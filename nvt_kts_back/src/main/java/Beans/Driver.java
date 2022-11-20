@@ -1,39 +1,63 @@
 package Beans;
 
+import Enumerations.CarType;
+
 public class Driver {
-    private Integer id;
-    private String name;
-    private String email;
+    private Boolean active;
+    private CarType carType;
+    private Boolean babyAllowed;
+    private Boolean petAllowed;
+    private Boolean isDriverFree;
 
     public Driver() {
     }
 
-    public Driver(String name, String email) {
-        this.name = name;
-        this.email = email;
+    public Driver(Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {
+        this.active = active;
+        this.carType = carType;
+        this.babyAllowed = babyAllowed;
+        this.petAllowed = petAllowed;
+        this.isDriverFree = isDriverFree;
     }
 
-    public Integer getId() {
-        return id;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
-    public String getName() {
-        return name;
+    public CarType getCarType() {
+        return carType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCarType(CarType carType) {
+        this.carType = carType;
     }
 
-    public String getEmail() {
-        return email;
+    public Boolean getBabyAllowed() {
+        return babyAllowed;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setBabyAllowed(Boolean babyAllowed) {
+        this.babyAllowed = babyAllowed;
+    }
+
+    public Boolean getPetAllowed() {
+        return petAllowed;
+    }
+
+    public void setPetAllowed(Boolean petAllowed) {
+        this.petAllowed = petAllowed;
+    }
+
+    public Boolean getDriverFree() {
+        return isDriverFree;
+    }
+
+    public void setDriverFree(Boolean driverFree) {
+        isDriverFree = driverFree;
     }
 }
+
