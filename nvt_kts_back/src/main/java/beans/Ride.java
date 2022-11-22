@@ -1,34 +1,57 @@
-package Beans;
+package beans;
 
-import Enumerations.RideState;
+import enumerations.RideState;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Ride {
-    private int rideId;
-    private String callerId;
-    private String driverId;
-    private List<String> linkedPassengers;  // TODO ovdje moze ici i lista Usera
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RegisteredUser caller;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<RegisteredUser> linkedPassengers = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Driver driver;
+
+    @Enumerated(EnumType.STRING)
     private RideState rideState;
+    @Column
     private double price;
+    @Column
     private LocalDateTime startDateTime;
+    @Column
     private LocalDateTime actualEndDateTime;
+    @Column
     private LocalDateTime expectedDuration;           // TODO mozda i int
+    @Column
     private double distance;
+
+//    za svakog korisnika memorisemo
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "review_id")
     private Review review;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "route_id")
     private Route route;
+
 
     public Ride()
     {
     }
 
-    public Ride(int rideId, String callerId, String driverId, List<String> linkedPassengers, RideState rideState, double price, LocalDateTime startDateTime, LocalDateTime actualEndDateTime, LocalDateTime expectedDuration, double distance) {
-        this.rideId = rideId;
-        this.callerId = callerId;
-        this.driverId = driverId;
-        this.linkedPassengers = linkedPassengers;
+    public Ride(RegisteredUser caller, Driver driver, RideState rideState, double price, LocalDateTime startDateTime, LocalDateTime actualEndDateTime, LocalDateTime expectedDuration, double distance) {
+        this.caller = caller;
+        this.driver = driver;
         this.rideState = rideState;
         this.price = price;
         this.startDateTime = startDateTime;
@@ -38,35 +61,27 @@ public class Ride {
     }
 
     public int getRideId() {
-        return rideId;
+        return id;
     }
 
     public void setRideId(int rideId) {
-        this.rideId = rideId;
+        this.id = rideId;
     }
 
-    public String getCallerId() {
-        return callerId;
+    public RegisteredUser getCaller() {
+        return caller;
     }
 
-    public void setCallerId(String callerId) {
-        this.callerId = callerId;
+    public void setCaller(RegisteredUser caller) {
+        this.caller = caller;
     }
 
-    public String getDriverId() {
-        return driverId;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
-    }
-
-    public List<String> getLinkedPassengers() {
-        return linkedPassengers;
-    }
-
-    public void setLinkedPassengers(List<String> linkedPassengers) {
-        this.linkedPassengers = linkedPassengers;
+    public void setDriver(Driver  driver) {
+        this.driver = driver;
     }
 
     public RideState getRideState() {

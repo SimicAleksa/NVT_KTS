@@ -1,8 +1,18 @@
-package Beans;
+package beans;
 
+import javax.persistence.*;
+
+@Entity
 public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column
     private int carStars;
+    @Column
     private int driverStars;
+    @Column
     private String comment;
 
     public Review()
@@ -14,6 +24,14 @@ public class Review {
         this.carStars = carStars;
         this.driverStars = driverStars;
         this.comment = comment;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public int getCarStars() {

@@ -1,19 +1,31 @@
-package Beans;
+package beans;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class User {
+    @Id
     private String email;
+
+    @Column
     private String password;
+    @Column
     private String name;
+    @Column
     private String surname;
+    @Column
     private String city;
+    @Column
     private String phone;
+    @Column
     private Boolean profileActivated;
+    @Column
     private String picture;
+    @Column
     private Boolean isBlocked;
 
-    private List<Ride> historyOfRides;
 
     public User() {    }
 

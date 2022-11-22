@@ -1,18 +1,32 @@
-package Beans;
+package beans;
 
-import Enumerations.CarType;
+import enumerations.CarType;
 
-public class Driver {
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Driver extends User {
+    @Column
     private Boolean active;
+    @Enumerated(EnumType.STRING)
     private CarType carType;
+    @Column
     private Boolean babyAllowed;
+    @Column
     private Boolean petAllowed;
+    @Column
     private Boolean isDriverFree;
+
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Ride> historyOfRides = new ArrayList<>();
 
     public Driver() {
     }
 
-    public Driver(Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {
+    public Driver(String email, String password, String name, String surname, String city, String phone, Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {
+        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked);
         this.active = active;
         this.carType = carType;
         this.babyAllowed = babyAllowed;

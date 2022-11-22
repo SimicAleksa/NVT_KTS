@@ -1,10 +1,20 @@
-package Beans;
+package beans;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class RegisteredUser extends User{
+
+    @Column
     private Boolean isBusy;
+
+    @OneToMany
     private List<Route> favouriteRoutes;
+
+    @OneToMany(mappedBy = "caller", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Ride> historyOfRides = new ArrayList<>();
 
     public RegisteredUser() {
 

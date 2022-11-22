@@ -1,17 +1,29 @@
-package Beans;
+package beans;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Route {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column
     private double startLocation;
+
+    @Column
     private double finishLocation;
-    private List<Double> optionalDestination;   // TODO mozda ce ici kao uredjeni parovi
+
+    @OneToMany()
+    private List<Coord> optionalDestination = new ArrayList<>();   // TODO mozda ce ici kao uredjeni parovi
 
     public Route()
     {
 
     }
-    public Route(double startLocation, double finishLocation, List<Double> optionalDestination) {
+    public Route(double startLocation, double finishLocation, List<Coord> optionalDestination) {
         this.startLocation = startLocation;
         this.finishLocation = finishLocation;
         this.optionalDestination = optionalDestination;
@@ -33,11 +45,11 @@ public class Route {
         this.finishLocation = finishLocation;
     }
 
-    public List<Double> getOptionalDestination() {
+    public List<Coord> getOptionalDestination() {
         return optionalDestination;
     }
 
-    public void setOptionalDestination(List<Double> optionalDestination) {
+    public void setOptionalDestination(List<Coord> optionalDestination) {
         this.optionalDestination = optionalDestination;
     }
 }

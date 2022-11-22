@@ -1,6 +1,6 @@
-package Controllers;
+package controllers;
 
-import Beans.Driver;
+import beans.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
