@@ -2,22 +2,23 @@ package controllers;
 
 import beans.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import service.DriverService;
 
 import java.util.List;
 
 @RestController
 public class DriverController {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+    private DriverService driverService;
 
-    @GetMapping("/drivers")
-    public List<Driver> listAll(){
-        String sql = "SELECT * FROM drivers";
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Driver.class));
+    @Autowired
+    public DriverController(DriverService driverService) {
+        this.driverService = driverService;
     }
+
+    @PostMapping("/driver/addDriver")
+    public Driver addDriver(@RequestBody Driver driver) {return driverService.createDriver(driver);}
 }
