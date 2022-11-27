@@ -4,7 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { Route, RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
+import { MapsModule } from '../maps/maps.module';
 
 const appRoutes: Routes = [
   {path:'',component:AppComponent}]
@@ -12,11 +13,12 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
