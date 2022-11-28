@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchRoutesPageComponent implements OnInit {
 
+  public selectedLocation:any;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  recieveSentSelectedLocation($event: any){
+    this.selectedLocation = $event;
   }
 
 }
