@@ -1,0 +1,109 @@
+
+label {
+    cursor: pointer;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 14vw;
+    transform: translate3d(-14vw, 0, 0);
+    transition: transform 1s;
+    border-radius: 0 0 10% 0;
+    background: black;
+}
+
+.menu label.menu-toggle {
+    position: absolute;
+    right: -60px;
+    width: 60px;
+    height: 60px;
+    line-height: 0px;
+    display: block;
+    text-indent: -9999px;
+    background: url(../../../assets/cogwheel.png) 50% 50%/45px 45px no-repeat;
+    border-radius: 50%;
+}
+
+.menu-checkbox {
+    display: none;
+}
+
+.menu .menu label.menu-toggle {
+    background: none;
+}
+
+.menu-checkbox:checked + .menu {
+    transform: translate3d(0, 0, 0);
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu button {
+    width: 95%;
+    height: 5vh;
+    margin: 1vh 2.5%;
+
+    font-weight: bolder;
+    font-size: 1.3em;
+
+    color: white;
+    background-color: black;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    z-index: 0;
+    border-radius: 5px 20px 5px 20px;
+}
+
+.menu button:hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 5px 20px 5px 20px;
+}
+
+.menu button:hover {
+    color: black;
+    font-size: 1.6em;
+}
+
+.menu button:hover:hover:after {
+    background: transparent;
+}
+
+.menu button:hover:hover:before {
+    opacity: 1;
+}
+
+.menu button:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    left: 0;
+    top: 0;
+    border-radius: 5px 20px 5px 20px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
