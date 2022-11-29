@@ -30,7 +30,7 @@ export class RouteSearchFormComponent implements OnInit {
   @Output() locationSelectedEvent = new EventEmitter<any>();
   liOnClick(res: any): void{
     this.selectedLocation = res;
-    console.log(this.selectedLocation);
+    // console.log(this.selectedLocation);
     this.locationSelectedEvent.emit(this.selectedLocation);
   }
 

@@ -14,8 +14,10 @@ export class SearchRoutesPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  recieveSentSelectedLocation($event: any){
-    this.selectedLocation = $event;
+  recieveSentSelectedLocation(emitedValue: any){
+    this.selectedLocation = emitedValue;
+    console.log("hvata na stranici");
+    console.log(emitedValue);
   }
 
 }

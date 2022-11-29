@@ -8,36 +8,46 @@ import * as L from 'leaflet';
 })
 export class MapComponent implements OnInit {
   private map!: L.Map;
-  private centroid: L.LatLngExpression = [42.3601, -71.0589]; //
+  private centroid: L.LatLngExpression = [44.0165, 21.0059]; //
 
   @Input() selectedLocation:any // IZBACI ANY
 
   private initMap(): void {
     this.map = L.map('map', {
       center: this.centroid,
-      zoom: 12,
+      zoom: 7,
     });
 
     const tiles = L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
-        maxZoom: 18,
-        minZoom: 10,
+        maxZoom: 17,
+        minZoom: 1,
         attribution:
           '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }
+      }    
     );
-
-    console.log("AAAAAAAAAAAAAAAAAAA");
-    console.log(this.selectedLocation);
-    const position = new L.LatLng(this.selectedLocation.lat, this.selectedLocation.lon);
-    this.map.flyTo(position, 10);
-    tiles.addTo(this.map);
+    this.map.addLayer(tiles)
+    // tiles.addTo(this.map);
   }
 
   constructor() {}
 
   ngOnInit(): void {
-    this.initMap();
+  }
+  ngOnChanges(): void{
+    if(this.map==null)
+      this.initMap();
+    else
+    {
+      console.log(this.selectedLocation);
+      const position = new L.LatLng(this.selectedLocation.lat, this.selectedLocation.lon);
+
+      this.map.flyTo(position, 15);
+
+      let marker = L.marker(position);
+      marker.bindPopup(this.selectedLocation.display_name).openPopup();
+      marker.addTo(this.map);
+    }
   }
 }
