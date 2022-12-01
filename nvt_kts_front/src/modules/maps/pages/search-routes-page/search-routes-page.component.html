@@ -1,11 +1,18 @@
 <div class="m-5">
   <div class="row" style="height: 90vh">
     <div class="col">
-      <app-route-search-form (locationSelectedEvent)="recieveSentSelectedLocation($event)"></app-route-search-form>
+      <app-route-search-form
+       (startLocationSelectedEvent)="recieveSentSelectedStartLocation($event)"
+       (endLocationSelectedEvent)="recieveSentSelectedEndLocation($event)"
+       (sendRequestForRideEvent)="recieveRequestForRide($event)">
+      </app-route-search-form>
     </div>
     <div class="col">
       <div style="height: 100%">
-        <app-map [selectedLocation]="selectedLocation"></app-map>
+        <app-map 
+        [selectedStartLocation]="selectedStartLocation"
+        [selectedEndLocation]="selectedEndLocation">
+        </app-map>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MapLocation } from 'src/modules/app/model/mapLocation';
 
 @Component({
   selector: 'app-search-routes-page',
@@ -7,15 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchRoutesPageComponent implements OnInit {
 
-  public selectedLocation:any;
+  public selectedStartLocation!:MapLocation;
+  public selectedEndLocation!:MapLocation;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  recieveSentSelectedLocation(emitedValue: any){
-    this.selectedLocation = emitedValue;
+  recieveSentSelectedStartLocation(emitedValue: MapLocation){
+    this.selectedStartLocation = emitedValue;
+    console.log("hvata na stranici");
+    console.log(emitedValue);
+  }
+
+  recieveSentSelectedEndLocation(emitedValue: MapLocation){
+    this.selectedEndLocation = emitedValue;
+    console.log("hvata na stranici");
+    console.log(emitedValue);
+  }
+
+  recieveRequestForRide(emitedValue: MapLocation){
+    // this.selectedLocation = emitedValue;
     console.log("hvata na stranici");
     console.log(emitedValue);
   }
