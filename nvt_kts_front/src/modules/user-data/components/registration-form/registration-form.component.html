@@ -1,0 +1,63 @@
+<form class="mx-1 mx-md-4">
+
+  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="bi bi-person-fill fa-lg"></i>
+    <div class="form-outline flex-fill mb-0 form-floating">
+      <input type="text" id="name" class="form-control" placeholder="Name" required/>
+      <label class="form-label" for="name">Name</label>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="bi bi-person-fill fa-lg"></i>
+    <div class="form-outline flex-fill mb-0 form-floating">
+      <input type="text" id="surname" class="form-control" placeholder="Surname" required/>
+      <label class="form-label" for="surname">Surname</label>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="bi bi-envelope-at-fill"></i>
+    <div class="form-outline flex-fill mb-0 form-floating">
+      <input type="email" id="email" class="form-control" placeholder="Email" required/>
+      <label class="form-label" for="email">Email</label>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="bi bi-lock-fill"></i>
+    <div class="form-outline flex-fill mb-0 form-floating">
+      <input type="password" id="password" class="form-control" placeholder="Password" required/>
+      <label class="form-label" for="password">Password</label>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="bi bi-lock-fill"></i>
+    <div class="form-outline flex-fill mb-0 form-floating">
+      <input type="password" id="repeatedPassword" class="form-control" placeholder="Repeated password" required/>
+      <label class="form-label" for="form3Example3c">Repeated password</label>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="bi bi-buildings-fill"></i>
+    <div class="form-outline flex-fill mb-0 form-floating">
+      <input type="password" id="city" class="form-control" placeholder="City" required/>
+      <label class="form-label" for="city">City</label>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="bi bi-telephone-fill"></i>
+    <div class="form-outline flex-fill mb-0 form-floating">
+      <input type="password" id="phone" class="form-control" placeholder="Phone number" required/>
+      <label class="form-label" for="phone">Phone number</label>
+    </div>
+  </div>
+
+  <div class="justify-content-center ">
+    <button (click)="register()" id="registerButton" type="submit" class="btn btn-primary btn-lg" style="float: right;">Register</button>
+  </div>
+
+</form>

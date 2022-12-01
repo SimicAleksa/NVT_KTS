@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
+import { UserDataModule } from '../user-data/user-data.module';
 
 const appRoutes: Routes = [
   {path:'',component:AppComponent}]
@@ -18,7 +19,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MapsModule
+    MapsModule,
+    UserDataModule
   ],
   providers: [],
   bootstrap: [AppComponent]
