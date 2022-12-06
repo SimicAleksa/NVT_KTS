@@ -1,3 +1,4 @@
+@import "~leaflet/dist/leaflet.css";
 html, body { 
     height: 100%; 
 }
@@ -6,5 +7,3 @@ body {
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
-
-@import "~leaflet/dist/leaflet.css";
