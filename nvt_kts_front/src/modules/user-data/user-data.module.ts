@@ -10,6 +10,7 @@ import { EditProfilePageComponent } from './pages/edit-profile-page/edit-profile
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ApproveChangesPageComponent } from './pages/approve-changes-page/approve-changes-page.component';
 import { ApproveChangesComponent } from './components/approve-changes/approve-changes.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -26,6 +27,7 @@ import { ApproveChangesComponent } from './components/approve-changes/approve-ch
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ]
 })
