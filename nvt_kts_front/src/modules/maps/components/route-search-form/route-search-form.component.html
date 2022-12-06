@@ -1,0 +1,13 @@
+<input class="form-control" type="text" [(ngModel)]="searchedStartLocationInput" (change)="getSearchedLocation(true)"/>
+<li *ngFor="let res of startResultList" (click)="startLiOnClick(res)" >
+  <p>{{res.display_name}}</p>
+</li>
+
+<input class="form-control" type="text" [(ngModel)]="searchedEndLocationInput" (change)="getSearchedLocation(false)"/>
+<li *ngFor="let res of endResultList" (click)="endLiOnClick(res)" >
+  <p>{{res.display_name}}</p>
+</li>
+
+
+
+<button class="btn btn-primary" (click)="sendLocationsToPage()">Submit</button>
