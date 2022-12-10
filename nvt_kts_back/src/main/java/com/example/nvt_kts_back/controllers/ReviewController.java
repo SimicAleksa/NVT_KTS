@@ -9,13 +9,10 @@ import com.example.nvt_kts_back.service.ReviewService;
 
 @RestController
 public class ReviewController {
-
+    @Autowired
     private ReviewService reviewService;
 
-    @Autowired
-    public ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
+
     @PostMapping("/review/addReview")
     public Review addReview(@RequestBody Review review) {return  reviewService.createReview(review);}
 }

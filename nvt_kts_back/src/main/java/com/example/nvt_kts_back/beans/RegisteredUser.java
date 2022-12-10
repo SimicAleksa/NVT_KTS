@@ -1,12 +1,17 @@
 package com.example.nvt_kts_back.beans;
 
+import com.example.nvt_kts_back.configurations.Settings;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
 public class RegisteredUser extends User{
-
     @Column
     private Boolean isBusy;
 
@@ -19,20 +24,10 @@ public class RegisteredUser extends User{
     @OneToMany(mappedBy = "passenger", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Review> reviews = new ArrayList<>();
 
-    public RegisteredUser() {
-        super();
-    }
-
-    public RegisteredUser(String email, String password, String name, String surname, String city, String phone, Boolean profileActivated, String picture, Boolean isBlocked, Boolean isBusy) {
-        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked);
+    public RegisteredUser(String email, String password, String name, String surname, String city, String phone,
+                          Boolean profileActivated, String picture, Boolean isBlocked, Boolean isBusy) {
+        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked,
+                new Role(Settings.USER_ROLE_NAME));
         this.isBusy = isBusy;
-    }
-
-    public Boolean getBusy() {
-        return isBusy;
-    }
-
-    public void setBusy(Boolean busy) {
-        isBusy = busy;
     }
 }

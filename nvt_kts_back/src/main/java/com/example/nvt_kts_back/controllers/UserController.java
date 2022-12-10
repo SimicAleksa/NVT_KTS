@@ -9,13 +9,12 @@ import com.example.nvt_kts_back.service.UserService;
 
 @RestController
 public class UserController {
+    @Autowired
     private UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/user/addUser")
-    public User addUser(@RequestBody User user) {return userService.createUser(user);}
+    public User addUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
 }

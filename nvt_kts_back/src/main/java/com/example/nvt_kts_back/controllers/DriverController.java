@@ -9,14 +9,11 @@ import com.example.nvt_kts_back.service.DriverService;
 
 @RestController
 public class DriverController {
-
+    @Autowired
     private DriverService driverService;
 
-    @Autowired
-    public DriverController(DriverService driverService) {
-        this.driverService = driverService;
-    }
-
     @PostMapping("/driver/addDriver")
-    public Driver addDriver(@RequestBody Driver driver) {return driverService.createDriver(driver);}
+    public Driver addDriver(@RequestBody Driver driver) {
+        return driverService.createDriver(driver);
+    }
 }
