@@ -9,8 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: "maps",
-        loadChildren: () =>
-              import("../maps/maps.module").then((m) => m.MapsModule),
+        loadChildren: () => import("../maps/maps.module").then((m) => m.MapsModule)
       }
     ]
   }

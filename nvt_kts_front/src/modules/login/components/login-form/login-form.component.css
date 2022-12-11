@@ -1,0 +1,42 @@
+div {
+    margin: 0;
+    padding: 0;
+}
+
+.middle-col {
+    height: 32vh;
+}
+
+input, label {
+    color: grey;
+    font-size: large;
+}
+
+input {
+    width: 30vw;
+}
+
+i {
+    font-size:3vw;
+    margin-right: 1vw;
+}
+
+.errorMessage {
+   visibility: collapse;
+   color: red;
+   padding-left: 5px;
+}
+
+.form-title-style {
+    margin-top: -2vh;
+    margin-bottom: 2vh;
+    font-weight: bold;
+    font-size: 3vh;
+}
+
+.forgotten-pass-style {
+    margin-top: -1vh;
+    margin-bottom: 2vh;
+    font-weight: bold;
+    font-size: 2vh;
+}
