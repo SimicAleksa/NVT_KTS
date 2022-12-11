@@ -6,6 +6,8 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { ForgottenPasswordFormComponent } from './components/forgotten-password-form/forgotten-password-form.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './login-routing';
+import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
+import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { routes } from './login-routing';
     LoginPageComponent,
     ForgottenPasswordPageComponent,
     LoginFormComponent,
-    ForgottenPasswordFormComponent
+    ForgottenPasswordFormComponent,
+    ResetPasswordFormComponent,
+    ResetPasswordPageComponent
   ],
   imports: [
     CommonModule, 
