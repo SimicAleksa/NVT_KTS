@@ -20,7 +20,7 @@ public class EmailService {
     private Environment env;
 
     @Async
-    public void sendPasswordResetMail(String sendToEmail, String tempCode) throws MailException {
+    public void sendPasswordResetMail(final String sendToEmail, final String tempCode) throws MailException {
         javaMailSender.send(
                 makeMail(
                         sendToEmail,
@@ -33,7 +33,7 @@ public class EmailService {
         );
     }
 
-    private MimeMessage makeMail(String sendToEmail, String mailSubj, String mailText) {
+    private MimeMessage makeMail(final String sendToEmail, final String mailSubj, final String mailText) {
         MimeMessage mail = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -42,8 +42,7 @@ public class EmailService {
             mail.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
             mail.setSubject(mailSubj);
             mail.setText(mailText, "UTF-8", "html");
-        } catch (MessagingException ignored) {
-        }
+        } catch (MessagingException ignored) {}
 
         return mail;
     }
