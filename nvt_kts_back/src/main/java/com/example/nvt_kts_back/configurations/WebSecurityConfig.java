@@ -54,20 +54,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
-                .authorizeRequests().antMatchers("/unauth/**").permitAll()
+                .authorizeRequests().antMatchers("/unauth/**", "/h2-console/**", "/h2-console").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(
                         new TokenAuthFilter(tokenUtils, customUserDetailsService),
                         BasicAuthenticationFilter.class
                 );
-
         http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST, "/api/unauth/login");
-        web.ignoring().antMatchers(HttpMethod.GET, "/api/rental/search");
+        web.ignoring().antMatchers(HttpMethod.GET, "/mail/password-reset/*");
     }
 }
