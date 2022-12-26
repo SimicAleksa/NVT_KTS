@@ -1,45 +1,39 @@
 <form class="row">
     <div class="row middle-col"></div>
+
     <div class="row middle-col">
         <div class="row">
-            <span class="col text-center form-title-style">Fill the form to login</span>
-            <div class="col"></div>
+            <span class="col text-center form-title-style">Login</span>
         </div>
 
-        <div class="row">
-            <div class="d-flex flex-row align-items-center">
+        <div class="form-holder">
+            <div class="d-flex flex-row align-items-center mb-3">
                 <i class="bi bi-envelope-fill"></i>
                 <div class="form-outline flex-fill mb-0 form-floating">
                     <input #inputEmail type="email" id="email" class="form-control" placeholder="Email" name="email"/>
                     <label class="form-label" for="email">Email</label>
                 </div>
-                <label #errorEmail class="errorMessage"> Email must contain "@" sign</label>
             </div>
-        </div>
-
-
-        <div class="row">
-            <div class="d-flex flex-row align-items-center mb-4">
+    
+    
+            <div class="d-flex flex-row align-items-center mb-3">
                 <i class="bi bi-lock-fill"></i>
                 <div class="form-outline flex-fill mb-0 form-floating">
                     <input #inputPassword type="password" id="password" class="form-control" placeholder="Password" name="password" />
                     <label class="form-label" for="password">Password</label>
                 </div>
-                <label #errorPassword class="errorMessage"> Password is required </label>
             </div>
-        </div>
-
-        <div class="row">
-            <a routerLink="/login/recover-password" class="col text-center forgotten-pass-style">Click here if you've forgotten your password</a>
-            <div class="col"></div>
-        </div>
-
-        <div class="row">
-            <div class="col text-center">
-                <button id="loginBtn" type="button" class="btn btn-primary btn-lg">Login</button>
+    
+            <div class="row">
+                <a routerLink="/login/recover-password" class="col text-center forgotten-pass-style">Click here if you've forgotten your password</a>
             </div>
-            <div class="col"></div>
+    
+            <div class="row">
+                <div class="col text-center">
+                    <button id="loginBtn" type="button" class="btn btn-primary btn-lg">Login</button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row middle-col"></div>
+
 </form>

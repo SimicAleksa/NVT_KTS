@@ -3,6 +3,10 @@ div {
     padding: 0;
 }
 
+.form-holder {
+    padding: 0 1.8vw;
+}
+
 .middle-col {
     height: 32vh;
 }
@@ -12,19 +16,9 @@ input, label {
     font-size: large;
 }
 
-input {
-    width: 30vw;
-}
-
 i {
-    font-size:3vw;
-    margin-right: 1vw;
-}
-
-.errorMessage {
-   visibility: collapse;
-   color: red;
-   padding-left: 5px;
+    font-size: 2vw;
+    margin-right: 0.5vw;
 }
 
 .form-title-style {
