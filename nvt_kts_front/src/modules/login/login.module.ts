@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './login-routing';
 import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
+import { PopUpModule } from '../pop-up/pop-up.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
   ],
   imports: [
     CommonModule, 
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PopUpModule
   ]
 })
 export class LoginModule { }

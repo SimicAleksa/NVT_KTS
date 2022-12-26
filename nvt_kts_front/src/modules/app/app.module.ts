@@ -8,12 +8,13 @@ import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
 import { FormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
+import { PopUpModule } from '../pop-up/pop-up.module';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, MapsModule, LoginModule],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, MapsModule, LoginModule, PopUpModule],
   providers: [],
   bootstrap: [AppComponent],
 })

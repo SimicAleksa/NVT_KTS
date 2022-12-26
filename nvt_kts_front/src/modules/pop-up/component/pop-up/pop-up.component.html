@@ -1,0 +1,7 @@
+<div *ngIf="showPopUp" >
+    <div class="pop-up" [ngClass]="{'fadeOut': isFadeClassActive}">
+        <p class="pop-up-message">{{ message }}</p>
+        <button class="close-button" (click)="showPopUp = false">X</button>
+    </div>
+</div>
+  

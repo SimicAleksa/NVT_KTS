@@ -2,10 +2,10 @@
     <div class="col"></div>
 
     <div class="col">
-        <app-login-form>
-
-        </app-login-form>
+        <app-login-form (errSignal)="popUp.startPopUpShowTimeout($event)"></app-login-form>
     </div>
 
     <div class="col"></div>
+    
+    <app-pop-up #popUp [duration]="6500"></app-pop-up>
 </div>
