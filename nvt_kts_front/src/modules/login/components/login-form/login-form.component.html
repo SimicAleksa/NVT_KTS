@@ -10,7 +10,7 @@
             <div class="d-flex flex-row align-items-center mb-3">
                 <i class="bi bi-envelope-fill"></i>
                 <div class="form-outline flex-fill mb-0 form-floating">
-                    <input #inputEmail type="email" id="email" class="form-control" placeholder="Email" name="email"/>
+                    <input [(ngModel)]="email" type="email" id="email" class="form-control" placeholder="Email" name="email"/>
                     <label class="form-label" for="email">Email</label>
                 </div>
             </div>
@@ -19,7 +19,7 @@
             <div class="d-flex flex-row align-items-center mb-3">
                 <i class="bi bi-lock-fill"></i>
                 <div class="form-outline flex-fill mb-0 form-floating">
-                    <input #inputPassword type="password" id="password" class="form-control" placeholder="Password" name="password" />
+                    <input [(ngModel)]="password" type="password" id="password" class="form-control" placeholder="Password" name="password" />
                     <label class="form-label" for="password">Password</label>
                 </div>
             </div>
@@ -30,7 +30,7 @@
     
             <div class="row">
                 <div class="col text-center">
-                    <button (click)="emitError()" id="loginBtn" type="button" class="btn btn-primary btn-lg">Login</button>
+                    <button (click)="onLoginBtnClick()" id="loginBtn" type="button" class="btn btn-primary btn-lg">Login</button>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ import { routes } from './login-routing';
 import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { PopUpModule } from '../pop-up/pop-up.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { PopUpModule } from '../pop-up/pop-up.module';
   ],
   imports: [
     CommonModule, 
+    FormsModule,
     RouterModule.forChild(routes),
     PopUpModule
   ]

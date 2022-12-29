@@ -9,12 +9,21 @@ import { MapsModule } from '../maps/maps.module';
 import { FormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
 import { PopUpModule } from '../pop-up/pop-up.module';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, MapsModule, LoginModule, PopUpModule],
+  imports: [
+    BrowserModule, 
+    HttpClientModule, 
+    FormsModule, 
+    AppRoutingModule, 
+    MapsModule, 
+    LoginModule, 
+    PopUpModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

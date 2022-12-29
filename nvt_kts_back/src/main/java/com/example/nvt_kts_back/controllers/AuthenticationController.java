@@ -3,6 +3,7 @@ package com.example.nvt_kts_back.controllers;
 import com.example.nvt_kts_back.DTOs.AuthTokenDTO;
 import com.example.nvt_kts_back.DTOs.LoginDTO;
 import com.example.nvt_kts_back.beans.User;
+import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.security.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,7 @@ public class AuthenticationController {
 
 
     @PostMapping(value = "/login")
+    @CrossOrigin(origins = Settings.CROSS_ORIGIN_FRONTEND_PATH)
     public ResponseEntity<AuthTokenDTO> login(@RequestBody LoginDTO loginDTO) {
         Authentication authentication;
         try {
