@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
+import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.service.EmailService;
 import com.example.nvt_kts_back.service.TempCodeHolderService;
 import com.example.nvt_kts_back.service.UserService;
@@ -8,13 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/api/mail")
 public class EmailController {
     @Autowired
     private EmailService emailService;
@@ -24,12 +22,13 @@ public class EmailController {
     private UserService userService;
 
 
-    @GetMapping(value = "/password-reset/{toSendEmail}")
     @Async
-    public ResponseEntity<HttpStatus> requestPasswordResetByMail(@PathVariable final String toSendEmail) {
+    @GetMapping(value = "/password-reset/{sendToMail}")
+    @CrossOrigin(origins = Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<HttpStatus> requestPasswordResetByMail(@PathVariable final String sendToMail) {
         try {
-            userService.verifyUserExistence(toSendEmail);
-            emailService.sendPasswordResetMail(toSendEmail, tempCodeHolderService.setAndRetNewPasswordResetCode(toSendEmail));
+            userService.verifyUserExistence(sendToMail);
+            emailService.sendPasswordResetMail(sendToMail, tempCodeHolderService.setAndRetNewPasswordResetCode(sendToMail));
         } catch (UserDoesNotExistException ignored) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

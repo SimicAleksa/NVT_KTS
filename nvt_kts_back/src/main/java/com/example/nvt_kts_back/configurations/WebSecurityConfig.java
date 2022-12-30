@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(HttpMethod.GET, "/mail/password-reset/*");
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/mail/password-reset/*");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/unauth/login");
         web.ignoring().antMatchers(HttpMethod.PUT, "/api/user/password-reset");
     }

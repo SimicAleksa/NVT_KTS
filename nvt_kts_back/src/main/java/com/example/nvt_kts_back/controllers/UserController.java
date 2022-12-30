@@ -8,6 +8,7 @@ import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
 import com.example.nvt_kts_back.beans.Driver;
 import com.example.nvt_kts_back.beans.RegisteredUser;
 import com.example.nvt_kts_back.beans.User;
+import com.example.nvt_kts_back.configurations.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class UserController {
 
 
     @PutMapping("/password-reset")
+    @CrossOrigin(origins = Settings.CROSS_ORIGIN_FRONTEND_PATH)
     public ResponseEntity<HttpStatus> resetPassword(@RequestBody final PasswordResetDTO passwordResetDTO) {
         try {
             userService.resetPassword(passwordResetDTO);

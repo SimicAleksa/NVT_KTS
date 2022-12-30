@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.configurations.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
@@ -26,7 +27,7 @@ public class EmailService {
                         sendToEmail,
                         "Password reset",
                         "You have requested a password reset. If this wasn't you, simply ignore this message." +
-                                "Otherwise, click this <a href=\"https//localhost:4200/login/reset-password\">link</a> " +
+                                "Otherwise, click this <a href=\"" + Settings.RESET_PASS_PAGE_URL + "\">link</a> " +
                                 "to proceed with the action and use given 4-digit code to verify yourself. \n\nCode: " +
                                 tempCode
                 )

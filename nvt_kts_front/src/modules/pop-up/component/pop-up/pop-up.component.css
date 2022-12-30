@@ -12,10 +12,17 @@
   padding-right: 50px;
   border-radius: 20px 5px;
 
-  background-color: #f38b8b;
   color: #333333;
 
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.inf-btn-clr {
+  background-color: #96e981;
+}
+
+.err-btn-clr {
+  background-color: #f38b8b;
 }
 
 .close-button {

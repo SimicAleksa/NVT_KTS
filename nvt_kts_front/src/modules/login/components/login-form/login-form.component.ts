@@ -30,15 +30,18 @@ export class LoginFormComponent implements OnInit {
     if (!this.isLoginBtnClickable)
       return;
 
-    if (!this.validateLoginForm())
+    this.isLoginBtnClickable = false;
+    if (!this.validateLoginForm()) {
+      this.isLoginBtnClickable = true;
       return;
+    }
 
     let data = {
       email: this.email,
       password: this.password
     }
 
-    this.reqMaker.createLoginRequest(data).subscribe(this.getLoginObserver());
+    this.reqMaker.createLoginRequest(data).subscribe(this.getObservable());
   }
 
   validateLoginForm(): boolean {
@@ -56,7 +59,7 @@ export class LoginFormComponent implements OnInit {
     return false;
   }
 
-  getLoginObserver() {
+  getObservable() {
     return {
       next: (retData: any) => {
         if (retData.body === undefined)
@@ -64,6 +67,7 @@ export class LoginFormComponent implements OnInit {
         localStorage.setItem('token', retData.body.accessToken);
         localStorage.setItem('role', retData.body.role);
       },
+
       error: (err: any) => {
         if (err.status === 401)
           this.emitError("Email or/and password you entered are not valid. Try again.");
@@ -71,7 +75,10 @@ export class LoginFormComponent implements OnInit {
           this.emitError("Your account has either been locked or is not activated yet.");
         else
           this.emitError("Something happened. Please try again later.");
+
+        this.isLoginBtnClickable = true;
       },
+      
       complete: () => {
         alert("Logged");
       }

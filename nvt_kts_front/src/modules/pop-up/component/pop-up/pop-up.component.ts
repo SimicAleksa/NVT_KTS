@@ -7,17 +7,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PopUpComponent implements OnInit {
   @Input() duration: number;
-  @Input() message: string;
+  @Input() isErrorPopUp: boolean;
 
-  showPopUp: boolean;
-  isFadeClassActive: boolean;
+  public showPopUp: boolean;
+  public isFadeClassActive: boolean;
+  public message: string;
 
-  
+
   constructor() { 
     this.duration = 5000;
-    this.message = '';
+    this.isErrorPopUp = true;
+    
     this.showPopUp = false;
     this.isFadeClassActive = false;
+    this.message = '';
   }
 
   ngOnInit() {

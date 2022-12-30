@@ -1,5 +1,5 @@
 <div *ngIf="showPopUp" >
-    <div class="pop-up" [ngClass]="{'fadeOut': isFadeClassActive}">
+    <div class="pop-up" [ngClass]="{'fadeOut': isFadeClassActive, 'err-btn-clr': isErrorPopUp, 'inf-btn-clr': !isErrorPopUp}">
         <p class="pop-up-message">{{ message }}</p>
         <button class="close-button" (click)="showPopUp = false">X</button>
     </div>
