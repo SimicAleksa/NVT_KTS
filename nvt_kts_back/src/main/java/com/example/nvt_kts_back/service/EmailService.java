@@ -27,9 +27,9 @@ public class EmailService {
                         sendToEmail,
                         "Password reset",
                         "You have requested a password reset. If this wasn't you, simply ignore this message." +
-                                "Otherwise, click this <a href=\"" + Settings.RESET_PASS_PAGE_URL + "\">link</a> " +
-                                "to proceed with the action and use given 4-digit code to verify yourself. \n\nCode: " +
-                                tempCode
+                                "Otherwise, click this <a href=\"" + Settings.RESET_PASS_PAGE_URL + sendToEmail +
+                                "\">link</a> to proceed with the action and use given 4-digit code to verify yourself." +
+                                " \n\nCode: " + tempCode
                 )
         );
     }
