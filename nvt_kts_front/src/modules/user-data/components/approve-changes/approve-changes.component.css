@@ -1,0 +1,32 @@
+input, label
+{
+    color: grey;
+    font-size: large;
+}
+
+i {
+    font-size:30px; 
+    padding-right: 10px;
+    margin-left: 10px;
+}
+
+.hasChanged {
+    color: rgb(77, 160, 242);
+}
+
+div.hasChanged label{
+    color: rgb(77, 160, 242);
+}
+
+button {
+    margin-left: 10px;
+}
+
+.oneDriverDiv{
+    border: 1px solid;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    padding-bottom: 70px;
+    background-color: rgb(247, 246, 220);
+}

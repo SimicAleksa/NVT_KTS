@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
+import { UserDataModule } from '../user-data/user-data.module';
 import { FormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
 import { PopUpModule } from '../pop-up/pop-up.module';
@@ -21,6 +22,7 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     FormsModule, 
     AppRoutingModule, 
     MapsModule, 
+    UserDataModule,
     LoginModule, 
     PopUpModule
   ],

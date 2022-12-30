@@ -1,0 +1,23 @@
+input, label
+{
+    color: grey;
+    font-size: large;
+}
+
+input
+{
+    width: 300px;
+}
+
+
+i {
+    font-size:30px; 
+    padding-right: 10px;
+}
+
+.errorMessage {
+   visibility: collapse;
+   color: red;
+   padding-left: 5px;
+}
+
