@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MenuService } from 'src/modules/menu/service/menu-service';
 import { FieldValidator } from 'src/utils/FieldValidator';
 import { APIRequestMaker } from "../../../../utils/api-request-maker";
 
@@ -17,7 +18,7 @@ export class LoginFormComponent implements OnInit {
   private isLoginBtnClickable: boolean;
 
 
-  constructor(private reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator) {
+  constructor(private reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator, private menuService: MenuService) {
     this.email = "";
     this.password = "";
 
@@ -80,6 +81,7 @@ export class LoginFormComponent implements OnInit {
       },
       
       complete: () => {
+        this.menuService.updateMenu();
         alert("Logged");
       }
     };

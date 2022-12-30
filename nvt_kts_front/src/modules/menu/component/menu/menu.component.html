@@ -1,0 +1,22 @@
+<nav>
+    <span *ngIf="role === 'USER'">
+        <button>USER</button>
+    </span>
+
+    <span *ngIf="role === 'DRIVER'">
+        <button>DRIVER</button>
+    </span>
+
+    <span *ngIf="role === 'ADMIN'">
+        <button>ADMIN</button>
+    </span>
+
+    <span *ngIf="role !== 'UNREGISTERED'">
+        <button (click)="onLogoutBtnClick()">LOGOUT</button>
+    </span>
+
+    <span *ngIf="role === 'UNREGISTERED'">
+        <button (click)="onRegisterBtnClick()">REGISTER</button>
+        <button (click)="onLoginBtnClick()">LOGIN</button>
+    </span>
+</nav>

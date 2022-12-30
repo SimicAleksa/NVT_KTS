@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
 import { PopUpModule } from '../pop-up/pop-up.module';
 import { HttpClientModule } from '@angular/common/http';
+import { MenuModule } from '../menu/menu.module';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
@@ -24,7 +25,8 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     MapsModule, 
     UserDataModule,
     LoginModule, 
-    PopUpModule
+    PopUpModule,
+    MenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],
