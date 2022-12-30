@@ -1,0 +1,36 @@
+div {
+    margin: 0;
+    padding: 0;
+}
+
+.form-holder {
+    padding: 0 1.8vw;
+}
+
+.middle-col {
+    height: 32vh;
+}
+
+input, label {
+    color: grey;
+    font-size: large;
+}
+
+i {
+    font-size: 2vw;
+    margin-right: 0.5vw;
+}
+
+.form-title-style {
+    margin-top: -2vh;
+    margin-bottom: 2vh;
+    font-weight: bold;
+    font-size: 3vh;
+}
+
+.forgotten-pass-style {
+    margin-top: -1vh;
+    margin-bottom: 2vh;
+    font-weight: bold;
+    font-size: 2vh;
+}

@@ -9,13 +9,9 @@ import com.example.nvt_kts_back.service.RouteService;
 
 @RestController
 public class RouteController {
-
+    @Autowired
     private RouteService routeService;
 
-    @Autowired
-    public RouteController(RouteService routeService) {
-        this.routeService = routeService;
-    }
 
     @PostMapping("/route/addRoute")
     public Route addRoute(@RequestBody Route route) {return routeService.createRoute(route);}

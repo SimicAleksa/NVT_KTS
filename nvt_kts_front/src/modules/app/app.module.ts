@@ -8,19 +8,23 @@ import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
 import { UserDataModule } from '../user-data/user-data.module';
 import { FormsModule } from '@angular/forms';
+import { LoginModule } from '../login/login.module';
+import { PopUpModule } from '../pop-up/pop-up.module';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MapsModule,
+    BrowserModule, 
+    HttpClientModule, 
+    FormsModule, 
+    AppRoutingModule, 
+    MapsModule, 
     UserDataModule,
-    FormsModule
+    LoginModule, 
+    PopUpModule
   ],
   providers: [],
   bootstrap: [AppComponent],
