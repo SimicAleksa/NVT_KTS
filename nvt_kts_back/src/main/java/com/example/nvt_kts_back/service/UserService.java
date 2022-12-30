@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.CustomExceptions.InvalidDTOAttributesValuesException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
 import com.example.nvt_kts_back.beans.Driver;
@@ -33,6 +34,9 @@ public class UserService {
     }
 
     public void resetPassword(final PasswordResetDTO passwordResetDTO) {
+        if (!passwordResetDTO.validateAttributes())
+            throw new InvalidDTOAttributesValuesException();
+
         User user = userRepository.getByEmail(passwordResetDTO.getEmail())
                 .orElseThrow(UserDoesNotExistException::new);
 

@@ -3,17 +3,16 @@ package com.example.nvt_kts_back.controllers;
 import com.example.nvt_kts_back.CustomExceptions.InvalidDTOAttributesValuesException;
 import com.example.nvt_kts_back.CustomExceptions.InvalidTempCodeException;
 import com.example.nvt_kts_back.CustomExceptions.PasswordResetTempCodeDoesNotExistException;
-import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
 import com.example.nvt_kts_back.beans.Driver;
 import com.example.nvt_kts_back.beans.RegisteredUser;
 import com.example.nvt_kts_back.beans.User;
 import com.example.nvt_kts_back.configurations.Settings;
+import com.example.nvt_kts_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.nvt_kts_back.service.UserService;
 
 
 @RestController
@@ -28,7 +27,7 @@ public class UserController {
     public ResponseEntity<HttpStatus> resetPassword(@RequestBody final PasswordResetDTO passwordResetDTO) {
         try {
             userService.resetPassword(passwordResetDTO);
-        } catch (PasswordResetTempCodeDoesNotExistException ignored) {
+        } catch (PasswordResetTempCodeDoesNotExistException | InvalidDTOAttributesValuesException ignored) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (InvalidTempCodeException ignored) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

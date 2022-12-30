@@ -11,6 +11,25 @@ export class FieldValidator {
         return value === null || value === undefined || value === "";
     }
 
+    isLenBetween(value: string, start: number, end: number): boolean {
+        return value.length >= start && value.length <= end;
+        
+    }
+
+    isLenGraterThan(value: string, num: number): boolean {
+        return value.length >= num;
+    }
+
+    isLenLesserThan(value: string, num: number): boolean {
+        return value.length <= num;
+
+    }
+
+    isOfExactLength(value: string, num: number): boolean {
+        return value.length === num;
+
+    }
+
     validateEmail(email: string): boolean {
         return this.emailRegex.test(email);
     }

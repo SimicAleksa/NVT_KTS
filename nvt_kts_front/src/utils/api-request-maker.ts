@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { API_LOGIN_URL, API_SEND_PASS_RESET_EMAIL } from "../config/api-urls";
+import { API_LOGIN_URL, API_SEND_PASS_RESET_EMAIL_URL, API_PASS_RESET_URL } from "../config/api-urls";
 
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +12,11 @@ export class APIRequestMaker {
   }
 
   createForgottenPasswordRequest(emailArg: string) {
-    return this.getRequest('GET', API_SEND_PASS_RESET_EMAIL + emailArg);
+    return this.getRequest('GET', API_SEND_PASS_RESET_EMAIL_URL + emailArg);
+  }
+
+  createPasswordResetRequest(data: any) {
+    return this.getRequest('PUT', API_PASS_RESET_URL, data);
   }
 
   getRequest(requestType: string, api_url: string, data: any = null) {
