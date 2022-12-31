@@ -11,6 +11,15 @@ div {
     height: 32vh;
 }
 
+.card-style {
+    margin-top: -5vh;
+    padding-top: 5vh;
+    padding-bottom: 4vh;
+    border: 1px solid rgb(223, 220, 220);
+    border-radius: 25px;
+    background-color: white;
+}
+
 input, label {
     color: grey;
     font-size: large;
@@ -25,7 +34,7 @@ i {
     margin-top: -2vh;
     margin-bottom: 2vh;
     font-weight: bold;
-    font-size: 3vh;
+    font-size: 4vh;
 }
 
 .forgotten-pass-style {
