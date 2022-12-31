@@ -12,11 +12,17 @@
     </span>
 
     <span *ngIf="role !== 'UNREGISTERED'">
-        <button (click)="onLogoutBtnClick()">LOGOUT</button>
+        <button (click)="onLogoutBtnClick()">
+            LOGOUT
+        </button>
     </span>
 
     <span *ngIf="role === 'UNREGISTERED'">
-        <button (click)="onRegisterBtnClick()">REGISTER</button>
-        <button (click)="onLoginBtnClick()">LOGIN</button>
+        <button (click)="onRegisterBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='REGISTER'}">
+            REGISTER
+        </button>
+        <button (click)="onLoginBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='LOGIN'}">
+            LOGIN
+        </button>
     </span>
 </nav>

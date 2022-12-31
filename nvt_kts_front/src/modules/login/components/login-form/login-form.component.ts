@@ -82,6 +82,7 @@ export class LoginFormComponent implements OnInit {
       
       complete: () => {
         this.menuService.updateMenu();
+        //TODO router.navigate
         alert("Logged");
       }
     };

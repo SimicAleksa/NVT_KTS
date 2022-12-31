@@ -10,10 +10,16 @@ import { MenuService } from '../../service/menu-service';
 })
 export class MenuComponent implements OnInit {
   public role: string;
+  public currentActiveBtn: string;
 
   constructor(private menuService: MenuService, private router: Router) {
     this.role = '';
     this.updateRole();
+    
+    if (this.role === "USER")
+      this.currentActiveBtn = "HOME";
+    else
+      this.currentActiveBtn = "LOGIN";
   }
 
   ngOnInit(): void {
@@ -30,14 +36,18 @@ export class MenuComponent implements OnInit {
     localStorage.removeItem('role');
     localStorage.removeItem('token');
     this.updateRole();
+
+    this.currentActiveBtn = 'LOGIN';
     this.router.navigate([CLIENT_LOGIN_URL]);
   }
 
   onLoginBtnClick(): void {
+    this.currentActiveBtn = 'LOGIN';
     this.router.navigate([CLIENT_LOGIN_URL]);
   }
   
   onRegisterBtnClick(): void {
+    this.currentActiveBtn = 'REGISTER';
     this.router.navigate([CLIENT_REGISTRATION_URL]);
   }
 }
