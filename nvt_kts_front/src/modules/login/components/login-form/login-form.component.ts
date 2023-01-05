@@ -1,3 +1,4 @@
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MenuService } from 'src/modules/menu/service/menu-service';
 import { FieldValidator } from 'src/utils/FieldValidator';
@@ -18,14 +19,27 @@ export class LoginFormComponent implements OnInit {
   private isLoginBtnClickable: boolean;
 
 
-  constructor(private reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator, private menuService: MenuService) {
+  constructor(private reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator, 
+              private menuService: MenuService, private authService: SocialAuthService) {
     this.email = "";
     this.password = "";
 
     this.isLoginBtnClickable = true;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.authState.subscribe((user) => {
+      let data = {
+        email: user.email,
+        authToken: user.authToken,
+        name: user.firstName,
+        surname: user.lastName,
+        picturePath: user.photoUrl
+      }
+      
+      this.reqMaker.createFacebookLoginRequest(data).subscribe(this.getFBLoginObservable());
+    });
+  }
 
   onLoginBtnClick(): void {
     if (!this.isLoginBtnClickable)
@@ -42,7 +56,7 @@ export class LoginFormComponent implements OnInit {
       password: this.password
     }
 
-    this.reqMaker.createLoginRequest(data).subscribe(this.getObservable());
+    this.reqMaker.createLoginRequest(data).subscribe(this.getSystemLoginObservable());
   }
 
   validateLoginForm(): boolean {
@@ -60,7 +74,7 @@ export class LoginFormComponent implements OnInit {
     return false;
   }
 
-  getObservable() {
+  getSystemLoginObservable() {
     return {
       next: (retData: any) => {
         if (retData.body === undefined)
@@ -76,15 +90,49 @@ export class LoginFormComponent implements OnInit {
           this.emitError("Your account has either been locked or is not activated yet.");
         else
           this.emitError("Something happened. Please try again later.");
-
-        this.isLoginBtnClickable = true;
+        
+          this.isLoginBtnClickable = true;
       },
       
-      complete: () => {
-        this.menuService.updateMenu();
-        //TODO router.navigate
-        alert("Logged");
-      }
+      complete: () => { this.redirectAfterLogin(); }
     };
+  }
+
+  getFBLoginObservable() {
+    return {
+      next: (retData: any) => {
+        if (retData.body === undefined)
+          return;
+        localStorage.setItem('token', retData.body.accessToken);
+        localStorage.setItem('role', retData.body.role);
+      },
+
+      error: (err: any) => {
+        if (err.status === 423)
+          this.emitError("Your account has either been locked or is not activated yet.");
+        else
+          this.emitError("Something happened. Please try again later.");
+      },
+      
+      complete: () => { this.redirectAfterLogin(); }
+    };
+  }
+
+  redirectAfterLogin() {
+    this.menuService.updateMenu();
+    //TODO router.navigate
+    alert("Logged");
+  }
+
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+  signOut(): void {
+    this.authService.signOut();
   }
 }

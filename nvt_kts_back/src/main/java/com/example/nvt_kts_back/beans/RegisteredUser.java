@@ -25,9 +25,9 @@ public class RegisteredUser extends User{
     private List<Review> reviews = new ArrayList<>();
 
     public RegisteredUser(String email, String password, String name, String surname, String city, String phone,
-                          Boolean profileActivated, String picture, Boolean isBlocked, Boolean isBusy) {
+                          Boolean profileActivated, String picture, Boolean isBlocked, Role role, Boolean isBusy) {
         super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked,
-                new Role(Settings.USER_ROLE_NAME));
+                role);
         this.isBusy = isBusy;
     }
 }

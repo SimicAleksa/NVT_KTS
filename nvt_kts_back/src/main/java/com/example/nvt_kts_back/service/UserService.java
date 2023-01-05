@@ -6,7 +6,9 @@ import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
 import com.example.nvt_kts_back.beans.Driver;
 import com.example.nvt_kts_back.beans.RegisteredUser;
 import com.example.nvt_kts_back.beans.User;
+import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.UserRepository;
@@ -16,10 +18,15 @@ import com.example.nvt_kts_back.repository.UserRepository;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private RegisteredUserRepository registeredUserRepository;
     @Autowired
     private TempCodeHolderService tempCodeHolderService;
 
+
+    public RegisteredUser getRegisteredUserByEmail(final String email) {
+        return registeredUserRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
+    }
 
     public void verifyUserExistence(final String email) {
         userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);

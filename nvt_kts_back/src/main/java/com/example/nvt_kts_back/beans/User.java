@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String picture;
     @Column
     private Boolean isBlocked;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
 

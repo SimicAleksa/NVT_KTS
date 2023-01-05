@@ -8,11 +8,11 @@ div {
 }
 
 .middle-col {
-    height: 32vh;
+    height: 25vh;
 }
 
 .card-style {
-    margin-top: -5vh;
+    margin-top: -7vh;
     padding-top: 5vh;
     padding-bottom: 4vh;
     border: 1px solid rgb(223, 220, 220);
@@ -34,7 +34,7 @@ i {
     margin-top: -2vh;
     margin-bottom: 2vh;
     font-weight: bold;
-    font-size: 4vh;
+    font-size: 2.8em;
 }
 
 .forgotten-pass-style {
@@ -42,4 +42,58 @@ i {
     margin-bottom: 2vh;
     font-weight: bold;
     font-size: 2vh;
+}
+
+.or-txt-style {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+#login-btn {
+    width: 30%;
+    font-weight: bold;
+}
+
+.login-with-btn {
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    width: 70%;
+    cursor: pointer;
+}
+
+.login-with-btn:hover {
+    width: 75%;
+}
+
+#fb-login-btn {
+    color: white;
+    background-color: #3b579d;
+}
+  
+#fb-login-btn img {
+    float: left;
+    width: 50px;
+}
+
+#fb-login-btn span {
+    margin-left: -50px;
+}
+
+#google-login-btn {
+    background-color: white;
+}
+  
+#google-login-btn img {
+    float: left;
+    width: 28px;
+    margin-left: 12px;
+}
+
+#google-login-btn span {
+    margin-left: -40px;
 }
