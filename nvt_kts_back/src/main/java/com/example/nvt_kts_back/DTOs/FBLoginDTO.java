@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDTO {
+public class FBLoginDTO {
     private String email;
-    private String password;
+    private String authToken;
+    private String name;
+    private String surname;
+    private String picturePath;
 }

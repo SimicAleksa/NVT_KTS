@@ -10,6 +10,7 @@ import { ResetPasswordFormComponent } from './components/reset-password-form/res
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { PopUpModule } from '../pop-up/pop-up.module';
 import { FormsModule } from '@angular/forms';
+import { SocialLoginModule } from '@abacritt/angularx-social-login';
 
 
 @NgModule({
@@ -19,13 +20,14 @@ import { FormsModule } from '@angular/forms';
     LoginFormComponent,
     ForgottenPasswordFormComponent,
     ResetPasswordFormComponent,
-    ResetPasswordPageComponent
+    ResetPasswordPageComponent,
   ],
   imports: [
     CommonModule, 
     FormsModule,
     RouterModule.forChild(routes),
-    PopUpModule
+    PopUpModule,
+    SocialLoginModule 
   ]
 })
 export class LoginModule { }

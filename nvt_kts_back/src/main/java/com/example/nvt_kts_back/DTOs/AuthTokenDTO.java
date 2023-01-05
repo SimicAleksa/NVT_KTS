@@ -11,5 +11,4 @@ public class AuthTokenDTO {
     private String accessToken;
     private String role;
     private Long expiresIn;
-
 }
