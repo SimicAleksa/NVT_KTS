@@ -1,7 +1,7 @@
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MenuService } from 'src/modules/menu/service/menu-service';
-import { FieldValidator } from 'src/utils/FieldValidator';
+import { FieldValidator } from 'src/utils/field-validator';
 import { APIRequestMaker } from "../../../../utils/api-request-maker";
 
 

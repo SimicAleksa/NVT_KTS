@@ -14,7 +14,7 @@ import { LoginModule } from '../login/login.module';
 import { PopUpModule } from '../pop-up/pop-up.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MenuModule } from '../menu/menu.module';
-import { ReferrerInterceptor } from 'src/utils/referrer-interceptor';
+import { ReferrerInterceptor } from '../../utils/referrer-interceptor';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 

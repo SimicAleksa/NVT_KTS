@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FieldValidator } from 'src/utils/FieldValidator';
+import { FieldValidator } from 'src/utils/field-validator';
 import { APIRequestMaker } from "../../../../utils/api-request-maker";
 
 @Component({
