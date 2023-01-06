@@ -1,5 +1,5 @@
 import { Component, OnInit,Input} from '@angular/core';
-import { Router } from '@angular/router';
+import {Route, Router} from '@angular/router';
 import * as L from 'leaflet';
 import GeocoderControl, {Geocoder, geocoders} from 'leaflet-control-geocoder';
 
@@ -64,14 +64,17 @@ export class MapComponent implements OnInit {
       routeWhileDragging:false,
       geocoder: new geocoders.Nominatim(),
       waypointMode:'snap'
-    }).on('routesfound',function (e){
-      console.log(e)
-      e.routes[0].coordinates.forEach(function (coord: L.LatLng,index: number){
-        setTimeout(()=>{
-          marker.setLatLng([coord.lat,coord.lng]);
-        },100*index)
+    })
+      .on('routeselected', function(e) {
+        var route = e.route;
+        console.log('Showing route between waypoints:\n' + JSON.stringify(route.instructions, null, 2));
+        route.coordinates.forEach(function (coord: L.LatLng,index: number){
+            setTimeout(()=>{
+              marker.setLatLng([coord.lat,coord.lng]);
+            },100*index)
+          })
       })
-    }).addTo(this.map)
+      .addTo(this.map)
   }
   ngOnChanges(): void {
   }
