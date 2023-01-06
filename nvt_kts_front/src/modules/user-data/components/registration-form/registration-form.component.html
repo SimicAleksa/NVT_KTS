@@ -1,70 +1,242 @@
-<form class="mx-1 mx-md-4">
-
+<form [formGroup]="registrationForm" (submit)="onSubmit()" class="mx-1 mx-md-4" >
   <div class="d-flex flex-row align-items-center mb-4">
     <i class="bi bi-person-fill fa-lg"></i>
-    <div class="form-outline flex-fill mb-0 form-floating">
-      <input #inputName type="text" id="name" class="form-control" placeholder="Name" name="name" [(ngModel)]="name"/>
-      <label class="form-label" for="name">Name</label>
+    <div>
+      <input 
+        class="form-control"
+        formControlName="name"
+        type="text"
+        id="name"
+        placeholder="Name"
+        appCustomAttribute
+        appCustomValidation
+      />
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.name.touched &&
+        registrationForm.controls.name.errors?.required
+        "
+      >
+        Name is required</small
+      >
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.name.touched &&
+        registrationForm.controls.name.errors?.minlength
+        "
+      >
+        Name should be at least two characters long</small
+      >
     </div>
-    <label #errorName class="errorMessage"> Name is required </label>
   </div>
-
   <div class="d-flex flex-row align-items-center mb-4">
     <i class="bi bi-person-fill fa-lg"></i>
-    <div class="form-outline flex-fill mb-0 form-floating">
-      <input #inputSurname type="text" id="surname" class="form-control" placeholder="Surname" name="surname" [(ngModel)]="surname"/>
-      <label class="form-label" for="surname">Surname</label>
+    <div>
+      <input
+        class="form-control"
+        type="text"
+        id="surname"
+        placeholder="Surname"
+        formControlName="surname"
+        appCustomAttribute
+        appCustomValidation
+      />
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.surname.touched &&
+        registrationForm.controls.surname.errors?.required
+        "
+      >
+        Surname is required</small
+      >
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.surname.touched &&
+        registrationForm.controls.surname.errors?.minlength
+        "
+      >
+        Surname should be at least two characters long</small
+      >
     </div>
-    <label #errorSurname class="errorMessage"> Surname is required </label>
   </div>
 
   <div class="d-flex flex-row align-items-center mb-4">
     <i class="bi bi-envelope-at-fill"></i>
-    <div class="form-outline flex-fill mb-0 form-floating">
-      <input #inputEmail type="email" id="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="email"/>
-      <label class="form-label" for="email">Email</label>
+    <div>
+      <input
+        class="form-control"
+        type="text"
+        id="email"
+        placeholder="Email"
+        formControlName="email"
+        appCustomAttribute
+        appCustomValidation
+      />
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.email.touched &&
+        registrationForm.controls.email.errors?.required
+        "
+      >
+        Email is required</small
+      >
+      <small
+        class="text-danger"
+        *ngIf="
+          registrationForm.controls.email.touched &&
+          registrationForm.controls.email.errors?.emailError
+        "
+      >
+        Email must contain "@"</small
+      >
     </div>
-    <label #errorEmail class="errorMessage"> Email must contain "@" sign</label>
   </div>
 
   <div class="d-flex flex-row align-items-center mb-4">
     <i class="bi bi-lock-fill"></i>
-    <div class="form-outline flex-fill mb-0 form-floating">
-      <input #inputPassword type="password" id="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password"/>
-      <label class="form-label" for="password">Password</label>
+    <div>
+      <input #inputPassword formControlName="confirmedPassword"
+        class="form-control"
+        type="password"
+        id="password"
+        placeholder="Password"
+        formControlName="password"
+        appCustomAttribute
+        appCustomValidation
+      />
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.password.touched &&
+        registrationForm.controls.password.errors?.required
+        "
+      >
+        Password is required</small
+      >
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.password.touched &&
+        registrationForm.controls.password.errors?.minlength
+        "
+      >
+        Password should be at least 5 characters long</small
+      >
     </div>
-    <label #errorPassword class="errorMessage"> Password is required </label>
   </div>
 
   <div class="d-flex flex-row align-items-center mb-4">
     <i class="bi bi-lock-fill"></i>
-    <div class="form-outline flex-fill mb-0 form-floating">
-      <input #inputRepeated type="password" id="repeatedPassword" class="form-control" placeholder="Repeated password" name="repeated" [(ngModel)]="repeatedPassword"/>
-      <label class="form-label" for="form3Example3c">Repeated password</label>
+    <div>
+      <input
+        class="form-control"
+        type="password"
+        id="repeated"
+        placeholder="Repeat password"
+        formControlName="repeated"
+        appCustomAttribute
+        appCustomValidation
+      />
+
+      <small
+        class="text-danger"
+        *ngIf="registrationForm.controls.repeated.touched && registrationForm.hasError('invalid')
+        "
+      >
+        Passwords do not match</small
+      >
+      
     </div>
-    <label #errorRepeated class="errorMessage"> Passwords do not match </label>
   </div>
 
   <div class="d-flex flex-row align-items-center mb-4">
     <i class="bi bi-buildings-fill"></i>
-    <div class="form-outline flex-fill mb-0 form-floating">
-      <input #inputCity type="password" id="city" class="form-control" placeholder="City" name="city" [(ngModel)]="city"/>
-      <label class="form-label" for="city">City</label>
+    <div>
+      <input
+        class="form-control"
+        type="text"
+        id="city"
+        placeholder="City"
+        formControlName="city"
+        appCustomAttribute
+        appCustomValidation
+      />
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.city.touched &&
+        registrationForm.controls.city.errors?.required
+        "
+      >
+        City is required</small
+      >
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.city.touched &&
+        registrationForm.controls.city.errors?.minlength
+        "
+      >
+        City should be at least two characters long</small
+      >
     </div>
-    <label #errorCity class="errorMessage"> City is required </label>
   </div>
 
   <div class="d-flex flex-row align-items-center mb-4">
     <i class="bi bi-telephone-fill"></i>
-    <div class="form-outline flex-fill mb-0 form-floating">
-      <input #inputPhone type="password" id="phone" class="form-control" placeholder="Phone number" name="phone" [(ngModel)]="phone"/>
-      <label class="form-label" for="phone">Phone number</label>
+    <div>
+      <input
+        class="form-control"
+        type="text"
+        id="phone"
+        placeholder="Phone number"
+        formControlName="phone"
+        appCustomAttribute
+        appCustomValidation
+      />
+
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.phone.touched &&
+        registrationForm.controls.phone.errors?.required
+        "
+      >
+        Phone number is required</small
+      >
+      <small
+        class="text-danger"
+        *ngIf="
+        registrationForm.controls.phone.touched &&
+        registrationForm.controls.phone.errors?.minlength
+        "
+      >
+        Phone number should be at least two characters long</small
+      >
     </div>
-    <label #errorPhone class="errorMessage"> Phone number is required </label>
   </div>
 
-  <div class="justify-content-center ">
-    <button (click)="register()" id="registerButton" type="button" class="btn btn-primary btn-lg" style="float: right;">Register</button>
+  <div class="form-group row float-right">
+    <div class="col-12">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="registrationForm.invalid"
+      >
+        Register
+      </button>
+    </div>
   </div>
-
 </form>

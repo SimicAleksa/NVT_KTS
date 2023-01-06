@@ -6,13 +6,14 @@ input, label
 
 input
 {
-    width: 300px;
+    width: 120%;
 }
 
 
 i {
     font-size:30px; 
     padding-right: 10px;
+    margin-left: 10%;
 }
 
 .errorMessage {

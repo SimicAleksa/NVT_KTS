@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
 import { UserDataModule } from '../user-data/user-data.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
@@ -20,7 +22,10 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     AppRoutingModule,
     MapsModule,
     UserDataModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
