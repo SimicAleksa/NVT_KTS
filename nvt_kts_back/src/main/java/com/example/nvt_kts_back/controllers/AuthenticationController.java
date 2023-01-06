@@ -5,21 +5,13 @@ import com.example.nvt_kts_back.CustomExceptions.InvalidAuthTokenException;
 import com.example.nvt_kts_back.DTOs.AuthTokenDTO;
 import com.example.nvt_kts_back.DTOs.FBLoginDTO;
 import com.example.nvt_kts_back.DTOs.LoginDTO;
-import com.example.nvt_kts_back.beans.User;
 import com.example.nvt_kts_back.configurations.Settings;
-import com.example.nvt_kts_back.security.TokenUtils;
 import com.example.nvt_kts_back.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "/api/unauth")

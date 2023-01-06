@@ -4,9 +4,9 @@ import com.example.nvt_kts_back.CustomExceptions.InvalidDTOAttributesValuesExcep
 import com.example.nvt_kts_back.CustomExceptions.InvalidTempCodeException;
 import com.example.nvt_kts_back.CustomExceptions.PasswordResetTempCodeDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
-import com.example.nvt_kts_back.beans.Driver;
-import com.example.nvt_kts_back.beans.RegisteredUser;
-import com.example.nvt_kts_back.beans.User;
+import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.RegisteredUser;
+import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
