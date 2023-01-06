@@ -18,17 +18,8 @@ export class MapComponent implements OnInit {
   private map!: L.Map;
   private centroid: L.LatLngExpression = [44.0165, 21.0059];
 
-  // private GeocoderControl = new Geocoder();
-
-
-  @Input() selectedStartLocation!:MapLocation;
-  @Input() selectedEndLocation!:MapLocation;
-
-  private startPosition!: L.LatLng;
-  private endPosition!: L.LatLng;
-
-  private startMarker!: L.Marker;
-  private endMarker!: L.Marker;
+  // @Input() selectedStartLocation!:MapLocation;
+  // @Input() selectedEndLocation!:MapLocation;
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -59,7 +50,6 @@ export class MapComponent implements OnInit {
       router: L.Routing.osrmv1({
         serviceUrl: 'https://routing.openstreetmap.de/routed-car/route/v1'
       }),
-      // showAlternatives:true,
       fitSelectedRoutes:true,
       routeWhileDragging:false,
       geocoder: new geocoders.Nominatim(),
@@ -67,7 +57,8 @@ export class MapComponent implements OnInit {
     })
       .on('routeselected', function(e) {
         var route = e.route;
-        console.log('Showing route between waypoints:\n' + JSON.stringify(route.instructions, null, 2));
+        // console.log('Showing route between waypoints:\n' + JSON.stringify(route.instructions, null, 2));
+        console.log(route)
         route.coordinates.forEach(function (coord: L.LatLng,index: number){
             setTimeout(()=>{
               marker.setLatLng([coord.lat,coord.lng]);
