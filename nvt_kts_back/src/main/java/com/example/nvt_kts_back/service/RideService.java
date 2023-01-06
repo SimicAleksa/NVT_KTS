@@ -1,6 +1,6 @@
 package com.example.nvt_kts_back.service;
 
-import com.example.nvt_kts_back.beans.Ride;
+import com.example.nvt_kts_back.models.Ride;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
