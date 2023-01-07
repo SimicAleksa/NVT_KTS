@@ -6,12 +6,16 @@ import { SearchRoutesPageComponent } from './pages/search-routes-page/search-rou
 import { RouteSearchFormComponent } from './components/route-search-form/route-search-form.component';
 import { MapComponent } from './components/map/map.component';
 import { FormsModule } from '@angular/forms';
+import { ActiveVehicleComponent } from './components/active-vehicle/active-vehicle.component';
+import { VehicleCardComponent } from './components/vehicle-card/vehicle-card.component';
 
 @NgModule({
   declarations: [
     SearchRoutesPageComponent,
     RouteSearchFormComponent,
-    MapComponent
+    MapComponent,
+    ActiveVehicleComponent,
+    VehicleCardComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes),FormsModule],
 })
