@@ -24,7 +24,7 @@ public class AuthenticationController {
     @CrossOrigin(origins = Settings.CROSS_ORIGIN_FRONTEND_PATH)
     public ResponseEntity<AuthTokenDTO> login(@RequestBody LoginDTO loginDTO) {
         try {
-            return new ResponseEntity<>(authService.verifySystemAuthToken(loginDTO), HttpStatus.OK);
+            return new ResponseEntity<>(authService.verifyBasicSystemLogin(loginDTO), HttpStatus.OK);
         } catch (InvalidAuthTokenException ignored) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } catch (AccountLockedOrInactiveException ignored) {
@@ -36,7 +36,7 @@ public class AuthenticationController {
     @CrossOrigin(origins = Settings.CROSS_ORIGIN_FRONTEND_PATH)
     public ResponseEntity<AuthTokenDTO> validateFBAuthToken(@RequestBody FBLoginDTO fbLoginDTO) {
         try {
-            return new ResponseEntity<>(authService.verifyFacebookAuthToken(fbLoginDTO), HttpStatus.OK);
+            return new ResponseEntity<>(authService.verifyFacebookLogin(fbLoginDTO), HttpStatus.OK);
         } catch (InvalidAuthTokenException ignored) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

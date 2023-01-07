@@ -49,4 +49,5 @@ public class UserController {
         User user = userService.addNewDriver(driver);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

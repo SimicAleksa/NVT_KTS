@@ -26,6 +26,9 @@ public class UserService {
     public RegisteredUser getRegisteredUserByEmail(final String email) {
         return registeredUserRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
     }
+    public User getUserByEmail(final String email) {
+        return userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
+    }
 
     public void verifyUserExistence(final String email) {
         userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
