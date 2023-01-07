@@ -8,6 +8,7 @@ import { MapComponent } from './components/map/map.component';
 import { FormsModule } from '@angular/forms';
 import { ActiveVehicleComponent } from './components/active-vehicle/active-vehicle.component';
 import { VehicleCardComponent } from './components/vehicle-card/vehicle-card.component';
+import { VehiclesOnMapComponent } from './components/vehicles-on-map/vehicles-on-map.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { VehicleCardComponent } from './components/vehicle-card/vehicle-card.com
     RouteSearchFormComponent,
     MapComponent,
     ActiveVehicleComponent,
-    VehicleCardComponent
+    VehicleCardComponent,
+    VehiclesOnMapComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes),FormsModule],
 })

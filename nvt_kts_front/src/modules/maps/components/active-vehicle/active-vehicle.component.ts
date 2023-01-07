@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {IDriverDTO} from "./driverDTO";
+import {IDriverVehicleDTO} from "./driverWithVehicleDTO";
 
 @Component({
   selector: 'app-active-vehicle',
@@ -8,14 +9,16 @@ import {IDriverDTO} from "./driverDTO";
 })
 export class ActiveVehicleComponent implements OnInit {
 
-  public vehicles: IDriverDTO[] = [
+  public vehicles: IDriverVehicleDTO[] = [
     {
       driverId: 1,
       carType: "Cupe",
       babyAllowed: false,
       petAllowed:  false,
       isDriverFree: true,
-      active:  true
+      active:  true,
+      vehicleCoordsLat: 0,
+      vehicleCoordsLen: 0
     },
     {
       driverId: 2,
@@ -23,7 +26,9 @@ export class ActiveVehicleComponent implements OnInit {
       babyAllowed: false,
       petAllowed:  false,
       isDriverFree: true,
-      active:  true
+      active:  true,
+      vehicleCoordsLat: 0,
+      vehicleCoordsLen: 0
     }
   ];
 
