@@ -10,6 +10,7 @@ import { UserDataModule } from '../user-data/user-data.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { HttpClientModule } from '@angular/common/http';
+import { ChatModule } from '../chat/chat.module';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
@@ -22,6 +23,7 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     AppRoutingModule,
     MapsModule,
     UserDataModule,
+    ChatModule,
     FormsModule,
     HttpClientModule,
     FormsModule,

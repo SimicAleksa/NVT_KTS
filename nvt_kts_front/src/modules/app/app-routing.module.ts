@@ -16,6 +16,11 @@ const routes: Routes = [
         path: "user-data",
         loadChildren: () =>
               import("../user-data/user-data.module").then((m) => m.UserDataModule),
+      },
+      {
+        path: "chat",
+        loadChildren: () =>
+              import("../chat/chat.module").then((m) => m.ChatModule),
       }
     ]
   }
