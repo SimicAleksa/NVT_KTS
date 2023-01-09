@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from "leaflet";
+import { MapService } from '../../services/map.service';
 import {IDriverVehicleDTO} from "../active-vehicle/driverWithVehicleDTO";
 
 @Component({
@@ -64,7 +65,7 @@ export class VehiclesOnMapComponent implements OnInit {
     this.map.addLayer(tiles)
   }
 
-  constructor() { }
+  constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
     this.initMap()
@@ -72,6 +73,7 @@ export class VehiclesOnMapComponent implements OnInit {
       let marker = L.marker([vehicle.vehicleCoordsLat,vehicle.vehicleCoordsLen]).setIcon(this.greenIcon).addTo(this.map);
 
       // POGLEDAJ GDE JE OVDE PROBLEM I ZASTO NECE
+      // treba dodati u zavisnosti od toga da li su vozila slobodna ili ne prikazati crvene ili zelene boje
       // marker.bindPopup('<app-vehicle-card [vehicle]=\"'+vehicle+'\"></app-vehicle-card>')
       marker.bindPopup(
         '<div class="card text-white bg-success mb-0" style="max-width: 13rem;">\n' +
@@ -89,6 +91,8 @@ export class VehiclesOnMapComponent implements OnInit {
                '</div>')
 
       console.log(vehicle)
+
+      this.mapService.majmun();
     }
   }
 
