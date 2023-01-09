@@ -3,6 +3,8 @@ package com.example.nvt_kts_back.service;
 import com.example.nvt_kts_back.CustomExceptions.InvalidDTOAttributesValuesException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
+import com.example.nvt_kts_back.exception.NotFoundException;
+import com.example.nvt_kts_back.models.Coord;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.RegisteredUser;
 import com.example.nvt_kts_back.models.User;
@@ -50,6 +52,15 @@ public class UserService {
 
         user.setPassword(new BCryptPasswordEncoder().encode(passwordResetDTO.getPassword()));
         userRepository.save(user);
+    }
+
+    public Driver updateDriverCoords(long id, double latitude,double longitude){
+        Driver driver = this.userRepository.findById(id).orElseThrow(()-> new NotFoundException("Driver does not exist!"));
+        driver.setCurrentCoords(new Coord(latitude,longitude));
+        return this.userRepository.save(driver);
+    }
+    public void deleteAllUsers(){
+        this.userRepository.deleteAll();
     }
 
 }

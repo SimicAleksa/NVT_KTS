@@ -5,5 +5,7 @@ public enum RideState {
     IN_PROGRESS,
     WAITING_FOR_PAYMENT,
     DECLINED,
-    RESERVED
+    RESERVED,
+    ENDED,
+    STARTED
 }

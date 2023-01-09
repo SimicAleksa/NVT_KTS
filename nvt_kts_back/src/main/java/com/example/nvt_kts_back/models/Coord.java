@@ -1,25 +1,23 @@
 package com.example.nvt_kts_back.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
-@Entity
+@Embeddable
+//@Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Coord {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
     @Column
-    private double x;
+    private double latitude;
     @Column
-    private double y;
+    private double longitude;
 
-
-    public Coord(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
 }
