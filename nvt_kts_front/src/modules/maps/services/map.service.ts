@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Ride } from '../components/active-vehicle/Ride';
 
 @Injectable({
   providedIn: 'root'
@@ -14,4 +16,9 @@ export class MapService {
       }}
     )
   }
+
+  getAllActiveRides(): Observable<Ride[]> {
+    return this.http.get<Ride[]>("api/rides");
+  }
+
 }

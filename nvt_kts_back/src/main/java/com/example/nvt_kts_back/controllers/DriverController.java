@@ -45,13 +45,13 @@ public class DriverController {
     }
 
 
-    @PostMapping("/addDriver")
-    public Driver addDriver(@RequestBody Driver driver) {
-        return userService.addNewDriver(driver);
-    }
-
-    @GetMapping("/{id}")
-    public String getDriver(@PathVariable Integer id){
-        return "JASAM VOZAC";
-    }
+//    @PostMapping("/addDriver")
+//    public Driver addDriver(@RequestBody Driver driver) {
+//        return userService.addNewDriver(driver);
+//    }
+//
+//    @GetMapping("/{id}")
+//    public String getDriver(@PathVariable Integer id){
+//        return "JASAM VOZAC";
+//    }
 }

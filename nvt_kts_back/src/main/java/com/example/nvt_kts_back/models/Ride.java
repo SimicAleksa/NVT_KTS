@@ -39,18 +39,18 @@ public class Ride {
     private double distance;
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    private Route route;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private RegisteredUser caller;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private RegisteredUser caller;
 
 
 //    @ManyToOne(fetch = FetchType.LAZY)
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Driver driver;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<RegisteredUser> passengers;
-    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<Review> reviews;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    private List<RegisteredUser> passengers;
+//    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    private List<Review> reviews;
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
@@ -77,11 +77,11 @@ public class Ride {
         this.rideState = rideDTO.getRideState();
     }
 
-    public List<RegisteredUser> getLinkedPassengers() {
-        List<RegisteredUser> linkedPassengers = new ArrayList<>(this.passengers);
-        linkedPassengers.removeIf(passenger -> passenger.getId().equals(caller.getId()));
-        return linkedPassengers;
-    }
+//    public List<RegisteredUser> getLinkedPassengers() {
+//        List<RegisteredUser> linkedPassengers = new ArrayList<>(this.passengers);
+//        linkedPassengers.removeIf(passenger -> passenger.getId().equals(caller.getId()));
+//        return linkedPassengers;
+//    }
 
 }
 

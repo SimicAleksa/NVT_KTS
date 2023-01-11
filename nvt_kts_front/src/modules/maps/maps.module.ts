@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ActiveVehicleComponent } from './components/active-vehicle/active-vehicle.component';
 import { VehicleCardComponent } from './components/vehicle-card/vehicle-card.component';
 import { VehiclesOnMapComponent } from './components/vehicles-on-map/vehicles-on-map.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,6 @@ import { VehiclesOnMapComponent } from './components/vehicles-on-map/vehicles-on
     VehicleCardComponent,
     VehiclesOnMapComponent
   ],
-  imports: [CommonModule, RouterModule.forChild(routes),FormsModule],
+  imports: [CommonModule, RouterModule.forChild(routes),FormsModule,LeafletModule],
 })
 export class MapsModule {}

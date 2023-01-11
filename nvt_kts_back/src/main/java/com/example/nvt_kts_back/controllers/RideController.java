@@ -29,7 +29,7 @@ public class RideController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
-        Ride ride = this.rideService.createRide(new Ride(rideDTO), new Driver(rideDTO.getDriverDTO()));
+        Ride ride = this.rideService.createRide(new Ride(rideDTO), new Driver(rideDTO.getDriver()));
         RideDTO returnRideDTO = new RideDTO(ride);
 
         // opet za ovo nisam siguran koja adresa treba da se cilja

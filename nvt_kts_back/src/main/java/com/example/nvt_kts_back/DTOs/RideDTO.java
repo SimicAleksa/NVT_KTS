@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 public class RideDTO {
     private long id;
     private RideState rideState;
-    private DriverDTO driverDTO;
+    private DriverDTO driver;
     private String routeJSON;
 
     public RideDTO(Ride ride){
         this.id = ride.getId();
         this.routeJSON = ride.getRouteJSON();
         this.rideState = ride.getRideState();
-        this.driverDTO = new DriverDTO(ride.getDriver());
+        this.driver = new DriverDTO(ride.getDriver());
     }
 }

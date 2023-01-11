@@ -37,8 +37,8 @@ license_plates = [
 
 @events.test_start.add_listener
 def on_test_start(environment, **kwargs):
-    requests.delete('http://localhost:8000/api/ride')
-    requests.delete('http://localhost:8000/api/vehicle')
+    requests.delete('http://localhost:8000/api/rides')
+    requests.delete('http://localhost:8000/api/drivers')
 
 
 class QuickstartUser(HttpUser):
@@ -47,7 +47,7 @@ class QuickstartUser(HttpUser):
 
     def on_start(self):
         random_taxi_stop = taxi_stops[randrange(0, len(taxi_stops))]
-        self.vehicle = self.client.post('/api/vehicle', json={
+        self.driver = self.client.post('/api/drivers', json={
             'licensePlateNumber': license_plates.pop(0),
             'latitude': random_taxi_stop[0],
             'longitude': random_taxi_stop[1]
@@ -63,7 +63,7 @@ class QuickstartUser(HttpUser):
     def update_vehicle_coordinates(self):
         if len(self.coordinates) > 0:
             new_coordinate = self.coordinates.pop(0)
-            self.client.put(f"/api/vehicle/{self.vehicle['id']}", json={
+            self.client.put(f"/api/drivers/{self.driver['id']}", json={
                 'latitude': new_coordinate[0],
                 'longitude': new_coordinate[1]
             })
@@ -100,16 +100,16 @@ class QuickstartUser(HttpUser):
         self.coordinates = []
         for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
             self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
-        self.ride = self.client.post('/api/ride', json={
+        self.ride = self.client.post('/api/rides', json={
             'routeJSON': json.dumps(self.routeGeoJSON),
-            'rideStatus': 0,
-            'vehicle': {
-                'id': self.vehicle['id'],
-                'licensePlateNumber': self.vehicle['licensePlateNumber'],
+            'rideState': 0,
+            'driver': {
+                'id': self.driver['id'],
+                'licensePlateNumber': self.driver['licensePlateNumber'],
                 'latitude': self.coordinates[0][0],
                 'longitude': self.coordinates[0][1]
             } 
         }).json()
 
     def end_ride(self):
-        self.client.put(f"/api/ride/{self.ride['id']}")
+        self.client.put(f"/api/rides/{self.ride['id']}")

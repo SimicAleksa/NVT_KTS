@@ -4,10 +4,7 @@ import com.example.nvt_kts_back.CustomExceptions.InvalidDTOAttributesValuesExcep
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
 import com.example.nvt_kts_back.exception.NotFoundException;
-import com.example.nvt_kts_back.models.Coord;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.RegisteredUser;
-import com.example.nvt_kts_back.models.User;
+import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,6 +35,10 @@ public class UserService {
     }
 
     public Driver addNewDriver(final Driver driver) {
+        Role dRole = new Role();
+        dRole.setName("Driver");
+        dRole.setId(1l);
+        driver.setRole(dRole);
         return userRepository.save(driver);
     }
 
