@@ -139,6 +139,7 @@ export class VehiclesOnMapComponent implements OnInit {
           }),
         });
         markerLayer.addTo(geoLayerRouteGroup);
+        
         this.drivers[ride.driver.id] = markerLayer;
         this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
       }
@@ -187,6 +188,15 @@ export class VehiclesOnMapComponent implements OnInit {
         }),
       });
       markerLayer.addTo(geoLayerRouteGroup);
+      markerLayer.bindPopup(
+    '<div class="card text-white bg-success mb-0" style="max-width: 13rem;">\n' +
+            '  <div class="card-body">\n' +
+            '    <h5 class="card-title">'+ride.driver.licensePlateNumber+'</h5>\n' +
+            '  </div>\n' +
+            '  <div class="card-body">\n' +
+            '    <a href="#" class="card-link text-white fs-5">Schedule</a>\n' +
+            '  </div>\n' +
+            '</div>')
       this.drivers[ride.driver.id] = markerLayer;
       this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     });

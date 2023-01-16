@@ -10,6 +10,8 @@ import { ActiveVehicleComponent } from './components/active-vehicle/active-vehic
 import { VehicleCardComponent } from './components/vehicle-card/vehicle-card.component';
 import { VehiclesOnMapComponent } from './components/vehicles-on-map/vehicles-on-map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { SimpleRouteSearchComponent } from './components/simple-route-search/simple-route-search.component';
+import { SimpleRoutesSearchPageComponent } from './pages/simple-routes-search-page/simple-routes-search-page.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     MapComponent,
     ActiveVehicleComponent,
     VehicleCardComponent,
-    VehiclesOnMapComponent
+    VehiclesOnMapComponent,
+    SimpleRouteSearchComponent,
+    SimpleRoutesSearchPageComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes),FormsModule,LeafletModule],
 })

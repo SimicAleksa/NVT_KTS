@@ -24,5 +24,11 @@
         <button (click)="onLoginBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='LOGIN'}">
             LOGIN
         </button>
+        <button (click)="onAllActiveVehiclesBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='ALL ACTIVE VEHICLES'}">
+            🚘
+        </button>
+        <button (click)="onSimpleRouteSearchBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='SIMPLE ROUTE SEARCH'}">
+            🔎🗺
+        </button>
     </span>
 </nav>

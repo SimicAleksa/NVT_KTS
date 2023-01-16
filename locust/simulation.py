@@ -24,15 +24,40 @@ taxi_stops = [
     (45.243097, 19.836284),   # Stajaliste kod limanske pijace
     (45.256863, 19.844129),   # Stajaliste kod trifkovicevog trga
     (45.255055, 19.810161),   # Stajaliste na telepu
-    (45.246540, 19.849282)    # Stajaliste kod velike menze
+    (45.246540, 19.849282),    # Stajaliste kod velike menze
+    (45.2457403, 19.8313000), # puskinova 6
+    (45.2407397, 19.8450102), #dragise brasovana 10
+    (45.2539584, 19.8026196), #kace dejanovic 2
+    (45.2477997, 19.7941289), #stevana calenica 2
+    (45.2396372, 19.8028856), #prvomajska 9 
+    (45.2321277, 19.8089044) # karas pala 3
+
+
 ]
 
 
 license_plates = [
     'NS-001-AA',
     'NS-001-AB',
-    'NS-001-AC'
+    'NS-001-AC',
+    'NS-001-CA',
+    'NS-001-CB',
+    'NS-011-CC',
+    'NS-021-CA',
+    'NS-031-CB',
+    'NS-041-CC',
+    'NS-101-AA',
+    'NS-101-AB',
+    'NS-101-AC',
+    'NS-101-CA',
+    'NS-101-CB',
+    'NS-111-CC',
+    'NS-121-CA',
+    'NS-131-CB',
+    'NS-241-CC'
 ]
+
+counter = 0
 
 
 @events.test_start.add_listener
@@ -43,21 +68,34 @@ def on_test_start(environment, **kwargs):
 
 class QuickstartUser(HttpUser):
     host = 'http://localhost:8000'
-    wait_time = between(0.5, 2)
+    wait_time = between(0.5, 3)
+
+    #VIDI KAKO I STA SA BAZOM DA SE POVEZE DA UZMES PODATKE OD VOZACA    
+
 
     def on_start(self):
+        global counter
         random_taxi_stop = taxi_stops[randrange(0, len(taxi_stops))]
         self.driver = self.client.post('/api/drivers', json={
             'licensePlateNumber': license_plates.pop(0),
             'latitude': random_taxi_stop[0],
             'longitude': random_taxi_stop[1]
         }).json()
-        self.driving_to_start_point = True
-        self.driving_the_route = False
-        self.driving_to_taxi_stop = False
-        self.departure = random_taxi_stop
-        self.destination = start_and_end_points.pop(randrange(0, len(start_and_end_points)))
-        self.get_new_coordinates()
+        counter=counter+1
+        if(counter%3!=0):
+            self.driving_to_start_point = True
+            self.driving_the_route = False
+            self.driving_to_taxi_stop = False
+            self.departure = random_taxi_stop
+            self.destination = start_and_end_points.pop(randrange(0, len(start_and_end_points)))
+            self.get_new_coordinates()
+        else:
+            self.driving_to_start_point = False
+            self.driving_the_route = False
+            self.driving_to_taxi_stop = False
+            self.departure = random_taxi_stop
+            self.destination = random_taxi_stop
+            self.get_new_coordinates()
 
     @task
     def update_vehicle_coordinates(self):

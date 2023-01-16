@@ -8,18 +8,15 @@ import { MapLocation } from 'src/modules/app/model/mapLocation';
 import {control, marker} from "leaflet";
 import {mark} from "@angular/compiler-cli/src/ngtsc/perf/src/clock";
 
-
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css'],
+  selector: 'app-simple-route-search',
+  templateUrl: './simple-route-search.component.html',
+  styleUrls: ['./simple-route-search.component.css']
 })
-export class MapComponent implements OnInit {
+export class SimpleRouteSearchComponent implements OnInit {
+
   private map!: L.Map;
   private centroid: L.LatLngExpression = [44.0165, 21.0059];
-
-  // @Input() selectedStartLocation!:MapLocation;
-  // @Input() selectedEndLocation!:MapLocation;
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -39,22 +36,28 @@ export class MapComponent implements OnInit {
     this.map.addLayer(tiles)
   }
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.initMap()
-    var marker = L.marker([-1000, -1000]).addTo(this.map);
 
+    var marker = L.marker([-1000, -1000]).addTo(this.map);
 
     L.Routing.control({
       router: L.Routing.osrmv1({
         serviceUrl: 'https://routing.openstreetmap.de/routed-car/route/v1'
       }),
       fitSelectedRoutes:true,
+      lineOptions:
+      {
+        addWaypoints:false,
+        extendToWaypoints:true,
+        missingRouteTolerance:0
+      },
       routeWhileDragging:false,
       geocoder: new geocoders.Nominatim(),
       waypointMode:'snap',
-      addWaypoints:true
+      showAlternatives:false,
     })
       .on('routeselected', function(e) {
         var route = e.route;
@@ -63,11 +66,12 @@ export class MapComponent implements OnInit {
         route.coordinates.forEach(function (coord: L.LatLng,index: number){
             setTimeout(()=>{
               marker.setLatLng([coord.lat,coord.lng]);
-            },100*index)
+            },10*index)
           })
       })
       .addTo(this.map)
   }
   ngOnChanges(): void {
   }
+
 }
