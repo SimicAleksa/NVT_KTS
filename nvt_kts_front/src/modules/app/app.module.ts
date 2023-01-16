@@ -15,6 +15,8 @@ import { PopUpModule } from '../pop-up/pop-up.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MenuModule } from '../menu/menu.module';
 import { ReferrerInterceptor } from '../../utils/referrer-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
@@ -30,6 +32,8 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     LoginModule, 
     PopUpModule,
     MenuModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     SocialLoginModule
   ],
   providers: [
