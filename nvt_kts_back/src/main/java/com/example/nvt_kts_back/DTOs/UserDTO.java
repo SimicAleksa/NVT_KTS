@@ -1,7 +1,7 @@
-package com.example.nvt_kts_back.dtos;
+package com.example.nvt_kts_back.DTOs;
 
-import com.example.nvt_kts_back.beans.ChangeProfileRequest;
-import com.example.nvt_kts_back.beans.User;
+import com.example.nvt_kts_back.models.ChangeProfileRequest;
+import com.example.nvt_kts_back.models.User;
 
 public class UserDTO {
 

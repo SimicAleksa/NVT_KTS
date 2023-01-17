@@ -1,8 +1,8 @@
 package com.example.nvt_kts_back.service;
 
-import com.example.nvt_kts_back.beans.Message;
-import com.example.nvt_kts_back.beans.User;
-import com.example.nvt_kts_back.dtos.UserDTO;
+import com.example.nvt_kts_back.models.Message;
+import com.example.nvt_kts_back.models.User;
+import com.example.nvt_kts_back.DTOs.UserDTO;
 import com.example.nvt_kts_back.repository.MessageRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,8 @@
 package com.example.nvt_kts_back.service;
 
-import com.example.nvt_kts_back.beans.ChangeProfileRequest;
-import com.example.nvt_kts_back.beans.Driver;
-import com.example.nvt_kts_back.beans.User;
-import com.example.nvt_kts_back.dtos.UserDTO;
-import com.example.nvt_kts_back.enumerations.CarType;
+import com.example.nvt_kts_back.models.ChangeProfileRequest;
+import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.repository.ChangeProfileRequestRepository;
 import com.example.nvt_kts_back.repository.DriverRepository;
 import com.example.nvt_kts_back.repository.UserRepository;

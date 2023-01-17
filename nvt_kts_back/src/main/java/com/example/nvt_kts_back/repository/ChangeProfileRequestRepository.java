@@ -1,10 +1,8 @@
 package com.example.nvt_kts_back.repository;
 
-import com.example.nvt_kts_back.beans.ChangeProfileRequest;
+import com.example.nvt_kts_back.models.ChangeProfileRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface ChangeProfileRequestRepository extends JpaRepository<ChangeProfileRequest, Integer> {
 

@@ -1,14 +1,11 @@
 package com.example.nvt_kts_back.repository;
 
-import com.example.nvt_kts_back.beans.Message;
-import com.example.nvt_kts_back.beans.User;
-import com.example.nvt_kts_back.dtos.UserDTO;
+import com.example.nvt_kts_back.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 
 @Transactional
 public interface UserRepository extends JpaRepository<User, String> {

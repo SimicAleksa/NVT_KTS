@@ -1,4 +1,4 @@
-package com.example.nvt_kts_back.dtos;
+package com.example.nvt_kts_back.DTOs;
 
 public class ReportParams {
     private String start;

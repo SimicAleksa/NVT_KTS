@@ -1,4 +1,4 @@
-package com.example.nvt_kts_back.beans;
+package com.example.nvt_kts_back.models;
 
 import com.example.nvt_kts_back.enumerations.RideState;
 

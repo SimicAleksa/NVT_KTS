@@ -1,8 +1,7 @@
 package com.example.nvt_kts_back.controllers;
 
-import com.example.nvt_kts_back.beans.ChangeProfileRequest;
-import com.example.nvt_kts_back.dtos.UserDTO;
-import com.example.nvt_kts_back.repository.ChangeProfileRequestRepository;
+import com.example.nvt_kts_back.models.ChangeProfileRequest;
+import com.example.nvt_kts_back.DTOs.UserDTO;
 import com.example.nvt_kts_back.service.ChangeProfileRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

@@ -1,7 +1,7 @@
 package com.example.nvt_kts_back.controllers;
 
-import com.example.nvt_kts_back.beans.ChangeProfileRequest;
-import com.example.nvt_kts_back.beans.Driver;
+import com.example.nvt_kts_back.models.ChangeProfileRequest;
+import com.example.nvt_kts_back.models.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,6 +1,6 @@
 package com.example.nvt_kts_back.repository;
 
-import com.example.nvt_kts_back.beans.Message;
+import com.example.nvt_kts_back.models.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

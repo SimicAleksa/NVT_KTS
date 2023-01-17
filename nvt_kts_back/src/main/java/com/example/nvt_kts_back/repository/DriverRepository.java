@@ -1,8 +1,6 @@
 package com.example.nvt_kts_back.repository;
 
-import com.example.nvt_kts_back.beans.Driver;
-import com.example.nvt_kts_back.beans.User;
-import com.example.nvt_kts_back.enumerations.CarType;
+import com.example.nvt_kts_back.models.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

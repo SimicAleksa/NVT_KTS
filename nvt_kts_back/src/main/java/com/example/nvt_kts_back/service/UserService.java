@@ -1,13 +1,10 @@
 package com.example.nvt_kts_back.service;
 
-import com.example.nvt_kts_back.beans.ChangeProfileRequest;
-import com.example.nvt_kts_back.beans.User;
-import com.example.nvt_kts_back.dtos.UserDTO;
+import com.example.nvt_kts_back.models.User;
+import com.example.nvt_kts_back.DTOs.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.UserRepository;
-
-import java.util.ArrayList;
 
 @Service
 public class UserService {
