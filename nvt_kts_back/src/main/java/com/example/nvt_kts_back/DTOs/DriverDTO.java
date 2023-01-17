@@ -16,8 +16,8 @@ public class DriverDTO {
 
     public DriverDTO(Driver driver){
         this.id = driver.getId();
-        this.latitude = driver.getCurrentCoords().getLatitude();
-        this.longitude = driver.getCurrentCoords().getLongitude();
+//        this.latitude = driver.getCurrentCoords().getLatitude();
+//        this.longitude = driver.getCurrentCoords().getLongitude();
         this.licensePlateNumber = driver.getLicensePlateNumber();
 
     }

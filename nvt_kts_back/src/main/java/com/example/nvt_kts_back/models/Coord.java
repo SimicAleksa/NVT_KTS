@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
-@Embeddable
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,8 +15,8 @@ public class Coord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Route route;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Route route;
 
     @Column
     private double latitude;

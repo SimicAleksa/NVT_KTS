@@ -58,7 +58,7 @@ public class UserService {
 
     public Driver updateDriverCoords(long id, double latitude,double longitude){
         Driver driver = this.userRepository.findById(id).orElseThrow(()-> new NotFoundException("Driver does not exist!"));
-        driver.setCurrentCoords(new Coord(latitude,longitude));
+//        driver.setCurrentCoords(new Coord(latitude,longitude));
         return this.userRepository.save(driver);
     }
     public void deleteAllUsers(){
