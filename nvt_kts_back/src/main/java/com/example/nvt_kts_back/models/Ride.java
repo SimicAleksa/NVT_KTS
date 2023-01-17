@@ -56,21 +56,6 @@ public class Ride {
     @Column(columnDefinition = "json")
     private String routeJSON;
 
-
-
-//    public Ride(RegisteredUser caller, Driver driver, RideState rideState, double price, LocalDateTime startDateTime,
-//                LocalDateTime endDateTime, int expectedDuration, double distance) {
-//        this.caller = caller;
-//        this.driver = driver;
-//        this.rideState = rideState;
-//        this.price = price;
-//        this.startDateTime = startDateTime;
-//        this.endDateTime = endDateTime;
-//        this.expectedDuration = expectedDuration;
-//        this.distance = distance;
-//        this.passengers = new ArrayList<>();
-//        this.reviews = new ArrayList<>();
-//    }
     public Ride(RideDTO rideDTO){
         this.id = rideDTO.getId();
         this.routeJSON = rideDTO.getRouteJSON();

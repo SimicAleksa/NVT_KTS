@@ -62,7 +62,7 @@ public class RideService {
     private HashMap<String, HashMap<String, Double>> putValuesInMap(HashMap<String, HashMap<String, Double>> map, List<Ride> rides) {
         for(Ride r:rides)
         {
-            String key = r.getActualEndDateTime().toString().substring(0,10);
+            String key = r.getEndDateTime().toString().substring(0,10);
             map.get(key).put("price", map.get(key).get("price") + r.getPrice());
             map.get(key).put("distance", map.get(key).get("distance") + r.getDistance());
             map.get(key).put("num", map.get(key).get("num") + 1);
@@ -96,7 +96,7 @@ public class RideService {
         {
             if (isInTimePeriod(r,params))
             {
-                String key = r.getActualEndDateTime().toString().substring(0,10);
+                String key = r.getEndDateTime().toString().substring(0,10);
                 if (retVal.containsKey(key))
                 {
                     retVal.get(key).add(r);
@@ -119,6 +119,6 @@ public class RideService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime startDate = LocalDateTime.parse(start, formatter);
         LocalDateTime endDateTime = LocalDateTime.parse(end, formatter);
-        return r.getActualEndDateTime().isAfter(startDate) && r.getActualEndDateTime().isBefore(endDateTime);
+        return r.getEndDateTime().isAfter(startDate) && r.getEndDateTime().isBefore(endDateTime);
     }
 }

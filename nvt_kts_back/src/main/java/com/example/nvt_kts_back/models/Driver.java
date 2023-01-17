@@ -60,8 +60,8 @@ public class Driver extends User {
         this.currentCoords = new Coord(driverDTO.getLatitude(), driverDTO.getLongitude());
     }
 
-    public Driver(String email, String password, String name, String surname, String city, String phone, Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {
-        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked);
+    public Driver(String email, String password, String name, String surname, String city, String phone, Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree,Role role) {
+        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked,role);
         this.active = active;
         this.carType = carType;
         this.babyAllowed = babyAllowed;
@@ -69,13 +69,19 @@ public class Driver extends User {
         this.isDriverFree = isDriverFree;
     }
 
+//    TODO ubacen null za rolu!!!!!!!!
     public Driver(ChangeProfileRequest d) {
-        super(d.getEmail(), d.getPassword(), d.getName(), d.getSurname(), d.getCity(), d.getPhone(), false, "", false);
+        super(d.getEmail(), d.getPassword(), d.getName(), d.getSurname(), d.getCity(), d.getPhone(), false, "", false,null);
         //this.active = false;
         this.carType =CarType.valueOf(d.getCarType());
         this.petAllowed = d.isBabyAllowed();
         this.babyAllowed = d.isBabyAllowed();
         //this.isDriverFree = true;
+    }
+
+    public String getCarTypeString()
+    {
+        return this.carType.toString();
     }
 }
 

@@ -14,14 +14,15 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
 
     @Modifying
     @Query("update Driver d set d.babyAllowed=?2, d.petAllowed=?3 where d.id =?1")
-    void updateCarData(Integer id, Boolean babyAllowed, Boolean petsAllowed);
+    void updateCarData(Long id, Boolean babyAllowed, Boolean petsAllowed);
 
 
     /*@Modifying
     @Query(value = "update Driver d set d.carType=?2 where d.id =?1", nativeQuery = true)
     void updateCarType(Integer id, String carType);*/
 
-    @Modifying
-    @Query(value = "update Driver d set d.carType=cast(?2 as carType) where d.id =?1", nativeQuery = true)
-    void updateCarType(Integer id, String carType);
+//    todo zqakomentariwsano pa pogledaj
+//    @Modifying
+//    @Query(value = "update Driver d set d.carType=cast(?2 as carType) where d.id =?1", nativeQuery = true)
+//    void updateCarType(Integer id, String carType);
 }

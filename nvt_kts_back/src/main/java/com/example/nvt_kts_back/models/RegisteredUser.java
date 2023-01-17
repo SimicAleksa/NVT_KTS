@@ -32,8 +32,9 @@ public class RegisteredUser extends User {
         this.reviews = new ArrayList<>();
     }
 
+//    todo ubacen null za rolu!!!!!!!!
     public RegisteredUser(ChangeProfileRequest c) {
-        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false);
+        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false,null);
         this.isBusy = false;
     }
 }
