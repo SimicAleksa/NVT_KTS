@@ -11,24 +11,35 @@
         <button>ADMIN</button>
     </span>
 
+    <button (click)="onAllActiveVehiclesBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='ALL ACTIVE VEHICLES'}">
+        🚘
+    </button>
+
+    <!-- ------- Treba posle staviti u meni registrovanog korisnika!!!!!  --------->
+    <!-- ----------------------------------------------------------------------  -->
+    <button (click)="onRouteSearchBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='ROUTE SEARCH'}">
+        🔎🗺
+    </button>
+    <!-- ----------------------------------------------------------------------  -->
+    <!-- ----------------------------------------------------------------------  -->
+
+
     <span *ngIf="role !== 'UNREGISTERED'">
+        
         <button (click)="onLogoutBtnClick()">
             LOGOUT
         </button>
     </span>
 
     <span *ngIf="role === 'UNREGISTERED'">
+        <button (click)="onSimpleRouteSearchBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='SIMPLE ROUTE SEARCH'}">
+            🔎🗺
+        </button>
         <button (click)="onRegisterBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='REGISTER'}">
             REGISTER
         </button>
         <button (click)="onLoginBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='LOGIN'}">
             LOGIN
-        </button>
-        <button (click)="onAllActiveVehiclesBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='ALL ACTIVE VEHICLES'}">
-            🚘
-        </button>
-        <button (click)="onSimpleRouteSearchBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='SIMPLE ROUTE SEARCH'}">
-            🔎🗺
         </button>
     </span>
 </nav>

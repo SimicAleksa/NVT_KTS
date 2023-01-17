@@ -15,8 +15,11 @@ public class Coord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Route route;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Route route;
+
+    @OneToOne
+    private Driver driver;
 
     @Column
     private double latitude;

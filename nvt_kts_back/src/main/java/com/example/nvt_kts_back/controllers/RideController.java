@@ -30,7 +30,7 @@ public class RideController {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
         Ride ride = this.rideService.createRide(new Ride(rideDTO), new Driver(rideDTO.getDriver()));
         RideDTO returnRideDTO = new RideDTO(ride);
@@ -40,7 +40,7 @@ public class RideController {
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
 
-    @PutMapping(path = "/{id}", produces = "application/json")
+    @PutMapping(value = "/changeRide/{id}", produces = "application/json")
     public ResponseEntity<RideDTO> changeRide(@PathVariable("id") long id) {
         Ride ride = this.rideService.changeRide(id);
         RideDTO returnRideDTO = new RideDTO(ride);
@@ -48,7 +48,7 @@ public class RideController {
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/getRides",produces = "application/json")
     public ResponseEntity<List<RideDTO>> getRides() {
         List<Ride> rides = this.rideService.getRides();
         List<RideDTO> rideDTOs = new ArrayList<>();
@@ -58,7 +58,7 @@ public class RideController {
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
 
-    @DeleteMapping(produces = "text/plain")
+    @DeleteMapping(value = "/deleteAllVehicles",produces = "text/plain")
     public ResponseEntity<String> deleteAllVehicles() {
         this.rideService.deleteAllRides();
         this.simpMessagingTemplate.convertAndSend("/map-updates/delete-all-rides", "Delete all rides");

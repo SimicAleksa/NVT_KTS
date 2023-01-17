@@ -34,21 +34,21 @@ public class DriverController {
         this.driverService = driverService;
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/createDriver" ,consumes = "application/json", produces = "application/json")
     public ResponseEntity<DriverDTO> createDriver(@RequestBody DriverDTO vehicleDTO) {
         Driver driver = this.userService.addNewDriver(new Driver(vehicleDTO));
         DriverDTO returnDriverDTO = new DriverDTO(driver);
         return new ResponseEntity<>(returnDriverDTO, HttpStatus.OK);
     }
 
-    @PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/updateDriverLocation/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<DriverDTO> updateDriverLocation(@PathVariable("id") long id, @RequestBody CoordsDTO coordsDTO) {
         Driver driver = this.userService.updateDriverCoords(id, coordsDTO.getLatitude(), coordsDTO.getLongitude());
         DriverDTO returnDriverDTO = new DriverDTO(driver);
         this.simpMessagingTemplate.convertAndSend("/map-updates/update-vehicle-position", returnDriverDTO);
         return new ResponseEntity<>(returnDriverDTO, HttpStatus.OK);
     }
-    @DeleteMapping(produces = "text/plain")
+    @DeleteMapping(value = "/deleteAllDrivers" ,produces = "text/plain")
     public ResponseEntity<String> deleteAllDrivers() {
         this.userService.deleteAllUsers();
         return new ResponseEntity<>("All drivers deleted!", HttpStatus.OK);

@@ -37,27 +37,27 @@ public class Driver extends User {
 
     @Column
     private String licensePlateNumber;
-//
-//    @Column
-//    private Coord currentCoords;
 
-//    public Driver(String email, String password, String name, String surname, String city, String phone,
-//                  Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType,
-//                  Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {
-//        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked, new Role(Settings.DRIVER_ROLE_NAME));
-//        this.active = active;
-//        this.carType = carType;
-//        this.babyAllowed = babyAllowed;
-//        this.petAllowed = petAllowed;
-//        this.isDriverFree = isDriverFree;
-//        this.historyOfRides = new ArrayList<>();
-//    }
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Coord currentCoords;
+
+    public Driver(String email, String password, String name, String surname, String city, String phone,
+                  Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType,
+                  Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {
+        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked, new Role(Settings.DRIVER_ROLE_NAME));
+        this.active = active;
+        this.carType = carType;
+        this.babyAllowed = babyAllowed;
+        this.petAllowed = petAllowed;
+        this.isDriverFree = isDriverFree;
+        this.historyOfRides = new ArrayList<>();
+    }
 
 
     public Driver(DriverDTO driverDTO){
         this.setId(driverDTO.getId());
         this.licensePlateNumber = driverDTO.getLicensePlateNumber();
-//        this.currentCoords = new Coord(driverDTO.getLatitude(), driverDTO.getLongitude());
+        this.currentCoords = new Coord(driverDTO.getLatitude(), driverDTO.getLongitude());
     }
 
     public Driver(String email, String password, String name, String surname, String city, String phone, Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree,Role role) {

@@ -18,7 +18,7 @@ export class MapService {
   }
 
   getAllActiveRides(): Observable<Ride[]> {
-    return this.http.get<Ride[]>("api/rides");
+    return this.http.get<Ride[]>("api/rides/getRides");
   }
 
 }

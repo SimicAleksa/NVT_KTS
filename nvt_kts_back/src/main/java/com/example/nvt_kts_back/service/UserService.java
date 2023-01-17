@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.UserRepository;
 
+import java.util.ArrayList;
+
 
 @Service
 public class UserService {
@@ -58,7 +60,7 @@ public class UserService {
 
     public Driver updateDriverCoords(long id, double latitude,double longitude){
         Driver driver = this.userRepository.findById(id).orElseThrow(()-> new NotFoundException("Driver does not exist!"));
-//        driver.setCurrentCoords(new Coord(latitude,longitude));
+        driver.setCurrentCoords(new Coord(latitude,longitude));
         return this.userRepository.save(driver);
     }
     public void deleteAllUsers(){
@@ -73,16 +75,16 @@ public class UserService {
         return dto;
     }
 
-    /*public ArrayList<ArrayList<UserDTO>> findChangedUsers() {
-        ArrayList<ChangeProfileRequest> users = this.userRepository.findChangedProfiles();
-        ArrayList<UserDTO> retVal = new ArrayList<>();
-        for(User u:users)
-        {
-            UserDTO d = new UserDTO(u);
-            d.setCity(u.getCity());
-            d.setEmail(u.getPhone());
-            retVal.add(d);
-        }
-        return retVal;
-    }*/
+//    public ArrayList<ArrayList<UserDTO>> findChangedUsers() {
+//        ArrayList<ChangeProfileRequest> users = this.userRepository.findChangedProfiles();
+//        ArrayList<UserDTO> retVal = new ArrayList<>();
+//        for(User u:users)
+//        {
+//            UserDTO d = new UserDTO(u);
+//            d.setCity(u.getCity());
+//            d.setEmail(u.getPhone());
+//            retVal.add(d);
+//        }
+//        return retVal;
+//    }
 }

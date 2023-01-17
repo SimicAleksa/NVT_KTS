@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CLIENT_LOGIN_URL, CLIENT_REGISTRATION_URL } from 'src/config/client-urls';
-import { API_ALL_ACTIVE_VEHICLES_URL, API_SIMPLE_ROUTE_SEARCH } from 'src/config/map-urls';
+import { API_ALL_ACTIVE_VEHICLES_URL, API_ROUTE_SEARCH, API_SIMPLE_ROUTE_SEARCH } from 'src/config/map-urls';
 import { MenuService } from '../../service/menu-service';
 
 @Component({
@@ -59,5 +59,10 @@ export class MenuComponent implements OnInit {
   onSimpleRouteSearchBtnClick(): void {
     this.currentActiveBtn = 'SIMPLE ROUTE SEARCH';
     this.router.navigate([API_SIMPLE_ROUTE_SEARCH]);
+  }
+
+  onRouteSearchBtnClick(): void {
+    this.currentActiveBtn = 'ROUTE SEARCH';
+    this.router.navigate([API_ROUTE_SEARCH]);
   }
 }

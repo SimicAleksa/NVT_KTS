@@ -7,6 +7,7 @@ import 'leaflet-routing-machine'
 import { MapLocation } from 'src/modules/app/model/mapLocation';
 import {control, marker} from "leaflet";
 import {mark} from "@angular/compiler-cli/src/ngtsc/perf/src/clock";
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -39,12 +40,12 @@ export class MapComponent implements OnInit {
     this.map.addLayer(tiles)
   }
 
-  constructor() {}
+  constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.initMap()
     var marker = L.marker([-1000, -1000]).addTo(this.map);
-
+    let that = this;
 
     L.Routing.control({
       router: L.Routing.osrmv1({
@@ -58,7 +59,8 @@ export class MapComponent implements OnInit {
     })
       .on('routeselected', function(e) {
         var route = e.route;
-        // console.log('Showing route between waypoints:\n' + JSON.stringify(route.instructions, null, 2));
+        let ridePrice:Number = parseInt(route.summary.totalDistance) + 100;
+        that.toastr.info("Price of selected route wolud be: "+ridePrice + ",00 RSD");
         console.log(route)
         route.coordinates.forEach(function (coord: L.LatLng,index: number){
             setTimeout(()=>{

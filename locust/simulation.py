@@ -76,7 +76,7 @@ class QuickstartUser(HttpUser):
     def on_start(self):
         global counter
         random_taxi_stop = taxi_stops[randrange(0, len(taxi_stops))]
-        self.driver = self.client.post('/api/drivers', json={
+        self.driver = self.client.post('/api/drivers/createDriver', json={
             'licensePlateNumber': license_plates.pop(0),
             'latitude': random_taxi_stop[0],
             'longitude': random_taxi_stop[1]
@@ -101,7 +101,7 @@ class QuickstartUser(HttpUser):
     def update_vehicle_coordinates(self):
         if len(self.coordinates) > 0:
             new_coordinate = self.coordinates.pop(0)
-            self.client.put(f"/api/drivers/{self.driver['id']}", json={
+            self.client.put(f"/api/drivers/updateDriverLocation/{self.driver['id']}", json={
                 'latitude': new_coordinate[0],
                 'longitude': new_coordinate[1]
             })
@@ -138,7 +138,7 @@ class QuickstartUser(HttpUser):
         self.coordinates = []
         for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
             self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
-        self.ride = self.client.post('/api/rides', json={
+        self.ride = self.client.post('/api/rides/createRide', json={
             'routeJSON': json.dumps(self.routeGeoJSON),
             'rideState': 0,
             'driver': {
@@ -150,4 +150,4 @@ class QuickstartUser(HttpUser):
         }).json()
 
     def end_ride(self):
-        self.client.put(f"/api/rides/{self.ride['id']}")
+        self.client.put(f"/api/rides/changeRide/{self.ride['id']}")
