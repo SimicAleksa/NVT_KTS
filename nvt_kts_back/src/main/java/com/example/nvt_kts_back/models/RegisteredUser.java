@@ -31,4 +31,9 @@ public class RegisteredUser extends User {
         this.historyOfRides = new ArrayList<>();
         this.reviews = new ArrayList<>();
     }
+
+    public RegisteredUser(ChangeProfileRequest c) {
+        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false);
+        this.isBusy = false;
+    }
 }

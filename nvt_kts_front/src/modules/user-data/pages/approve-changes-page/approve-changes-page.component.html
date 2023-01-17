@@ -1,5 +1,5 @@
 <div style="background-color: #eee;">
-  <section class="vh-100">
+  <section class="">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-8 col-xl-8">
@@ -10,9 +10,73 @@
   
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-1 mt-4">Verify changes</p>
   
-                  <app-approve-changes></app-approve-changes>
-                  <app-approve-changes></app-approve-changes>
-                  <app-approve-changes></app-approve-changes>
+                  <div class="oneDriverDiv" *ngFor="let user of requests" id={{user[0].email}}>
+                    <form class="mx-1 mx-md-4">
+
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.name == user.at(1)?.name ? '': 'hasChanged'">
+                          <i class="bi bi-person-fill fa-lg"></i>
+                          <label> {{user.at(0)?.name}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.name}}</label>
+                        </div>
+                      
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.surname== user.at(1)?.surname ? '': 'hasChanged'">
+                          <i class="bi bi-person-fill fa-lg"></i>
+                          <label> {{user.at(0)?.surname}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.surname}}</label>
+                        </div>
+                      
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.email == user.at(1)?.email ? '': 'hasChanged'">
+                          <i class="bi bi-envelope-at-fill"></i>
+                          <label> {{user.at(0)?.email}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.email}}</label>
+                        </div>
+                      
+                      
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.city == user.at(1)?.city ? '': 'hasChanged'">
+                          <i class="bi bi-buildings-fill"></i>
+                          <label> {{user.at(0)?.city}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.city}}</label>
+                        </div>
+                      
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.phone == user.at(1)?.phone ? '': 'hasChanged'">
+                          <i class="bi bi-telephone-fill"></i>
+                          <label> {{user.at(0)?.phone}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.phone}}</label>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.carType == user.at(1)?.carType ? '': 'hasChanged'">
+                          <i class="bi bi-telephone-fill"></i>
+                          <label> {{user.at(0)?.carType}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.carType}}</label>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.babyAllowed == user.at(1)?.babyAllowed ? '': 'hasChanged'">
+                          <i class="bi bi-telephone-fill"></i>
+                          <label> {{user.at(0)?.babyAllowed}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.babyAllowed}}</label>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.petAllowed == user.at(1)?.petAllowed ? '': 'hasChanged'">
+                          <i class="bi bi-telephone-fill"></i>
+                          <label> {{user.at(0)?.petAllowed}}</label>
+                          <i class="bi bi-arrow-right"></i>
+                          <label> {{user.at(1)?.petAllowed}}</label>
+                        </div>
+                      
+                        <div class="justify-content-center ">
+                          <button id="registerButton" type="button" class="btn btn-success btn-lg" style="float: right;" (click)="approve(user.at(0)?.email)">Approve</button>
+                          <button id="registerButton" type="button" class="btn btn-danger btn-lg" style="float: right;" (click)="decline(user.at(0)?.email)">Decline</button>
+                        </div>
+                      
+                      </form>
+                  </div>
                 </div>
                 
               </div>

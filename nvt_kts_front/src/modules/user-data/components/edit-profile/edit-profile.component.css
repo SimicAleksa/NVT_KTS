@@ -1,15 +1,28 @@
-input, label
+input
 {
     font-size: large;
 }
 
+input.inModal
+{
+    margin: 3px;
+}
+
+#closeBtn, #confirmBtn
+{
+    font-size: larger;
+    width: 20%;
+    height: 10%;
+    font-size: medium;
+}
+
 i {
-    font-size:30px; 
-    padding-right: 10px;
+    font-size:xx-large; 
+    padding-right: 2%;
 }
 
 .circle {
-    width: 200px;
+    width: 45%;
     height: 200px;
     object-fit: cover;
     border-radius: 50%;
@@ -27,6 +40,14 @@ i {
     padding-bottom: 20px;
 }
 
-#files {
-    width: 10px;
+#changePicMsg
+{
+    padding-top: 14px;
+    width: 250px;
+    font-size: large;
+}
+
+label
+{
+    font-size: medium;
 }

@@ -8,6 +8,7 @@ import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.RegisteredUser;
 import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.configurations.Settings;
+import com.example.nvt_kts_back.DTOs.UserDTO;
 import com.example.nvt_kts_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,4 +50,18 @@ public class UserController {
         User user = userService.addNewDriver(driver);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("/user/addUser")
+    public User addUser(@RequestBody User user) {return userService.createUser(user);}
+
+
+    @GetMapping(value="/getUserDTOForChat/{email}")
+    public ResponseEntity<UserDTO> getUserDataToShow(@PathVariable("email") String email)
+    {
+        UserDTO retVal = this.userService.findDTOByEmail(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+
+
+
 }

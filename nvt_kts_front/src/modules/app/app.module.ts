@@ -9,7 +9,6 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, Facebo
 import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
 import { UserDataModule } from '../user-data/user-data.module';
-import { FormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
 import { PopUpModule } from '../pop-up/pop-up.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -17,24 +16,31 @@ import { MenuModule } from '../menu/menu.module';
 import { ReferrerInterceptor } from '../../utils/referrer-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
+import { ChatModule } from '../chat/chat.module';
+import { ReportsModule } from '../reports/reports.module';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
-    HttpClientModule, 
-    FormsModule, 
-    AppRoutingModule, 
-    MapsModule, 
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule,
+    MapsModule,
     UserDataModule,
-    LoginModule, 
+    LoginModule,
     PopUpModule,
     MenuModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    SocialLoginModule
+    SocialLoginModule,
+    ChatModule,
+    ReportsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

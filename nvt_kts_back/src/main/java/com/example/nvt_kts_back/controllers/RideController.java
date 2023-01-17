@@ -3,6 +3,7 @@ package com.example.nvt_kts_back.controllers;
 import com.example.nvt_kts_back.DTOs.RideDTO;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.Ride;
+import com.example.nvt_kts_back.DTOs.ReportParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import com.example.nvt_kts_back.service.RideService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/rides")
@@ -64,4 +67,14 @@ public class RideController {
 
 //    @PostMapping("/addRide")
 //    public Ride addRide(@RequestBody Ride ride) {return  rideService.createRide(ride);}
+    @PostMapping("/ride/addRide")
+    public Ride addRide(@RequestBody Ride ride) {return  rideService.createRide(ride);}
+
+    @PostMapping(value="/driver/getDriverReportData")
+    public ResponseEntity<HashMap<String, HashMap<String, Double>>> getDriverReportData(@RequestBody ReportParams params)
+    {
+        HashMap<String, HashMap<String, Double>> retVal = this.rideService.getDriverReportData(params);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
 }

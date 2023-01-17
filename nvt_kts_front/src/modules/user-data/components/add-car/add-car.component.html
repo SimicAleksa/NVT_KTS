@@ -1,24 +1,304 @@
-<div class="dropdown">
-    <i class="bi bi-car-front-fill"></i>
-    <label> Car type </label>
-    <select class="custom-select mb-3"  formControlName="carType">
-        <option value=""> </option>
-        <option *ngFor="let c of carTypes" [value]="c">
-        {{ c }}
-        </option>
-    </select>
-</div>
+<form [formGroup]="registrationForm" (submit)="onSubmit()" class="justify-content-center align-items-center">
+    <div class="d-flex flex-row align-items-center mb-4 justify-content-center">
+        
+      <i class="bi bi-person-fill fa-lg"></i>
+      <div>
+        <input 
+          class="form-control"
+          formControlName="name"
+          type="text"
+          id="name"
+          placeholder="Name"
+          appCustomAttribute
+          appCustomValidation
+        />
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.name.touched &&
+          registrationForm.controls.name.errors?.required
+          "
+        >
+          Name is required</small
+        >
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.name.touched &&
+          registrationForm.controls.name.errors?.minlength
+          "
+        >
+          Name should be at least two characters long</small
+        >
+      </div>
+    </div>
+    <div class="d-flex flex-row align-items-center mb-4 justify-content-center">
+      <i class="bi bi-person-fill fa-lg"></i>
+      <div>
+        <input
+          class="form-control"
+          type="text"
+          id="surname"
+          placeholder="Surname"
+          formControlName="surname"
+          appCustomAttribute
+          appCustomValidation
+        />
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.surname.touched &&
+          registrationForm.controls.surname.errors?.required
+          "
+        >
+          Surname is required</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.surname.touched &&
+          registrationForm.controls.surname.errors?.minlength
+          "
+        >
+          Surname should be at least two characters long</small
+        >
+      </div>
+    </div>
+  
+    <div class="d-flex flex-row align-items-center mb-4 justify-content-center">
+      <i class="bi bi-envelope-at-fill"></i>
+      <div>
+        <input
+          class="form-control"
+          type="text"
+          id="email"
+          placeholder="Email"
+          formControlName="email"
+          appCustomAttribute
+          appCustomValidation
+        />
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.email.touched &&
+          registrationForm.controls.email.errors?.required
+          "
+        >
+          Email is required</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            registrationForm.controls.email.touched &&
+            registrationForm.controls.email.errors?.emailError
+          "
+        >
+          Email must contain "@"</small
+        >
+      </div>
+    </div>
+  
+    <div class="d-flex flex-row align-items-center mb-4 justify-content-center">
+      <i class="bi bi-lock-fill"></i>
+      <div>
+        <input #inputPassword formControlName="confirmedPassword"
+          class="form-control"
+          type="password"
+          id="password"
+          placeholder="Password"
+          formControlName="password"
+          appCustomAttribute
+          appCustomValidation
+        />
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.password.touched &&
+          registrationForm.controls.password.errors?.required
+          "
+        >
+          Password is required</small
+        >
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.password.touched &&
+          registrationForm.controls.password.errors?.minlength
+          "
+        >
+          Password should be at least 5 characters long</small
+        >
+      </div>
+    </div>
+  
+    <div class="d-flex flex-row align-items-center mb-4 justify-content-center">
+      <i class="bi bi-lock-fill"></i>
+      <div>
+        <input
+          class="form-control"
+          type="password"
+          id="repeated"
+          placeholder="Repeat password"
+          formControlName="repeated"
+          appCustomAttribute
+          appCustomValidation
+        />
+  
+        <small
+          class="text-danger"
+          *ngIf="registrationForm.controls.repeated.touched && registrationForm.hasError('invalid')
+          "
+        >
+          Passwords do not match</small
+        >
+        
+      </div>
+    </div>
+  
+    <div class="d-flex flex-row align-items-center mb-4 justify-content-center">
+      <i class="bi bi-buildings-fill"></i>
+      <div>
+        <input
+          class="form-control"
+          type="text"
+          id="city"
+          placeholder="City"
+          formControlName="city"
+          appCustomAttribute
+          appCustomValidation
+        />
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.city.touched &&
+          registrationForm.controls.city.errors?.required
+          "
+        >
+          City is required</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.city.touched &&
+          registrationForm.controls.city.errors?.minlength
+          "
+        >
+          City should be at least two characters long</small
+        >
+      </div>
+    </div>
+  
+    <div class="d-flex flex-row align-items-center mb-4 justify-content-center">
+      <i class="bi bi-telephone-fill"></i>
+      <div>
+        <input
+          class="form-control"
+          type="text"
+          id="phone"
+          placeholder="Phone number"
+          formControlName="phone"
+          appCustomAttribute
+          appCustomValidation
+        />
+  
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.phone.touched &&
+          registrationForm.controls.phone.errors?.required
+          "
+        >
+          Phone number is required</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+          registrationForm.controls.phone.touched &&
+          registrationForm.controls.phone.errors?.minlength
+          "
+        >
+          Phone number should be at least two characters long</small
+        >
+      </div>
+    </div>
+  
 
-<div class="form-check">
-    <label class="form-check-label" for="flexCheckDefault">
-        Baby allowed
-    </label>
-    <input class="form-check-input" type="checkbox" value="" id="babyAllowed">
-</div>
+    <div class="dropdown d-flex flex-row align-items-center mb-4 justify-content-center">
+        <i class="bi bi-car-front-fill"></i>
+        <label> Car type </label>
+        <select class="custom-select mb-3" formControlName="carType">
+            <option value=""> </option>
+            <option *ngFor="let c of carTypes" [value]="c">
+            {{ c }}
+            </option>
+        </select>
+    </div>
+    
+    <div class="form-check d-flex flex-row align-items-center mb-4 justify-content-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-5">
+            </div>
+            <div class="col-2">
+              <label class="form-check-label" for="flexCheckDefault">
+                Baby allowed
+              </label>
+            </div>
+            <div class="col-1">
+              <input class="form-check-input" type="checkbox" class="form-check-input" id="babyAllowed" formControlName="babyAllowed">
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="form-check d-flex flex-row align-items-center mb-4 justify-content-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-5">
+          </div>
+          <div class="col-2">
+            <label class="form-check-label" for="flexCheckDefault">
+                Pets allowed
+            </label>
+          </div>
+          <div class="col-1">
+            <input class="form-check-input" type="checkbox" class="form-check-input" id="petsAllowed" formControlName="petsAllowed">
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="form-check">
-    <label class="form-check-label" for="flexCheckDefault">
-        Pets allowed
-    </label>
-    <input class="form-check-input" type="checkbox" value="" id="petsAllowed">
-</div>
+    <div class="form-group row float-right">
+        <div class="col-7"></div>
+        <div class="col-1 float-right">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="registrationForm.invalid"
+          >
+            Register
+          </button>
+        </div>
+      </div>
+  </form>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+

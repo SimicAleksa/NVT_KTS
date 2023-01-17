@@ -4,7 +4,14 @@ import com.example.nvt_kts_back.DTOs.CoordsDTO;
 import com.example.nvt_kts_back.DTOs.DriverDTO;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.service.UserService;
+import com.example.nvt_kts_back.models.ChangeProfileRequest;
+import com.example.nvt_kts_back.models.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.example.nvt_kts_back.service.DriverService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -15,13 +22,16 @@ import org.springframework.web.bind.annotation.*;
 public class DriverController {
 
     @Autowired
+    private DriverService driverService;
+    @Autowired
     private UserService userService;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    public DriverController(UserService userService, SimpMessagingTemplate simpMessagingTemplate){
+    public DriverController(UserService userService, SimpMessagingTemplate simpMessagingTemplate, DriverService driverService){
         this.userService = userService;
         this.simpMessagingTemplate = simpMessagingTemplate;
+        this.driverService = driverService;
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -54,4 +64,10 @@ public class DriverController {
 //    public String getDriver(@PathVariable Integer id){
 //        return "JASAM VOZAC";
 //    }
+
+    @PostMapping("/driver/addDriver")
+    public void addDriver(@RequestBody ChangeProfileRequest driver) {
+        Driver d = new Driver(driver);
+        driverService.addDriver(d);
+    }
 }

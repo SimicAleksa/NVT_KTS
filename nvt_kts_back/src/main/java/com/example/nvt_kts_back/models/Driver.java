@@ -19,8 +19,11 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Driver extends User {
+
     @Column
     private Boolean active;
+
+    @Column
     @Enumerated(EnumType.STRING)
     private CarType carType;
     @Column
@@ -50,10 +53,29 @@ public class Driver extends User {
 //        this.historyOfRides = new ArrayList<>();
 //    }
 
+
     public Driver(DriverDTO driverDTO){
         this.setId(driverDTO.getId());
         this.licensePlateNumber = driverDTO.getLicensePlateNumber();
         this.currentCoords = new Coord(driverDTO.getLatitude(), driverDTO.getLongitude());
+    }
+
+    public Driver(String email, String password, String name, String surname, String city, String phone, Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {
+        super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked);
+        this.active = active;
+        this.carType = carType;
+        this.babyAllowed = babyAllowed;
+        this.petAllowed = petAllowed;
+        this.isDriverFree = isDriverFree;
+    }
+
+    public Driver(ChangeProfileRequest d) {
+        super(d.getEmail(), d.getPassword(), d.getName(), d.getSurname(), d.getCity(), d.getPhone(), false, "", false);
+        //this.active = false;
+        this.carType =CarType.valueOf(d.getCarType());
+        this.petAllowed = d.isBabyAllowed();
+        this.babyAllowed = d.isBabyAllowed();
+        //this.isDriverFree = true;
     }
 }
 
