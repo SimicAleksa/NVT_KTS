@@ -12,4 +12,8 @@ public class RegisteredUserService {
     private RegisteredUserRepository registeredUserRepository;
 
     public RegisteredUser createRegisteredUser(RegisteredUser registeredUser) {return registeredUserRepository.save(registeredUser); }
+
+    public void addUser(RegisteredUser u) {
+        registeredUserRepository.save(u);
+    }
 }

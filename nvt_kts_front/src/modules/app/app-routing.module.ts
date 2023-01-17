@@ -21,7 +21,13 @@ const routes: Routes = [
         path: "chat",
         loadChildren: () =>
               import("../chat/chat.module").then((m) => m.ChatModule),
+      },
+      {
+        path: "charts",
+        loadChildren: () =>
+              import("../reports/reports.module").then((m) => m.ReportsModule),
       }
+      // http://localhost:4200/charts/driverChart
     ]
   }
 

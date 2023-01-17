@@ -42,9 +42,9 @@ public class Ride {
     private double distance;
 
 //    za svakog korisnika memorisemo
-    @OneToOne(cascade = CascadeType.ALL)
+    /*@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "review_id")
-    private Review review;
+    private Review review;*/
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id")

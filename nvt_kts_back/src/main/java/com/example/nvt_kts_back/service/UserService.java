@@ -1,10 +1,13 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.beans.ChangeProfileRequest;
 import com.example.nvt_kts_back.beans.User;
 import com.example.nvt_kts_back.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.UserRepository;
+
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -19,4 +22,17 @@ public class UserService {
         UserDTO dto = new UserDTO(u);
         return dto;
     }
+
+    /*public ArrayList<ArrayList<UserDTO>> findChangedUsers() {
+        ArrayList<ChangeProfileRequest> users = this.userRepository.findChangedProfiles();
+        ArrayList<UserDTO> retVal = new ArrayList<>();
+        for(User u:users)
+        {
+            UserDTO d = new UserDTO(u);
+            d.setCity(u.getCity());
+            d.setEmail(u.getPhone());
+            retVal.add(d);
+        }
+        return retVal;
+    }*/
 }

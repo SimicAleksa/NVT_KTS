@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2 } from '@ang
 import { UserDataService } from '../../services/user-data.service';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router } from "@angular/router";
+import { ChangeProfileRequest } from 'src/modules/app/model/user';
 
 @Component({
   selector: 'app-registration-form',
@@ -10,11 +11,12 @@ import { Router } from "@angular/router";
 })
 export class RegistrationFormComponent implements OnInit {
   registrationForm: FormGroup;
+
+  user: ChangeProfileRequest;
   
   constructor(
     private fb: FormBuilder,
     private userDataService : UserDataService, 
-    private renderer: Renderer2
     ) { 
       this.createForm();
     }
@@ -47,17 +49,9 @@ export class RegistrationFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  register():void{
-    this.userDataService.register()
-  }
-
   onSubmit() {
-    /*this.wine = new Wine(this.wineForm.value);
-    this.wineService.add(this.wine);
-    this.wineForm.reset();
-    this.router.navigate(["wines"]);*/
-    console.log("Poslala sam formu!!!");
+    this.user = this.registrationForm.value;
+    this.userDataService.addUser(this.user);
   }
   
   

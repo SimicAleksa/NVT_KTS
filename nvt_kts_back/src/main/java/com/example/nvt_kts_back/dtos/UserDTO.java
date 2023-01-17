@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.dtos;
 
+import com.example.nvt_kts_back.beans.ChangeProfileRequest;
 import com.example.nvt_kts_back.beans.User;
 
 public class UserDTO {
@@ -9,6 +10,9 @@ public class UserDTO {
     private String email;
     private String picture;
 
+    private String city;
+    private String phone;
+
     public UserDTO() {}
 
 
@@ -17,6 +21,14 @@ public class UserDTO {
         this.surname = u.getSurname();
         this.email = u.getEmail();
         this.picture = u.getPicture();
+    }
+
+    public UserDTO(ChangeProfileRequest c) {
+        this.name = c.getName();
+        this.surname = c.getSurname();
+        this.email = c.getEmail();
+        this.city = c.getCity();
+        this.phone = c.getPhone();
     }
 
     public String getName() {
@@ -49,5 +61,21 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -39,7 +39,6 @@ public class MessageController {
     public ResponseEntity<Map<String, List<Message>>> getUserMessagesMap(@PathVariable("email") String email)
     {
         HashMap<String, List<Message>> retVal = this.messageService.getUsersMessagesMap(email);
-
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 

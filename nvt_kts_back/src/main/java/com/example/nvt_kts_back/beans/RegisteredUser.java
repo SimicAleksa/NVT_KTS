@@ -28,6 +28,11 @@ public class RegisteredUser extends User{
         this.isBusy = isBusy;
     }
 
+    public RegisteredUser(ChangeProfileRequest c) {
+        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false);
+        this.isBusy = false;
+    }
+
     public Boolean getBusy() {
         return isBusy;
     }

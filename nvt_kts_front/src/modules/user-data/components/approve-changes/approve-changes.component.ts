@@ -12,4 +12,14 @@ export class ApproveChangesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  approve()
+  {
+    alert("Odobrila sam promjene");
+  }
+
+  decline()
+  {
+    alert("Odbacila sam promjene");
+  }
+
 }

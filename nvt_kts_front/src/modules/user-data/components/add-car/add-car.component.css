@@ -5,7 +5,7 @@ option {
 select {
     font-size: 19px;
     height: 40px;
-    width: 250px;
+    width: 150px;
     margin-left: 10px;
 }
 
@@ -36,4 +36,35 @@ i {
 
 div {
     margin-left: 10px;
+}
+
+input, label
+{
+    color: grey;
+    font-size: large;
+}
+
+input
+{
+    width: 120%;
+}
+
+
+
+
+i {
+    font-size:30px; 
+    padding-right: 10px;
+    margin-left: 10%;
+}
+
+.errorMessage {
+   visibility: collapse;
+   color: red;
+   padding-left: 5px;
+}
+
+button
+{
+    font-size: large;
 }

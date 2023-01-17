@@ -1,0 +1,16 @@
+
+<form [formGroup]="dateForm" (submit)="onSubmit()">
+    <div id="blockDiv">
+        <label>Select start date</label>
+        <input id="start" type="date" class="form-control" formControlName="start">
+        <label>Select end date</label>
+        <input id="end" type="date" class="form-control" formControlName="end">
+    </div>
+    <div id="buttonDiv">
+        <button id="confirm" class="btn btn-primary" type="submit" [disabled]="dateForm.invalid">Confirm</button>
+    </div>
+
+</form>
+<div id="divChart">
+    <canvas id="myChart"></canvas>
+</div>  

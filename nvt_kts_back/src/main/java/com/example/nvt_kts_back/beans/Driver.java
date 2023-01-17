@@ -11,6 +11,8 @@ public class Driver extends User {
 
     @Column
     private Boolean active;
+
+    @Column
     @Enumerated(EnumType.STRING)
     private CarType carType;
     @Column
@@ -34,6 +36,23 @@ public class Driver extends User {
         this.babyAllowed = babyAllowed;
         this.petAllowed = petAllowed;
         this.isDriverFree = isDriverFree;
+    }
+
+    public Driver(ChangeProfileRequest d) {
+        super(d.getEmail(), d.getPassword(), d.getName(), d.getSurname(), d.getCity(), d.getPhone(), false, "", false);
+        //this.active = false;
+        this.carType =CarType.valueOf(d.getCarType());
+        this.petAllowed = d.isBabyAllowed();
+        this.babyAllowed = d.isBabyAllowed();
+        //this.isDriverFree = true;
+
+
+
+    }
+
+    public String getCarTypeString()
+    {
+        return this.carType.toString();
     }
 
     public Boolean getActive() {
