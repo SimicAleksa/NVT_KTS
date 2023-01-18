@@ -69,9 +69,8 @@ public class Driver extends User {
         this.isDriverFree = isDriverFree;
     }
 
-//    TODO ubacen null za rolu!!!!!!!!
     public Driver(ChangeProfileRequest d) {
-        super(d.getEmail(), d.getPassword(), d.getName(), d.getSurname(), d.getCity(), d.getPhone(), false, "", false,null);
+        super(d.getEmail(), d.getPassword(), d.getName(), d.getSurname(), d.getCity(), d.getPhone(), false, "", false,new Role(Settings.DRIVER_ROLE_NAME));
         //this.active = false;
         this.carType =CarType.valueOf(d.getCarType());
         this.petAllowed = d.isBabyAllowed();

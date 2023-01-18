@@ -18,9 +18,8 @@ public class Coord {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    private Route route;
 
-    @OneToOne
-    private Driver driver;
-
+//    @OneToOne
+//    private Driver driver;
     @Column
     private double latitude;
     @Column

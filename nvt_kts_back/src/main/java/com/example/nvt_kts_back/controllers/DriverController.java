@@ -2,7 +2,9 @@ package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.DTOs.CoordsDTO;
 import com.example.nvt_kts_back.DTOs.DriverDTO;
+import com.example.nvt_kts_back.DTOs.RideDTO;
 import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.service.UserService;
 import com.example.nvt_kts_back.models.ChangeProfileRequest;
 import com.example.nvt_kts_back.models.Driver;
@@ -16,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/drivers")
@@ -60,10 +65,22 @@ public class DriverController {
 //        return userService.addNewDriver(driver);
 //    }
 //
-//    @GetMapping("/{id}")
-//    public String getDriver(@PathVariable Integer id){
-//        return "JASAM VOZAC";
-//    }
+    @GetMapping("/getDriver/{id}")
+    public ResponseEntity<DriverDTO> getDriver(@PathVariable String id){
+        Driver driver = this.driverService.findById(id);
+        DriverDTO returnDriverDTO = new DriverDTO(driver);
+        return new ResponseEntity<>(returnDriverDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllDrivers")
+    public ResponseEntity<List<DriverDTO>> getAllDrivers() {
+        List<Driver> drivers = this.driverService.findAll();
+        List<DriverDTO> driverDTOS = new ArrayList<>();
+        for (Driver driver : drivers) {
+            driverDTOS.add(new DriverDTO(driver));
+        }
+        return new ResponseEntity<>(driverDTOS, HttpStatus.OK);
+    }
 
     @PostMapping("/driver/addDriver")
     public void addDriver(@RequestBody ChangeProfileRequest driver) {

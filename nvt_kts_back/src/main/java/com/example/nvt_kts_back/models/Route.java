@@ -1,7 +1,10 @@
 package com.example.nvt_kts_back.models;
 
+import com.example.nvt_kts_back.DTOs.RouteDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +18,15 @@ public class Route {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-////    @ManyToOne
-//    @Embedded
-//    private Coord startLocation;
-//
-////    @ManyToOne
-//    @Embedded
-//    private Coord endLocation;
+    @OneToOne
+    private Coord startLocation;
+
+    @OneToOne
+    private Coord endLocation;
+
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private String routeJSON;
 
 ////    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    @Embedded
@@ -29,10 +34,11 @@ public class Route {
 //    private List<Coord> optionalLocations;
 
 
-    public Route(Long id, Coord startLocation, Coord endLocation) {
-        this.id = id;
-//        this.startLocation = startLocation;
-//        this.endLocation = endLocation;
+    public Route(RouteDTO routeDTO ) {
+        this.id = routeDTO.getId();
+        this.startLocation = routeDTO.getStartLocation();
+        this.endLocation = routeDTO.getEndLocation();
+        this.routeJSON = routeDTO.getRouteJSON();
 //        this.optionalLocations = new ArrayList<>();
     }
 

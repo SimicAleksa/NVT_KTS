@@ -13,11 +13,13 @@ public class RideDTO {
     private long id;
     private RideState rideState;
     private DriverDTO driver;
-    private String routeJSON;
+//    private String routeJSON;
+    private RouteDTO route;
 
     public RideDTO(Ride ride){
         this.id = ride.getId();
-        this.routeJSON = ride.getRouteJSON();
+//        this.routeJSON = ride.getRouteJSON();
+        this.route = new RouteDTO(ride.getRoute());
         this.rideState = ride.getRideState();
         this.driver = new DriverDTO(ride.getDriver());
     }

@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.models;
 
+import com.example.nvt_kts_back.configurations.Settings;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -32,9 +33,8 @@ public class RegisteredUser extends User {
         this.reviews = new ArrayList<>();
     }
 
-//    todo ubacen null za rolu!!!!!!!!
     public RegisteredUser(ChangeProfileRequest c) {
-        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false,null);
+        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false,new Role(Settings.USER_ROLE_NAME));
         this.isBusy = false;
     }
 }

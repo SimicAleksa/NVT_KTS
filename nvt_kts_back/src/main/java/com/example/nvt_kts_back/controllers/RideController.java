@@ -50,7 +50,7 @@ public class RideController {
 
     @GetMapping(value = "/getRides",produces = "application/json")
     public ResponseEntity<List<RideDTO>> getRides() {
-        List<Ride> rides = this.rideService.getRides();
+        List<Ride> rides = this.rideService.getAllRides();
         List<RideDTO> rideDTOs = new ArrayList<>();
         for (Ride ride: rides) {
             rideDTOs.add(new RideDTO(ride));

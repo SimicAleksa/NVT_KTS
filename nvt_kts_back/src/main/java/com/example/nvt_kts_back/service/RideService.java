@@ -47,6 +47,10 @@ public class RideService {
         return this.rideRepository.findAllByRideState(RideState.STARTED);
     }
 
+    public List<Ride> getAllRides(){
+        return this.rideRepository.findAll();
+    }
+
     public void deleteAllRides(){
         this.rideRepository.deleteAll();
     }

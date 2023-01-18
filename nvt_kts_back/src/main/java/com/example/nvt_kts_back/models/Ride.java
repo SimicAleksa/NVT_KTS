@@ -37,8 +37,6 @@ public class Ride {
     private int expectedDuration;
     @Column
     private double distance;
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private Route route;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    private RegisteredUser caller;
 
@@ -52,13 +50,19 @@ public class Ride {
 //    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    private List<Review> reviews;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    private String routeJSON;
+
+
+
+//    @Type(type = "json")
+//    @Column(columnDefinition = "json")
+//    private String routeJSON;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Route route;
 
     public Ride(RideDTO rideDTO){
         this.id = rideDTO.getId();
-        this.routeJSON = rideDTO.getRouteJSON();
+        this.route = new Route(rideDTO.getRoute());
         this.rideState = rideDTO.getRideState();
     }
 

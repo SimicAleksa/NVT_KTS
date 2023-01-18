@@ -33,6 +33,7 @@ public class UserService {
         userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
     }
 
+
     public RegisteredUser addNewRegisteredUser(final RegisteredUser rUser) {
         return userRepository.save(rUser);
     }
