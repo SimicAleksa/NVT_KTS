@@ -56,7 +56,7 @@ public class RideController {
 
     @GetMapping(value = "/getRides",produces = "application/json")
     public ResponseEntity<List<RideDTO>> getRides() {
-        List<Ride> rides = this.rideService.getAllRides();
+        List<Ride> rides = this.rideService.findAllStartedAndInProgress();
         List<RideDTO> rideDTOs = new ArrayList<>();
         for (Ride ride: rides) {
             rideDTOs.add(new RideDTO(ride));

@@ -1,6 +1,7 @@
+import { Coord } from "./Coords";
+
 export interface Driver{
     id: number;
-    latitude: number;
-    longitude: number;
+    currentCoords: Coord;
     licensePlateNumber: string;
 }

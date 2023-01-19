@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ride } from '../components/active-vehicle/Ride';
+import { Driver } from '../components/active-vehicle/Driver';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class MapService {
 
   getAllActiveRides(): Observable<Ride[]> {
     return this.http.get<Ride[]>("api/rides/getRides");
+  }
+
+  getDriverFromRide(driverID:string): Observable<Driver> {
+    return this.http.get<Driver>("api/drivers/getDriver/"+driverID);
   }
 
 }

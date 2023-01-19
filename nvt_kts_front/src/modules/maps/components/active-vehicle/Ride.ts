@@ -1,8 +1,9 @@
 import { Driver } from "./Driver";
+import { Route } from "./Route";
 
 export interface Ride{
     id: number;
-    routeJSON: string;
+    route: Route;
     rideState: number;
-    driver: Driver;
+    driver: number;
 }

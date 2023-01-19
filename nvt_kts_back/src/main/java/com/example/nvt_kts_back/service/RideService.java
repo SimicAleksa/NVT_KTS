@@ -2,9 +2,7 @@ package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
-import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.Ride;
-import com.example.nvt_kts_back.models.Route;
 import com.example.nvt_kts_back.repository.DriverRepository;
 import com.example.nvt_kts_back.repository.RouteRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
@@ -145,5 +143,9 @@ public class RideService {
         LocalDateTime startDate = LocalDateTime.parse(start, formatter);
         LocalDateTime endDateTime = LocalDateTime.parse(end, formatter);
         return r.getEndDateTime().isAfter(startDate) && r.getEndDateTime().isBefore(endDateTime);
+    }
+
+    public List<Ride> findAllStartedAndInProgress() {
+        return this.rideRepository.findAllInProgressRides();
     }
 }

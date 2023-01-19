@@ -73,34 +73,17 @@ class QuickstartUser(HttpUser):
 
     def on_start(self):
         global counter
-        # random_taxi_stop = taxi_stops[randrange(0, len(taxi_stops))]
-        # self.driver = self.client.post('/api/drivers/createDriver', json={
-        #     'licensePlateNumber': license_plates.pop(0),
-        #     'latitude': random_taxi_stop[0],
-        #     'longitude': random_taxi_stop[1]
-        # }).json()
 
         self.driver = self.client.get('/api/drivers/getDriver/'+str(counter)).json()
         self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
         self.driverINPROGRESSRide = self.client.get('/api/rides/getDriversINPROGRESSRide/'+str(self.driver['id'])).json()
         # if counter<3:
         #     counter=counter+1
-        
-        print(self.driverSTARTEDRide['rideState'])
-        print("______________________________")
-        print(self.driverINPROGRESSRide['rideState'])    
-        print(self.driver['currentCoords'])  
-
-        # if((self.driver['latitude'],self.driver['longitude']) == self. ride['route']['startLocation'])
 
         if(self.driverSTARTEDRide['rideState']=="STARTED"):
             self.driving_to_start_point = True
             self.driving_the_route = False
-            self.driving_to_taxi_stop = False
             self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
-            print("AAAAAAAAAAAAA")
-            print(self.departure[0])
-            print("AAAAAAAAAAAAA")
             self.destination = (self.driverSTARTEDRide['route']['startLocation']['latitude'],self.driverSTARTEDRide['route']['startLocation']['longitude'])
             self.get_new_coordinates()
         
@@ -110,25 +93,23 @@ class QuickstartUser(HttpUser):
         if len(self.coordinates) > 0:
             new_coordinate = self.coordinates.pop(0)
             self.client.put(f"/api/drivers/updateDriverLocation/{self.driver['id']}", json={
-                'currentCoords': (new_coordinate[0],new_coordinate[1])
+                'latitude':new_coordinate[1],
+                'longitude':new_coordinate[0]
             })
-        # elif len(self.coordinates) == 0 and self.driving_to_start_point:
-        #     self.end_ride()
-        #     self.departure = self.destination
-        #     while (self.departure[0] == self.destination[0]):
-        #         self.destination = start_and_end_points.pop(randrange(0, len(start_and_end_points)))
-        #     self.get_new_coordinates()
-        #     self.driving_to_start_point = False
-        #     self.driving_the_route = True
-        # elif len(self.coordinates) == 0 and self.driving_the_route:
-        #     random_taxi_stop = taxi_stops[randrange(0, len(taxi_stops))]
-        #     start_and_end_points.append(self.departure)
-        #     self.end_ride()
-        #     self.departure = self.destination
-        #     self.destination = random_taxi_stop
-        #     self.get_new_coordinates()
-        #     self.driving_the_route = False
-        #     self.driving_to_taxi_stop = True
+        elif len(self.coordinates) == 0 and self.driving_to_start_point:
+            self.end_ride()
+            self.departure = self.destination
+            while (self.departure[0] == self.destination[0]):
+                self.destination = (self.driverSTARTEDRide['route']['endLocation']['latitude'],self.driverSTARTEDRide['route']['endLocation']['longitude'])
+            self.get_new_coordinates()
+            self.driving_to_start_point = False
+            self.driving_the_route = True
+        elif len(self.coordinates) == 0 and self.driving_the_route:
+            self.end_ride()
+            self.departure = self.destination
+            self.destination = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
+            self.get_new_coordinates()
+            self.driving_the_route = False
         # elif len(self.coordinates) == 0 and self.driving_to_taxi_stop:
         #     random_taxi_stop = taxi_stops[randrange(0, len(taxi_stops))]
         #     start_and_end_points.append(self.departure)
@@ -142,7 +123,6 @@ class QuickstartUser(HttpUser):
     def get_new_coordinates(self):
         response = requests.get(f'https://routing.openstreetmap.de/routed-car/route/v1/driving/{self.departure[1]},{self.departure[0]};{self.destination[1]},{self.destination[0]}?geometries=geojson&overview=false&alternatives=true&steps=true')
         self.routeGeoJSON = response.json()
-        print(self.routeGeoJSON)
         self.coordinates = []
         for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
             self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
@@ -157,20 +137,12 @@ class QuickstartUser(HttpUser):
                 'longitude':self.destination[1]}
         }
 
+        # 'rideState': 3, # znaci da je IN_PROGRESS
         self.ride = self.client.post('/api/rides/createRide', json={
             'route': self.route,
-            'rideState': 0,
+            'rideState': 3,
             'driver': self.driver['id']
-            # 'driver': {
-            #     'id': self.driver['id'],
-            #     'licensePlateNumber': self.driver['licensePlateNumber'],
-            #     'currentCoordstude': (self.coordinates[0][1],self.coordinates[0][0])
-            # } 
         }).json()
-        # print(self.ride)
-        # print("EEEEEEEEEEEE")
-        # print(self.coordinates[0][0])
-        # print("EEEEEEEEEEEE")
 
     def end_ride(self):
         self.client.put(f"/api/rides/changeRide/{self.ride['id']}")

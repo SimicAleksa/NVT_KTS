@@ -25,6 +25,9 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
     List<Ride> findAll();
 
+    @Query("select r from Ride r where r.rideState='IN_PROGRESS'")
+    List<Ride> findAllInProgressRides();
+
     List<Ride> findAllByRideState(RideState rideState);
 
 //    List<Ride> findByDriverEmail(String id);
