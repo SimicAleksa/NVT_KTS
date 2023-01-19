@@ -23,6 +23,12 @@ public class UserService {
     private RegisteredUserRepository registeredUserRepository;
     @Autowired
     private TempCodeHolderService tempCodeHolderService;
+    @Autowired
+    private CoordService coordService;
+
+    @Autowired
+    private DriverService driverService;
+
 
 
     public RegisteredUser getRegisteredUserByEmail(final String email) {
@@ -60,8 +66,12 @@ public class UserService {
     }
 
     public Driver updateDriverCoords(long id, double latitude,double longitude){
-        Driver driver = this.userRepository.findById(id).orElseThrow(()-> new NotFoundException("Driver does not exist!"));
-        driver.setCurrentCoords(new Coord(latitude,longitude));
+        Driver driver = this.driverService.findById(String.valueOf(id));
+        Coord driverCurrentCoord = this.coordService.findCoordbyId(driver.getCurrentCoords().getId());
+        driverCurrentCoord.setLatitude(latitude);
+        driverCurrentCoord.setLongitude(longitude);
+        driver.setCurrentCoords(driverCurrentCoord);
+
         return this.userRepository.save(driver);
     }
     public void deleteAllUsers(){

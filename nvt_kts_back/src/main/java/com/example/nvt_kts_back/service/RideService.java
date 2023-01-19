@@ -4,6 +4,9 @@ import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.Ride;
+import com.example.nvt_kts_back.models.Route;
+import com.example.nvt_kts_back.repository.DriverRepository;
+import com.example.nvt_kts_back.repository.RouteRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
 import com.example.nvt_kts_back.DTOs.ReportParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +29,17 @@ public class RideService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RouteRepository routeRepository;
+
+    @Autowired
+    DriverRepository driverRepository;
+
     public Ride createRide(Ride ride) { return rideRepository.save(ride);}
 
-    public Ride createRide(Ride ride, Driver driver){
+    public Ride createRide(Ride ride, long driver_id){
         Ride returnRide = this.rideRepository.save(ride);
-        Driver storedDriver = this.userRepository.findById(driver.getId()).
-                orElseThrow(()-> new NotFoundException("Driver does not exist"));
-        returnRide.setDriver(storedDriver);
+        returnRide.setDriver_id(driver_id);
         return rideRepository.save(returnRide);
     }
 
@@ -51,17 +58,31 @@ public class RideService {
         return this.rideRepository.findAll();
     }
 
+    public Ride getDriversStartedRide(String id){
+        Long temp = Long.parseLong(id);
+        Ride ride = new Ride();
+        ride.setRideState(RideState.NOT_FOUND);
+        return  this.rideRepository.findByDriverAndRideStateSTARTED(temp).orElse(ride);
+    }
+
+    public Ride getDriversINPROGRESSRide(String id){
+        Long temp = Long.parseLong(id);
+        Ride ride = new Ride();
+        ride.setRideState(RideState.NOT_FOUND);
+        return  this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
+    }
+
     public void deleteAllRides(){
         this.rideRepository.deleteAll();
     }
 
-    public HashMap<String, HashMap<String, Double>> getDriverReportData(ReportParams params) {
-        HashMap<String, HashMap<String, Double>> map = createMapWithDays(params);
-        List<Ride> rides  = rideRepository.findByDriverEmail(params.getEmail());
-        //HashMap<String, ArrayList<Ride>> map = getReportMap(rides, params);
-        map = putValuesInMap(map, rides);
-        return map;
-    }
+//    public HashMap<String, HashMap<String, Double>> getDriverReportData(ReportParams params) {
+//        HashMap<String, HashMap<String, Double>> map = createMapWithDays(params);
+//        List<Ride> rides  = rideRepository.findByDriverEmail(params.getEmail());
+//        //HashMap<String, ArrayList<Ride>> map = getReportMap(rides, params);
+//        map = putValuesInMap(map, rides);
+//        return map;
+//    }
 
     private HashMap<String, HashMap<String, Double>> putValuesInMap(HashMap<String, HashMap<String, Double>> map, List<Ride> rides) {
         for(Ride r:rides)

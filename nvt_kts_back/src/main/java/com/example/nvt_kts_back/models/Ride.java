@@ -41,9 +41,9 @@ public class Ride {
 //    private RegisteredUser caller;
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Driver driver;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column
+    private Long driver_id;
 
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    private List<RegisteredUser> passengers;

@@ -12,15 +12,18 @@ import lombok.NoArgsConstructor;
 public class RideDTO {
     private long id;
     private RideState rideState;
-    private DriverDTO driver;
-//    private String routeJSON;
+//    private DriverDTO driver;
+    private Long driver;
     private RouteDTO route;
 
     public RideDTO(Ride ride){
         this.id = ride.getId();
-//        this.routeJSON = ride.getRouteJSON();
         this.route = new RouteDTO(ride.getRoute());
         this.rideState = ride.getRideState();
-        this.driver = new DriverDTO(ride.getDriver());
+        this.driver = ride.getDriver_id();
+    }
+
+    public RideDTO(Ride ride,boolean missing){
+        this.rideState = ride.getRideState();
     }
 }

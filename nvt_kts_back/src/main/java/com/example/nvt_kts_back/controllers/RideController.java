@@ -1,9 +1,13 @@
 package com.example.nvt_kts_back.controllers;
 
+import com.example.nvt_kts_back.DTOs.DriverDTO;
 import com.example.nvt_kts_back.DTOs.RideDTO;
+import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.DTOs.ReportParams;
+import com.example.nvt_kts_back.models.Route;
+import com.example.nvt_kts_back.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,9 @@ public class RideController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+    @Autowired
+    private DriverService driverService;
+
     public RideController(RideService rideService, SimpMessagingTemplate simpMessagingTemplate){
         this.rideService = rideService;
         this.simpMessagingTemplate = simpMessagingTemplate;
@@ -32,10 +39,9 @@ public class RideController {
 
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
-        Ride ride = this.rideService.createRide(new Ride(rideDTO), new Driver(rideDTO.getDriver()));
+        Ride ride = this.rideService.createRide(new Ride(rideDTO), rideDTO.getDriver());
         RideDTO returnRideDTO = new RideDTO(ride);
 
-        // opet za ovo nisam siguran koja adresa treba da se cilja
         this.simpMessagingTemplate.convertAndSend("/map-updates/new-ride", returnRideDTO);
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
@@ -58,6 +64,30 @@ public class RideController {
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
+    public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
+        Ride ride = this.rideService.getDriversStartedRide(id);
+        RideDTO rideDTO;
+        if(ride.getRideState() == RideState.NOT_FOUND)
+            rideDTO = new RideDTO(ride,true);
+        else
+            rideDTO = new RideDTO(ride);
+//        rideDTO.setDriver(new DriverDTO(this.driverService.
+//                findById(String.valueOf(ride.getDriver().getId()))));
+        return new ResponseEntity<>(rideDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getDriversINPROGRESSRide/{id}",produces = "application/json")
+    public ResponseEntity<RideDTO> getDriversINPROGRESSRide(@PathVariable("id") String id) {
+        Ride ride = this.rideService.getDriversINPROGRESSRide(id);
+        RideDTO rideDTO;
+        if(ride.getRideState() == RideState.NOT_FOUND)
+            rideDTO = new RideDTO(ride,true);
+        else
+            rideDTO = new RideDTO(ride);
+        return new ResponseEntity<>(rideDTO, HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/deleteAllVehicles",produces = "text/plain")
     public ResponseEntity<String> deleteAllVehicles() {
         this.rideService.deleteAllRides();
@@ -70,11 +100,11 @@ public class RideController {
     @PostMapping("/ride/addRide")
     public Ride addRide(@RequestBody Ride ride) {return  rideService.createRide(ride);}
 
-    @PostMapping(value="/driver/getDriverReportData")
-    public ResponseEntity<HashMap<String, HashMap<String, Double>>> getDriverReportData(@RequestBody ReportParams params)
-    {
-        HashMap<String, HashMap<String, Double>> retVal = this.rideService.getDriverReportData(params);
-        return new ResponseEntity<>(retVal, HttpStatus.OK);
-    }
+//    @PostMapping(value="/driver/getDriverReportData")
+//    public ResponseEntity<HashMap<String, HashMap<String, Double>>> getDriverReportData(@RequestBody ReportParams params)
+//    {
+//        HashMap<String, HashMap<String, Double>> retVal = this.rideService.getDriverReportData(params);
+//        return new ResponseEntity<>(retVal, HttpStatus.OK);
+//    }
 
 }

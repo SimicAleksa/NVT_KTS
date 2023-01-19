@@ -18,10 +18,10 @@ public class Route {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Coord startLocation;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Coord endLocation;
 
     @Type(type = "json")
@@ -35,7 +35,6 @@ public class Route {
 
 
     public Route(RouteDTO routeDTO ) {
-        this.id = routeDTO.getId();
         this.startLocation = routeDTO.getStartLocation();
         this.endLocation = routeDTO.getEndLocation();
         this.routeJSON = routeDTO.getRouteJSON();

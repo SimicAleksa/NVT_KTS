@@ -32,7 +32,9 @@ public class Driver extends User {
     private Boolean petAllowed;
     @Column
     private Boolean isDriverFree;
-    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+
+    @OneToMany(cascade = CascadeType.PERSIST,orphanRemoval = true)
+    @JoinColumn(name = "driver_id")
     private List<Ride> historyOfRides;
 
     @Column
@@ -57,7 +59,7 @@ public class Driver extends User {
     public Driver(DriverDTO driverDTO){
         this.setId(driverDTO.getId());
         this.licensePlateNumber = driverDTO.getLicensePlateNumber();
-        this.currentCoords = new Coord(driverDTO.getLatitude(), driverDTO.getLongitude());
+        this.currentCoords = new Coord(driverDTO.getCurrentCoords());
     }
 
     public Driver(String email, String password, String name, String surname, String city, String phone, Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType, Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree,Role role) {
