@@ -122,10 +122,20 @@ export class VehiclesOnMapComponent implements OnInit {
       let ride: Ride = JSON.parse(message.body);
       this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.rides[ride.id]);
       // delete this.drivers[ride.driver.id];
-      // delete this.rides[ride.id];
+      delete this.rides[ride.id];
     });
+
+
+    this.stompClient.subscribe('/map-updates/change-RIDE-to-in-PROGRESS', (message: { body: string }) => {
+      let ride: Ride = JSON.parse(message.body);
+      this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.rides[ride.id]);
+      // delete this.drivers[ride.driver.id];
+      delete this.rides[ride.id];
+    });
+
+
     this.stompClient.subscribe('/map-updates/delete-all-rides', (message: { body: string }) => {
-      this.drivers = {};
+      // this.drivers = {};
       this.rides = {};
       this.mainGroup = [];
     });

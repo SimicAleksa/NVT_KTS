@@ -48,6 +48,13 @@ public class RideService {
         return this.rideRepository.save(ride);
     }
 
+    public Ride changeRideToINPROGRESS(long id){
+        Ride ride = this.rideRepository.findById(id).orElseThrow(()->
+                new NotFoundException("Ride does not exist"));
+        ride.setRideState(RideState.IN_PROGRESS);
+        return this.rideRepository.save(ride);
+    }
+
     public List<Ride> getRides(){
         return this.rideRepository.findAllByRideState(RideState.STARTED);
     }
@@ -145,7 +152,7 @@ public class RideService {
         return r.getEndDateTime().isAfter(startDate) && r.getEndDateTime().isBefore(endDateTime);
     }
 
-    public List<Ride> findAllStartedAndInProgress() {
-        return this.rideRepository.findAllInProgressRides();
+    public List<Ride> findAllInProgressAndDTS() {
+        return this.rideRepository.findAllInProgressAndDTSRides();
     }
 }
