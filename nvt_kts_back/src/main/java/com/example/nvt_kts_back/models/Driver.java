@@ -22,7 +22,6 @@ public class Driver extends User {
 
     @Column
     private Boolean active;
-
     @Column
     @Enumerated(EnumType.STRING)
     private CarType carType;

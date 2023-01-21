@@ -5,6 +5,9 @@ export interface User{
     picture: string;
     city: string;
     phone: string;
+    note: string;
+    blocked: boolean;
+    tokens: number;
 }
 
 export interface ChangeProfileRequest {
@@ -18,4 +21,7 @@ export interface ChangeProfileRequest {
     petAllowed: boolean;
     babyAllowed: boolean; 
     password: string;
+    note: string;
+    blocked: boolean;
+    tokens: number;
 }

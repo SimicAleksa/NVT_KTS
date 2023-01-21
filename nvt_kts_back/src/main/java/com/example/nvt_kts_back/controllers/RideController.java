@@ -70,10 +70,17 @@ public class RideController {
     @PostMapping("/ride/addRide")
     public Ride addRide(@RequestBody Ride ride) {return  rideService.createRide(ride);}
 
-    @PostMapping(value="/driver/getDriverReportData")
+    @PostMapping(value="/getDriverReportData")
     public ResponseEntity<HashMap<String, HashMap<String, Double>>> getDriverReportData(@RequestBody ReportParams params)
     {
         HashMap<String, HashMap<String, Double>> retVal = this.rideService.getDriverReportData(params);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @PostMapping(value="/getUserReportData")
+    public ResponseEntity<HashMap<String, HashMap<String, Double>>> getUserReportData(@RequestBody ReportParams params)
+    {
+        HashMap<String, HashMap<String, Double>> retVal = this.rideService.getUserReportData(params);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 

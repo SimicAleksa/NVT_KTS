@@ -6,6 +6,7 @@ import { routes } from './reports-routing';
 import { RegisteredUserChartComponent } from './components/registered-user-chart/registered-user-chart.component';
 import { DriverReportPageComponent } from './pages/driver-report-page/driver-report-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegisteredUserPageComponent } from './pages/registered-user-page/registered-user-page.component';
 
 
 
@@ -13,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     DriverChartComponent,
     RegisteredUserChartComponent,
-    DriverReportPageComponent
+    DriverReportPageComponent,
+    RegisteredUserPageComponent
   ],
   imports: [
     CommonModule,

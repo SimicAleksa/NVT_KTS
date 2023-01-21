@@ -3,7 +3,10 @@ package com.example.nvt_kts_back.service;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.RegisteredUser;
 import com.example.nvt_kts_back.models.Ride;
+import com.example.nvt_kts_back.repository.DriverRepository;
+import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
 import com.example.nvt_kts_back.DTOs.ReportParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,12 @@ public class RideService {
 
     @Autowired
     private RideRepository rideRepository;
+
+    @Autowired
+    private DriverRepository driverRepository;
+
+    @Autowired
+    private RegisteredUserRepository registeredUserRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -53,19 +62,25 @@ public class RideService {
 
     public HashMap<String, HashMap<String, Double>> getDriverReportData(ReportParams params) {
         HashMap<String, HashMap<String, Double>> map = createMapWithDays(params);
-        List<Ride> rides  = rideRepository.findByDriverEmail(params.getEmail());
+
+        Driver d = this.driverRepository.findByEmail(params.getEmail());
+        List<Ride> rides  = d.getHistoryOfRides();
         //HashMap<String, ArrayList<Ride>> map = getReportMap(rides, params);
-        map = putValuesInMap(map, rides);
+        map = putValuesInMap(map, rides, params);
         return map;
     }
 
-    private HashMap<String, HashMap<String, Double>> putValuesInMap(HashMap<String, HashMap<String, Double>> map, List<Ride> rides) {
+    private HashMap<String, HashMap<String, Double>> putValuesInMap(HashMap<String, HashMap<String, Double>> map, List<Ride> rides, ReportParams params) {
         for(Ride r:rides)
         {
-            String key = r.getEndDateTime().toString().substring(0,10);
-            map.get(key).put("price", map.get(key).get("price") + r.getPrice());
-            map.get(key).put("distance", map.get(key).get("distance") + r.getDistance());
-            map.get(key).put("num", map.get(key).get("num") + 1);
+            if (isInTimePeriod(r,params))
+            {
+                String key = r.getEndDateTime().toString().substring(0,10);
+                map.get(key).put("price", map.get(key).get("price") + r.getPrice());
+                map.get(key).put("distance", map.get(key).get("distance") + r.getDistance());
+                map.get(key).put("num", map.get(key).get("num") + 1);
+            }
+
         }
         return map;
     }
@@ -120,5 +135,15 @@ public class RideService {
         LocalDateTime startDate = LocalDateTime.parse(start, formatter);
         LocalDateTime endDateTime = LocalDateTime.parse(end, formatter);
         return r.getEndDateTime().isAfter(startDate) && r.getEndDateTime().isBefore(endDateTime);
+    }
+
+    public HashMap<String, HashMap<String, Double>> getUserReportData(ReportParams params) {
+        HashMap<String, HashMap<String, Double>> map = createMapWithDays(params);
+
+        Driver d = this.driverRepository.findByEmail(params.getEmail());
+        RegisteredUser u = this.registeredUserRepository.findByEmail(params.getEmail());
+        List<Ride> rides  = u.getHistoryOfRides();
+        map = putValuesInMap(map, rides, params);
+        return map;
     }
 }

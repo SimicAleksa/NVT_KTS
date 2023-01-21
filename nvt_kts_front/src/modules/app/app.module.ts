@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ChatModule } from '../chat/chat.module';
 import { ReportsModule } from '../reports/reports.module';
+import { ProbaModule } from '../proba/proba.module';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
@@ -40,6 +41,7 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     SocialLoginModule,
     ChatModule,
     ReportsModule,
+    ProbaModule,
     ReactiveFormsModule,
   ],
   providers: [

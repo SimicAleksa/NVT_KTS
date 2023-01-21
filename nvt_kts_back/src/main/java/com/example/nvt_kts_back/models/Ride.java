@@ -44,11 +44,13 @@ public class Ride {
 
 
 //    @ManyToOne(fetch = FetchType.LAZY)
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Driver driver;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    private List<RegisteredUser> passengers;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="ride_passengers", joinColumns = @JoinColumn(name="ride_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="registered_user_id", referencedColumnName = "id"))
+    private List<RegisteredUser> passengers;
 //    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    private List<Review> reviews;
 

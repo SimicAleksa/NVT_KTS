@@ -30,8 +30,13 @@ label {
     font-size: 15px;
 }
 
-#divChart{
+.divChart{
     display: block;
     width: 600px;
-    height: 600px;
+    height: 400px;
+}
+
+#priceLabel, #distanceLabel, #numberLabel
+{
+    margin-top: 5px;
 }

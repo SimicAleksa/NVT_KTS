@@ -18,13 +18,14 @@
 
 .oneFriend
 {
-    height: 90px;
+    height: 300px;
     /*border-style: ridge;*/
     margin:0; 
     line-height:0; 
     padding: 0;
     
 }
+
 
 hr{
     line-height: 0;
@@ -63,3 +64,4 @@ p, textarea, button{
     bottom:2%;
     right: 0;
 }
+

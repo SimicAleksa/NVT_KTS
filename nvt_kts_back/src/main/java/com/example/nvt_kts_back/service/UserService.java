@@ -7,10 +7,14 @@ import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import com.example.nvt_kts_back.DTOs.UserDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -71,6 +75,32 @@ public class UserService {
         User u = userRepository.findByEmail(email);
         UserDTO dto = new UserDTO(u);
         return dto;
+    }
+
+    public ArrayList<UserDTO> getAllDTOs() {
+        ArrayList<UserDTO> retVal = new ArrayList<>();
+        List<User> users = this.userRepository.findAll();
+        for (User u : users)
+        {
+            UserDTO dto = new UserDTO(u);
+            retVal.add(dto);
+        }
+        return retVal;
+    }
+
+    public void addNote(String newNote, String email) {
+        String old = this.userRepository.findNoteByEmail(email);
+        String newOne;
+        if (old!=null)
+            newOne = old + ", " + newNote;
+        else
+             newOne = newNote;
+        this.userRepository.updateNote(email, newOne);
+    }
+
+    public void blockUser(boolean blocked, String email) {
+        this.userRepository.updateIsBlocked(blocked, email);
+
     }
 
     /*public ArrayList<ArrayList<UserDTO>> findChangedUsers() {

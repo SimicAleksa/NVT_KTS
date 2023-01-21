@@ -9,6 +9,12 @@ public class ReportParams {
 
     }
 
+    public ReportParams(String start, String end, String email) {
+        this.start = start;
+        this.end = end;
+        this.email = email;
+    }
+
     public String getStart() {
         return start;
     }

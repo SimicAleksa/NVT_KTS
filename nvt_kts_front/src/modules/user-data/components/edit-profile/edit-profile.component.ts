@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserDataService } from '../../services/user-data.service';
+import { User } from 'src/modules/app/model/user';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -10,9 +15,16 @@ export class EditProfileComponent implements OnInit {
 
   editForm: FormGroup;
   modalForm: FormGroup;
+  username: string;
+  userData: User;
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private userDataService: UserDataService,
+    private router: Router,
+    ) {
+    this.username = "registrovani1@gmail.com";
     this.createForm();
     this.createModalForm();
    }
@@ -87,6 +99,11 @@ export class EditProfileComponent implements OnInit {
     this.editForm.controls['city'].enable();
   }
 
+  addMoney()
+  {
+    this.router.navigate(["proba"]);
+  }
+
   phoneChanged()
   {
     this.editForm.controls['phone'].enable();
@@ -108,12 +125,19 @@ export class EditProfileComponent implements OnInit {
   }
 
   setInitialValues() {
-    this.editForm.get("name")?.setValue("Ime");
-    this.editForm.get("surname")?.setValue("Prezime");
-    this.editForm.get("email")?.setValue("email");
-    this.editForm.get("password")?.setValue("lozinka");
-    this.editForm.get("city")?.setValue("grad");
-    this.editForm.get("phone")?.setValue("telefon");
+    //let u: User = this.userDataService.getUserData(this.username);
+    this.userDataService.getUserData(this.username).subscribe((response) => {
+      this.userData = response;      
+      this.editForm.get("name")?.setValue(this.userData.name);
+      this.editForm.get("surname")?.setValue(this.userData.surname);
+      this.editForm.get("email")?.setValue(this.userData.email);
+      this.editForm.get("password")?.setValue("lozinka");
+      this.editForm.get("city")?.setValue(this.userData.city);
+      this.editForm.get("phone")?.setValue(this.userData.phone);
+      document.getElementById("tokensLbl")!.innerHTML = this.userData.tokens.toString() + " ";
+      
+    });
+    
     
   }
 

@@ -15,9 +15,12 @@ import java.util.List;
 public class RegisteredUser extends User {
     @Column
     private Boolean isBusy;
+
+    @Column Double tokens;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Route> favouriteRoutes;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "passengers")
     private List<Ride> historyOfRides;
     @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Review> reviews;
@@ -34,7 +37,7 @@ public class RegisteredUser extends User {
 
 //    todo ubacen null za rolu!!!!!!!!
     public RegisteredUser(ChangeProfileRequest c) {
-        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false,null);
+        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false, null);
         this.isBusy = false;
     }
 }

@@ -65,7 +65,7 @@ public class DriverController {
 //        return "JASAM VOZAC";
 //    }
 
-    @PostMapping("/driver/addDriver")
+    @PostMapping("/addDriver")
     public void addDriver(@RequestBody ChangeProfileRequest driver) {
         Driver d = new Driver(driver);
         driverService.addDriver(d);

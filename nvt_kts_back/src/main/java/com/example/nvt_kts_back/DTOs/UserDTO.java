@@ -13,6 +13,11 @@ public class UserDTO {
     private String city;
     private String phone;
 
+    private String note;
+
+    private boolean isBlocked;
+
+
     public UserDTO() {}
 
 
@@ -21,6 +26,8 @@ public class UserDTO {
         this.surname = u.getSurname();
         this.email = u.getEmail();
         this.picture = u.getPicture();
+        this.note = u.getNote();
+        this.isBlocked = u.getIsBlocked();
     }
 
     public UserDTO(ChangeProfileRequest c) {
@@ -77,5 +84,21 @@ public class UserDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }
