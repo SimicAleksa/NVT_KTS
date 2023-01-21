@@ -78,8 +78,8 @@ class QuickstartUser(HttpUser):
         self.driver = self.client.get('/api/drivers/getDriver/'+str(counter)).json()
         self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
         self.driverINPROGRESSRide = self.client.get('/api/rides/getDriversINPROGRESSRide/'+str(self.driver['id'])).json()
-        # if counter<3:
-        #     counter=counter+1
+        if counter<3:
+            counter=counter+1
 
         if(self.driverSTARTEDRide['rideState']=="STARTED"):
             self.driving_to_start_point = True
@@ -88,12 +88,18 @@ class QuickstartUser(HttpUser):
             self.destination = (self.driverSTARTEDRide['route']['startLocation']['latitude'],self.driverSTARTEDRide['route']['startLocation']['longitude'])
             self.get_new_coordinates()
         
-        if(self.driverINPROGRESSRide['rideState']=='IN_PROGRESS'):
+        elif(self.driverINPROGRESSRide['rideState']=='IN_PROGRESS'):
             self.driving_to_start_point = False
             self.driving_the_route = True
             self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
             self.destination = (self.driverINPROGRESSRide['route']['endLocation']['latitude'],self.driverINPROGRESSRide['route']['endLocation']['longitude'])
             self.getCoordsForRideINPROGRESS()
+        else:
+            self.driving_to_start_point = False
+            self.driving_the_route = False
+            self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
+            self.destination = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
+            self.coordinates = []
         
 
     @task
@@ -119,6 +125,9 @@ class QuickstartUser(HttpUser):
             self.destination = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
             self.driving_to_start_point = False
             self.driving_the_route = False
+        else:
+            pass
+
 
     def getCoordsForRideINPROGRESS(self):
         self.ride  = self.driverINPROGRESSRide

@@ -30,5 +30,8 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
     List<Ride> findAllByRideState(RideState rideState);
 
+    @Query("select r.driver_id from Ride r where r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START' or r.rideState='STARTED'")
+    List<Long> findDriversThatDrive();
+
 //    List<Ride> findByDriverEmail(String id);
 }

@@ -59,6 +59,18 @@ public class DriverController {
         return new ResponseEntity<>("All drivers deleted!", HttpStatus.OK);
     }
 
+//    VOZACI KONI NISU U STANJU VOZNJE,ALI SU AKTIVNI
+    @GetMapping(value = "/getDrivers",produces = "application/json")
+    public ResponseEntity<List<DriverDTO>> getRides() {
+        List<Driver> drivers = this.driverService.findDriversWhoDonTDriveRN();
+        List<DriverDTO> driverDTOS = new ArrayList<>();
+        for (Driver driver: drivers) {
+            if(driver.getActive())
+                driverDTOS.add(new DriverDTO(driver));
+        }
+        return new ResponseEntity<>(driverDTOS, HttpStatus.OK);
+    }
+
 
 //    @PostMapping("/addDriver")
 //    public Driver addDriver(@RequestBody Driver driver) {

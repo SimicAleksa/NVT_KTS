@@ -35,6 +35,31 @@ export class VehiclesOnMapComponent implements OnInit {
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
+    this.mapService.getAllActiveDrivers().subscribe((ret)=>{
+      for(let driver of ret){
+        console.log(driver)
+          let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+          let markerLayer = marker([driver.currentCoords.latitude,driver.currentCoords.longitude], {
+            icon: icon({
+              iconUrl: './assets/images/carOnMap.png',
+              iconSize: [35, 45],
+              iconAnchor: [18, 45],
+          }),
+        });
+        markerLayer.addTo(geoLayerRouteGroup);
+        markerLayer.bindPopup(
+          '<div class="card text-white bg-success mb-0" style="max-width: 13rem;">\n' +
+                  '  <div class="card-body">\n' +
+                  '    <h5 class="card-title">'+driver.id+'</h5>\n' +
+                  '  </div>\n' +
+                  '  <div class="card-body">\n' +
+                  '    <a href="#" class="card-link text-white fs-5">Schedule</a>\n' +
+                  '  </div>\n' +
+                  '</div>')
+        this.drivers[driver.id] = markerLayer;
+        this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+      }
+    })
 
     this.initializeWebSocketConnection();
     this.mapService.getAllActiveRides().subscribe((ret) => {
@@ -78,12 +103,11 @@ export class VehiclesOnMapComponent implements OnInit {
   }
 
   openGlobalSocket() {
-    let geoLayerRouteGroup: LayerGroup = new LayerGroup();
     this.stompClient.subscribe('/map-updates/update-vehicle-position', (message: { body: string }) => {
-      geoLayerRouteGroup.clearLayers()
+      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
       let driver: Driver = JSON.parse(message.body);
       let existingDriver = this.drivers[driver.id];
-      // existingDriver.setLatLng([driver.currentCoords.latitude, driver.currentCoords.longitude]);
+      existingDriver.setLatLng([driver.currentCoords.latitude, driver.currentCoords.longitude]);
       existingDriver.update();
 
       let markerLayer = marker([driver.currentCoords.latitude, driver.currentCoords.longitude], {
@@ -94,19 +118,20 @@ export class VehiclesOnMapComponent implements OnInit {
         }),
       });
       markerLayer.addTo(geoLayerRouteGroup);
-      markerLayer.bindPopup(
-        '<div class="card text-white bg-success mb-0" style="max-width: 13rem;">\n' +
-                '  <div class="card-body">\n' +
-                '    <h5 class="card-title">'+driver.id+'</h5>\n' +
-                '  </div>\n' +
-                '  <div class="card-body">\n' +
-                '    <a href="#" class="card-link text-white fs-5">Schedule</a>\n' +
-                '  </div>\n' +
-                '</div>')
+      // markerLayer.bindPopup(
+      //   '<div class="card text-white bg-success mb-0" style="max-width: 13rem;">\n' +
+      //           '  <div class="card-body">\n' +
+      //           '    <h5 class="card-title">'+driver.id+'</h5>\n' +
+      //           '  </div>\n' +
+      //           '  <div class="card-body">\n' +
+      //           '    <a href="#" class="card-link text-white fs-5">Schedule</a>\n' +
+      //           '  </div>\n' +
+      //           '</div>')
       this.drivers[driver.id] = markerLayer;
       this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     });
     this.stompClient.subscribe('/map-updates/new-ride', (message: { body: string }) => {
+      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
       let ride: Ride = JSON.parse(message.body);
       let color = Math.floor(Math.random() * 16777215).toString(16);
       for (let step of JSON.parse(ride.route.routeJSON)['routes'][0]['legs'][0]['steps']) {
@@ -122,7 +147,7 @@ export class VehiclesOnMapComponent implements OnInit {
       let ride: Ride = JSON.parse(message.body);
       this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.rides[ride.id]);
       // delete this.drivers[ride.driver.id];
-      delete this.rides[ride.id];
+      // delete this.rides[ride.id];
     });
 
 
@@ -130,15 +155,15 @@ export class VehiclesOnMapComponent implements OnInit {
       let ride: Ride = JSON.parse(message.body);
       this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.rides[ride.id]);
       // delete this.drivers[ride.driver.id];
-      delete this.rides[ride.id];
+      // delete this.rides[ride.id];
     });
 
 
-    this.stompClient.subscribe('/map-updates/delete-all-rides', (message: { body: string }) => {
-      // this.drivers = {};
-      this.rides = {};
-      this.mainGroup = [];
-    });
+    // this.stompClient.subscribe('/map-updates/delete-all-rides', (message: { body: string }) => {
+    //   // this.drivers = {};
+    //   // this.rides = {};
+    //   // this.mainGroup = [];
+    // });
   }
 
 }

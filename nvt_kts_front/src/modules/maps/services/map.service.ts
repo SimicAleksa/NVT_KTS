@@ -18,6 +18,11 @@ export class MapService {
     )
   }
 
+  getAllActiveDrivers(): Observable<Driver[]>{
+    return this.http.get<Driver[]>("api/drivers/getDrivers")
+  }
+
+
   getAllActiveRides(): Observable<Ride[]> {
     return this.http.get<Ride[]>("api/rides/getRides");
   }
