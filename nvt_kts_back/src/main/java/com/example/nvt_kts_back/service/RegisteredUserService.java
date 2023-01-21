@@ -16,4 +16,8 @@ public class RegisteredUserService {
     public void addUser(RegisteredUser u) {
         registeredUserRepository.save(u);
     }
+
+    public RegisteredUser getByEmail(String email) {
+        return this.registeredUserRepository.findByEmail(email);
+    }
 }

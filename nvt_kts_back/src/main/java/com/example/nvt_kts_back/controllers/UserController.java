@@ -15,13 +15,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
     private UserService userService;
-
 
     @PutMapping("/password-reset")
     @CrossOrigin(origins = Settings.CROSS_ORIGIN_FRONTEND_PATH)
@@ -59,6 +61,25 @@ public class UserController {
     {
         UserDTO retVal = this.userService.findDTOByEmail(email);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/getAllUsers")
+    public ResponseEntity<ArrayList<UserDTO>> getAllUsers()
+    {
+        ArrayList<UserDTO> retVal = this.userService.getAllDTOs();
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/addNote/{newNote}/{email}")
+    public void addNote(@PathVariable("newNote") String newNote, @PathVariable("email") String email)
+    {
+        this.userService.addNote(newNote, email);
+    }
+
+    @GetMapping(value="/blockUser/{block}/{email}")
+    public void blockUser(@PathVariable("block") boolean newNote, @PathVariable("email") String email)
+    {
+        this.userService.blockUser(newNote, email);
     }
 
 

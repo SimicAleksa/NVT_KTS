@@ -10,11 +10,21 @@ input.inModal
 
 #closeBtn, #confirmBtn
 {
-    font-size: larger;
+    font-size: large;
     width: 20%;
     height: 10%;
     font-size: medium;
 }
+
+#paypalBtn {
+    font-size: large;
+    
+}
+
+#paypalDiv{
+    margin-right: 220px;
+}
+
 
 i {
     font-size:xx-large; 
@@ -50,4 +60,10 @@ i {
 label
 {
     font-size: medium;
+}
+
+#tokensLbl
+{
+    font-size: 25px;
+    margin-right: 5px;
 }

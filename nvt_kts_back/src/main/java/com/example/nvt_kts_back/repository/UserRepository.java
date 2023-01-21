@@ -26,4 +26,14 @@ public interface UserRepository extends JpaRepository<User, String> {
     void updatePersonalData(String email, String name, String surname, String picture, String city, String phone);
 
 
+    @Query("select u.note from User u where u.email =?1")
+    String findNoteByEmail(String email);
+
+    @Modifying
+    @Query("update User u set u.note=?2 where u.email =?1")
+    void updateNote(String email, String newOne);
+
+    @Modifying
+    @Query("update User u set u.isBlocked=?1 where u.email =?2")
+    void updateIsBlocked(boolean blocked, String email);
 }

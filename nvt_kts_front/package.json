@@ -24,6 +24,7 @@
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.10.2",
     "chart.js": "^4.1.2",
+    "creditcardpayments": "^1.0.3",
     "leaflet": "^1.9.3",
     "leaflet-control-geocoder": "^2.4.0",
     "leaflet-routing-machine": "^3.2.12",

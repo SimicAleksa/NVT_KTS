@@ -7,7 +7,7 @@ import { ChangeProfileRequest, User } from 'src/modules/app/model/user';
   providedIn: 'root'
 })
 export class UserDataService {
-  
+
   
   private headers = new HttpHeaders({ "Content-Type": "application/json"});
   private getChangedProfilesUrl: string;
@@ -15,6 +15,10 @@ export class UserDataService {
   private declineChangesUrl : string;
   private addDriverUrl: string;
   private addUserUrl: string;
+  private getAllUsersURL: string;
+  private getUserURL: string;
+  private addNoteURL: string;
+  private blockUserURL: string;
 
 
 
@@ -26,6 +30,10 @@ export class UserDataService {
     this.declineChangesUrl = 'http://localhost:8000/declineChanges';
     this.addDriverUrl = 'http://localhost:8000/driver/addDriver';
     this.addUserUrl = 'http://localhost:8000/users/addUser';
+    this.getAllUsersURL = "api/user/getAllUsers";
+    this.getUserURL = "api/registeredUsers/getUserData/";
+    this.addNoteURL = "api/user/addNote";
+    this.blockUserURL = "api/user/blockUser";
   }
 
   getChangedProfiles(): Observable<ChangeProfileRequest[] []> {
@@ -34,6 +42,25 @@ export class UserDataService {
       responseType: "json",
     });
   }
+
+  blockUser(email: string, block: boolean) {
+    this.http.get(this.blockUserURL + "/" + block + "/" + email, {
+      headers: this.headers,
+      responseType: "json",      
+    }).subscribe(() => {
+    });
+  }
+
+  addNote(newNote: string, currentUser: string) {
+    let fullURL = this.addNoteURL + "/" + newNote + "/" + currentUser;
+    this.http.get(fullURL, {
+      headers: this.headers,
+      responseType: "json",      
+    }).subscribe(() => {
+    });
+  }
+  
+
 
   saveChanges(email: string , requests: ChangeProfileRequest[][]) {
     let u : User = this.findCertainUser(email, requests);
@@ -55,7 +82,7 @@ export class UserDataService {
   }
 
   findCertainUser(email: string, users: User[][]): User{
-    let ret : User = {name:"", surname:"", email:"", city:"", phone:"", picture:""};
+    let ret : User = {name:"", surname:"", email:"", city:"", phone:"", picture:"", note:"", blocked:false, tokens:0};
     for (let u of users)
     {
       if (u.at(1)?.email == email)
@@ -79,6 +106,20 @@ export class UserDataService {
       headers: this.headers,
       responseType: "json",      
     }).subscribe(() => {
+    });
+  }
+
+  getAllUserData(): Observable<User[]> {
+    return this.http.get<User[]>(this.getAllUsersURL, {
+      headers: this.headers,
+      responseType: "json",
+    });
+  }
+
+  getUserData(email: string): Observable<User> {
+    return this.http.get<User>(this.getUserURL + email, {
+      headers: this.headers,
+      responseType: "json",
     });
   }
 

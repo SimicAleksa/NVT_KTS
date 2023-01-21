@@ -12,7 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.UserRepository;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -38,7 +40,6 @@ public class UserService {
     public void verifyUserExistence(final String email) {
         userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
     }
-
 
     public RegisteredUser addNewRegisteredUser(final RegisteredUser rUser) {
         return userRepository.save(rUser);
@@ -86,16 +87,42 @@ public class UserService {
         return dto;
     }
 
-//    public ArrayList<ArrayList<UserDTO>> findChangedUsers() {
-//        ArrayList<ChangeProfileRequest> users = this.userRepository.findChangedProfiles();
-//        ArrayList<UserDTO> retVal = new ArrayList<>();
-//        for(User u:users)
-//        {
-//            UserDTO d = new UserDTO(u);
-//            d.setCity(u.getCity());
-//            d.setEmail(u.getPhone());
-//            retVal.add(d);
-//        }
-//        return retVal;
-//    }
+    public ArrayList<UserDTO> getAllDTOs() {
+        ArrayList<UserDTO> retVal = new ArrayList<>();
+        List<User> users = this.userRepository.findAll();
+        for (User u : users)
+        {
+            UserDTO dto = new UserDTO(u);
+            retVal.add(dto);
+        }
+        return retVal;
+    }
+
+    public void addNote(String newNote, String email) {
+        String old = this.userRepository.findNoteByEmail(email);
+        String newOne;
+        if (old!=null)
+            newOne = old + ", " + newNote;
+        else
+             newOne = newNote;
+        this.userRepository.updateNote(email, newOne);
+    }
+
+    public void blockUser(boolean blocked, String email) {
+        this.userRepository.updateIsBlocked(blocked, email);
+
+    }
+
+    /*public ArrayList<ArrayList<UserDTO>> findChangedUsers() {
+        ArrayList<ChangeProfileRequest> users = this.userRepository.findChangedProfiles();
+        ArrayList<UserDTO> retVal = new ArrayList<>();
+        for(User u:users)
+        {
+            UserDTO d = new UserDTO(u);
+            d.setCity(u.getCity());
+            d.setEmail(u.getPhone());
+            retVal.add(d);
+        }
+        return retVal;
+    }*/
 }

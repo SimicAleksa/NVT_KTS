@@ -1,4 +1,3 @@
-
 <form [formGroup]="dateForm" (submit)="onSubmit()">
     <div id="blockDiv">
         <label>Select start date</label>
@@ -11,6 +10,15 @@
     </div>
 
 </form>
-<div id="divChart">
-    <canvas id="myChart"></canvas>
+<div class="divChart">
+    <canvas id="myChartPrice"></canvas>
+    <label id="priceLabel"> </label>
+</div>  
+<div class="divChart">
+    <canvas id="myChartDistance"></canvas>
+    <label id="distanceLabel"></label>
+</div>  
+<div class="divChart">
+    <canvas id="myChartNumber"></canvas>
+    <label id="numberLabel"></label>
 </div>  

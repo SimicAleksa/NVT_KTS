@@ -12,6 +12,8 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { ApproveChangesPageComponent } from './pages/approve-changes-page/approve-changes-page.component';
 import { ApproveChangesComponent } from './components/approve-changes/approve-changes.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BlockUserPageComponent } from './pages/block-user-page/block-user-page.component';
+import { BlockUserComponent } from './components/block-user/block-user.component';
 
 
 
@@ -25,6 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EditProfileComponent,
     ApproveChangesPageComponent,
     ApproveChangesComponent,
+    BlockUserPageComponent,
+    BlockUserComponent,
   ],
   imports: [
     CommonModule,

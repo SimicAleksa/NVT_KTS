@@ -3,6 +3,10 @@ import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Message } from 'src/modules/app/model/message';
 import { MessagePerson } from 'src/modules/app/model/messagePerson';
 import { MessageService } from '../../services/message.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import { ReportParam } from 'src/modules/app/model/reportParams';
+//import { WebSocketService } from 'src/modules/app/services/web-socket.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -20,16 +24,72 @@ export class ChatPageComponent implements OnInit {
   public userEmail: string;
   public usersFriend: string;
   public friendName: string;
-  public myName: string;
+  private stompClient: any;
+  public ws: any;
 
 
   constructor(
     private messageService: MessageService, 
+    //private webSocketService: WebSocketService,
   ) { 
     this.userEmail = "zima@gmail.com";
     this.usersFriend = "pera@gmail.com";
-    
   }
+
+
+
+
+  ngOnInit(): void {
+    
+    this.initializeWebSocketConnection();
+    this.messageService.getUserMessageMap(this.userEmail).subscribe((response) => {
+      this.messagesMap = new Map(Object.entries(response));
+      this.currentMessages = this.messagesMap.get(this.usersFriend);
+      this.messageService.getUsersToShowInMessages(this.userEmail).subscribe((response) => {
+        this.messagePersons = response;
+        this.friendName = this.findName(this.usersFriend);
+        //this.myName = this.findName(this.userEmail);
+        this.addLastMessages();
+        //this.initializeWebSocketConnection();
+
+      })
+    });
+  }
+ 
+
+  initializeWebSocketConnection() {
+    this.ws = new SockJS('http://localhost:8000/socket');
+    this.stompClient = Stomp.over(this.ws);
+    this.stompClient.debug = null;
+    let that = this;
+    alert(that.ws.readyState + " je stanje");
+    this.stompClient.connect({}, function () {
+      
+      that.openGlobalSocket();
+      //alert("Trebalo bi da otvorim konekciju");
+      alert(that.ws.readyState + " je stanje");
+    });
+  }
+
+  openGlobalSocket()
+  {
+    this.stompClient.subscribe('/map-updates/add-message', (message: { body: string }) => {
+      alert(message.body + " je tijelo. Ovdje samo trebam ubaciti poruke");
+      let param: ReportParam = JSON.parse(message.body);
+    });
+  }
+
+  sendMessage()
+  {      
+      let element : HTMLInputElement = (<HTMLInputElement>document.getElementById('textAreaExample2'))
+      element.value = "";
+      // sad saljem na back poruku, a na backu se to salje dalje na socket
+      this.messageService.sendMessage();
+      //this.messageService.gadjajMladjino();
+      // sad jos samo da posaljem poruku konobaru
+  }
+
+    
 
   findName(email:string): string {
     // na osnovu mejla dobijem messagePerson, a na osnovu toga ime i prezime
@@ -44,19 +104,7 @@ export class ChatPageComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.messageService.getUserMessageMap(this.userEmail).subscribe((response) => {
-      this.messagesMap = new Map(Object.entries(response));
-      this.currentMessages = this.messagesMap.get(this.usersFriend);
-      this.messageService.getUsersToShowInMessages(this.userEmail).subscribe((response) => {
-        this.messagePersons = response;
-        this.friendName = this.findName(this.usersFriend);
-        this.myName = this.findName(this.userEmail);
-        this.addLastMessages();
 
-      })
-    });
-  }
   addLastMessages() {
     for(let p of this.messagePersons)
     {
@@ -72,14 +120,22 @@ export class ChatPageComponent implements OnInit {
   }
 
   onFriendClick(email: string) {
+    this.setAllWhite();
+    document.getElementById(email)?.style.setProperty('background-color', 'rgb(246, 241, 241)');
+    this.currentMessages = this.messagesMap.get(email);
+    this.usersFriend = email;
+    this.friendName = this.findName(email);
+  }
+
+  setAllWhite() {
     let l:HTMLCollectionOf<Element> = document.getElementsByClassName("allWhite"); 
     for(var i = 0; i<l.length; i++)
     {
-      //l.item(i)?.getElementsByClassName.setProperty('background-color', 'white');
       (l.item(i) as HTMLElement).style.setProperty('background-color', 'white');
     }
-    document.getElementById(email)?.style.setProperty('background-color', 'rgb(246, 241, 241)');
   }
+
+
 
   /*personAlreadyInMessagePersons(anotherPerson: string) {
     
