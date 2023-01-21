@@ -34,17 +34,8 @@ public class DriverService {
     }
 
     public List<Driver> findDriversWhoDonTDriveRN(){
-        List<Driver> returnDrivers= new ArrayList<>();
         List<Long> driversThatDrive =rideRepository.findDriversThatDrive();
-
         return this.findAll().stream().filter(dr -> !driversThatDrive.contains(dr.getId())).collect(Collectors.toList());
-//        List<Driver> allDrivers = this.findAll();
-//        for(Driver tempDriver : allDrivers) {
-//            if(!driversThatDrive.contains(tempDriver.getId())){
-//                returnDrivers.add(tempDriver);
-//            }
-//        }
-//        return returnDrivers;
     }
 
 

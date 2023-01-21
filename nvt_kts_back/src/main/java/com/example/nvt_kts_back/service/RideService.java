@@ -39,8 +39,6 @@ public class RideService {
     @Autowired
     private RouteRepository routeRepository;
 
-    @Autowired
-    DriverRepository driverRepository;
 
     public Ride createRide(Ride ride) { return rideRepository.save(ride);}
 
