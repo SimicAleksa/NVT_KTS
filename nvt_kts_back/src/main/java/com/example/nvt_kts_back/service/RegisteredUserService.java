@@ -20,4 +20,12 @@ public class RegisteredUserService {
     public RegisteredUser getByEmail(String email) {
         return this.registeredUserRepository.findByEmail(email);
     }
+
+    public void addTokens(String email, Double value) {
+        Double currentTokens = this.registeredUserRepository.findTokensByEmail(email);
+        Double newTokens = currentTokens + value;
+        this.registeredUserRepository.setTokens(email, newTokens);
+
+
+    }
 }

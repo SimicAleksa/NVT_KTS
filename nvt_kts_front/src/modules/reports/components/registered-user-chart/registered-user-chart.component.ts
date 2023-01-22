@@ -40,7 +40,6 @@ export class RegisteredUserChartComponent implements OnInit {
 
   onSubmit()
     {
-      alert("Poslala sam formu");
       if (this.myChartDistance)
       {
         this.myChartDistance.destroy();
@@ -67,7 +66,7 @@ export class RegisteredUserChartComponent implements OnInit {
           data: {
               labels: this.getLabels(),
               datasets: [{
-                  label: '# money earned',
+                  label: '# money spent',
                   data: this.getPrices(),
                   backgroundColor: [
                       'rgba(54, 162, 235, 0.2)'

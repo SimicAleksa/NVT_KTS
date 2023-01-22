@@ -24,8 +24,8 @@ export class MessageService {
     this.userMessageMapUrl = 'api/messages/getUserMessagesMap/';
    }
 
-   sendMessage() {
-    let m: Message = {sender: "sender", receiver: "receiver", text: "sadrzaj poruke"};
+   sendMessage(text1: string, sender1: string, receiver1: string) {
+    let m: Message = {sender: sender1, receiver: receiver1, text: text1};
     //return this.http.post<string>("api/messages/addMessage", m);
     return this.http.post("api/messages/addMessage", m, {
       headers: this.headers,
@@ -34,7 +34,7 @@ export class MessageService {
     });
   }
 
-  gadjajMladjino(): void {
+  /*gadjajMladjino(): void {
     alert("gadjala sam Mladjin servis");
     this.http.get('api/notifyWaiter', {
         headers: this.headers,
@@ -44,7 +44,7 @@ export class MessageService {
         //this.toastr.success('Notify successfull!');
         alert("Alert iz message servisa u subscribe");
       });
-  }
+  }*/
 
    getUsersMessages(): Observable<Message[]>{
     return this.http.get<Message[]>(this.messagesUrl, {

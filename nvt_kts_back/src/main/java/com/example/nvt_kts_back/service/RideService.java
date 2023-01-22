@@ -178,4 +178,11 @@ public class RideService {
         map = putValuesInMap(map, rides, params);
         return map;
     }
+
+    public HashMap<String, HashMap<String, Double>> getAdminReportData(ReportParams params) {
+        HashMap<String, HashMap<String, Double>> map = createMapWithDays(params);
+        List<Ride> rides  = this.rideRepository.findAll();
+        map = putValuesInMap(map, rides, params);
+        return map;
+    }
 }

@@ -55,12 +55,11 @@ public class MessageController {
     }
 
     @PostMapping(value = "/addMessage", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ReportParams> sendMessage(@RequestBody Message message, HttpServletRequest request) {
-        System.out.println("Na back dodajem poruku");
-        System.out.println("Trenutna putanja je " + request.getRequestURI());
-        ReportParams r = new ReportParams("pocetak", "kraj", "email");
-        this.simpMessagingTemplate.convertAndSend("/map-updates/add-message", r);
-        return new ResponseEntity<>(r, HttpStatus.OK);
+    public ResponseEntity<Message> sendMessage(@RequestBody Message message, HttpServletRequest request) {
+        //System.out.println("Trenutna putanja je " + request.getRequestURI());
+        this.messageService.saveMessage(message);
+        this.simpMessagingTemplate.convertAndSend("/map-updates/add-message", message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 

@@ -77,4 +77,8 @@ public class MessageService {
         }
         return false;
     }
+
+    public void saveMessage(Message message) {
+        this.messageRepository.save(message);
+    }
 }

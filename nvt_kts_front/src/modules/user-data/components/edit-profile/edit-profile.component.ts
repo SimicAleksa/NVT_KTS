@@ -101,7 +101,7 @@ export class EditProfileComponent implements OnInit {
 
   addMoney()
   {
-    this.router.navigate(["proba"]);
+    this.router.navigate(["paypal"]);
   }
 
   phoneChanged()
@@ -111,7 +111,7 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit()
   {
-    console.log("Poslala sam");
+    alert("Vasi podaci su sacuvani");
   }
 
   onModalSubmit()

@@ -34,4 +34,9 @@ public class RegisteredUserController {
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
+    @GetMapping("/addTokens/{email}/{value}")
+    public void addTokens(@PathVariable("email") String email, @PathVariable("value") Double value) {
+        this.registeredUserService.addTokens(email, value);
+    }
+
 }

@@ -45,7 +45,7 @@ insert into ride (end_date_time, distance, expected_duration,
                                                                          100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 1,1);
 
 insert into ride (end_date_time, distance, expected_duration,
-                  price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
+                  price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-02 18:47:52.069', 54.3,
                                                                                    100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 3,2);
 
 insert into ride_passengers(ride_id, registered_user_id) values (1, 4);

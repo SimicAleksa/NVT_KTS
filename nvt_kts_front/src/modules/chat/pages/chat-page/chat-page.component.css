@@ -6,14 +6,19 @@
     border-radius: 15px;
     background-color: white;
     padding: 15px;
+    overflow-y:scroll;
 }
 
 #messagesDiv
 {
-    height: 600px; 
+    height: 500px; 
     /*border-color: red; 
     border-style: solid;*/
     margin: 30px;
+    overflow-y:scroll;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .oneFriend
@@ -54,7 +59,9 @@ p, textarea, button{
 
     position:absolute;
     bottom:0;
-    width:90%;
+    width:53%;
+    right: 100px;
+ 
     
 }
 
@@ -62,6 +69,6 @@ p, textarea, button{
 {
     position:absolute;
     bottom:2%;
-    right: 0;
+    right: 20px;
 }
 

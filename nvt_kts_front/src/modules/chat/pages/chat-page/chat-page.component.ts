@@ -54,6 +54,20 @@ export class ChatPageComponent implements OnInit {
 
       })
     });
+
+    this.setEnterToSendMessage();
+  }
+
+  setEnterToSendMessage() {  
+    let that = this;
+    let element : HTMLInputElement = (<HTMLInputElement>document.getElementById('textAreaExample2'));
+    element.addEventListener("keydown",function(e){
+      if(e.keyCode == 13){
+       that.sendMessage();
+       element.value = "";
+      } 
+    });
+    element.value = "";
   }
  
 
@@ -62,32 +76,35 @@ export class ChatPageComponent implements OnInit {
     this.stompClient = Stomp.over(this.ws);
     this.stompClient.debug = null;
     let that = this;
-    alert(that.ws.readyState + " je stanje");
+    //alert(that.ws.readyState + " je stanje");
     this.stompClient.connect({}, function () {
       
       that.openGlobalSocket();
-      //alert("Trebalo bi da otvorim konekciju");
-      alert(that.ws.readyState + " je stanje");
+      //alert(that.ws.readyState + " je stanje");
     });
   }
 
   openGlobalSocket()
   {
     this.stompClient.subscribe('/map-updates/add-message', (message: { body: string }) => {
-      alert(message.body + " je tijelo. Ovdje samo trebam ubaciti poruke");
+      //this.messageService.saveMessage();
+      let m: Message =JSON.parse(message.body);
+      this.currentMessages?.push(m);
       let param: ReportParam = JSON.parse(message.body);
     });
   }
 
   sendMessage()
   {      
-      let element : HTMLInputElement = (<HTMLInputElement>document.getElementById('textAreaExample2'))
+      let element : HTMLInputElement = (<HTMLInputElement>document.getElementById('textAreaExample2'));
+      this.messageService.sendMessage(element.value, this.userEmail, this.usersFriend);
       element.value = "";
       // sad saljem na back poruku, a na backu se to salje dalje na socket
-      this.messageService.sendMessage();
       //this.messageService.gadjajMladjino();
       // sad jos samo da posaljem poruku konobaru
   }
+
+ 
 
     
 

@@ -122,4 +122,11 @@ public class RideController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    @PostMapping(value="/getAdminReportData")
+    public ResponseEntity<HashMap<String, HashMap<String, Double>>> getAdminReportData(@RequestBody ReportParams params)
+    {
+        HashMap<String, HashMap<String, Double>> retVal = this.rideService.getAdminReportData(params);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
 }

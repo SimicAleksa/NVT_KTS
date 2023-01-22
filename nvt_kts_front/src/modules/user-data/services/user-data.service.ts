@@ -8,6 +8,7 @@ import { ChangeProfileRequest, User } from 'src/modules/app/model/user';
 })
 export class UserDataService {
 
+
   
   private headers = new HttpHeaders({ "Content-Type": "application/json"});
   private getChangedProfilesUrl: string;
@@ -19,21 +20,23 @@ export class UserDataService {
   private getUserURL: string;
   private addNoteURL: string;
   private blockUserURL: string;
+  private addTokensURL: string;
 
 
 
   //private usersUrl: string;
 
   constructor(private http: HttpClient) { 
-    this.getChangedProfilesUrl = 'http://localhost:8000/getChangedProfiles';
-    this.saveChangesUrl = 'http://localhost:8000/saveChanges';
-    this.declineChangesUrl = 'http://localhost:8000/declineChanges';
+    this.getChangedProfilesUrl = 'api/changeProfileRequests/getChangedProfiles';
+    this.saveChangesUrl = 'api/changeProfileRequests/saveChanges';
+    this.declineChangesUrl = 'api/changeProfileRequests/declineChanges';
     this.addDriverUrl = 'http://localhost:8000/driver/addDriver';
     this.addUserUrl = 'http://localhost:8000/users/addUser';
     this.getAllUsersURL = "api/user/getAllUsers";
     this.getUserURL = "api/registeredUsers/getUserData/";
     this.addNoteURL = "api/user/addNote";
     this.blockUserURL = "api/user/blockUser";
+    this.addTokensURL = "api/registeredUsers/addTokens/";
   }
 
   getChangedProfiles(): Observable<ChangeProfileRequest[] []> {
@@ -118,6 +121,14 @@ export class UserDataService {
 
   getUserData(email: string): Observable<User> {
     return this.http.get<User>(this.getUserURL + email, {
+      headers: this.headers,
+      responseType: "json",
+    });
+  }
+
+
+  addTokens(value: string, username: string) {
+    return this.http.get<User>(this.addTokensURL + username + "/" + value, {
       headers: this.headers,
       responseType: "json",
     });
