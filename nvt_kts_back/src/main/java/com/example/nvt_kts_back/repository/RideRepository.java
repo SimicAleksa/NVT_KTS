@@ -9,7 +9,11 @@ import java.util.List;
 
 public interface RideRepository extends JpaRepository<Ride, Integer> {
 
-//    @Query("SELECT r FROM Ride r JOIN FETCH r.driver d JOIN FETCH r.passengers p WHERE r.caller.id = :userId OR p.id = :userId")
-    @Query("SELECT DISTINCT r FROM Ride r JOIN FETCH r.driver d JOIN FETCH r.passengers p WHERE r.caller.id = :userId OR p.id = :userId")
+    @Query(
+            "SELECT DISTINCT r FROM Ride r " +
+                    "JOIN FETCH r.driver d " +
+                    "JOIN FETCH r.passengers p " +
+                        "WHERE r.caller.id = :userId OR p.id = :userId"
+    )
     List<Ride> findAllByPassengerId(@Param("userId") Long userId);
 }

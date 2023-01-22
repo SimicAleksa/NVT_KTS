@@ -4,11 +4,11 @@ INSERT INTO role (name) VALUES ('ROLE_USER'),
 
 INSERT INTO my_users (email, password, name, surname, city, phone, profile_activated, picture, is_blocked, role_id)
     VALUES
+      ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'ime', 'prezime', 'grad', '42145135', true, 'slika', false, 1),
       ('john.doe@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'John', 'Doe', 'New York', '123-456-7890', true, 'picture.jpg', false, 1),
       ('sarah.johnson@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Sarah', 'Johnson', 'Houston', '123-456-7890', true, 'picture.jpg', false, 1),
       ('michael.brown@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Michael', 'Brown', 'Philadelphia', '123-456-7890', true, 'picture.jpg', false, 1),
       ('ashley.taylor@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Ashley', 'Taylor', 'San Diego', '123-456-7890', true, 'picture.jpg', false, 1),
-      ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'ime', 'prezime', 'grad', '42145135', true, 'slika', false, 1),
       ('matthew.davis@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Matthew', 'Davis', 'Dallas', '123-456-7890', true, 'picture.jpg', false, 2),
       ('jane.doe@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Jane', 'Doe', 'Los Angeles', '123-456-7890', true, 'picture.jpg', false, 2),
       ('bob.smith@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Bob', 'Smith', 'Chicago', '123-456-7890', true, 'picture.jpg', false, 2),
@@ -31,18 +31,18 @@ INSERT INTO registered_user (id, is_busy)
       (4, false),
       (5, true);
 
-INSERT INTO coord (x, y)
+INSERT INTO coord (x, y, location_name)
     VALUES
-      (1.0, 2.0),
-      (3.0, 4.0),
-      (5.0, 6.0),
-      (7.0, 8.0),
-      (9.0, 10.0),
-      (11.0, 12.0),
-      (13.0, 14.0),
-      (15.0, 16.0),
-      (17.0, 18.0),
-      (19.0, 20.0);
+      (1.0, 2.0, 'Neka lokacija 1'),
+      (3.0, 4.0, 'Neka lokacija 2'),
+      (5.0, 6.0, 'Neka lokacija 3'),
+      (7.0, 8.0, 'Neka lokacija 4'),
+      (9.0, 10.0, 'Neka lokacija 5'),
+      (11.0, 12.0, 'Neka lokacija 6'),
+      (13.0, 14.0, 'Neka lokacija 7'),
+      (15.0, 16.0, 'Neka lokacija 8'),
+      (17.0, 18.0, 'Neka lokacija 9'),
+      (19.0, 20.0, 'Neka lokacija 10');
 
 INSERT INTO route (start_location_id, end_location_id)
     VALUES

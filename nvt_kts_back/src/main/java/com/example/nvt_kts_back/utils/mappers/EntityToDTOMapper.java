@@ -37,8 +37,8 @@ public class EntityToDTOMapper {
         );
     }
 
-    public static CoordDTO mapCoordToCoordDTO(@NonNull Coord coord) {
-        return new CoordDTO(coord.getX(), coord.getY());
+    public static CoordDTO mapCoordToCoordDTO(Coord coord) {
+        return new CoordDTO(coord.getX(), coord.getY(), coord.getLocationName());
     }
 
 }

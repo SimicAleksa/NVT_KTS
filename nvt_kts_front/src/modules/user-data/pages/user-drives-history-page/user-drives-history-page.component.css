@@ -1,0 +1,6 @@
+.page-holder {
+    margin: 0;
+    padding: 10vh 5vw;
+    background-color: #eee;
+    min-height: 100vh;
+}

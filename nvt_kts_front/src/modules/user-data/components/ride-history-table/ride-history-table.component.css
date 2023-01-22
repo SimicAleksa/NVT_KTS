@@ -1,0 +1,77 @@
+.title-style {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.table-card {
+    border: 1px solid rgb(209, 208, 208);
+    border-radius: 20px;
+    background: white;
+    display: table;
+    padding: 10px;
+    margin: 0 -20px;
+} 
+
+table {
+    table-layout: fixed; 
+    width: 100%;
+    font-size: large;
+    border-radius: 20px;
+}
+
+table:hover {
+    cursor: pointer;
+}
+
+th.sorted {
+    font-size: 20px;
+    font-style: italic;
+}
+
+th.sorted::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-right: 4px solid currentColor;
+    margin-right: .3em;
+    vertical-align: middle;
+}
+
+th.sorted::before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-left: 4px solid currentColor;
+    margin-left: .3em;
+    vertical-align: middle;
+}
+
+th.sorted[aria-sort='ascending']::after {
+    border-left: none;
+    border-bottom: 4px solid currentColor;
+}
+
+th:nth-child(1), td:nth-child(1) {
+    width: 5%;
+}
+  
+th:nth-child(2), td:nth-child(2), 
+th:nth-child(3), td:nth-child(3) {
+    width: 19%;
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 7%;
+}
+
+th:nth-child(5), td:nth-child(5), 
+th:nth-child(6), td:nth-child(6) {
+    width: 12%;
+}

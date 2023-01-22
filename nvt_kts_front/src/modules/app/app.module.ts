@@ -5,13 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from '@abacritt/angularx-social-login';
-
 import { Routes } from '@angular/router';
+
+
 import { MapsModule } from '../maps/maps.module';
 import { UserDataModule } from '../user-data/user-data.module';
 import { FormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
-import { PopUpModule } from '../pop-up/pop-up.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MenuModule } from '../menu/menu.module';
 import { ReferrerInterceptor } from '../../utils/referrer-interceptor';
@@ -24,11 +24,10 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     BrowserModule, 
     HttpClientModule, 
     FormsModule, 
-    AppRoutingModule, 
+    AppRoutingModule,
     MapsModule, 
     UserDataModule,
     LoginModule, 
-    PopUpModule,
     MenuModule,
     SocialLoginModule
   ],

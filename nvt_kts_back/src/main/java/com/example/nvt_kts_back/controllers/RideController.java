@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.CustomExceptions.InvalidAuthTokenException;
+import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.UserRideHistoryDTO;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.models.Ride;
@@ -27,14 +28,14 @@ public class RideController {
     @PostMapping("/ride/addRide")
     public Ride addRide(@RequestBody Ride ride) {return  rideService.createRide(ride);}
 
-    @GetMapping("/rides/history")
+    @GetMapping(value = "/rides/history")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
     public ResponseEntity<List<UserRideHistoryDTO>> getRegisteredUserRideHistory(HttpServletRequest request) {
         Long userId;
         try {
             userId = authService.verifyAuthTokenFromHeaderAndRetUser(request).getId();
-        } catch (InvalidAuthTokenException ignored) {
+        } catch (InvalidAuthTokenException | UserDoesNotExistException ignored) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(rideService.getRideHistoryForRegisteredUser(userId), HttpStatus.OK);

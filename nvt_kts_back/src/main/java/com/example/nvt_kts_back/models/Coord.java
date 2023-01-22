@@ -16,10 +16,13 @@ public class Coord {
     private double x;
     @Column
     private double y;
+    @Column
+    private String locationName;
 
 
-    public Coord(double x, double y) {
+    public Coord(double x, double y, String locationName) {
         this.x = x;
         this.y = y;
+        this.locationName = locationName;
     }
 }

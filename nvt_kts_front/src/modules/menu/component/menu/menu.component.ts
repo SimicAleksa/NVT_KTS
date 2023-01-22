@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CLIENT_LOGIN_URL, CLIENT_REGISTRATION_URL } from 'src/config/client-urls';
+import { CLIENT_LOGIN_URL, CLIENT_REGISTRATION_URL, CLIENT_REG_USR_DRIVES_HISTORY_URL } from 'src/config/client-urls';
 import { MenuService } from '../../service/menu-service';
 
 @Component({
@@ -49,5 +49,11 @@ export class MenuComponent implements OnInit {
   onRegisterBtnClick(): void {
     this.currentActiveBtn = 'REGISTER';
     this.router.navigate([CLIENT_REGISTRATION_URL]);
+  }
+
+  onRidesHistoryBtnClick(): void { 
+    this.currentActiveBtn = 'HISTORY';
+    this.router.navigate([CLIENT_REG_USR_DRIVES_HISTORY_URL]);
+
   }
 }

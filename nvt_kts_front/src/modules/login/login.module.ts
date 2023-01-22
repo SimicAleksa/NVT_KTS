@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './login-routing';
 import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
-import { PopUpModule } from '../pop-up/pop-up.module';
+import { PopUpModule } from '../pop-up/pop-up.module'; 
 import { FormsModule } from '@angular/forms';
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
 
