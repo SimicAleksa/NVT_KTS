@@ -1,4 +1,4 @@
-import { Component, OnInit,Input} from '@angular/core';
+import { Component, OnInit,Input, Output, EventEmitter} from '@angular/core';
 import {Route, Router} from '@angular/router';
 import * as L from 'leaflet';
 import GeocoderControl, {Geocoder, geocoders} from 'leaflet-control-geocoder';
@@ -21,6 +21,9 @@ export class MapComponent implements OnInit {
 
   // @Input() selectedStartLocation!:MapLocation;
   // @Input() selectedEndLocation!:MapLocation;
+
+  @Output() routeSelectedBoolean = new EventEmitter();
+  @Output() selectedRouteData = new EventEmitter();
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -57,16 +60,19 @@ export class MapComponent implements OnInit {
       waypointMode:'snap',
       addWaypoints:true
     })
-      .on('routeselected', function(e) {
+    .on('routeselected', function(e) {
+        console.log(e)
         var route = e.route;
-        let ridePrice:Number = parseInt(route.summary.totalDistance) + 100;
-        that.toastr.info("Price of selected route wolud be: "+ridePrice + ",00 RSD");
-        console.log(route)
-        route.coordinates.forEach(function (coord: L.LatLng,index: number){
-            setTimeout(()=>{
-              marker.setLatLng([coord.lat,coord.lng]);
-            },100*index)
-          })
+        that.selectedRouteData.emit(e);
+        that.routeSelectedBoolean.emit(true);
+
+        // let ridePrice:Number = parseInt(route.summary.totalDistance) + 100;
+        // that.toastr.info("Price of selected route wolud be: "+ridePrice + ",00 RSD");
+        // route.coordinates.forEach(function (coord: L.LatLng,index: number){
+        //     setTimeout(()=>{
+        //       marker.setLatLng([coord.lat,coord.lng]);
+        //     },100*index)
+        //   })
       })
       .addTo(this.map)
   }

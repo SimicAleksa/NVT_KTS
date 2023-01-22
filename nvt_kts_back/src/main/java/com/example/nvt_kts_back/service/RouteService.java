@@ -12,4 +12,6 @@ public class RouteService {
     private RouteRepository routeRepository;
 
     public Route createRoute(Route route) {return routeRepository.save(route);}
+
+    public Route saveRoute(Route route){return routeRepository.save(route);}
 }

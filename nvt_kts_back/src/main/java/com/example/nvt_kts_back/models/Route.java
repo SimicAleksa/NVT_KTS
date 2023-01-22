@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.models;
 
 import com.example.nvt_kts_back.DTOs.RouteDTO;
+import com.example.nvt_kts_back.DTOs.RouteFormFrontDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -37,6 +38,13 @@ public class Route {
     public Route(RouteDTO routeDTO ) {
         this.startLocation = routeDTO.getStartLocation();
         this.endLocation = routeDTO.getEndLocation();
+        this.routeJSON = routeDTO.getRouteJSON();
+//        this.optionalLocations = new ArrayList<>();
+    }
+
+    public Route(RouteFormFrontDTO routeDTO ) {
+        this.startLocation = new Coord(routeDTO.getStartLocation());
+        this.endLocation = new Coord(routeDTO.getEndLocation());
         this.routeJSON = routeDTO.getRouteJSON();
 //        this.optionalLocations = new ArrayList<>();
     }
