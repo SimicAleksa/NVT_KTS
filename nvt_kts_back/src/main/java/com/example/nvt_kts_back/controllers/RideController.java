@@ -136,6 +136,17 @@ public class RideController {
         return new ResponseEntity<>(rideDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getDriversDTSRide/{id}",produces = "application/json")
+    public ResponseEntity<RideDTO> getDriversDTSRide(@PathVariable("id") String id) {
+        Ride ride = this.rideService.getDriversDrivingToStartRide(id);
+        RideDTO rideDTO;
+        if(ride.getRideState() == RideState.NOT_FOUND)
+            rideDTO = new RideDTO(ride,true);
+        else
+            rideDTO = new RideDTO(ride);
+        return new ResponseEntity<>(rideDTO, HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/deleteAllVehicles",produces = "text/plain")
     public ResponseEntity<String> deleteAllVehicles() {
         this.rideService.deleteAllRides();

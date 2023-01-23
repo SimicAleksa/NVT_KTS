@@ -71,9 +71,6 @@ export class VehiclesOnMapComponent implements OnInit {
          
           var polyline =L.polyline(step)
           polyline.addTo(geoLayerRouteGroup)
-          // let routeLayer = geoJSON(data);
-          // routeLayer.setStyle({ color: `#${color}` });
-          // routeLayer.addTo(geoLayerRouteGroup);
           this.rides[ride.id] = geoLayerRouteGroup;
         }
         else{

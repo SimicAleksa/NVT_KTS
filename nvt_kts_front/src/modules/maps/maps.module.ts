@@ -12,6 +12,7 @@ import { VehiclesOnMapComponent } from './components/vehicles-on-map/vehicles-on
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { SimpleRouteSearchComponent } from './components/simple-route-search/simple-route-search.component';
 import { SimpleRoutesSearchPageComponent } from './pages/simple-routes-search-page/simple-routes-search-page.component';
+import { TrackIncDriverComponent } from './components/track-inc-driver/track-inc-driver.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SimpleRoutesSearchPageComponent } from './pages/simple-routes-search-pa
     VehicleCardComponent,
     VehiclesOnMapComponent,
     SimpleRouteSearchComponent,
-    SimpleRoutesSearchPageComponent
+    SimpleRoutesSearchPageComponent,
+    TrackIncDriverComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes),FormsModule,LeafletModule],
 })

@@ -13,17 +13,14 @@ export class MapService {
   private headers = new HttpHeaders({ "Content-Type": "application/json"});
   constructor(private http: HttpClient) { }
 
-  majmun() {
-    this.http.get<String>("api/drivers/78").subscribe(
-      {next: (response) => {console.log(response);
-      }}
-    )
-  }
 
   getAllActiveDrivers(): Observable<Driver[]>{
     return this.http.get<Driver[]>("api/drivers/getDrivers")
   }
 
+  getPassangersDrivingToStartRide(driverID:string): Observable<Ride> {
+    return this.http.get<Ride>("api/rides/getDriversDTSRide/"+driverID);
+  }
 
   getAllActiveRides(): Observable<Ride[]> {
     return this.http.get<Ride[]>("api/rides/getRides");

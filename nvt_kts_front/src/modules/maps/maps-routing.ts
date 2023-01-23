@@ -4,6 +4,7 @@ import { ActiveVehicleComponent } from './components/active-vehicle/active-vehic
 import { VehiclesOnMapComponent } from './components/vehicles-on-map/vehicles-on-map.component';
 import { SimpleRouteSearchComponent } from './components/simple-route-search/simple-route-search.component';
 import { SimpleRoutesSearchPageComponent } from './pages/simple-routes-search-page/simple-routes-search-page.component';
+import { TrackIncDriverComponent } from './components/track-inc-driver/track-inc-driver.component';
 export const routes: Routes = [
   {
     path:"routeSearch",
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path:"activeVehicle",
     component :ActiveVehicleComponent
+  },
+  {
+    path:"incomingDriver",
+    component :TrackIncDriverComponent
   },
   {
     path:"allVehiclesOnMap",

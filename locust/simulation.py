@@ -138,6 +138,7 @@ class QuickstartUser(HttpUser):
         else:
             self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
             if(self.driverSTARTEDRide['rideState']=="STARTED"):
+                self.driver = self.client.get('/api/drivers/getDriver/'+str(self.driver['id'])).json()
                 self.driving_to_start_point = True
                 self.driving_the_route = False
                 self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])

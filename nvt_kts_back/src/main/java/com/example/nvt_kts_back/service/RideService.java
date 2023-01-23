@@ -84,6 +84,13 @@ public class RideService {
         return  this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
     }
 
+    public Ride getDriversDrivingToStartRide(String id){
+        Long temp = Long.parseLong(id);
+        Ride ride = new Ride();
+        ride.setRideState(RideState.NOT_FOUND);
+        return  this.rideRepository.findByDriverAndRideStateDTS(temp).orElse(ride);
+    }
+
     public void deleteAllRides(){
         this.rideRepository.deleteAll();
     }
