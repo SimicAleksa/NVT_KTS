@@ -61,7 +61,16 @@ public class RideController {
         routeFormFrontDTO.setStartLocation(coordsDTOStartLoc);
         routeFormFrontDTO.setEndLocation(coordsDTOEndLoc);
 
-        this.routeService.saveRoute(new Route(routeFormFrontDTO));
+        Route route = new Route(routeFormFrontDTO);
+
+        Ride ride = new Ride();
+        ride.setRideState(RideState.STARTED);
+        ride.setDriver_id(3l);
+        ride.setRoute(route);
+
+//        this.routeService.saveRoute(new Route(routeFormFrontDTO));
+        this.rideService.saveRide(ride);
+
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

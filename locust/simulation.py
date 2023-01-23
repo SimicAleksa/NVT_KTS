@@ -75,6 +75,8 @@ class QuickstartUser(HttpUser):
     def on_start(self):
         global counter
 
+        print("USAO U STARTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+
         self.driver = self.client.get('/api/drivers/getDriver/'+str(counter)).json()
         self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
         self.driverINPROGRESSRide = self.client.get('/api/rides/getDriversINPROGRESSRide/'+str(self.driver['id'])).json()
@@ -82,6 +84,8 @@ class QuickstartUser(HttpUser):
             counter=counter+1
 
         if(self.driverSTARTEDRide['rideState']=="STARTED"):
+            print("Kreira VOznju za vozaca---")
+            print(self.driver)
             self.driving_to_start_point = True
             self.driving_the_route = False
             self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
@@ -94,18 +98,24 @@ class QuickstartUser(HttpUser):
             self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
             self.destination = (self.driverINPROGRESSRide['route']['endLocation']['latitude'],self.driverINPROGRESSRide['route']['endLocation']['longitude'])
             self.getCoordsForRideINPROGRESS()
+
         else:
-            self.driving_to_start_point = False
-            self.driving_the_route = False
-            self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
-            self.destination = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
-            self.coordinates = []
-        
+            while(True):
+                self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
+                if(self.driverSTARTEDRide['rideState']=="STARTED"):
+                    self.driving_to_start_point = True
+                    self.driving_the_route = False
+                    self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
+                    self.destination = (self.driverSTARTEDRide['route']['startLocation']['latitude'],self.driverSTARTEDRide['route']['startLocation']['longitude'])
+                    self.get_new_coordinates()
+                    break
+                
 
     @task
     def update_vehicle_coordinates(self):
         if len(self.coordinates) > 0:
             new_coordinate = self.coordinates.pop(0)
+            print(new_coordinate)
             self.client.put(f"/api/drivers/updateDriverLocation/{self.driver['id']}", json={
                 'latitude':new_coordinate[1],
                 'longitude':new_coordinate[0]
@@ -113,31 +123,41 @@ class QuickstartUser(HttpUser):
         elif len(self.coordinates) == 0 and self.driving_to_start_point:
             self.end_ride()
             self.departure = self.destination
-            # while (self.departure[0] == self.destination[0]):
-            #     self.destination = (self.driverSTARTEDRide['route']['endLocation']['latitude'],self.driverSTARTEDRide['route']['endLocation']['longitude'])
             self.destination = (self.driverSTARTEDRide['route']['endLocation']['latitude'],self.driverSTARTEDRide['route']['endLocation']['longitude'])
             self.getCoordsForRideSTARTED()
             self.driving_to_start_point = False
             self.driving_the_route = True
+
         elif len(self.coordinates) == 0 and self.driving_the_route:
             self.end_ride()
             self.departure = self.destination
             self.destination = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
             self.driving_to_start_point = False
             self.driving_the_route = False
+
         else:
-            pass
+            self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
+            if(self.driverSTARTEDRide['rideState']=="STARTED"):
+                self.driving_to_start_point = True
+                self.driving_the_route = False
+                self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
+                self.destination = (self.driverSTARTEDRide['route']['startLocation']['latitude'],self.driverSTARTEDRide['route']['startLocation']['longitude'])
+                self.get_new_coordinates()
 
 
     def getCoordsForRideINPROGRESS(self):
         self.ride  = self.driverINPROGRESSRide
         self.routeGeoJSON = json.loads(self.driverINPROGRESSRide['route']['routeJSON'])
         self.coordinates = []
-        for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
-            self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
-        print("pre end ride")
-        # self.end_ride()
-        print("posle end ride")
+        if("routesIndex" not in self.routeGeoJSON):
+            for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
+                self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
+        else:
+            brojac = 0
+            for step in self.routeGeoJSON['coordinates']:
+                if(brojac%3==0):
+                    self.coordinates.append([step['lng'],step['lat']])
+                brojac=brojac+1
         
 
     def getCoordsForRideSTARTED(self):
@@ -146,11 +166,15 @@ class QuickstartUser(HttpUser):
 
         self.routeGeoJSON = json.loads(self.driverSTARTEDRide['route']['routeJSON'])
         self.coordinates = []
-        for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
-            self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
-        print("pre end inprogress")
-        # self.end_ride()
-        print("posle end inprogress")
+        if("routesIndex" not in self.routeGeoJSON):
+            for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
+                self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
+        else:
+            brojac = 0
+            for step in self.routeGeoJSON['coordinates']:
+                if(brojac%3==0):
+                    self.coordinates.append([step['lng'],step['lat']])
+                brojac=brojac+1
 
     def get_new_coordinates(self):
         response = requests.get(f'https://routing.openstreetmap.de/routed-car/route/v1/driving/{self.departure[1]},{self.departure[0]};{self.destination[1]},{self.destination[0]}?geometries=geojson&overview=false&alternatives=true&steps=true')

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import * as L from "leaflet";
+import * as L from "leaflet";
 import { latLng, tileLayer, marker, geoJSON, LayerGroup, icon, gridLayer } from 'leaflet';
 import { MapService } from '../../services/map.service';
 import {IDriverVehicleDTO} from "../active-vehicle/driverWithVehicleDTO";
@@ -65,11 +65,25 @@ export class VehiclesOnMapComponent implements OnInit {
       for (let ride of ret) {
         let color = Math.floor(Math.random() * 16777215).toString(16);
         let geoLayerRouteGroup: LayerGroup = new LayerGroup();
-        for (let step of JSON.parse(ride.route.routeJSON)['routes'][0]['legs'][0]['steps']) {
-          let routeLayer = geoJSON(step.geometry);
-          routeLayer.setStyle({ color: `#${color}` });
-          routeLayer.addTo(geoLayerRouteGroup);
+        let temRoute = JSON.parse(ride.route.routeJSON)
+        if("routesIndex" in temRoute){
+          let step = JSON.parse(ride.route.routeJSON)['coordinates'];
+         
+          var polyline =L.polyline(step)
+          polyline.addTo(geoLayerRouteGroup)
+          // let routeLayer = geoJSON(data);
+          // routeLayer.setStyle({ color: `#${color}` });
+          // routeLayer.addTo(geoLayerRouteGroup);
           this.rides[ride.id] = geoLayerRouteGroup;
+        }
+        else{
+          for (let step of temRoute['routes'][0]['legs'][0]['steps']) {
+            console.log(step.geometry)
+            let routeLayer = geoJSON(step.geometry);
+            routeLayer.setStyle({ color: `#${color}` });
+            routeLayer.addTo(geoLayerRouteGroup);
+            this.rides[ride.id] = geoLayerRouteGroup;
+          }
         }
         this.mapService.getDriverFromRide(ride.driver.toString()).subscribe((ret)=>{
           let driver = ret;

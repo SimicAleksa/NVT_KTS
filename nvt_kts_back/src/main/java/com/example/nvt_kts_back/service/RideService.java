@@ -178,4 +178,8 @@ public class RideService {
         map = putValuesInMap(map, rides, params);
         return map;
     }
+
+    public void saveRide(Ride ride){
+        this.rideRepository.save(ride);
+    }
 }
