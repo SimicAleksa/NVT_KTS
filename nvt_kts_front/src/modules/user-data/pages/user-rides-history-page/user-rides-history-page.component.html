@@ -16,7 +16,10 @@
         <app-driver-reviews-for-user 
             id="reviews-panel" 
             #reviewsPanel
+            (errSignal)="popUp.startPopUpShowTimeout($event)"
         >
         </app-driver-reviews-for-user>
     </div>
+
+    <app-pop-up #popUp [duration]="6500"></app-pop-up>
 </div>

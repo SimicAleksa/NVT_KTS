@@ -40,8 +40,6 @@ public class Ride {
     private Driver driver;
     @ManyToMany(fetch = FetchType.LAZY)
     private List<RegisteredUser> passengers;
-    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<Review> reviews;
 
 
     public Ride(RegisteredUser caller, Driver driver, RideState rideState, double price, LocalDateTime startDateTime,
@@ -55,7 +53,6 @@ public class Ride {
         this.expectedDuration = expectedDuration;
         this.distance = distance;
         this.passengers = new ArrayList<>();
-        this.reviews = new ArrayList<>();
     }
 
     public List<RegisteredUser> getLinkedPassengers() {

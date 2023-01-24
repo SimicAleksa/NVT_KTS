@@ -7,8 +7,12 @@ export class FieldValidator {
     
     constructor() { }
 
+    isNotNullOrUndef(obj: any): boolean {
+        return obj !== null && obj !== undefined
+    }
+
     isEmpty(value: string): boolean {
-        return value === null || value === undefined || value === "";
+        return !this.isNotNullOrUndef(value) || value === "";
     }
 
     isLenBetween(value: string, start: number, end: number): boolean {
@@ -32,6 +36,10 @@ export class FieldValidator {
 
     validateEmail(email: string): boolean {
         return this.emailRegex.test(email);
+    }
+
+    isNonZero(value: number): boolean {
+        return value !== 0;
     }
 
 }

@@ -26,8 +26,6 @@ public class Review {
     private RegisteredUser reviewer;
     @OneToOne(fetch = FetchType.LAZY)
     private Driver driver;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Ride ride;
 
 
     public Review(int carStars, int driverStars, String comment) {

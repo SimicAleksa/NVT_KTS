@@ -56,7 +56,7 @@ export class RideDetailsForUserComponent implements OnInit {
   }
 
   goToNewRidePage(): void {
-
+    //TO DO
   }
 
   showDriverReviews(): void {

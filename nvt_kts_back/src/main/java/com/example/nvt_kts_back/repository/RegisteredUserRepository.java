@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, String>  {
     Optional<RegisteredUser> getByEmail(String email);
+    Optional<RegisteredUser> getById(Long id);
 
 }

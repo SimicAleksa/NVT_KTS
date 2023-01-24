@@ -26,7 +26,7 @@ public class Driver extends User {
     private Boolean isDriverFree;
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Ride> historyOfRides;
-    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Review> reviews;
 
 

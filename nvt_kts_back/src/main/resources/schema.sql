@@ -73,7 +73,7 @@ INSERT INTO route_optional_locations (route_id, optional_locations_id, optional_
 
 INSERT INTO ride (ride_state, price, start_date_time, end_date_time, expected_duration, distance, route_id, caller_id, driver_id)
     VALUES
-      ('SCHEDULED', 50.0, '2022-01-01 10:00:00', '2022-01-01 11:00:00', 60, 10.0, 1, 1, 6),
+      ('SCHEDULED', 50.0, '2023-01-24 10:00:00', '2023-01-24 11:00:00', 60, 10.0, 1, 1, 6),
       ('IN_PROGRESS', 75.0, '2022-01-02 10:00:00', '2022-01-02 11:00:00', 60, 15.0, 2, 1, 6),
       ('SCHEDULED', 100.0, '2022-01-03 10:00:00', '2022-01-03 11:00:00', 60, 20.0, 3, 1, 6),
       ('WAITING_FOR_PAYMENT', 125.0, '2022-01-04 10:00:00', '2022-01-04 11:00:00', 60, 25.0, 4, 1, 6),
@@ -91,15 +91,15 @@ INSERT INTO ride_passengers (ride_id, passengers_id)
         (5, 1),
         (6, 1);
 
-INSERT INTO review (car_stars, driver_stars, comment, reviewer_id, ride_id, driver_id)
+INSERT INTO review (car_stars, driver_stars, comment, reviewer_id, driver_id)
     VALUES
-      (5, 5, 'Great ride!', 1, 6, 6),
-      (4, 4, 'The car was a bit old, but the driver was very friendly.', 2, 6, 6),
-      (3, 3, 'The ride was ok, but the car could have been cleaner.', 3, 6, 6),
-      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6, 7),
-      (1, 1, 'This was the worst ride I have ever taken.', 4, 6, 6),
-      (5, 5, 'Great ride!', 5, 6, 6),
-      (4, 4, 'The car was a bit old, but the driver was very friendly.', 1, 6, 7),
-      (3, 3, 'The ride was ok, but the car could have been cleaner.', 1, 6, 8),
-      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6, 9),
-      (1, 1, 'This was the worst ride I have ever taken.', 1, 6, 9);
+      (5, 5, 'Great ride!', 1, 6),
+      (4, 4, 'The car was a bit old, but the driver was very friendly.', 2, 6),
+      (3, 3, 'The ride was ok, but the car could have been cleaner.', 3, 6),
+      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 7),
+      (1, 1, 'This was the worst ride I have ever taken.', 4, 6),
+      (5, 5, 'Great ride!', 5, 6),
+      (4, 4, 'The car was a bit old, but the driver was very friendly.', 1, 7),
+      (3, 3, 'The ride was ok, but the car could have been cleaner.', 1, 8),
+      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 9),
+      (1, 1, 'This was the worst ride I have ever taken.', 1, 9);

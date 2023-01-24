@@ -55,4 +55,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public RegisteredUser getRegUserById(Long usrId) {
+        return registeredUserRepository.getById(usrId).orElseThrow(UserDoesNotExistException::new);
+    }
 }

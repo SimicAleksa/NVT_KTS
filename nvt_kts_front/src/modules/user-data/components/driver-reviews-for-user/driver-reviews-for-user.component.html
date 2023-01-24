@@ -3,7 +3,7 @@
         <p class="panel-title">Driver reviews section</p>
         <div class="row">
             <div class="form-outline flex-fill mb-0 form-floating">
-                <textarea [value]="newReviewMess" type="text" id="name" class="form-control review-txt-area"></textarea>
+                <textarea [(ngModel)]="newReviewMess" type="text" id="name" class="form-control review-txt-area"></textarea>
                 <label class="form-label" for="name">Tell us what you think about this driver.</label>
             </div>
         </div>

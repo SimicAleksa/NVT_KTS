@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +29,11 @@ public class RideService {
             ));
         }
         return rideHistory;
+    }
+
+    public boolean userHadRideWitGivenDriverInLast3Days(Long passengerId, Long driverId) {
+        return rideRepository.findByPassengerIdAndDriverIdAndDate(
+                passengerId, driverId, LocalDateTime.now().minusDays(3), LocalDateTime.now()
+        ).size() > 0;
     }
 }
