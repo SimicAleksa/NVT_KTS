@@ -1,11 +1,11 @@
-<div class="d-flex aligns-items-center">
-    <div id="wrapper">
-        <div> 
-            <label>Input the value you want to pay</label>
-            <input id="moneyValueInput" type="number" (change)="setValue()">
-            
-        </div>
-        
-        <div id="myPaypalButtons"></div>
-    </div>
-</div>
+
+
+<h1>The datalist element</h1>
+
+<form action="/action_page.php" method="get">
+    <label for="browser">Choose your browser from the list:</label>
+    <input type="text"  list="codes" (change)="saveSelectedFruit($event)">
+    <datalist id="codes">
+        <option *ngFor="let fruit of fruits">{{fruit}} </option>
+    </datalist>
+</form>
