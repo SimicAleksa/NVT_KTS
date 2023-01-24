@@ -2,9 +2,7 @@ package com.example.nvt_kts_back.models;
 
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.CarType;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,9 +10,9 @@ import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class Driver extends User {
     @Column
     private Boolean active;
@@ -28,6 +26,9 @@ public class Driver extends User {
     private Boolean isDriverFree;
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Ride> historyOfRides;
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Review> reviews;
+
 
     public Driver(String email, String password, String name, String surname, String city, String phone,
                   Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType,
@@ -39,6 +40,7 @@ public class Driver extends User {
         this.petAllowed = petAllowed;
         this.isDriverFree = isDriverFree;
         this.historyOfRides = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 }
 

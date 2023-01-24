@@ -91,15 +91,15 @@ INSERT INTO ride_passengers (ride_id, passengers_id)
         (5, 1),
         (6, 1);
 
-INSERT INTO review (car_stars, driver_stars, comment, reviewer_id, ride_id)
+INSERT INTO review (car_stars, driver_stars, comment, reviewer_id, ride_id, driver_id)
     VALUES
-      (5, 5, 'Great ride!', 1, 6),
-      (4, 4, 'The car was a bit old, but the driver was very friendly.', 1, 6),
-      (3, 3, 'The ride was ok, but the car could have been cleaner.', 1, 6),
-      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6),
-      (1, 1, 'This was the worst ride I have ever taken.', 1, 6),
-      (5, 5, 'Great ride!', 1, 6),
-      (4, 4, 'The car was a bit old, but the driver was very friendly.', 1, 6),
-      (3, 3, 'The ride was ok, but the car could have been cleaner.', 1, 6),
-      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6),
-      (1, 1, 'This was the worst ride I have ever taken.', 1, 6);
+      (5, 5, 'Great ride!', 1, 6, 6),
+      (4, 4, 'The car was a bit old, but the driver was very friendly.', 2, 6, 6),
+      (3, 3, 'The ride was ok, but the car could have been cleaner.', 3, 6, 6),
+      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6, 7),
+      (1, 1, 'This was the worst ride I have ever taken.', 4, 6, 6),
+      (5, 5, 'Great ride!', 5, 6, 6),
+      (4, 4, 'The car was a bit old, but the driver was very friendly.', 1, 6, 7),
+      (3, 3, 'The ride was ok, but the car could have been cleaner.', 1, 6, 8),
+      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6, 9),
+      (1, 1, 'This was the worst ride I have ever taken.', 1, 6, 9);

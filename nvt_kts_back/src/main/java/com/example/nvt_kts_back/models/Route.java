@@ -1,14 +1,18 @@
 package com.example.nvt_kts_back.models;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Route {
     @Id

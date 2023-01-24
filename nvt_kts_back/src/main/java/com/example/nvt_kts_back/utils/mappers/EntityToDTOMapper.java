@@ -1,24 +1,14 @@
 package com.example.nvt_kts_back.utils.mappers;
 
-import com.example.nvt_kts_back.DTOs.CoordDTO;
-import com.example.nvt_kts_back.DTOs.DriverInfoForRideHistoryDTO;
-import com.example.nvt_kts_back.DTOs.RideHistoryInfoDTO;
-import com.example.nvt_kts_back.DTOs.RouteInfoForDriveHistory;
-import com.example.nvt_kts_back.models.Coord;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.Ride;
-import com.example.nvt_kts_back.models.Route;
-import lombok.NonNull;
-
-import java.util.List;
+import com.example.nvt_kts_back.DTOs.*;
+import com.example.nvt_kts_back.models.*;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EntityToDTOMapper {
     public static DriverInfoForRideHistoryDTO mapDriverToDriverInfoForRideHistoryDTO(Driver driver) {
         return new DriverInfoForRideHistoryDTO(
-                driver.getName(), driver.getSurname(), driver.getPhone(), driver.getPicture(),
+                driver.getId(), driver.getName(), driver.getSurname(), driver.getPhone(), driver.getPicture(),
                 driver.getCarType(), driver.getBabyAllowed(), driver.getPetAllowed()
         );
     }
@@ -39,6 +29,14 @@ public class EntityToDTOMapper {
 
     public static CoordDTO mapCoordToCoordDTO(Coord coord) {
         return new CoordDTO(coord.getX(), coord.getY(), coord.getLocationName());
+    }
+
+    public static ReviewToShowDTO mapReviewToReviewToShowDTO(Review review) {
+        return new ReviewToShowDTO(review.getCarStars(), review.getDriverStars(), review.getComment(), mapUserToRegUserForReviewDTO(review.getReviewer()));
+    }
+
+    public static RegUserForReviewDTO mapUserToRegUserForReviewDTO(User usr) {
+        return new RegUserForReviewDTO(usr.getName(), usr.getSurname(), usr.getPicture());
     }
 
 }

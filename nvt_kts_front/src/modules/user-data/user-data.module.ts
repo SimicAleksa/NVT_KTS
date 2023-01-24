@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 import { UserRidesHistoryPageComponent } from './pages/user-rides-history-page/user-rides-history-page.component';
 import { RideHistoryTableComponent } from './components/ride-history-table/ride-history-table.component';
 import { RideDetailsForUserComponent } from './components/ride-details-for-user/ride-details-for-user.component';
+import { DriverReviewsForUserComponent } from './components/driver-reviews-for-user/driver-reviews-for-user.component';
 
 
 
@@ -31,7 +32,8 @@ import { RideDetailsForUserComponent } from './components/ride-details-for-user/
     ApproveChangesComponent,
     UserRidesHistoryPageComponent,
     RideHistoryTableComponent,
-    RideDetailsForUserComponent
+    RideDetailsForUserComponent,
+    DriverReviewsForUserComponent
   ],
   imports: [
     CommonModule,
