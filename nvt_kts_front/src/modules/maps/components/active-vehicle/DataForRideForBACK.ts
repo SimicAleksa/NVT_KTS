@@ -8,4 +8,5 @@ export interface DataForRideForBack{
     route: Route;
     duration: number;
     price: number;
+    reservedTime:string;
 }

@@ -18,4 +18,5 @@ public class DataForRideFromFromDTO {
     private int distance;
     private int duration;
     private int price;
+    private String reservedTime;
 }

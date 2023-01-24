@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,VERSION } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { MapLocation } from 'src/modules/app/model/mapLocation';
 import { Coord } from '../../components/active-vehicle/Coords';
@@ -28,11 +28,27 @@ export class SearchRoutesPageComponent implements OnInit {
   public priceOfRideString:string;
   public routeToOrdedJSON:any;
 
+  public now: Date = new Date();  //minimuim
+  public temp1: Date = new Date(); //maksimum
+  public minDate:string;
+  public maxDate:string;
+  public selectedDateTime:Date = new Date();
+  public reservedCheckBoxChecked:boolean;
+
+
   carTypes: string[] = ["SUV", "HATCHBACK", "COUPE", "MINIVAN", "SEDAN", "VAN", "LIMOUSINE"];
 
-  constructor(private toastr: ToastrService, private mapService: MapService) { }
+  constructor(private toastr: ToastrService, private mapService: MapService) { 
+    setInterval(() => {
+      this.now = new Date();
+    }, 1);
+  }
 
   ngOnInit(): void {
+    this.minDate= this.now.toISOString().slice(0,16)
+    this.maxDate = new Date(this.temp1.setHours(this.temp1.getHours()+5)).toISOString().slice(0,16)
+    console.log(this.minDate)
+    console.log(this.maxDate)
   }
 
   recieveSentSelectedStartLocation(emitedValue: MapLocation){
@@ -181,7 +197,8 @@ export class SearchRoutesPageComponent implements OnInit {
       distance: 0,
       route: route,
       duration: 0,
-      price: 0
+      price: 0,
+      reservedTime:""
     }
     return sendIT;
   }
@@ -203,18 +220,48 @@ export class SearchRoutesPageComponent implements OnInit {
     sendIT.route.routeJSON = this.routeToOrdedJSON
   }
 
+  isValideDateTimeSelected():boolean{
+    if(this.now>new Date(this.selectedDateTime)){
+      return false;
+    }
+    if(this.temp1<new Date(this.selectedDateTime)){
+      return false;
+    }
+    return true;
+  }
+
+  reservedCheckBoxCheckedFinction():void{
+    if(this.reservedCheckBoxChecked)
+      this.reservedCheckBoxChecked = false;
+    else
+      this.reservedCheckBoxChecked = true;
+  }
+
+  setUpReservedTime(sendIT:DataForRideForBack):void{
+      if(this.reservedCheckBoxChecked)
+        sendIT.reservedTime = this.selectedDateTime.toString();
+      else
+        sendIT.reservedTime = "";
+  }
+
   onSubmit(){
     var sendIT = this.create_SENDIT();
     this.handleCheckboxesForSentData(sendIT);
     this.routeSetUpForBack(sendIT);
     this.startAndEndLocationForBack(sendIT);
     this.routeJsonSetUp(sendIT);
+    this.setUpReservedTime(sendIT);
     if(sendIT.carTypes.length===0){
       this.toastr.warning("At least one type of vehicle must be checked");
     }
+    else if(!this.isValideDateTimeSelected() && this.reservedCheckBoxChecked){
+      this.toastr.warning("Invalid date or time selected!");
+      this.toastr.warning("You can only reserve 5h upfront");
+    }
     else{
+      console.log(sendIT);
       this.mapService.saveRide(sendIT);
     }
-    console.log(sendIT);
+    // console.log(sendIT);
   }
 }
