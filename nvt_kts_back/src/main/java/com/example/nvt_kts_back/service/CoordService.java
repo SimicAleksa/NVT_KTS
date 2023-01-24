@@ -15,5 +15,7 @@ public class CoordService {
         return this.coordRepository.findById(id);
     }
 
+    public Coord saveCoord(Coord coord){return coordRepository.save(coord);}
+
 
 }

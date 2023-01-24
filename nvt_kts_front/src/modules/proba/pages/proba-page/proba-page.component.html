@@ -1,6 +1,11 @@
-<div class="search-container">
-	<input type="text" name="fruit" id="fruit" placeholder="Search fruit 🍎">
-	<div class="suggestions">
-		<ul></ul>
-	</div>
-</div>
+
+
+<h1>The datalist element</h1>
+
+<form action="/action_page.php" method="get">
+    <label for="browser">Choose your browser from the list:</label>
+    <input type="text"  list="codes" (change)="saveSelectedFruit($event)">
+    <datalist id="codes">
+        <option *ngFor="let fruit of fruits">{{fruit}} </option>
+    </datalist>
+</form>

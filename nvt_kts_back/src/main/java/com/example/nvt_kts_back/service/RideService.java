@@ -87,6 +87,13 @@ public class RideService {
         return  this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
     }
 
+    public Ride getDriversDrivingToStartRide(String id){
+        Long temp = Long.parseLong(id);
+        Ride ride = new Ride();
+        ride.setRideState(RideState.NOT_FOUND);
+        return  this.rideRepository.findByDriverAndRideStateDTS(temp).orElse(ride);
+    }
+
     public void deleteAllRides(){
         this.rideRepository.deleteAll();
     }
@@ -180,6 +187,10 @@ public class RideService {
         List<Ride> rides  = u.getHistoryOfRides();
         map = putValuesInMap(map, rides, params);
         return map;
+    }
+
+    public void saveRide(Ride ride){
+        this.rideRepository.save(ride);
     }
 
     public HashMap<String, HashMap<String, Double>> getAdminReportData(ReportParams params) {

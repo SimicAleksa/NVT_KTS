@@ -1,11 +1,14 @@
 package com.example.nvt_kts_back.controllers;
 
-import com.example.nvt_kts_back.DTOs.RideDTO;
-import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
+import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.enumerations.RideState;
+import com.example.nvt_kts_back.models.Coord;
 import com.example.nvt_kts_back.models.Ride;
+import com.example.nvt_kts_back.models.Route;
+import com.example.nvt_kts_back.service.CoordService;
 import com.example.nvt_kts_back.service.DriverService;
-import com.example.nvt_kts_back.DTOs.ReportParams;
+import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,12 @@ public class RideController {
     private RideService rideService;
 
     @Autowired
+    private CoordService coordService;
+
+    @Autowired
+    private RouteService routeService;
+
+    @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
@@ -34,6 +43,37 @@ public class RideController {
     public RideController(RideService rideService, SimpMessagingTemplate simpMessagingTemplate){
         this.rideService = rideService;
         this.simpMessagingTemplate = simpMessagingTemplate;
+    }
+
+    @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
+    public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
+        System.out.println(dto.toString());
+        RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
+        routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());
+
+        CoordsDTO coordsDTOStartLoc = new CoordsDTO();
+        coordsDTOStartLoc.setLatitude(dto.getRoute().getStartLocation().getLatitude());
+        coordsDTOStartLoc.setLongitude(dto.getRoute().getStartLocation().getLongitude());
+
+        CoordsDTO coordsDTOEndLoc = new CoordsDTO();
+        coordsDTOEndLoc.setLatitude(dto.getRoute().getEndLocation().getLatitude());
+        coordsDTOEndLoc.setLongitude(dto.getRoute().getEndLocation().getLongitude());
+
+        routeFormFrontDTO.setStartLocation(coordsDTOStartLoc);
+        routeFormFrontDTO.setEndLocation(coordsDTOEndLoc);
+
+        Route route = new Route(routeFormFrontDTO);
+
+        Ride ride = new Ride();
+        ride.setRideState(RideState.STARTED);
+        ride.setDriver_id(3l);
+        ride.setRoute(route);
+
+//        this.routeService.saveRoute(new Route(routeFormFrontDTO));
+        this.rideService.saveRide(ride);
+
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
@@ -89,6 +129,17 @@ public class RideController {
     @GetMapping(value = "/getDriversINPROGRESSRide/{id}",produces = "application/json")
     public ResponseEntity<RideDTO> getDriversINPROGRESSRide(@PathVariable("id") String id) {
         Ride ride = this.rideService.getDriversINPROGRESSRide(id);
+        RideDTO rideDTO;
+        if(ride.getRideState() == RideState.NOT_FOUND)
+            rideDTO = new RideDTO(ride,true);
+        else
+            rideDTO = new RideDTO(ride);
+        return new ResponseEntity<>(rideDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getDriversDTSRide/{id}",produces = "application/json")
+    public ResponseEntity<RideDTO> getDriversDTSRide(@PathVariable("id") String id) {
+        Ride ride = this.rideService.getDriversDrivingToStartRide(id);
         RideDTO rideDTO;
         if(ride.getRideState() == RideState.NOT_FOUND)
             rideDTO = new RideDTO(ride,true);
