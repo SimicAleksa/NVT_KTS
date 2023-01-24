@@ -22,6 +22,12 @@ export class MapService {
     return this.http.get<Ride>("api/rides/getDriversDTSRide/"+driverID);
   }
 
+
+  getPassangersDrivingTheRouteRide(driverID:string): Observable<Ride> {
+    return this.http.get<Ride>("api/rides/getDriversINPROGRESSRide/"+driverID);
+  }
+
+
   getAllActiveRides(): Observable<Ride[]> {
     return this.http.get<Ride[]>("api/rides/getRides");
   }
