@@ -104,4 +104,17 @@ public class DriverController {
     public long getActiveMinutes(@PathVariable("email") String email) {
         return this.driverService.getActiveMinutes(email);
     }
+    @PostMapping("/changeDriverActiveStatus/{email}/{active}")
+    public void changeDriverActiveStatus(@PathVariable("email") String email, @PathVariable("active") boolean active)
+    {
+        this.driverService.changeDriverActiveStatus(email, active);
+    }
+
+    @GetMapping("/getDrivesActiveStatus/{email}")
+    public ResponseEntity<Boolean> getDrivesActiveStatus(@PathVariable("email") String email)
+    {
+        Boolean b = this.driverService.getDrivesActiveStatus(email);
+        return new ResponseEntity<>(b, HttpStatus.OK);
+    }
+
 }

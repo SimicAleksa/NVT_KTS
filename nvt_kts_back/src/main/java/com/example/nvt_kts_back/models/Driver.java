@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +87,11 @@ public class Driver extends User {
     public String getCarTypeString()
     {
         return this.carType.toString();
+    }
+
+    public void addSpan(TimeSpan ts)
+    {
+        this.activeTime.add(ts);
     }
 }
 

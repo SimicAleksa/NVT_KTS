@@ -1,7 +1,16 @@
 <div class="offcanvas offcanvas-end w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
     <div class="offcanvas-header">
-        <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas">My rides</h6>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="col-7">
+            <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas">My rides | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Active</h6>
+        </div>
+        <div class="col">
+            <div class="form-check form-switch d-flex justify-content-center">
+                <input class="form-check-input" style="width: 80%;" type="checkbox" id="flexSwitchCheckDefault" (change)="changeStatus()">
+            </div>
+        </div>
+        <div class="col-1 d-flex justify-content-end">
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
     </div>
     <div class="offcanvas-body px-0 overflow-auto" id="overflowedDiv">
         <div id="moj" class="overflow-auto">

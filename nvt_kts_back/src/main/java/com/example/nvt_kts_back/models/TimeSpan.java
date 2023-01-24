@@ -22,4 +22,9 @@ public class TimeSpan {
 
     @Column
     private LocalDateTime endTime;
+
+    public TimeSpan (LocalDateTime start)
+    {
+        this.startTime = start;
+    }
 }

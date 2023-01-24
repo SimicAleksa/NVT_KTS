@@ -88,4 +88,47 @@ public class DriverService {
         }
         return result;
     }
+
+    public void changeDriverActiveStatus(String email, boolean active) {
+        Driver d = this.driverRepository.findByEmail(email);
+        d.setActive(active);
+        this.driverRepository.save(d);
+        //treba jos da kreiram span
+        writeInSpan(email, active);
+    }
+
+    private void writeInSpan(String email, boolean active) {
+        if (active)
+        {
+            // ako smo ukljucili treba dodoati novi span
+            addSpan(email);
+            setStart(email);
+            return;
+        }
+        // ako je iskljuycio treba zatvoriti span
+        closeSpan(email);
+    }
+
+    private void setStart(String email) {
+        Driver d = driverRepository.findByEmail(email);
+        d.getActiveTime().get(d.getActiveTime().size() - 1).setStartTime(LocalDateTime.now());
+        driverRepository.save(d);
+    }
+
+    private void closeSpan(String email) {
+        Driver d = driverRepository.findByEmail(email);
+        d.getActiveTime().get(d.getActiveTime().size() - 1).setEndTime(LocalDateTime.now());
+        driverRepository.save(d);
+    }
+
+    private void addSpan(String email) {
+        TimeSpan t = new TimeSpan();
+        Driver d = driverRepository.findByEmail(email);
+        d.addSpan(t);
+        driverRepository.save(d);
+    }
+
+    public boolean getDrivesActiveStatus(String email) {
+        return this.driverRepository.findByEmail(email).getActive();
+    }
 }

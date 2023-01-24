@@ -21,6 +21,8 @@ export class UserDataService {
   private addNoteURL: string;
   private blockUserURL: string;
   private addTokensURL: string;
+  private changeDriverActiveStatusURL: string;
+  private getDrivesActiveStatusURL: string;
 
 
 
@@ -37,6 +39,23 @@ export class UserDataService {
     this.addNoteURL = "api/user/addNote";
     this.blockUserURL = "api/user/blockUser";
     this.addTokensURL = "api/registeredUsers/addTokens/";
+    this.changeDriverActiveStatusURL = "api/drivers/changeDriverActiveStatus/";
+    this.getDrivesActiveStatusURL = "api/drivers/getDrivesActiveStatus/";
+  }
+
+  getDrivesActiveStatus(username: string) {
+    return this.http.get(this.getDrivesActiveStatusURL + username, {
+      headers: this.headers,
+      responseType: "json",      
+    })
+  }
+
+  changeDriverActiveStatus(email: string, active: boolean) {
+    this.http.post(this.changeDriverActiveStatusURL + email + "/" + active, {
+      headers: this.headers,
+      responseType: "json",      
+    }).subscribe(() => { 
+    });
   }
 
   getChangedProfiles(): Observable<ChangeProfileRequest[] []> {

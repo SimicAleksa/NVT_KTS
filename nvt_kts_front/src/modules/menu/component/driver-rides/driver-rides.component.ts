@@ -1,3 +1,4 @@
+import { ASTWithSource } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 import * as L from 'leaflet';
@@ -5,6 +6,7 @@ import GeocoderControl, {Geocoder, geocoders} from 'leaflet-control-geocoder';
 import { GeocodingCallback } from 'leaflet-control-geocoder/dist/geocoders';
 import { RideForNotification } from 'src/modules/app/model/ride';
 import { RideService } from 'src/modules/reports/services/ride.service';
+import { UserDataService } from 'src/modules/user-data/services/user-data.service';
 
 
 @Component({
@@ -17,23 +19,35 @@ export class DriverRidesComponent implements OnInit {
   username: string = "djura@gmail.com";
   driverRides: RideForNotification[];
 
-  
-
-
   constructor(
     private rideService: RideService,
+    private userService: UserDataService
   ) { }
 
   ngOnInit(): void {
-
+    this.setActiveStatus();
     this.rideService.findDriversUpcomingRides(this.username).subscribe((response) => {
       this.driverRides = <RideForNotification[]> response;
       this.addStringLocation();
       this.splitDate();
 
     });
+  }
 
+  setActiveStatus() {
+    this.userService.getDrivesActiveStatus(this.username).subscribe((response) => {
+      let b = <boolean> response;     
+      let el: HTMLInputElement = document.querySelector("#flexSwitchCheckDefault")!;
+      el.checked = b;
+    });
     
+  }
+
+  changeStatus()
+  {
+    let el: HTMLInputElement = document.querySelector("#flexSwitchCheckDefault")!;
+    let state: boolean =  el.checked
+    this.userService.changeDriverActiveStatus(this.username, state);   
   }
 
   splitDate() {
@@ -128,5 +142,4 @@ export class DriverRidesComponent implements OnInit {
 }
 
 
- 
 
