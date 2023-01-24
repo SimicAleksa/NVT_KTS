@@ -42,6 +42,10 @@ public class Driver extends User {
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Coord currentCoords;
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<TimeSpan> activeTime;
+
+
     public Driver(String email, String password, String name, String surname, String city, String phone,
                   Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType,
                   Boolean babyAllowed, Boolean petAllowed, Boolean isDriverFree) {

@@ -1,10 +1,10 @@
 package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.DTOs.RideDTO;
+import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.service.DriverService;
-import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.DTOs.ReportParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("api/rides")
@@ -127,6 +128,26 @@ public class RideController {
     {
         HashMap<String, HashMap<String, Double>> retVal = this.rideService.getAdminReportData(params);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getDriverNotificationRides/{email}")
+    public ResponseEntity<ArrayList<RideNotificationDTO>> findDriversUpcomingRides(@PathVariable("email") String email)
+    {
+        ArrayList<RideNotificationDTO> retVal = this.rideService.findDriversUpcomingRides(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getUserNotificationRides/{email}")
+    public ResponseEntity<ArrayList<RideNotificationDTO>> findUsersUpcomingRides(@PathVariable("email") String email)
+    {
+        ArrayList<RideNotificationDTO> retVal = this.rideService.finUsersUpcomingRides(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/changeRideState/{id}/{state}")
+    public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
+    {
+        this.rideService.changeRideState(id, state);
     }
 
 }

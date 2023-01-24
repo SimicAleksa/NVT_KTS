@@ -79,7 +79,8 @@ public class UserService {
         this.userRepository.deleteAll();
     }
 
-    public User createUser(User user) {return userRepository.save(user);}
+    public User createUser(User user)
+    {return userRepository.save(user);}
     public UserDTO findDTOByEmail(String email)
     {
         User u = userRepository.findByEmail(email);
@@ -112,6 +113,7 @@ public class UserService {
         this.userRepository.updateIsBlocked(blocked, email);
 
     }
+
 
     /*public ArrayList<ArrayList<UserDTO>> findChangedUsers() {
         ArrayList<ChangeProfileRequest> users = this.userRepository.findChangedProfiles();

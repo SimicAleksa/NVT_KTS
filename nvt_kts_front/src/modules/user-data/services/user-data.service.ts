@@ -31,7 +31,7 @@ export class UserDataService {
     this.saveChangesUrl = 'api/changeProfileRequests/saveChanges';
     this.declineChangesUrl = 'api/changeProfileRequests/declineChanges';
     this.addDriverUrl = 'http://localhost:8000/driver/addDriver';
-    this.addUserUrl = 'http://localhost:8000/users/addUser';
+    this.addUserUrl = 'api/registeredUsers/addUser';
     this.getAllUsersURL = "api/user/getAllUsers";
     this.getUserURL = "api/registeredUsers/getUserData/";
     this.addNoteURL = "api/user/addNote";

@@ -52,8 +52,10 @@ public class UserController {
         User user = userService.addNewDriver(driver);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/user/addUser")
-    public User addUser(@RequestBody User user) {return userService.createUser(user);}
+    @PostMapping("/addUser")
+    public User addUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
 
 
     @GetMapping(value="/getUserDTOForChat/{email}")

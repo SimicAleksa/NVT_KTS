@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './component/menu/menu.component';
-
+import { DriverRidesComponent } from './component/driver-rides/driver-rides.component';
+import { RouterModule } from '@angular/router';
+import { routes } from './menu-routing';
+import { RegisteredUsersRidesComponent } from './component/registered-users-rides/registered-users-rides.component';
 
 
 @NgModule({
   declarations: [
-    MenuComponent
+    MenuComponent,
+    DriverRidesComponent,
+    RegisteredUsersRidesComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild(routes),
   ],
   exports: [
     MenuComponent

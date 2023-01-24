@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.repository;
 
 import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.TimeSpan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,7 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
     @Modifying
     @Query("update Driver d set d.babyAllowed=?2, d.petAllowed=?3 where d.id =?1")
     void updateCarData(Long id, Boolean babyAllowed, Boolean petsAllowed);
+
 
 
 

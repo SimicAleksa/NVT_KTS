@@ -25,6 +25,12 @@ const routes: Routes = [
         path: "charts",
         loadChildren: () =>
               import("../reports/reports.module").then((m) => m.ReportsModule),
+      },
+      {
+        path: "sidebar",
+        loadChildren: () =>
+              import("../menu/menu.module").then((m) => m.MenuModule),
+              // http://localhost:4200/sidebar/driver-rides
       }
     ]
   }

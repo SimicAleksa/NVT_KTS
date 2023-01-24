@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {render} from "creditcardpayments/creditCardPayments";
+import { ProbaService } from '../../services/proba.service';
 
 
 @Component({
@@ -8,34 +8,22 @@ import {render} from "creditcardpayments/creditCardPayments";
   styleUrls: ['./proba-page.component.css']
 })
 export class ProbaPageComponent implements OnInit {
-  value:string = "20";
+
+  
+  private username: string = "djura@gmail.com";
   
 
-  constructor(){
+  constructor(private probaService: ProbaService){
     
   }
 
 
   ngOnInit(): void {
+    this.probaService.getMinutes(this.username).subscribe((response) => {
+      alert(response);
+    });
   }
 
-  setValue()
-  {
-    
-    //this.value = document.querySelector("#moneyValueInput")!.innerHTML;
-
-    const input = document.getElementById('moneyValueInput') as HTMLInputElement | null;
-    this.value = input!.value;    
-    console.log(this.value + "je unesena vrijednos");
-    render({
-      id: "#myPaypalButtons",
-      currency: "USD",
-      value: this.value,
-      onApprove: (details) => {
-        alert("Transaction successful");
-      }
-    })
-  }
 
   
 

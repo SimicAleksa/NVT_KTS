@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,14 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
     @Query("select r.driver_id from Ride r where r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START' or r.rideState='STARTED'")
     List<Long> findDriversThatDrive();
+
+
+    @Query("select r from Ride r where r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START' or r.rideState='STARTED' or r.rideState='SCHEDULED' or r.rideState='RESERVED' and r.driver_id=?1 order by start_date_time")
+    ArrayList<Ride> findDriversUpcomingRides(Long id);
+
+
+    /*@Query("select r. from Ride r where r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START' or r.rideState='STARTED' or r.rideState='SCHEDULED' or r.rideState='RESERVED' and r.driver_id=?1 order by start_date_time")
+    ArrayList<Ride> findDriversUpcomingRidesDTO(Long id);*/
 
 //    List<Ride> findByDriverEmail(String id);
 

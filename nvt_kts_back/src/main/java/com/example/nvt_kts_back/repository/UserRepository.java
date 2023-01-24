@@ -36,4 +36,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Modifying
     @Query("update User u set u.isBlocked=?1 where u.email =?2")
     void updateIsBlocked(boolean blocked, String email);
+
+    @Query("select u.id from User u where u.email =?1")
+    Long findIdByEmail(String email);
 }

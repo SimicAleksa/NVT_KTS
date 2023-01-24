@@ -42,15 +42,38 @@ insert into route (start_location_id, end_location_id, routejson) values (4, 5, 
 
 insert into ride (end_date_time, distance, expected_duration,
                   price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
-                                                                         100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 1,1);
+                                                                         100, 16.3, 'WAITING_FOR_PAYMENT', '2023-01-24 18:47:52.069', 3,1);
 
 insert into ride (end_date_time, distance, expected_duration,
                   price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-02 18:47:52.069', 54.3,
-                                                                                   100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 3,2);
+                                                                                   100, 16.3, 'STARTED', '2023-01-24 13:47:51.069', 3,2);
+
+insert into ride (end_date_time, distance, expected_duration,
+                  price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
+                                                                         100, 16.3, 'IN_PROGRESS', '2023-01-24 13:47:52.069', 3,1);
+
+insert into ride (end_date_time, distance, expected_duration,
+                  price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-02 18:47:52.069', 54.3,
+                                                                                   100, 16.3, 'SCHEDULED', '2023-01-24 18:47:52.069', 3,2);
+
+insert into ride (end_date_time, distance, expected_duration,
+                  price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
+                                                                         100, 16.3, 'DRIVING_TO_START', '2023-01-24 18:45:52.069', 3,1);
+
+insert into ride (end_date_time, distance, expected_duration,
+                  price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-02 18:47:52.069', 54.3,
+                                                                                   100, 16.3, 'RESERVED', '2023-01-24 18:50:52.069', 3,2);
 
 insert into ride_passengers(ride_id, registered_user_id) values (1, 4);
 insert into ride_passengers(ride_id, registered_user_id) values (1, 5);
+
 insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (3, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (4, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (5, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (6, 4);
+
+
 
 
 
@@ -59,6 +82,21 @@ insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
 
 INSERT INTO REVIEW (comment) values ('Kojmentar');
 INSERT INTO MESSAGE (text, sender, receiver) values ('Hey, Zima, how are you?','pera@gmail.com', 'zima@gmail.com' );
-INSERT INTO MESSAGE (text, sender, receiver) values ('Happy Monday Laura! I have good news, the shoes you inquired about are back in stock in your size. I set a pair aside for you to come pick up this week. ', 'zima@gmail.com',  'pera@gmail.com');
+INSERT INTO MESSAGE (text, sender, receiver) values ('Happy Monday Laura! I have good news, the shoes you inquired about are back in stock in your size', 'zima@gmail.com',  'pera@gmail.com');
 INSERT INTO MESSAGE (text, sender, receiver) values ('Ovo je Djurina poruka', 'djura@gmail.com',  'zima@gmail.com');
 INSERT INTO MESSAGE (text, sender, receiver) values ('Ovo je poruka koju Djura pise zimi', 'djura@gmail.com',  'pera@gmail.com');
+
+
+insert into TIME_SPAN (start_time, end_time) values ('2023-01-23 10:47:52.069', '2023-01-23 11:47:52.069'); --1
+insert into TIME_SPAN (start_time, end_time) values ('2023-01-23 12:47:52.069', '2023-01-23 13:47:52.069'); --1
+insert into TIME_SPAN (start_time, end_time) values ('2023-01-23 15:47:52.069', '2023-01-23 17:47:52.069'); --1
+insert into TIME_SPAN (start_time, end_time) values ('2023-01-23 18:47:52.069', '2023-01-23 18:50:52.069'); --0
+insert into TIME_SPAN (start_time, end_time) values ('2023-01-23 19:47:52.069', '2023-01-23 21:47:52.069'); --2
+insert into TIME_SPAN (start_time, end_time) values ('2023-01-23 23:47:52.069', '2023-01-24 01:47:52.069'); --2
+
+insert into DRIVER_ACTIVE_TIME (DRIVER_ID, ACTIVE_TIME_ID) values (3, 1);
+insert into DRIVER_ACTIVE_TIME (DRIVER_ID, ACTIVE_TIME_ID) values (3, 2);
+insert into DRIVER_ACTIVE_TIME (DRIVER_ID, ACTIVE_TIME_ID) values (3, 3);
+insert into DRIVER_ACTIVE_TIME (DRIVER_ID, ACTIVE_TIME_ID) values (3, 4);
+insert into DRIVER_ACTIVE_TIME (DRIVER_ID, ACTIVE_TIME_ID) values (3, 5);
+insert into DRIVER_ACTIVE_TIME (DRIVER_ID, ACTIVE_TIME_ID) values (3, 6);

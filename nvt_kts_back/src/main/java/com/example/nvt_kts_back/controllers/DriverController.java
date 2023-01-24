@@ -99,4 +99,9 @@ public class DriverController {
         Driver d = new Driver(driver);
         driverService.addDriver(d);
     }
+
+    @GetMapping("/getActiveMinutes/{email}")
+    public long getActiveMinutes(@PathVariable("email") String email) {
+        return this.driverService.getActiveMinutes(email);
+    }
 }

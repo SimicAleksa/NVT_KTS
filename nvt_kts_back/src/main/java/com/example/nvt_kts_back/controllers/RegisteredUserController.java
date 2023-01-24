@@ -2,6 +2,7 @@ package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.DTOs.RegisteredUserDTO;
 import com.example.nvt_kts_back.DTOs.UserDTO;
+import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.service.UserService;
 import com.example.nvt_kts_back.models.ChangeProfileRequest;
 import com.example.nvt_kts_back.models.RegisteredUser;
@@ -38,5 +39,11 @@ public class RegisteredUserController {
     public void addTokens(@PathVariable("email") String email, @PathVariable("value") Double value) {
         this.registeredUserService.addTokens(email, value);
     }
+
+    @PostMapping("/addUser")
+    public User addUser(@RequestBody ChangeProfileRequest user) {
+        return registeredUserService.saveUser(user);
+    }
+
 
 }

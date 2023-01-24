@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.Driver;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
+import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.List;
 
 import java.time.LocalDateTime;
@@ -184,5 +187,38 @@ public class RideService {
         List<Ride> rides  = this.rideRepository.findAll();
         map = putValuesInMap(map, rides, params);
         return map;
+    }
+
+    public ArrayList<RideNotificationDTO> findDriversUpcomingRides(String email) {
+        Driver d= this.driverRepository.findByEmail(email);
+        List<Ride> rides = rideRepository.findDriversUpcomingRides(d.getId());
+        ArrayList<RideNotificationDTO> retVal = new ArrayList<>();
+        for(Ride r: rides)
+        {
+            retVal.add(new RideNotificationDTO(r));
+        }
+        return retVal;
+    }
+
+    public void changeRideState(Long id, String state) {
+        Ride r = rideRepository.findById(id).get();
+        r.setRideState(RideState.valueOf(state));
+        rideRepository.save(r);
+    }
+
+    public ArrayList<RideNotificationDTO> finUsersUpcomingRides(String email) {
+        RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
+        List<Ride> rides = ru.getHistoryOfRides();
+        ArrayList<RideNotificationDTO> retVal = new ArrayList<>();
+        for(Ride r: rides)
+        {
+            if (r.getRideState()==RideState.IN_PROGRESS || r.getRideState()==RideState.DRIVING_TO_START ||
+                    r.getRideState()==RideState.SCHEDULED || r.getRideState()==RideState.WAITING_FOR_PAYMENT ||
+                    r.getRideState()==RideState.RESERVED)
+                retVal.add(new RideNotificationDTO(r));
+        }
+        Collections.sort(retVal, (x, y) -> x.getStartDateTime().compareTo(y.getStartDateTime()));
+        return retVal;
+
     }
 }

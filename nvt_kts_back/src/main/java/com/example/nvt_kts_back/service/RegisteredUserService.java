@@ -1,6 +1,10 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.configurations.Settings;
+import com.example.nvt_kts_back.models.ChangeProfileRequest;
 import com.example.nvt_kts_back.models.RegisteredUser;
+import com.example.nvt_kts_back.models.Role;
+import com.example.nvt_kts_back.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
@@ -27,5 +31,12 @@ public class RegisteredUserService {
         this.registeredUserRepository.setTokens(email, newTokens);
 
 
+    }
+
+    public RegisteredUser saveUser(ChangeProfileRequest user) {
+        RegisteredUser ru = new RegisteredUser(user);
+        ru.setRole(new Role(Settings.USER_ROLE_NAME));
+        ru.setTokens(0.0);
+        return registeredUserRepository.save(ru);
     }
 }
