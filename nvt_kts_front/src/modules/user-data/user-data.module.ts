@@ -11,10 +11,11 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { ApproveChangesPageComponent } from './pages/approve-changes-page/approve-changes-page.component';
 import { ApproveChangesComponent } from './components/approve-changes/approve-changes.component';
 import { FormsModule } from '@angular/forms';
-import { UserDrivesHistoryPageComponent } from './pages/user-drives-history-page/user-drives-history-page.component';
-import { RideHistoryTableComponent } from './components/ride-history-table/ride-history-table.component';
 import { PopUpModule } from '../pop-up/pop-up.module'; 
 import { DatePipe } from '@angular/common';
+import { UserRidesHistoryPageComponent } from './pages/user-rides-history-page/user-rides-history-page.component';
+import { RideHistoryTableComponent } from './components/ride-history-table/ride-history-table.component';
+import { RideDetailsForUserComponent } from './components/ride-details-for-user/ride-details-for-user.component';
 
 
 
@@ -28,8 +29,9 @@ import { DatePipe } from '@angular/common';
     EditProfileComponent,
     ApproveChangesPageComponent,
     ApproveChangesComponent,
-    UserDrivesHistoryPageComponent,
-    RideHistoryTableComponent
+    UserRidesHistoryPageComponent,
+    RideHistoryTableComponent,
+    RideDetailsForUserComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,10 @@
+<div class="row page-holder">
+    <div class="col">
+        <app-ride-history-table 
+            [rideHistory]="ridesHistory"
+            (rowClickedSignal)="detailsPanel.setUpData($event); scrollToDetailsPanel();"
+        >
+        </app-ride-history-table>
+        <app-ride-details-for-user id="details-panel" #detailsPanel></app-ride-details-for-user>
+    </div>
+</div>

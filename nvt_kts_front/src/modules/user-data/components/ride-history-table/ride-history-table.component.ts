@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 
@@ -8,10 +8,13 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./ride-history-table.component.css']
 })
 export class RideHistoryTableComponent implements OnInit {
+  @Output() rowClickedSignal = new EventEmitter<any>();
+ 
+  @Input() rideHistory: Array<any>;
+  
   public sortedColumn: string;
   public isSortDirAsc: boolean;
 
-  @Input() rideHistory: Array<any>;
 
   constructor(private datePipe: DatePipe) { 
     this.rideHistory = new Array;
@@ -101,5 +104,8 @@ export class RideHistoryTableComponent implements OnInit {
     return retVal;
   }
 
+  openRideDetails(rideHistoryData: any): void {
+    this.rowClickedSignal.emit(rideHistoryData);
+  }
 }
 
