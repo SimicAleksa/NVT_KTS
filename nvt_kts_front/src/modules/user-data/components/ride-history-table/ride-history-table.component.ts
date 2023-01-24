@@ -15,7 +15,6 @@ export class RideHistoryTableComponent implements OnInit {
   public sortedColumn: string;
   public isSortDirAsc: boolean;
 
-
   constructor(private datePipe: DatePipe) { 
     this.rideHistory = new Array;
     this.sortedColumn = "startTime";

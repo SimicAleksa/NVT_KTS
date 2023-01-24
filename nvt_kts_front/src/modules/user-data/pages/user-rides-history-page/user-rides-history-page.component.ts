@@ -36,17 +36,28 @@ export class UserRidesHistoryPageComponent implements OnInit {
   }
 
   scrollToDetailsPanel(): void {
-    let element = document.querySelector('#details-panel');
+    this.doDaScroll('#details-panel');
+  }
+
+  scrollToReviewsPanel() {
+    this.doDaScroll('#reviews-panel');
+  }
+
+  doDaScroll(elemId: string) {
+    let element = document.querySelector(elemId);
     let elementPosition = element!.getBoundingClientRect();
     if (elementPosition.height === 0) {
       setTimeout(() => {
-        element = document.querySelector('#details-panel');
+        element = document.querySelector(elemId);
         elementPosition = element!.getBoundingClientRect();
+        console.log(elementPosition, elemId);
+
         if (elementPosition !== undefined)
-        window.scrollTo({ 
-          top: elementPosition.top,
-          behavior: 'smooth'
-        });
+          window.scrollTo({ 
+            top: elementPosition.top,
+            behavior: 'smooth'
+          });
+          
       }, 300);
     }
 

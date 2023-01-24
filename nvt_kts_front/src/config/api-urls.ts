@@ -9,4 +9,5 @@ export const API_PASS_RESET_URL = API_BASE_URL + "/api/user/password-reset";
 
 //user related urls
 export const API_USER_RIDE_HISTORY_URL = API_BASE_URL + "/api/rides/history";
+export const API_DRIVER_REVIEWS_URL = API_BASE_URL + "/api/driver/reviews";
 

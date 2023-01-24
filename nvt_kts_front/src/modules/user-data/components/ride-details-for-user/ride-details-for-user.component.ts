@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-ride-details-for-user',
@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ride-details-for-user.component.css']
 })
 export class RideDetailsForUserComponent implements OnInit {
+  @Output() showReviewsBtnClickedSignal = new EventEmitter<number>();
+
   public showPanel: boolean = false;
 
+  public id: number;
   public name: string;
   public surname: string;
   public phoneNumber: string;
@@ -19,6 +22,7 @@ export class RideDetailsForUserComponent implements OnInit {
   public betweenLocations: string;
   
   constructor() { 
+    this.id = -1;
     this.name = "";
     this.surname = "";
     this.phoneNumber = "";
@@ -34,7 +38,7 @@ export class RideDetailsForUserComponent implements OnInit {
   }
 
   setUpData(rowData: any): void {
-    console.log(rowData);
+    this.id = rowData.driver.id;
     this.name = rowData.driver.name;
     this.surname = rowData.driver.surname;
     this.phoneNumber = rowData.driver.phone;
@@ -46,7 +50,7 @@ export class RideDetailsForUserComponent implements OnInit {
     if (rowData.ride.route.optionalLocations.length !== 0)
       this.betweenLocations = rowData.ride.route.optionalLocations.join(', ');
     else 
-    this.betweenLocations = "No between locations";
+      this.betweenLocations = "No between locations";
 
     this.showPanel = true;
   }
@@ -56,7 +60,7 @@ export class RideDetailsForUserComponent implements OnInit {
   }
 
   showDriverReviews(): void {
-
+    this.showReviewsBtnClickedSignal.emit(this.id);
   }
   
 }

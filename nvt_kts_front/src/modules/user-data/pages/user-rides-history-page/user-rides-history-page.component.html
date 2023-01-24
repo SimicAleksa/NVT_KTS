@@ -5,6 +5,18 @@
             (rowClickedSignal)="detailsPanel.setUpData($event); scrollToDetailsPanel();"
         >
         </app-ride-history-table>
-        <app-ride-details-for-user id="details-panel" #detailsPanel></app-ride-details-for-user>
+        
+        <app-ride-details-for-user 
+            id="details-panel" 
+            #detailsPanel
+            (showReviewsBtnClickedSignal)="reviewsPanel.fetchReviews($event); scrollToReviewsPanel();"
+        >
+        </app-ride-details-for-user>
+        
+        <app-driver-reviews-for-user 
+            id="reviews-panel" 
+            #reviewsPanel
+        >
+        </app-driver-reviews-for-user>
     </div>
 </div>

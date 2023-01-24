@@ -1,15 +1,20 @@
 package com.example.nvt_kts_back.controllers;
 
+import com.example.nvt_kts_back.CustomExceptions.InvalidAuthTokenException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.ReviewToShowDTO;
+import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.service.AuthService;
 import com.example.nvt_kts_back.service.DriverService;
 import com.example.nvt_kts_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -19,7 +24,8 @@ public class DriverController {
     private UserService userService;
     @Autowired
     private DriverService driverService;
-
+    @Autowired
+    private AuthService authService;
 
     @PostMapping("/addDriver")
     public Driver addDriver(@RequestBody Driver driver) {
@@ -27,11 +33,16 @@ public class DriverController {
     }
 
     @GetMapping("/reviews")
-    public ResponseEntity<List<ReviewToShowDTO>> getDriverReviews(@RequestParam Long driverId) {
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
+    @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<List<ReviewToShowDTO>> getDriverReviews(@RequestParam Long driverId, HttpServletRequest request) {
         try {
+            authService.verifyAuthTokenFromHeaderAndRetUser(request);
             return new ResponseEntity<>(driverService.getDriverReviews(driverId), HttpStatus.OK);
         } catch (UserDoesNotExistException ignored) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        } catch (InvalidAuthTokenException ignored) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }
