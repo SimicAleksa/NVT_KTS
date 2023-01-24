@@ -60,10 +60,10 @@ insert into ride_passengers(ride_id, registered_user_id) values (1, 4);
 insert into ride_passengers(ride_id, registered_user_id) values (1, 5);
 
 insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
-insert into ride_passengers(ride_id, registered_user_id) values (3, 4);
-insert into ride_passengers(ride_id, registered_user_id) values (4, 4);
-insert into ride_passengers(ride_id, registered_user_id) values (5, 4);
-insert into ride_passengers(ride_id, registered_user_id) values (6, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (1, 4);
+insert into ride_passengers(ride_id, registered_user_id) values (1, 4);
 
 
 
