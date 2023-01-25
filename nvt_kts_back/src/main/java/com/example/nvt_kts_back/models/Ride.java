@@ -5,9 +5,7 @@ import com.example.nvt_kts_back.enumerations.RideState;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -18,8 +16,7 @@ import java.util.List;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TypeDef(name = "json", typeClass = JsonType.class)
@@ -52,25 +49,12 @@ public class Ride {
     @JoinTable(name="ride_passengers", joinColumns = @JoinColumn(name="ride_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="registered_user_id", referencedColumnName = "id"))
     private List<RegisteredUser> passengers;
-
 //    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    private List<Review> reviews;
 
+
     @OneToOne(cascade = CascadeType.ALL)
     private Route route;
-
-    public Ride(RegisteredUser caller, Driver driver, RideState rideState, double price, LocalDateTime startDateTime,
-                LocalDateTime endDateTime, int expectedDuration, double distance) {
-        this.caller = caller;
-        this.driver = driver;
-        this.rideState = rideState;
-        this.price = price;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.expectedDuration = expectedDuration;
-        this.distance = distance;
-        this.passengers = new ArrayList<>();
-    }
 
     public Ride(RideDTO rideDTO){
         this.id = rideDTO.getId();

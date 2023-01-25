@@ -11,7 +11,6 @@ import java.util.Optional;
 @Transactional
 public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, String>  {
     Optional<RegisteredUser> getByEmail(String email);
-    Optional<RegisteredUser> getById(Long id);
 
     RegisteredUser findByEmail(String email);
 

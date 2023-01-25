@@ -3,18 +3,16 @@ package com.example.nvt_kts_back.models;
 import com.example.nvt_kts_back.DTOs.RouteDTO;
 import com.example.nvt_kts_back.DTOs.RouteFormFrontDTO;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Route {
     @Id
