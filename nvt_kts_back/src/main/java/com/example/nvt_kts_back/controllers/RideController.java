@@ -48,7 +48,9 @@ public class RideController {
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
     public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
         System.out.println(dto.toString());
-        RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
+        this.rideService.findDriverList(dto);
+        return null;
+        /*RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
         routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());
 
         CoordsDTO coordsDTOStartLoc = new CoordsDTO();
@@ -73,7 +75,7 @@ public class RideController {
         this.rideService.saveRide(ride);
 
 
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(dto, HttpStatus.OK);*/
     }
 
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")

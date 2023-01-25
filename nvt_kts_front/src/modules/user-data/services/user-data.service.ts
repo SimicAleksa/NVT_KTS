@@ -23,6 +23,7 @@ export class UserDataService {
   private addTokensURL: string;
   private changeDriverActiveStatusURL: string;
   private getDrivesActiveStatusURL: string;
+  private getAllRegisteredUsersMailsURL: string;
 
 
 
@@ -41,6 +42,8 @@ export class UserDataService {
     this.addTokensURL = "api/registeredUsers/addTokens/";
     this.changeDriverActiveStatusURL = "api/drivers/changeDriverActiveStatus/";
     this.getDrivesActiveStatusURL = "api/drivers/getDrivesActiveStatus/";
+    
+    this.getAllRegisteredUsersMailsURL = "api/registeredUsers/getAllRegisteredUsersMails";
   }
 
   getDrivesActiveStatus(username: string) {
@@ -152,6 +155,14 @@ export class UserDataService {
       responseType: "json",
     });
   }
+
+  getAllRegisteredUsersMails() {
+    return this.http.get(this.getAllRegisteredUsersMailsURL, {
+      headers: this.headers,
+      responseType: "json",      
+    })
+  }
+  
 
 
 }

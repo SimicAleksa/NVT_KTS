@@ -1,8 +1,10 @@
 package com.example.nvt_kts_back.models;
 
+import com.example.nvt_kts_back.DTOs.CoordsDTO;
 import com.example.nvt_kts_back.DTOs.DriverDTO;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.CarType;
+import com.example.nvt_kts_back.enumerations.RideState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -92,6 +94,37 @@ public class Driver extends User {
     public void addSpan(TimeSpan ts)
     {
         this.activeTime.add(ts);
+    }
+
+    public boolean hasScheduledOrCurrentRides() {
+        for (Ride r : historyOfRides)
+        {
+            if (r.getRideState()== RideState.SCHEDULED || r.getRideState()==RideState.IN_PROGRESS) return true;
+        }
+        return false;
+    }
+
+    public boolean hasScheduled() {
+        for (Ride r : historyOfRides)
+        {
+            if (r.getRideState()== RideState.SCHEDULED) return true;
+        }
+        return false;
+    }
+
+    public double getDistanceFromCoordDTO(CoordsDTO coords)
+    {
+        double xDiff = this.currentCoords.getLongitude() - coords.getLongitude();
+        double yDiff = this.currentCoords.getLatitude() - coords.getLatitude();
+        return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    }
+
+    public Ride findCurrentRide() {
+        for (Ride r : historyOfRides)
+        {
+            if (r.getRideState().equals(RideState.IN_PROGRESS)) return r;
+        }
+        return null;
     }
 }
 

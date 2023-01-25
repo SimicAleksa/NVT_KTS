@@ -18,8 +18,7 @@ export class ProbaPageComponent implements OnInit {
     let fruitFromPage=e.target.value;
     this.selectedFruits.push(String(fruitFromPage));
     // this.fruits = this.fruits.filter(x => x === fruitFromPage);
-    console.log(this.selectedFruits);
-    console.log(this.fruits);
+    alert(this.selectedFruits);
  }
 
 

@@ -12,6 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.nvt_kts_back.service.RegisteredUserService;
 
+import javax.xml.stream.events.EntityReference;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("api/registeredUsers")
 public class RegisteredUserController {
@@ -45,5 +49,10 @@ public class RegisteredUserController {
         return registeredUserService.saveUser(user);
     }
 
-
+    @GetMapping("/getAllRegisteredUsersMails")
+    public ResponseEntity<ArrayList<String>> getAllRegisteredUsersMails()
+    {
+        ArrayList<String> retVal = this.registeredUserService.getMails();
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
 }

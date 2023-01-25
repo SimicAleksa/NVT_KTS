@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class RegisteredUserService {
 
@@ -38,5 +41,15 @@ public class RegisteredUserService {
         ru.setRole(new Role(Settings.USER_ROLE_NAME));
         ru.setTokens(0.0);
         return registeredUserRepository.save(ru);
+    }
+
+    public ArrayList<String> getMails() {
+        ArrayList<String> retVal = new ArrayList<>();
+        List<RegisteredUser> all = this.registeredUserRepository.findAll();
+        for (RegisteredUser r: all)
+        {
+            retVal.add(r.getEmail());
+        }
+        return retVal;
     }
 }

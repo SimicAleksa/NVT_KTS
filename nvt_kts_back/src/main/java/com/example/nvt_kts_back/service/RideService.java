@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.DTOs.DataForRideFromFromDTO;
 import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
@@ -16,13 +17,11 @@ import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
 import java.lang.reflect.Array;
-import java.util.Collections;
-import java.util.List;
+import java.sql.SQLOutput;
+import java.util.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 @Service
 public class RideService {
@@ -228,8 +227,122 @@ public class RideService {
                     r.getRideState()==RideState.RESERVED)
                 retVal.add(new RideNotificationDTO(r));
         }
-        Collections.sort(retVal, (x, y) -> x.getStartDateTime().compareTo(y.getStartDateTime()));
+        Collections.sort(retVal, Comparator.comparing(RideNotificationDTO::getStartDateTime));
         return retVal;
+    }
 
+    // ova funkcija ce za zadati ride da pronadje sve potencijane vozace i da ih sortira po blizini
+    public void findDriverList(DataForRideFromFromDTO rideDTO)
+    {
+        // prvo cu naci sve prijavljene vozace koji imaju ovaj tip vozila i ljubimce i bebe
+        ArrayList<Driver> activeFilteredDrivers = findActiveFilteredDrivers(rideDTO);
+        // slucaj kada nema nijednog
+        if (activeFilteredDrivers.size()==0)
+        {
+            // TODO salji odgovor da se voznja automatski odbija
+            return;
+        }
+        // sad uzimam one koji nemaju nista
+        ArrayList<Driver> freeNow =  filterFreeNow(activeFilteredDrivers);
+        if (freeNow.size()>0)
+        {
+            // TODO ovdje treba sortirati vozace po udaljenosti od pocetka voznje
+            freeNow = sortByDistance(freeNow, rideDTO);
+            System.out.println("Nasla sam nekoga ko nema ni sad ni kasnije");
+            return;
+        }
+        ArrayList<Driver> freeAfter = filterFreeAfter(activeFilteredDrivers);
+        if (freeAfter.size()>0)
+        {
+            // TODO sada treba dodijeliti onoga koji ce najranije zavrsiti
+            Driver best = sortByEndTime(freeNow);
+            System.out.println("Nasla sam nekoga ko ima sad, ali nema kasnije");
+            return;
+        }
+        // posljednji slucaj je da svi imaju i sada i kasnije
+        // TODO salji odgovor da se voznja automatski odbija
+        System.out.println("Odbijamo voznju jer svi imaju i sada i kasnije");
+
+
+    }
+
+    private Driver sortByEndTime(ArrayList<Driver> freeAfter) {
+        LocalDateTime min = LocalDateTime.now().plusYears(1);
+        Driver best = freeAfter.get(0);
+        for (Driver d : freeAfter)
+        {
+            Ride r = d.findCurrentRide();
+            LocalDateTime l= r.getStartDateTime().plusMinutes(r.getExpectedDuration());
+            if (l.isBefore(min))
+            {
+                min = l;
+                best = d;
+            }
+        }
+        return best;
+
+    }
+
+    private ArrayList<Driver> sortByDistance(ArrayList<Driver> freeNow, DataForRideFromFromDTO rideDTO) {
+        for (int i = 0; i < freeNow.size()-1; i++)
+        {
+            // Find the minimum element in unsorted array
+            int min_idx = i;
+            for (int j = i+1; j < freeNow.size(); j++)
+                if (freeNow.get(j).getDistanceFromCoordDTO(rideDTO.getRoute().getStartLocation()) < freeNow.get(min_idx).getDistanceFromCoordDTO(rideDTO.getRoute().getStartLocation()))
+                    min_idx = j;
+
+            // Swap the found minimum element with the first
+            // element
+            Driver temp = freeNow.get(min_idx);
+            freeNow.set(min_idx, freeNow.get(i));
+            freeNow.set(i, temp);
+        }
+        return freeNow;
+    }
+
+    private ArrayList<Driver> filterFreeAfter(ArrayList<Driver> activeFilteredDrivers) {
+        // sad treba proci kroz vozace i uzeti samo one koji nemaju scheduled
+        ArrayList<Driver> retVal = new ArrayList<>();
+        for (Driver d : activeFilteredDrivers)
+        {
+            if (!d.hasScheduled())
+            {
+                retVal.add(d);
+            }
+        }
+        return retVal;
+    }
+
+    private ArrayList<Driver> filterFreeNow(ArrayList<Driver> activeFilteredDrivers) {
+        // sad treba proci kroz vozace i uzeti samo one koji nemaju ni trenutnu voznju, ni scheduled
+        ArrayList<Driver> retVal = new ArrayList<>();
+        for (Driver d : activeFilteredDrivers)
+        {
+            if (!d.hasScheduledOrCurrentRides())
+            {
+                retVal.add(d);
+            }
+        }
+        return retVal;
+    }
+
+    private void printDriversDebug(ArrayList<Driver> activeFilteredDrivers) {
+        for (Driver d : activeFilteredDrivers)
+        {
+            System.out.println(d.getEmail());
+        }
+    }
+
+    private ArrayList<Driver> findActiveFilteredDrivers(DataForRideFromFromDTO rideDTO) {
+        ArrayList<Driver> retVal = new ArrayList<>();
+        ArrayList<Driver> drivers = this.driverRepository.findDriversByPetBabyActive(rideDTO.isBabyAllowed(), rideDTO.isPetAllowed());
+        // sad treba vidjeti da li imaju tip vozila
+        for (Driver d : drivers)
+        {
+            if (rideDTO.getCarTypes().contains(d.getCarTypeString()))
+                retVal.add(d);
+        }
+        return retVal;
     }
 }

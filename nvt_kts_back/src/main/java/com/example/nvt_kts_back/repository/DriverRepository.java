@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -24,6 +25,10 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
     @Modifying
     @Query("update Driver d set d.babyAllowed=?2, d.petAllowed=?3 where d.id =?1")
     void updateCarData(Long id, Boolean babyAllowed, Boolean petsAllowed);
+
+
+    @Query("select d from Driver d where d.active=true and (d.babyAllowed=true or d.babyAllowed=?1) and (d.petAllowed=true or d.petAllowed=?2)")
+    ArrayList<Driver> findDriversByPetBabyActive(boolean babyAllowed, boolean petAllowed);
 
 
 

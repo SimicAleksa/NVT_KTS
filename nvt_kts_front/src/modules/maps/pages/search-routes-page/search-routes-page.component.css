@@ -1,0 +1,76 @@
+/*
+OVO JE KOD KOJI SE ODNOSI SAMO NA ODABIR ULINKOVANIH PUTNIKA
+*/
+
+.search-container {
+    width: 400px;
+    position: relative;
+    margin: 15px auto;
+  }
+  .search-container input,
+  .search-container .suggestions {
+    width: 100%;
+    background: #fff;
+    text-align: left;
+  }
+  .search-container input {
+    background: rgba(255, 255, 255, 0.2);
+    height: 60px;
+    padding: 0 10px;
+  }
+  .search-container .suggestions {
+    position: absolute;
+    top: 60px;
+  }
+  
+  ul {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  ul.has-suggestions {
+    display: block;
+  }
+  ul li {
+    padding: 10px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  ul li:hover {
+    background-color: #e65c00;
+  }
+
+  #addLinkedForm {
+    margin: 5px;
+    height: 35%;
+  }
+
+  #addLinkedInput {
+    margin-left: 5px;
+  }
+
+  .btn-close {
+    width: 7px;
+    height: 7px;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+div.border{
+  background-color: white;
+
+}
+
+.maxLimitLbl
+{
+  display: none;
+}
+
+  /* 
+  OVO JE KRAJ KODA KOJI SE ODNOSI SAMO NA ODABIR ULINKOVANIH PUTNIKA
+  */

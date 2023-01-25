@@ -34,9 +34,9 @@ INSERT INTO COORD (latitude, longitude) values (45.240808, 19.8448008);
 -- 45.236420, 19.820529 heroja pinkija
 
 
-insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (true, true, 'SUV', true, true, 1,3);
-insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (true, true, 'SUV', true, true, 2,6);
-insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (true, true, 'SUV', true, true, 3,5);
+insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (true, true, 'SUV', true, false, 1,3);
+insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (false, false, 'SEDAN', true, true, 2,6);
+insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (false, true, 'COUPE', true, true, 3,5);
 
 insert into change_profile_requests (name, surname, email, city, phone, picture, car_type, baby_allowed, pets_allowed) values ('Djurica', 'Djuric', 'djura@gmail.com', 'Samac','42145135', 'slika', 'SUV', true, false);
 insert into change_profile_requests (name, surname, email, city, phone, picture, car_type, baby_allowed, pets_allowed) values ('Simija', 'Radesic', 'zima@gmail.com', 'Samac','42145135', 'slika', 'SUV', false, false);
@@ -50,11 +50,11 @@ insert into route (start_location_id, end_location_id, routejson) values (4, 5, 
 
 insert into ride (end_date_time, distance, expected_duration,
                   price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
-                                                                         100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 1,1);
+                                                                         100, 16.3, 'SCHEDULED', '2012-09-17 18:47:52.069', 2,2);
 
 insert into ride (end_date_time, distance, expected_duration,
                   price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
-                                                                                   100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 3,2);
+                                                                                   100, 16.3, 'IN_PROGRESS', '2012-09-17 18:47:52.069', 2,2);
 
 insert into ride_passengers(ride_id, registered_user_id) values (1, 4);
 insert into ride_passengers(ride_id, registered_user_id) values (1, 5);
