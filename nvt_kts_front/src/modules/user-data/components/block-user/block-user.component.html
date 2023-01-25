@@ -1,0 +1,91 @@
+<form [formGroup]="modalForm" (submit)="onModalSubmit()">
+    <div
+      class="modal"
+      tabindex="-1"
+      role="dialog"
+      [ngStyle]="{'display':displayStyle}">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Add note</h2>
+          </div>
+          
+          <div class="modal-body">
+              <div class="container">
+                <div class="row">
+                  <div class="col-4">
+                    <label class="modal-font">Enter note</label>
+                  </div>
+                  <div class="col-7">
+                      <input
+                        class="form-control inModal modal-font"
+                        formControlName="note"
+                        type="text"
+                        id="newPass"
+                        appCustomAttribute
+                        appCustomValidation
+                      />
+                  </div>
+                </div>
+              </div>
+        
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="closeBtn"
+                    (click)="closePopup()">
+              Close
+            </button>
+  
+  
+            <!--
+            <button type="button" class="btn btn-primary" id="confirmBtn"
+                    (click)="confirm()">
+              Confirm
+            </button> -->
+  
+            <button
+              id="confirmBtn"
+              class="btn btn-primary"
+              type="submit"
+              [disabled]="modalForm.invalid"
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col"> Name</th>
+            <th scope="col"> Surname</th>
+            <th scope="col"> Email</th>
+            <th scope="col"> Note</th>
+            <th scope="col" class="noteTd"> </th>
+            <th scope="col"> </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of this.users" id={{user.email}}>
+            <td> {{user.name}}</td>
+            <td> {{user.surname}}</td>
+            <td> {{user.email}}</td>
+            <td> {{user.note}}</td>
+            <td> <button class="btn btn-link" (click)="addNote(user.email)" id={{user.email}}|note>Add note</button>
+            </td>
+            <td> 
+                <button *ngIf="user.blocked==false" class="btn btn-danger" (click)="block(user.email)" id={{user.email}}|block>Block</button> 
+                <button *ngIf="user.blocked==true" class="btn btn-success" (click)="unblock(user.email)" id={{user.email}}|note>Unblock</button>
+            </td>
+        </tr>
+
+        
+    </tbody>
+
+</table>
+

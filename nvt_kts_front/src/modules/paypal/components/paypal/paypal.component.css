@@ -1,0 +1,19 @@
+#wrapper
+{
+    margin-top: 100px;
+}
+
+label, input {
+    font-size: large;
+}
+
+#myPaypalButtons
+{
+    width: 300px;
+    margin-left: 70px;
+}
+
+input {
+    width: 100px;
+    margin-left: 15px;
+}

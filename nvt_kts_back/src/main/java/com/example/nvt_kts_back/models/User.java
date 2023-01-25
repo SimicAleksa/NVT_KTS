@@ -38,6 +38,9 @@ public class User implements UserDetails {
     private String picture;
     @Column
     private Boolean isBlocked;
+
+    @Column
+    private String note;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Role role;

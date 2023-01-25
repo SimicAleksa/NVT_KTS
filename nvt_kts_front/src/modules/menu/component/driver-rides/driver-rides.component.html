@@ -1,0 +1,124 @@
+<div class="offcanvas offcanvas-end w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+    <div class="offcanvas-header">
+        <div class="col-7">
+            <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas">My rides | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Active</h6>
+        </div>
+        <div class="col">
+            <div class="form-check form-switch d-flex justify-content-center">
+                <input class="form-check-input" style="width: 80%;" type="checkbox" id="flexSwitchCheckDefault" (change)="changeStatus()">
+            </div>
+        </div>
+        <div class="col-1 d-flex justify-content-end">
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="offcanvas-body px-0 overflow-auto" id="overflowedDiv">
+        <div id="moj" class="overflow-auto">
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start overflow-auto" id="menu">
+            <li  *ngFor="let ride of driverRides">
+                <div class="container cardDiv" *ngIf="ride.state === 'RESERVED'">
+                    <div class="row">
+                        <label class="title-label"> <i id="notificationIcon" class="bi bi-bell-fill"></i>  You have been assigned a new ride:</label>    
+                    </div>
+                    <div class="row">
+                        <p>From: {{ride.startLocationString}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <p>At: {{ride.startDateTime}}h </p>
+                        </div>
+                        <div class="col-7">
+                            <p>distance: {{ride.distance}} km </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-success" (click)="accept(ride.id)">Accept</button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-danger" (click)="reject(ride.id)">Reject</button>
+                        </div>
+                    </div>
+                    <div class="row reasonDiv" id="reasonDiv-{{ride.id}}">
+                        <div class="col-9">
+                            <input type="text">
+                        </div>
+                        <div class="col-3">
+                            <button id="sendReasonBtn" class="btn btn-primary" (click)="sendReason(ride.id)" >Send</button>
+                        </div>
+                    </div>
+                </div>
+           
+                <div class="container cardDiv" *ngIf="ride.state === 'SCHEDULED'">
+                    <div class="row">
+                        <label class="title-label">Upcoming ride</label>    
+                    </div>
+                    <div class="row">
+                        <p>From:  {{ride.startLocationString}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <p>Starting at: {{ride.startDateTime}}h</p>
+                        </div>
+                        <div class="col-7">
+                            <p>distance:  {{ride.distance}} km </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-primary" (click)="start(ride.id)">Start</button>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-warning" (click)="report(ride.id)">Report!</button>
+                        </div>
+                    </div>
+                    <div class="row reportDiv" id="reportDiv-{{ride.id}}">
+                        <div class="col-9">
+                            <input type="text">
+                        </div>
+                        <div class="col-3">
+                            <button id="sendReportBtn" class="btn btn-primary" (click)="sendReport(ride.id)" >Send</button>
+                        </div>
+                    </div>
+                </div>
+         
+                <div class="container cardDiv" *ngIf="ride.state === 'IN_PROGRESS'">
+                    <div class="row">
+                        <label class="title-label">Current ride</label>    
+                    </div>
+                    <div class="row">
+                        <p>From: {{ride.startLocationString}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-11">
+                            <p>Started at: {{ride.startDateTime}}h </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-primary" (click)="end(ride.id)">End ride</button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4">
+            <!-- toggler -->
+            <button id="toggleBtn" class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+                <i id="buttonIcon" class="bi bi-arrow-left-square-fill fs-7" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+            </button>
+            <h3>Sample Content...</h3>
+        </div>
+    </div>
+</div>

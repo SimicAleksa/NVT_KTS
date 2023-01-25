@@ -1,0 +1,74 @@
+#allFriendsDiv
+{
+    height: 600px; 
+    border-color: rgb(217, 212, 212); 
+    
+    border-radius: 15px;
+    background-color: white;
+    padding: 15px;
+    overflow-y:scroll;
+}
+
+#messagesDiv
+{
+    height: 500px; 
+    /*border-color: red; 
+    border-style: solid;*/
+    margin: 30px;
+    overflow-y:scroll;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.oneFriend
+{
+    height: 300px;
+    /*border-style: ridge;*/
+    margin:0; 
+    line-height:0; 
+    padding: 0;
+    
+}
+
+
+hr{
+    line-height: 0;
+    margin: 0;
+}
+
+.myMessage
+{
+    background-color: white;
+    border-radius: 10px;
+    /*padding: 15px;*/
+    font-size: medium;
+}
+
+p, textarea, button{
+    /*margin-top: 10px;*/
+    font-size: medium;
+}
+
+#typeMessage
+{
+    /*margin-bottom: 0px;
+    padding-bottom: 0px;
+    width:100%;
+    height:60px;*/
+
+    position:absolute;
+    bottom:0;
+    width:53%;
+    right: 100px;
+ 
+    
+}
+
+#sendButton
+{
+    position:absolute;
+    bottom:2%;
+    right: 20px;
+}
+

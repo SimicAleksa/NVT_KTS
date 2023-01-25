@@ -10,26 +10,41 @@ import { Routes } from '@angular/router';
 
 import { MapsModule } from '../maps/maps.module';
 import { UserDataModule } from '../user-data/user-data.module';
-import { FormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MenuModule } from '../menu/menu.module';
 import { ReferrerInterceptor } from '../../utils/referrer-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
+import { ChatModule } from '../chat/chat.module';
+import { ReportsModule } from '../reports/reports.module';
+import { ProbaModule } from '../proba/proba.module';
+import { PaypalModule } from '../paypal/paypal.module';
 
 const appRoutes: Routes = [{ path: '', component: AppComponent }];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
-    HttpClientModule, 
-    FormsModule, 
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
     AppRoutingModule,
-    MapsModule, 
+    MapsModule,
     UserDataModule,
-    LoginModule, 
+    LoginModule,
+    PopUpModule,
     MenuModule,
-    SocialLoginModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    SocialLoginModule,
+    ChatModule,
+    ReportsModule,
+    ProbaModule,
+    PaypalModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

@@ -1,0 +1,42 @@
+input
+{
+    width: 150px;
+    height: 40px;
+    font-size: 17px;
+    border-radius: 9px;
+    display: inline-block;
+}
+
+label {
+    font-size: 17px;
+    font-weight: 400;
+    white-space: nowrap;
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+#buttonDiv
+{
+    width: 100%;
+}
+
+#confirm
+{
+    margin-left: 77%;
+    margin-top: 30px;
+    width: 90px;
+    height: 35px;
+    font-size: 15px;
+}
+
+.divChart{
+    display: block;
+    width: 600px;
+    height: 400px;
+}
+
+#priceLabel, #distanceLabel, #numberLabel
+{
+    margin-top: 5px;
+}

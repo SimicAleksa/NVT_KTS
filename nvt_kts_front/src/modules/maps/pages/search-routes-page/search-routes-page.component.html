@@ -1,18 +1,123 @@
-<div class="m-5">
-  <div class="row" style="height: 90vh">
-    <div class="col">
-      <app-route-search-form
-       (startLocationSelectedEvent)="recieveSentSelectedStartLocation($event)"
-       (endLocationSelectedEvent)="recieveSentSelectedEndLocation($event)"
-       (sendRequestForRideEvent)="recieveRequestForRide($event)">
-      </app-route-search-form>
+<div class="container" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col-8">
+      <div style="height: 90vh;">
+        <app-map
+            (selectedRouteData)="recieveSelectedRoute($event)" 
+            (routeSelectedBoolean)="recieveIsRouteSelected($event)">
+        </app-map>
+      </div>
     </div>
     <div class="col">
-      <div style="height: 100%">
-        <app-map 
-        [selectedStartLocation]="selectedStartLocation"
-        [selectedEndLocation]="selectedEndLocation">
-        </app-map>
+      <div class="row">
+        <div class="col border border-dark rounded">
+          <div><label>Ride preference</label></div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="quickTime" (change)="changeRidePref($event)">
+            <label class="form-check-label" for="quickTime">
+              Quickest time
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="shortest" (change)="changeRidePref($event)">
+            <label class="form-check-label" for="shortest">
+              Shortest distance
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="cheapest" (change)="changeRidePref($event)">
+            <label class="form-check-label" for="cheapest">
+              Cheapest
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="uchoice" checked (change)="changeRidePref($event)">
+            <label class="form-check-label" for="uchoice">
+              Users choice
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col border border-dark rounded mt-4">
+          <div><label>Additional options</label></div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="baby" value="option1">
+            <label class="form-check-label" for="baby">Baby</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="pet">
+            <label class="form-check-label" for="pet">Pet</label>
+          </div>
+        </div>
+      </div>
+      <div class="row border border-dark rounded mt-4">
+        <div><label>Car type</label></div>
+        <div class="row">
+          <div class="col">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="minivan" value="MINIVAN" checked>
+              <label class="form-check-label" for="minivan">MINIVAN</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hatchback" value="HATCHBACK" checked>
+              <label class="form-check-label" for="hatchback">HATCHBACK</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="suv" value="SUV" checked>
+              <label class="form-check-label" for="suv">SUV</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="van" value="VAN" checked>
+              <label class="form-check-label" for="van">VAN</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="sedan" value="SEDAN" checked>
+              <label class="form-check-label" for="sedan">SEDAN</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="coupe" value="COUPE" checked>
+              <label class="form-check-label" for="coupe">COUPE</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="limousine" value="LIMOUSINE" checked>
+              <label class="form-check-label" for="limousine">LIMOUSINE</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mt-4">
+            <label>Time: {{durationOfRideString}} sec</label><br>
+            <label>Distance: {{distanceOfRideString}} km</label><br>
+            <label style="margin-bottom: 0px;">Price: {{priceOfRideString}} rsd<p style="font-weight: 50; font-size: smaller;"> *price of vehicle type not included</p></label><br>
+        </div>
+      </div> 
+      <div class="row border border-dark rounded mt-4">
+        <div class="col">
+          <input class="form-check-input" type="checkbox" id="reserve" (change)="reservedCheckBoxCheckedFinction()">
+          <label class="form-check-label">&nbsp;Reserve</label>
+        </div>
+        <div class="col">
+            <input type="datetime-local" [min]="minDate" [max]="maxDate" [(ngModel)]="selectedDateTime" *ngIf="reservedCheckBoxChecked">
+        </div>
+      </div> 
+      <div class="row" style="height: 420px;">
+        <textarea style="height: 50%;" disabled>{{routeToOrdedJSON}}</textarea>
+      </div>
+
+
+      <div class="row" style="height: 420px;">
+        <textarea> </textarea>
+      </div>
+
+
+      <div class="row">
+        <button type="button" class="btn btn-primary mt-1" (click)="onSubmit()" >Order</button>
       </div>
     </div>
   </div>

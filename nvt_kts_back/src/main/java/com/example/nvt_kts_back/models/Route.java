@@ -1,10 +1,12 @@
 package com.example.nvt_kts_back.models;
 
+import com.example.nvt_kts_back.DTOs.RouteDTO;
+import com.example.nvt_kts_back.DTOs.RouteFormFrontDTO;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +20,35 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Coord startLocation;
-    @ManyToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Coord endLocation;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @OrderColumn(name = "optional_location_order")
-    private List<Coord> optionalLocations;
+
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private String routeJSON;
+
+////    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @Embedded
+//    @OrderColumn(name = "optional_location_order")
+//    private List<Coord> optionalLocations;
 
 
-    public Route(Long id, Coord startLocation, Coord endLocation) {
-        this.id = id;
-        this.startLocation = startLocation;
-        this.endLocation = endLocation;
-        this.optionalLocations = new ArrayList<>();
+    public Route(RouteDTO routeDTO ) {
+        this.startLocation = routeDTO.getStartLocation();
+        this.endLocation = routeDTO.getEndLocation();
+        this.routeJSON = routeDTO.getRouteJSON();
+//        this.optionalLocations = new ArrayList<>();
+    }
+
+    public Route(RouteFormFrontDTO routeDTO ) {
+        this.startLocation = new Coord(routeDTO.getStartLocation());
+        this.endLocation = new Coord(routeDTO.getEndLocation());
+        this.routeJSON = routeDTO.getRouteJSON();
+//        this.optionalLocations = new ArrayList<>();
     }
 
 }

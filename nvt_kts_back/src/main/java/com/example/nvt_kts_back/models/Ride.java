@@ -1,10 +1,15 @@
 package com.example.nvt_kts_back.models;
 
+import com.example.nvt_kts_back.DTOs.RideDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,11 +21,14 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@TypeDef(name = "json", typeClass = JsonType.class)
 public class Ride {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
+    @Column
     private RideState rideState;
     @Column
     private double price;
@@ -32,15 +40,24 @@ public class Ride {
     private int expectedDuration;
     @Column
     private double distance;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Route route;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private RegisteredUser caller;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Driver driver;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private RegisteredUser caller;
+
+
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column
+    private Long driver_id;
+
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="ride_passengers", joinColumns = @JoinColumn(name="ride_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="registered_user_id", referencedColumnName = "id"))
     private List<RegisteredUser> passengers;
 
+//    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    private List<Review> reviews;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Route route;
 
     public Ride(RegisteredUser caller, Driver driver, RideState rideState, double price, LocalDateTime startDateTime,
                 LocalDateTime endDateTime, int expectedDuration, double distance) {
@@ -55,11 +72,17 @@ public class Ride {
         this.passengers = new ArrayList<>();
     }
 
-    public List<RegisteredUser> getLinkedPassengers() {
-        List<RegisteredUser> linkedPassengers = new ArrayList<>(this.passengers);
-        linkedPassengers.removeIf(passenger -> passenger.getId().equals(caller.getId()));
-        return linkedPassengers;
+    public Ride(RideDTO rideDTO){
+        this.id = rideDTO.getId();
+        this.route = new Route(rideDTO.getRoute());
+        this.rideState = rideDTO.getRideState();
     }
+
+//    public List<RegisteredUser> getLinkedPassengers() {
+//        List<RegisteredUser> linkedPassengers = new ArrayList<>(this.passengers);
+//        linkedPassengers.removeIf(passenger -> passenger.getId().equals(caller.getId()));
+//        return linkedPassengers;
+//    }
 
 }
 

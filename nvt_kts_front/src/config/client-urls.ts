@@ -11,4 +11,5 @@ export const CLIENT_ADD_DRIVER_URL = "addDriverPage";
 export const CLIENT_EDIT_PROF_URL = "editProfilePage";
 export const CLIENT_APPROVEC_CHANGES_URL = "approveChangesPage";
 export const CLIENT_REG_USR_DRIVES_HISTORY_URL = USR_PREFIX + "drives-history";
+export const CLIENT_BLOCK_USER_URL = "blockUser";
 

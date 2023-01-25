@@ -28,6 +28,16 @@ public class Review {
     private Driver driver;
 
 
+//    debata oko mergovanja, ako treba uzmi
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "registered_user_email")
+//    private RegisteredUser passenger;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ride_id")
+//    private Ride ride;
+
+
     public Review(int carStars, int driverStars, String comment) {
         this.carStars = carStars;
         this.driverStars = driverStars;

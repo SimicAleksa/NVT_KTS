@@ -1,7 +1,7 @@
 package com.example.nvt_kts_back.models;
 
 import lombok.*;
-
+import com.example.nvt_kts_back.configurations.Settings;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,12 @@ import java.util.List;
 public class RegisteredUser extends User {
     @Column
     private Boolean isBusy;
+
+    @Column Double tokens;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Route> favouriteRoutes;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "passengers")
     private List<Ride> historyOfRides;
     @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Review> reviews;
@@ -28,5 +31,10 @@ public class RegisteredUser extends User {
         this.favouriteRoutes = new ArrayList<>();
         this.historyOfRides = new ArrayList<>();
         this.reviews = new ArrayList<>();
+    }
+
+    public RegisteredUser(ChangeProfileRequest c) {
+        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false,new Role(Settings.USER_ROLE_NAME));
+        this.isBusy = false;
     }
 }
