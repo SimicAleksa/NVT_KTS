@@ -1,5 +1,8 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.DTOs.UserRideHistoryDTO;
+import com.example.nvt_kts_back.models.Ride;
+import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
@@ -231,5 +234,21 @@ public class RideService {
         Collections.sort(retVal, (x, y) -> x.getStartDateTime().compareTo(y.getStartDateTime()));
         return retVal;
 
+    public List<UserRideHistoryDTO> getRideHistoryForRegisteredUser(Long userId) {
+        List<UserRideHistoryDTO> rideHistory = new ArrayList<>();
+        List<Ride> a = rideRepository.findAllByPassengerId(userId);
+        for (Ride ride : a) {
+            rideHistory.add(new UserRideHistoryDTO(
+                    EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
+                    EntityToDTOMapper.mapDriverToDriverInfoForRideHistoryDTO(ride.getDriver())
+            ));
+        }
+        return rideHistory;
+    }
+
+    public boolean userHadRideWitGivenDriverInLast3Days(Long passengerId, Long driverId) {
+        return rideRepository.findByPassengerIdAndDriverIdAndDate(
+                passengerId, driverId, LocalDateTime.now().minusDays(3), LocalDateTime.now()
+        ).size() > 0;
     }
 }

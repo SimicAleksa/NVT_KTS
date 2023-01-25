@@ -3,11 +3,7 @@ package com.example.nvt_kts_back.models;
 import com.example.nvt_kts_back.DTOs.DriverDTO;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.CarType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -15,12 +11,10 @@ import java.util.List;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class Driver extends User {
-
     @Column
     private Boolean active;
     @Column
@@ -36,6 +30,9 @@ public class Driver extends User {
     @OneToMany(cascade = CascadeType.PERSIST,orphanRemoval = true)
     @JoinColumn(name = "driver_id")
     private List<Ride> historyOfRides;
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
 
     @Column
     private String licensePlateNumber;
@@ -57,6 +54,7 @@ public class Driver extends User {
         this.petAllowed = petAllowed;
         this.isDriverFree = isDriverFree;
         this.historyOfRides = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
 

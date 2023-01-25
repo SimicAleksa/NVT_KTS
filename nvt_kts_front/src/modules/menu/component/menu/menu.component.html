@@ -1,6 +1,8 @@
 <nav>
     <span *ngIf="role === 'USER'">
-        <button>USER</button>
+        <button (click)="onRidesHistoryBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}">
+            RIDES HISTORY
+        </button>
     </span>
 
     <span *ngIf="role === 'DRIVER'">

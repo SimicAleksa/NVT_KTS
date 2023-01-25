@@ -36,6 +36,9 @@ public class UserService {
     public RegisteredUser getRegisteredUserByEmail(final String email) {
         return registeredUserRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
     }
+    public User getUserByEmail(final String email) {
+        return userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
+    }
 
     public void verifyUserExistence(final String email) {
         userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
@@ -64,6 +67,10 @@ public class UserService {
 
         user.setPassword(new BCryptPasswordEncoder().encode(passwordResetDTO.getPassword()));
         userRepository.save(user);
+    }
+
+    public RegisteredUser getRegUserById(Long usrId) {
+        return registeredUserRepository.getById(usrId).orElseThrow(UserDoesNotExistException::new);
     }
 
     public Driver updateDriverCoords(long id, double latitude,double longitude){

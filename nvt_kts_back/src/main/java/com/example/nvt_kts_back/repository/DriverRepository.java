@@ -1,11 +1,12 @@
 package com.example.nvt_kts_back.repository;
 
 import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.TimeSpan;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
+import org.springframework.data.repository.query.Param;
+import java.util.Optional;
+import com.example.nvt_kts_back.models.TimeSpan;
+import org.springframework.data.jpa.repository.Modifying;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -19,7 +20,8 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
 
     List<Driver> findAll();
 
-
+    @Query("SELECT d FROM Driver d JOIN FETCH d.reviews r JOIN FETCH r.reviewer WHERE d.id = :id")
+    Optional<Driver> findByIdWithReviews(@Param("id") Long id);
 
     @Modifying
     @Query("update Driver d set d.babyAllowed=?2, d.petAllowed=?3 where d.id =?1")

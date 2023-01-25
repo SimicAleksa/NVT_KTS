@@ -1,5 +1,17 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.CustomExceptions.NoRideInLast3DaysException;
+import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
+import com.example.nvt_kts_back.DTOs.NewReviewDTO;
+import com.example.nvt_kts_back.DTOs.ReviewToShowDTO;
+import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.RegisteredUser;
+import com.example.nvt_kts_back.models.Review;
+import com.example.nvt_kts_back.repository.DriverRepository;
+import com.example.nvt_kts_back.utils.mappers.DTOToEntityMapper;
+import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.TimeSpan;
 import com.example.nvt_kts_back.repository.RideRepository;
@@ -8,7 +20,6 @@ import com.google.gson.JsonStreamParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.DriverRepository;
-
 import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -28,7 +39,10 @@ public class DriverService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private RideService rideService;
+    
+    
     public void addDriver(Driver driver) {
         driverRepository.save(driver);
     }
@@ -130,5 +144,25 @@ public class DriverService {
 
     public boolean getDrivesActiveStatus(String email) {
         return this.driverRepository.findByEmail(email).getActive();
+        
+        public List<ReviewToShowDTO> getDriverReviews(Long driverId) {
+        Driver driver = driverRepository.findByIdWithReviews(driverId).orElseThrow(UserDoesNotExistException::new);
+        List<ReviewToShowDTO> reviewDTOs = new ArrayList<>();
+        for(Review review : driver.getReviews())
+            reviewDTOs.add(EntityToDTOMapper.mapReviewToReviewToShowDTO(review));
+
+        return reviewDTOs;
+    }
+
+    public void addNewDriverReview(NewReviewDTO newReviewDTO, RegisteredUser reviewer) {
+        Driver driver = driverRepository.findById(newReviewDTO.getDriverId()).orElseThrow(UserDoesNotExistException::new);
+        if (!rideService.userHadRideWitGivenDriverInLast3Days(reviewer.getId(), driver.getId()))
+            throw new NoRideInLast3DaysException();
+
+        Review newReview = DTOToEntityMapper.mapNewReviewDTOtoReview(newReviewDTO);
+        newReview.setReviewer(reviewer);
+        newReview.setDriver(driver);
+        driver.getReviews().add(newReview);
+        driverRepository.save(driver);
     }
 }

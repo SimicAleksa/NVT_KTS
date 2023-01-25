@@ -52,6 +52,7 @@ public class UserController {
         User user = userService.addNewDriver(driver);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user) {
         return userService.createUser(user);
@@ -83,8 +84,5 @@ public class UserController {
     {
         this.userService.blockUser(newNote, email);
     }
-
-
-
 
 }
