@@ -18,6 +18,7 @@ export class SearchRoutesPageComponent implements OnInit {
   public selectedEndLocation!:MapLocation;
 
   public routeSelectedBoolean:boolean = false;
+  public didUserAlreadyOrder:boolean;
   public selectedRouteEmitedValue:any;
   public ListOfRoutes = [];
   public routeToOrded:any;
@@ -36,7 +37,7 @@ export class SearchRoutesPageComponent implements OnInit {
   public selectedDateTime:Date = new Date();
   public reservedCheckBoxChecked:boolean;
 
-
+  public userEmail:string = "registrovani2@gmail.com";
   carTypes: string[] = ["SUV", "HATCHBACK", "COUPE", "MINIVAN", "SEDAN", "VAN", "LIMOUSINE"];
 
   public emails: string[];
@@ -53,12 +54,16 @@ export class SearchRoutesPageComponent implements OnInit {
     this.maxDate = new Date(this.temp1.setHours(this.temp1.getHours()+5)).toISOString().slice(0,16)
     this.userService.getAllRegisteredUsersMails().subscribe((response) => {
       this.emails = <string[]>response;
-  });
+      this.emails = this.emails.filter(x => x !== this.userEmail);
+    });
+      this.userService.getUsersStateBasedOnHisRides(this.userEmail).subscribe((response) => {
+        this.didUserAlreadyOrder = response;
+    });
   }
 
   saveSelectedFruit(e:any) {
     let fruitFromPage=e.target.value;
-    // this.fruits = this.fruits.filter(x => x === fruitFromPage);
+    this.emails = this.emails.filter(x => x !== fruitFromPage);
     this.tryToAddPassenger(String(fruitFromPage));
     this.deleteInnerHTML();
     
@@ -123,6 +128,7 @@ export class SearchRoutesPageComponent implements OnInit {
     var element = document.getElementById(divId);
     element?.parentNode?.removeChild(element);
 
+    this.emails.push(divId)
     const index = this.selectedMails.indexOf(divId);
     this.selectedMails.splice(index, 1);
   }
@@ -328,6 +334,7 @@ export class SearchRoutesPageComponent implements OnInit {
     this.startAndEndLocationForBack(sendIT);
     this.routeJsonSetUp(sendIT);
     this.setUpReservedTime(sendIT);
+
     if(sendIT.carTypes.length===0){
       this.toastr.warning("At least one type of vehicle must be checked");
     }
@@ -336,9 +343,15 @@ export class SearchRoutesPageComponent implements OnInit {
       this.toastr.warning("You can only reserve 5h upfront");
     }
     else{
-      //alert(sendIT);
+      sendIT.linkedPassengers.push(this.userEmail);
       this.mapService.saveRide(sendIT);
+      sendIT.linkedPassengers.pop();
+      this.routeSelectedBoolean = false;
+      this.userService.getUsersStateBasedOnHisRides(this.userEmail).subscribe((response) => {
+        this.didUserAlreadyOrder = response;
+      });
+      this.toastr.success("Successfully ordered");
     }
-    // console.log(sendIT);
+    console.log(sendIT);
   }
 }

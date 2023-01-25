@@ -2,6 +2,8 @@ package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.DTOs.RegisteredUserDTO;
 import com.example.nvt_kts_back.DTOs.UserDTO;
+import com.example.nvt_kts_back.enumerations.RideState;
+import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.service.UserService;
 import com.example.nvt_kts_back.models.ChangeProfileRequest;
@@ -15,6 +17,7 @@ import com.example.nvt_kts_back.service.RegisteredUserService;
 import javax.xml.stream.events.EntityReference;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/registeredUsers")
@@ -54,5 +57,18 @@ public class RegisteredUserController {
     {
         ArrayList<String> retVal = this.registeredUserService.getMails();
         return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/getUserStateBasedOnRide/{email}")
+    public boolean getUserStateBasedOnRide(@PathVariable("email") String email)
+    {
+        RegisteredUser u = this.registeredUserService.getByEmail(email);
+        List<Ride> rides  = u.getHistoryOfRides();
+        for(Ride ride : rides){
+            if(ride.getRideState().equals(RideState.STARTED) || ride.getRideState().equals(RideState.IN_PROGRESS)
+                    || ride.getRideState().equals(RideState.SCHEDULED) || ride.getRideState().equals(RideState.WAITING_FOR_PAYMENT))
+                return  true;
+        }
+        return false;
     }
 }

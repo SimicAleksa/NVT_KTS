@@ -162,7 +162,9 @@ export class UserDataService {
       responseType: "json",      
     })
   }
+
+  getUsersStateBasedOnHisRides(userEmail:string): Observable<boolean>{
+    return this.http.get<boolean>("api/registeredUsers/getUserStateBasedOnRide/"+userEmail)
+  }
   
-
-
 }

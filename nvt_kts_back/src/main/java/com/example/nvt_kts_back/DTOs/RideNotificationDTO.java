@@ -10,13 +10,38 @@ public class RideNotificationDTO {
     String state;
     String startLocationString;
     Long id;
+    String passengerEmail;
     public RideNotificationDTO(Ride r) {
         this.distance = r.getDistance();
         this.state = r.getRideState().toString();
-        this.startDateTime = r.getStartDateTime().toString();
+        this.startDateTime = setDateTimeIfExist(r);
         this.startLocation = r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
         this.startLocationString = "";
         this.id = r.getId();
+    }
+
+    private String setDateTimeIfExist(Ride r) {
+        if(r.getStartDateTime()!=null){
+            return r.getStartDateTime().toString();
+        }
+        return "2035";
+    }
+
+    public RideNotificationDTO(Ride r, String email) {
+        this.distance = r.getDistance();
+        this.state = r.getRideState().toString();
+        this.startLocation = r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        this.startLocationString = "";
+        this.id = r.getId();
+        this.setPassengerEmail(email);
+    }
+
+    public String getPassengerEmail() {
+        return passengerEmail;
+    }
+
+    public void setPassengerEmail(String passengerEmail) {
+        this.passengerEmail = passengerEmail;
     }
 
     public String getStartDateTime() {

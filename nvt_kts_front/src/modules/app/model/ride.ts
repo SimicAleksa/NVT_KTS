@@ -5,6 +5,6 @@ export interface RideForNotification{
     startLocationString: string,
     state: string,
     id: number,
-
+    passengerEmail: string
 
 }

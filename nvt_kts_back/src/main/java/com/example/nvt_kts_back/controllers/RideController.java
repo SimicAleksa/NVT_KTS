@@ -16,6 +16,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import com.example.nvt_kts_back.service.RideService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +49,7 @@ public class RideController {
 
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
     public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
-        System.out.println(dto.toString());
-        this.rideService.findDriverList(dto);
-        return null;
-        /*RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
+        RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
         routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());
 
         CoordsDTO coordsDTOStartLoc = new CoordsDTO();
@@ -67,15 +66,24 @@ public class RideController {
         Route route = new Route(routeFormFrontDTO);
 
         Ride ride = new Ride();
-        ride.setRideState(RideState.STARTED);
-        ride.setDriver_id(3l);
+        ride.setRideState(RideState.WAITING_FOR_PAYMENT);
         ride.setRoute(route);
+        ride.setDistance(dto.getDistance());
+        ride.setExpectedDuration(dto.getDuration());
+        ride.setPrice(dto.getPrice());
 
-//        this.routeService.saveRoute(new Route(routeFormFrontDTO));
+        ride.setPassengers(this.rideService.getLinkedPassangersFromStringArray(dto.getLinkedPassengers(),ride));
+
+        if(!dto.getReservedTime().equals("")){
+            String tempDateTime = dto.getReservedTime().replace('T',' ');
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime localDateTime = LocalDateTime.parse(tempDateTime,dateTimeFormatter);
+            System.out.println(localDateTime);
+            ride.setStartDateTime(localDateTime);
+        }
+
         this.rideService.saveRide(ride);
-
-
-        return new ResponseEntity<>(dto, HttpStatus.OK);*/
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")

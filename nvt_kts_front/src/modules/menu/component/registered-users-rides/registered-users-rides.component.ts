@@ -5,6 +5,8 @@ import GeocoderControl, {Geocoder, geocoders} from 'leaflet-control-geocoder';
 import { GeocodingCallback } from 'leaflet-control-geocoder/dist/geocoders';
 import { RideForNotification } from 'src/modules/app/model/ride';
 import { RideService } from 'src/modules/reports/services/ride.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 
 @Component({
@@ -17,6 +19,9 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   username: string = "registrovani1@gmail.com";
   usersRides: RideForNotification[];
+  
+  private stompClient: any;
+  public ws: any;
 
 
   constructor(
@@ -25,14 +30,44 @@ export class RegisteredUsersRidesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
       this.usersRides = <RideForNotification[]> response;
       this.addStringLocation();
       this.splitDate();
-
     });
   }
+
+  initializeWebSocketConnection() {
+    this.ws = new SockJS('http://localhost:8000/socket');
+    this.stompClient = Stomp.over(this.ws);
+    this.stompClient.debug = null;
+    let that = this;
+    //alert(that.ws.readyState + " je stanje");
+    this.stompClient.connect({}, function () {
+      
+      that.openGlobalSocket();
+      //alert(that.ws.readyState + " je stanje");
+    });
+  }
+
+  openGlobalSocket()
+  {
+    this.stompClient.subscribe('/map-updates/ride-notification', (message: { body: string }) => {
+      console.log(message.body)
+      alert("SOCKET AKTIVIRAN")
+      let rideNotif:RideForNotification = JSON.parse(message.body);
+      if(rideNotif.passengerEmail===this.username){
+        alert("SOCKET USAO")
+        this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
+          this.usersRides = <RideForNotification[]> response;
+          this.addStringLocation();
+          this.splitDate();
+        });
+      }
+    });
+  }
+
 
   report(id: number)
   {
@@ -61,7 +96,10 @@ export class RegisteredUsersRidesComponent implements OnInit {
     {
       let datetime: string = ride.startDateTime;
       let lista:string[] = datetime.split("T");
-      ride.startDateTime = lista[1].slice(0, 5);
+      if(ride.state==="IN_PROGRESS" || ride.state==="RESERVED")
+        ride.startDateTime = lista[1].slice(0, 5);
+      else
+        ride.startDateTime = "TBD"
     }
   }
 

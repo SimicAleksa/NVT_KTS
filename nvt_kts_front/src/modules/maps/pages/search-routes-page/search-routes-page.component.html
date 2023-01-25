@@ -119,7 +119,7 @@
 
 
       <div class="row">
-        <button type="button" class="btn btn-primary mt-1" (click)="onSubmit()" >Order</button>
+        <button type="button" class="btn btn-primary mt-1" (click)="onSubmit()" *ngIf="routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)">Order</button>
       </div>
     </div>
   </div>

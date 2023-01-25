@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.DTOs.DataForRideFromFromDTO;
+import com.example.nvt_kts_back.DTOs.RegisteredUserDTO;
 import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
@@ -13,6 +14,7 @@ import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
 import com.example.nvt_kts_back.DTOs.ReportParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
@@ -40,6 +42,9 @@ public class RideService {
 
     @Autowired
     private RouteRepository routeRepository;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
 
     public Ride createRide(Ride ride) { return rideRepository.save(ride);}
@@ -180,8 +185,6 @@ public class RideService {
 
     public HashMap<String, HashMap<String, Double>> getUserReportData(ReportParams params) {
         HashMap<String, HashMap<String, Double>> map = createMapWithDays(params);
-
-        Driver d = this.driverRepository.findByEmail(params.getEmail());
         RegisteredUser u = this.registeredUserRepository.findByEmail(params.getEmail());
         List<Ride> rides  = u.getHistoryOfRides();
         map = putValuesInMap(map, rides, params);
@@ -222,7 +225,7 @@ public class RideService {
         ArrayList<RideNotificationDTO> retVal = new ArrayList<>();
         for(Ride r: rides)
         {
-            if (r.getRideState()==RideState.IN_PROGRESS || r.getRideState()==RideState.DRIVING_TO_START ||
+            if (r.getRideState()==RideState.IN_PROGRESS || r.getRideState()==RideState.STARTED ||
                     r.getRideState()==RideState.SCHEDULED || r.getRideState()==RideState.WAITING_FOR_PAYMENT ||
                     r.getRideState()==RideState.RESERVED)
                 retVal.add(new RideNotificationDTO(r));
@@ -255,15 +258,13 @@ public class RideService {
         if (freeAfter.size()>0)
         {
             // TODO sada treba dodijeliti onoga koji ce najranije zavrsiti
-            Driver best = sortByEndTime(freeNow);
+            Driver best = sortByEndTime(freeAfter);
             System.out.println("Nasla sam nekoga ko ima sad, ali nema kasnije");
             return;
         }
         // posljednji slucaj je da svi imaju i sada i kasnije
         // TODO salji odgovor da se voznja automatski odbija
         System.out.println("Odbijamo voznju jer svi imaju i sada i kasnije");
-
-
     }
 
     private Driver sortByEndTime(ArrayList<Driver> freeAfter) {
@@ -344,5 +345,15 @@ public class RideService {
                 retVal.add(d);
         }
         return retVal;
+    }
+
+    public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) {
+        List<RegisteredUser> registeredUsers = new ArrayList<>();
+        for(String passEmail : linkedPassengers){
+            registeredUsers.add(this.registeredUserRepository.findByEmail(passEmail));
+            RideNotificationDTO dto = new RideNotificationDTO(ride,passEmail);
+            this.simpMessagingTemplate.convertAndSend("/map-updates/ride-notification", dto);
+        }
+        return registeredUsers;
     }
 }
