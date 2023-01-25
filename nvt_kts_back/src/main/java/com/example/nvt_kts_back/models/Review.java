@@ -1,16 +1,13 @@
 package com.example.nvt_kts_back.models;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Review {
     @Id
@@ -24,8 +21,8 @@ public class Review {
     private String comment;
     @ManyToOne(fetch = FetchType.LAZY)
     private RegisteredUser reviewer;
-    @OneToOne(fetch = FetchType.LAZY)
-    private Driver driver;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Ride ride;
 
 
 //    debata oko mergovanja, ako treba uzmi

@@ -17,15 +17,11 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Version;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class AuthService {
@@ -40,7 +36,7 @@ public class AuthService {
     @Autowired
     private TokenUtils tokenUtils;
 
-    public AuthTokenDTO verifyBasicSystemLogin(LoginDTO loginDTO) {
+    public AuthTokenDTO verifySystemAuthToken(LoginDTO loginDTO) {
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(
@@ -60,7 +56,7 @@ public class AuthService {
         return new AuthTokenDTO(tokenUtils.generateToken(user.getEmail(), userRole), userRole, (long) tokenUtils.getExpiredIn());
     }
 
-    public AuthTokenDTO verifyFacebookLogin(FBLoginDTO fbLoginDTO) {
+    public AuthTokenDTO verifyFacebookAuthToken(FBLoginDTO fbLoginDTO) {
         FacebookClient facebookClient = new DefaultFacebookClient(Version.LATEST);
         facebookClient = new DefaultFacebookClient(
                 facebookClient.obtainAppAccessToken(Settings.FB_APP_ID, Settings.FB_APP_SECRET).getAccessToken() ,
@@ -82,14 +78,6 @@ public class AuthService {
 
         String userRole = registeredUser.getRole().getName().substring(5);
         return new AuthTokenDTO(tokenUtils.generateToken(registeredUser.getEmail(), userRole), userRole, (long) tokenUtils.getExpiredIn());
-    }
-
-    public User verifyAuthTokenFromHeaderAndRetUser(HttpServletRequest request) {
-        String email = tokenUtils.getEmailDirectlyFromHeader(request);
-        if (email == null)
-            throw new InvalidAuthTokenException();
-
-        return userService.getUserByEmail(email);
     }
 
 }
