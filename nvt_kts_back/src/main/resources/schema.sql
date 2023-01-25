@@ -15,7 +15,7 @@ INSERT INTO COORD (latitude, longitude)
             (45.240808, 19.8448008); -- 45.240808, 19.8448008 --dragise brasovana 10
 
 INSERT INTO my_users (email, password, name, surname, city, phone, profile_activated, picture, is_blocked, role_id, note)
-    VALUES ('korisnik@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'ime', 'prezime', 'grad', '42145135', true, 'slika', false, 1, null),
+    VALUES ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'ime', 'prezime', 'grad', '42145135', true, 'slika', false, 1, null),
             ('djura@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Djura','Djuric','grad','42145135',true,'slika',false, 1, null),
             ('registrovani1@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Put','Putic','grad','42145135',true,'slika',false,1, null),
             ('registrovani2@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Isidora', 'Mladjic', 'grad', '42145135', true, 'slika', false, 1, null),
