@@ -9,6 +9,7 @@ nav {
 }
 
 button {
+  font-size: 15px;
   display: inline-block;
   white-space: nowrap;
   margin: 0;

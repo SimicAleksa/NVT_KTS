@@ -49,6 +49,7 @@
 .pop-up-message {
   font-size: 1.1rem;
   font-weight: 500;
+  font-size: 17px;
 }
 
 @media (max-width: 20vw) {
