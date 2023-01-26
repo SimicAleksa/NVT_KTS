@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
+import com.example.nvt_kts_back.DTOs.UserRideHistoryDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.Driver;
@@ -11,6 +12,7 @@ import com.example.nvt_kts_back.repository.RouteRepository;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
 import com.example.nvt_kts_back.DTOs.ReportParams;
+import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
@@ -232,4 +234,26 @@ public class RideService {
         return retVal;
 
     }
+
+    public List<UserRideHistoryDTO> getRideHistoryForRegisteredUser(Long userId) {
+        List<UserRideHistoryDTO> rideHistory = new ArrayList<>();
+        List<Ride> a = rideRepository.findAllByPassengerId(userId);
+        for (Ride ride : a)
+            rideHistory.add(new UserRideHistoryDTO(
+                    EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
+                    EntityToDTOMapper.mapDriverToDriverInfoForRideHistoryDTO(
+                            driverRepository.getReferenceById(ride.getDriver_id())
+                    )
+                )
+            );
+
+        return rideHistory;
+    }
+
+    public boolean userHadRideWitGivenDriverInLast3Days(Long passengerId, Long driverId) {
+        return rideRepository.findByPassengerIdAndDriverIdAndDate(
+                passengerId, driverId, LocalDateTime.now().minusDays(3), LocalDateTime.now()
+        ).size() > 0;
+    }
+
 }

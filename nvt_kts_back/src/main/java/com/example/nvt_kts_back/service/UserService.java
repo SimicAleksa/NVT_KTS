@@ -127,4 +127,12 @@ public class UserService {
         }
         return retVal;
     }*/
+
+    public User getUserByEmail(final String email) {
+        return userRepository.getByEmail(email).orElseThrow(UserDoesNotExistException::new);
+    }
+
+    public RegisteredUser getRegUserById(Long usrId) {
+        return registeredUserRepository.getById(usrId).orElseThrow(UserDoesNotExistException::new);
+    }
 }

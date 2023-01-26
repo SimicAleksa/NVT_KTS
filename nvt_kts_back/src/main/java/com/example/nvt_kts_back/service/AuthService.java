@@ -23,6 +23,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class AuthService {
     @Autowired
@@ -78,6 +80,14 @@ public class AuthService {
 
         String userRole = registeredUser.getRole().getName().substring(5);
         return new AuthTokenDTO(tokenUtils.generateToken(registeredUser.getEmail(), userRole), userRole, (long) tokenUtils.getExpiredIn());
+    }
+
+    public User verifyAuthTokenFromHeaderAndRetUser(HttpServletRequest request) {
+        String email = tokenUtils.getEmailDirectlyFromHeader(request);
+        if (email == null)
+            throw new InvalidAuthTokenException();
+
+        return userService.getUserByEmail(email);
     }
 
 }

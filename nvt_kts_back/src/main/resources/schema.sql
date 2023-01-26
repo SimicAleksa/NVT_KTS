@@ -73,12 +73,12 @@ INSERT INTO ride (ride_state, price, start_date_time, end_date_time, expected_du
             ('ENDED', 175.0, '2023-01-06 10:00:00', '2023-01-06 11:00:00', 60, 35.0, 2, 13);
 
 INSERT INTO ride_passengers(ride_id, registered_user_id)
-    VALUES (1, 4),
+    VALUES (1, 1),
             (1, 5),
-            (2, 4),
+            (2, 1),
             (2, 5),
             (2, 6),
-            (3, 5),
+            (3, 1),
             (4, 6);
 
 

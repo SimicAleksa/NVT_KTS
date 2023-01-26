@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
@@ -14,7 +14,13 @@ import { ApproveChangesComponent } from './components/approve-changes/approve-ch
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockUserPageComponent } from './pages/block-user-page/block-user-page.component';
 import { BlockUserComponent } from './components/block-user/block-user.component';
-
+import { UserRidesHistoryPageComponent } from './pages/user-rides-history-page/user-rides-history-page.component';
+import { RideHistoryTableComponent } from './components/ride-history-table/ride-history-table.component';
+import { RideDetailsForUserComponent } from './components/ride-details-for-user/ride-details-for-user.component';
+import { DriverReviewsForUserComponent } from './components/driver-reviews-for-user/driver-reviews-for-user.component';
+import { StarRatingModule } from 'angular-star-rating';
+import { PopUpModule } from '../pop-up/pop-up.module';
+import { StarRatingConfigService } from 'angular-star-rating';
 
 
 @NgModule({
@@ -29,17 +35,27 @@ import { BlockUserComponent } from './components/block-user/block-user.component
     ApproveChangesComponent,
     BlockUserPageComponent,
     BlockUserComponent,
+    UserRidesHistoryPageComponent,
+    RideHistoryTableComponent,
+    RideDetailsForUserComponent,
+    DriverReviewsForUserComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    StarRatingModule,
+    PopUpModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+  ],
+  providers: [
+    DatePipe,
+    StarRatingConfigService
   ]
 })
 export class UserDataModule { }
