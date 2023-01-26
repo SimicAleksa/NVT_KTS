@@ -40,4 +40,8 @@ public class EntityToDTOMapper {
         return new RegUserForReviewDTO(usr.getName(), usr.getSurname(), usr.getPicture());
     }
 
+    public static RegUserInfoForRideHistoryDTO mapDriverToRegUserInfoForRideHistoryDTO(User usr) {
+        return new RegUserInfoForRideHistoryDTO(usr.getName(), usr.getSurname(), usr.getPhone(), usr.getPicture());
+    }
+
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { API_LOGIN_URL, API_SEND_PASS_RESET_EMAIL_URL, API_PASS_RESET_URL, API_FB_LOGIN_URL, API_DRIVER_REVIEWS_URL, API_NEW_REVIEWS_URL, API_USER_RIDE_HISTORY_URL } from "../config/api-urls";
+import { API_LOGIN_URL, API_SEND_PASS_RESET_EMAIL_URL, API_PASS_RESET_URL, API_FB_LOGIN_URL, API_DRIVER_REVIEWS_URL, API_NEW_REVIEWS_URL, API_USER_RIDE_HISTORY_URL, API_DRIVER_RIDE_HISTORY_URL } from "../config/api-urls";
 
 
 @Injectable({ providedIn: 'root' })
@@ -26,13 +26,17 @@ export class APIRequestMaker {
   creteUserRidesHistoryRequest() {
     return this.getRequest('GET', API_USER_RIDE_HISTORY_URL);
   }
-
+  
   createDriverReviewsRequest(driverId: number) {
     return this.getRequest('GET', API_DRIVER_REVIEWS_URL+"?driverId="+driverId);
   }
 
   createNewReviewRequest(data: any) {
     return this.getRequest('POST', API_NEW_REVIEWS_URL, data);
+  }
+  
+  creteDriverRidesHistoryRequest() {
+    return this.getRequest('GET', API_DRIVER_RIDE_HISTORY_URL);
   }
   
   getRequest(requestType: string, api_url: string,data: any = null) {

@@ -67,4 +67,11 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
     )
     List<Ride> findByPassengerIdAndDriverIdAndDate(@Param("passengerId") Long passengerId, @Param("driverId") Long driverId,
                                                    @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    @Query(
+            "SELECT DISTINCT r FROM Ride r " +
+                    "JOIN FETCH r.passengers p " +
+                    "WHERE r.driver_id = :driverId"
+    )
+    List<Ride> findAllByDriverId(@Param("driverId") Long driverId);
 }

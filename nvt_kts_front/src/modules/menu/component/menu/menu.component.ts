@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CLIENT_LOGIN_URL, CLIENT_REGISTRATION_URL, CLIENT_REG_USR_DRIVES_HISTORY_URL } from 'src/config/client-urls';
+import { CLIENT_DRIVER_RIDES_HISTORY_URL, CLIENT_LOGIN_URL, CLIENT_REGISTRATION_URL, CLIENT_REG_USR_RIDES_HISTORY_URL } from 'src/config/client-urls';
 import { API_ALL_ACTIVE_VEHICLES_URL, API_ROUTE_SEARCH, API_SIMPLE_ROUTE_SEARCH } from 'src/config/map-urls';
 import { MenuService } from '../../service/menu-service';
 
@@ -66,9 +66,14 @@ export class MenuComponent implements OnInit {
     this.router.navigate([API_ROUTE_SEARCH]);
   }
 
-  onRidesHistoryBtnClick(): void { 
+  onUserRidesHistoryBtnClick(): void { 
     this.currentActiveBtn = 'HISTORY';
-    this.router.navigate([CLIENT_REG_USR_DRIVES_HISTORY_URL]);
+    this.router.navigate([CLIENT_REG_USR_RIDES_HISTORY_URL]);
   }
   
+  onDriverRidesHistoryBtnClick(): void { 
+    this.currentActiveBtn = 'HISTORY';
+    this.router.navigate([CLIENT_DRIVER_RIDES_HISTORY_URL]);
+  }
+
 }

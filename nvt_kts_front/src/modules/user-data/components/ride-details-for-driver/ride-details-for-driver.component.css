@@ -12,6 +12,7 @@
     border-right: 1px solid black;
     border-radius: 20px;
     margin-right: 1px;
+    padding-right: 20px;
 }
 
 .right-col {
@@ -26,13 +27,6 @@
     font-weight: bold;
 }
 
-img {
-    border-radius: 40px;
-    width: 85%;
-    height: calc(20px + 24vh);
-    margin: auto;
-}
-
 input, label{
     font-size: large;
     font-weight: bold;
@@ -43,30 +37,22 @@ input {
     height: 8vh !important;
 }
 
-.btn-style {
-    width: 100%;
+.passengers-cont {
+    overflow: auto;
+    height: 55vh;
+}
+
+.passenger-card {
+    border: 1px solid rgb(85, 82, 82);
     border-radius: 20px;
-    margin: 0;
-    font-weight: 700;
-    height: 5vh;
-    font-size: 15px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: rgb(238, 233, 233);
 }
 
-.btn-style:hover {
-    width: 105%;
-    margin: 0 calc(2.5% * -1);
-}
-
-#new-ride-btn {
-    background-color: rgb(79, 140, 219);
-}
-
-#driver-reviews-btn {
-    background-color: rgb(223, 174, 42);
-}
-
-#fav-route-btn {
-    background-color: rgb(94, 226, 62);
+img {
+    border-radius: 20px;
+    margin: 5px;
 }
 
 .map-style {

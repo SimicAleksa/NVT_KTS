@@ -58,6 +58,8 @@
                 </div>
             </div>
         </div>
+
+        <hr>
         
         <p class="section-title-style">Route information</p>
         <div class="row">
@@ -82,10 +84,17 @@
             <div class="col-4">
                 <button id="driver-reviews-btn" class="btn-style" (click)="showDriverReviews()">Show driver reviews</button>
             </div>
+            <div class="col-4">
+                <button id="fav-route-btn" class="btn-style" (click)="saveRouteToFavourites()">Save route to favourites</button>
+            </div>
         </div>
     </div>
 
     <div class="col right-col">
-
+        <div class="map-style" 
+            leaflet
+            [leafletOptions]="options"
+            [leafletLayers]="mainGroup"
+        ></div>
     </div>
 </div>

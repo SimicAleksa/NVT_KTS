@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.DTOs.DriverRideHistoryDTO;
 import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
 import com.example.nvt_kts_back.DTOs.UserRideHistoryDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class RideService {
@@ -254,6 +256,21 @@ public class RideService {
         return rideRepository.findByPassengerIdAndDriverIdAndDate(
                 passengerId, driverId, LocalDateTime.now().minusDays(3), LocalDateTime.now()
         ).size() > 0;
+    }
+
+    public List<DriverRideHistoryDTO> getRideHistoryForDriver(Long driverId) {
+        List<DriverRideHistoryDTO> rideHistory = new ArrayList<>();
+        List<Ride> a = rideRepository.findAllByDriverId(driverId);
+        for (Ride ride : a)
+            rideHistory.add(new DriverRideHistoryDTO(
+                            EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
+                            ride.getPassengers().stream().map(
+                                            EntityToDTOMapper::mapDriverToRegUserInfoForRideHistoryDTO
+                            ).collect(Collectors.toList())
+                        )
+                );
+
+        return rideHistory;
     }
 
 }

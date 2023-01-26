@@ -21,7 +21,9 @@ import { DriverReviewsForUserComponent } from './components/driver-reviews-for-u
 import { StarRatingModule } from 'angular-star-rating';
 import { PopUpModule } from '../pop-up/pop-up.module';
 import { StarRatingConfigService } from 'angular-star-rating';
-
+import { DriverRidesHistoryPageComponent } from './pages/driver-rides-history-page/driver-rides-history-page.component';
+import { RideDetailsForDriverComponent } from './components/ride-details-for-driver/ride-details-for-driver.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { StarRatingConfigService } from 'angular-star-rating';
     RideHistoryTableComponent,
     RideDetailsForUserComponent,
     DriverReviewsForUserComponent,
+    DriverRidesHistoryPageComponent,
+    RideDetailsForDriverComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +50,8 @@ import { StarRatingConfigService } from 'angular-star-rating';
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     StarRatingModule,
-    PopUpModule
+    PopUpModule,
+    LeafletModule
   ],
   exports: [
     CommonModule,

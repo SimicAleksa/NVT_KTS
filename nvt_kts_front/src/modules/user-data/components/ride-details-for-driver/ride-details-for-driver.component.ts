@@ -3,11 +3,11 @@ import * as L from 'leaflet';
 import { geoJSON, latLng, LayerGroup, tileLayer } from 'leaflet';
 
 @Component({
-  selector: 'app-ride-details-for-user',
-  templateUrl: './ride-details-for-user.component.html',
-  styleUrls: ['./ride-details-for-user.component.css']
+  selector: 'app-ride-details-for-driver',
+  templateUrl: './ride-details-for-driver.component.html',
+  styleUrls: ['./ride-details-for-driver.component.css']
 })
-export class RideDetailsForUserComponent implements OnInit {
+export class RideDetailsForDriverComponent implements OnInit {
   @Output() showReviewsBtnClickedSignal = new EventEmitter<number>();
 
   public mainGroup: LayerGroup[] = [];
@@ -45,17 +45,6 @@ export class RideDetailsForUserComponent implements OnInit {
     this.showPanel = true;
   }
 
-  goToNewRidePage(): void {
-    //TO DO
-  }
-
-  showDriverReviews(): void {
-    this.showReviewsBtnClickedSignal.emit(this.details.driver.id);
-  }
-
-  saveRouteToFavourites(): void {
-    
-  }
 
   setupRouteLineOnMap() {
     let color = Math.floor(8000000).toString(16);
@@ -98,6 +87,5 @@ export class RideDetailsForUserComponent implements OnInit {
     markerLayer2.addTo(geoLayerRouteGroup);
     this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
   }
- 
-  
+
 }

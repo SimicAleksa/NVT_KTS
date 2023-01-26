@@ -204,7 +204,7 @@ public class RideController {
         this.rideService.changeRideState(id, state);
     }
 
-    @GetMapping(value = "/history")
+    @GetMapping(value = "/user/history")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
     public ResponseEntity<List<UserRideHistoryDTO>> getRegisteredUserRideHistory(HttpServletRequest request) {
@@ -215,6 +215,19 @@ public class RideController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(rideService.getRideHistoryForRegisteredUser(userId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/driver/history")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_ROLE)
+    @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<List<DriverRideHistoryDTO>> getDriverRideHistory(HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = authService.verifyAuthTokenFromHeaderAndRetUser(request).getId();
+        } catch (InvalidAuthTokenException | UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(rideService.getRideHistoryForDriver(userId), HttpStatus.OK);
     }
 
 }

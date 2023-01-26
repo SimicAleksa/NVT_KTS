@@ -57,8 +57,7 @@ public class UserService {
         if (!passwordResetDTO.validateAttributes())
             throw new InvalidDTOAttributesValuesException();
 
-        User user = userRepository.getByEmail(passwordResetDTO.getEmail())
-                .orElseThrow(UserDoesNotExistException::new);
+        User user = userRepository.getByEmail(passwordResetDTO.getEmail()).orElseThrow(UserDoesNotExistException::new);
 
         tempCodeHolderService.verifyUserPasswordResetTempCode(passwordResetDTO.getEmail(), passwordResetDTO.getTempCode());
 
