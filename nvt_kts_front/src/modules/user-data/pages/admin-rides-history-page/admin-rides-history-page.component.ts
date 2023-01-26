@@ -2,30 +2,41 @@ import { Component, OnInit } from '@angular/core';
 import { APIRequestMaker } from 'src/utils/api-request-maker';
 
 @Component({
-  selector: 'app-driver-rides-history-page',
-  templateUrl: './driver-rides-history-page.component.html',
-  styleUrls: ['./driver-rides-history-page.component.css']
+  selector: 'app-admin-rides-history-page',
+  templateUrl: './admin-rides-history-page.component.html',
+  styleUrls: ['./admin-rides-history-page.component.css']
 })
-export class DriverRidesHistoryPageComponent implements OnInit {
+export class AdminRidesHistoryPageComponent implements OnInit {
   public ridesHistory: Array<any>;
+
+  public showTable: boolean;
+
+  public usrEmail: string;
 
   constructor(private reqMaker: APIRequestMaker) {
     this.ridesHistory = [];
-   }
+    this.showTable = false;
+    this.usrEmail = "";
+  }
 
-   ngOnInit(): void {
-    this.getRideHistory();
+  ngOnInit(): void {
+  }
+
+  onSubmitEmailBtnClick(): void {
+    this.getRideHistory();  
   }
 
   getRideHistory(): void { 
-    this.reqMaker.creteDriverRidesHistoryRequest().subscribe(this.getObservable());
+    this.reqMaker.creteAdminRidesHistoryRequest(this.usrEmail).subscribe(this.getObservable());
   }
 
   getObservable() {
     return {
       next: (retData: any) => {
+        this.showTable = true;
         this.ridesHistory = retData.body;
         this.convertJsonStrToObj();
+        this.scrollToHistoryTable();
       },
       error: (err: any) => {
         this.ridesHistory = [];
@@ -40,6 +51,10 @@ export class DriverRidesHistoryPageComponent implements OnInit {
       this.ridesHistory.forEach(elem => {
         elem.ride.route.routeJSON = JSON.parse(elem.ride.route.routeJSON);
       });
+  }
+
+  scrollToHistoryTable(): void {
+    this.doDaScroll('#history-table');
   }
 
   scrollToDetailsPanel(): void {

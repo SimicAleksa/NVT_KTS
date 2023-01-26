@@ -1,0 +1,93 @@
+<div class="info-card-holder row" *ngIf="showPanel">
+    <div class="col left-col">
+        <p class="section-title-style">User information</p>
+        <div class="row">
+
+            <div class="col">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="row">
+                            <img src="../../../../assets/images/pera.webp">
+                        </div>
+                    </div>
+               
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-outline flex-fill mb-0 form-floating">
+                                    <input [value]="details.user.name" type="text" id="name" class="form-control" disabled/>
+                                    <label class="form-label" for="name">NAME</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-outline flex-fill mb-0 form-floating">
+                                    <input [value]="details.user.surname" type="text" id="surname" class="form-control" disabled/>
+                                    <label class="form-label" for="surname">SURNAME</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-outline flex-fill mb-0 form-floating">
+                            <input [value]="details.user.email" type="text" id="email" class="form-control" disabled/>
+                            <label class="form-label" for="email">EMAIL</label>
+                        </div>
+
+                        <div class="form-outline flex-fill mb-0 form-floating">
+                            <input [value]="details.user.phone" type="text" id="phoneNumber" class="form-control" disabled/>
+                            <label class="form-label" for="phoneNumber">PHONE NUMBER</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-outline flex-fill mb-0 form-floating">
+                            <input [value]="details.user.isBlocked ? 'Yes': 'No'" type="text" id="isBlocked" class="form-control" disabled/>
+                            <label class="form-label" for="isBlocked">IS BLOCKED</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-outline flex-fill mb-0 form-floating">
+                            <input [value]="details.user.role === 'ROLE_USER' ? 'Regular user' : 'Driver'" type="text" id="sysRole" class="form-control" disabled/>
+                            <label class="form-label" for="sysRole">SYSTEM ROLE</label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-outline flex-fill mb-0 form-floating">
+                            <input [value]="details.user.city" type="text" id="city" class="form-control" disabled/>
+                            <label class="form-label" for="city">CITY</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <hr>
+        
+        <p class="section-title-style">Route information</p>
+        <div class="row">
+            <div class="col">
+                <div class="form-outline flex-fill mb-0 form-floating">
+                    <input [value]="details.ride.route.routeJSON.waypoints[0].name" type="text" id="startLocation" class="form-control" disabled/>
+                    <label class="form-label" for="startLocation">START LOCATION</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-outline flex-fill mb-0 form-floating">
+                    <input [value]="details.ride.route.routeJSON.waypoints[1].name" type="text" id="endLocation" class="form-control" disabled/>
+                    <label class="form-label" for="endLocation">END LOCATION</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col right-col">
+        <div class="map-style" 
+            leaflet
+            [leafletOptions]="options"
+            [leafletLayers]="mainGroup"
+        ></div>
+    </div>
+</div>

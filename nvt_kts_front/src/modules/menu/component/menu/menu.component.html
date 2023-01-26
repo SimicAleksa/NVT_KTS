@@ -12,7 +12,9 @@
     </span>
 
     <span *ngIf="role === 'ADMIN'">
-        <button>ADMIN</button>
+        <button (click)="onAdminRidesHistoryBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}">
+            RIDES HISTORY
+        </button>
     </span>
 
     <button (click)="onAllActiveVehiclesBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='ALL ACTIVE VEHICLES'}">

@@ -13,3 +13,5 @@ export const API_NEW_REVIEWS_URL = API_BASE_URL + "/api/drivers/review/new";
 
 export const API_DRIVER_RIDE_HISTORY_URL = API_BASE_URL + "/api/rides/driver/history";
 
+export const API_ADMIN_RIDE_HISTORY_URL = API_BASE_URL + "/api/rides/admin/history";
+

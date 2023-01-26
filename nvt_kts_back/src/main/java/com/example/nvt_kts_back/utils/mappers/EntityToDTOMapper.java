@@ -3,9 +3,6 @@ package com.example.nvt_kts_back.utils.mappers;
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.models.*;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 public class EntityToDTOMapper {
     public static DriverInfoForRideHistoryDTO mapDriverToDriverInfoForRideHistoryDTO(Driver driver) {
         return new DriverInfoForRideHistoryDTO(
@@ -40,8 +37,14 @@ public class EntityToDTOMapper {
         return new RegUserForReviewDTO(usr.getName(), usr.getSurname(), usr.getPicture());
     }
 
-    public static RegUserInfoForRideHistoryDTO mapDriverToRegUserInfoForRideHistoryDTO(User usr) {
+    public static RegUserInfoForRideHistoryDTO mapUserToRegUserInfoForRideHistoryDTO(User usr) {
         return new RegUserInfoForRideHistoryDTO(usr.getName(), usr.getSurname(), usr.getPhone(), usr.getPicture());
+    }
+
+    public static UserInfoForAdminRideHistoryDTO mapUserToUserInfoForAdminRideHistoryDTO(User usr) {
+        return new UserInfoForAdminRideHistoryDTO(usr.getEmail(), usr.getName(), usr.getSurname(), usr.getCity(), usr.getPhone(),
+                                                    usr.getPicture(), usr.getIsBlocked(), usr.getRole().getName()
+        );
     }
 
 }

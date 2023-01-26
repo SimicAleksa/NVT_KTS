@@ -24,6 +24,8 @@ import { StarRatingConfigService } from 'angular-star-rating';
 import { DriverRidesHistoryPageComponent } from './pages/driver-rides-history-page/driver-rides-history-page.component';
 import { RideDetailsForDriverComponent } from './components/ride-details-for-driver/ride-details-for-driver.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { AdminRidesHistoryPageComponent } from './pages/admin-rides-history-page/admin-rides-history-page.component';
+import { RideDetailsForAdminComponent } from './components/ride-details-for-admin/ride-details-for-admin.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     DriverReviewsForUserComponent,
     DriverRidesHistoryPageComponent,
     RideDetailsForDriverComponent,
+    AdminRidesHistoryPageComponent,
+    RideDetailsForAdminComponent,
   ],
   imports: [
     CommonModule,

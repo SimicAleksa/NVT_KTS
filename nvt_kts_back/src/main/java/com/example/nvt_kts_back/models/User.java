@@ -18,6 +18,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+
     private String email;
     @Column
     private String password;
@@ -35,7 +36,6 @@ public class User implements UserDetails {
     private String picture;
     @Column
     private Boolean isBlocked;
-
     @Column
     private String note;
     @ManyToOne(cascade = CascadeType.ALL)

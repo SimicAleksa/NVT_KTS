@@ -230,4 +230,11 @@ public class RideController {
         return new ResponseEntity<>(rideService.getRideHistoryForDriver(userId), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/admin/history")
+    @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)
+    @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<List<RideHistoryForAdminDTO>> getUserRideHistoryForAdmin(@RequestParam String email, HttpServletRequest request) {
+        return new ResponseEntity<>(rideService.getRideHistoryForAdmin(email), HttpStatus.OK);
+    }
+
 }

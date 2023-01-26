@@ -74,4 +74,5 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
                     "WHERE r.driver_id = :driverId"
     )
     List<Ride> findAllByDriverId(@Param("driverId") Long driverId);
+
 }
