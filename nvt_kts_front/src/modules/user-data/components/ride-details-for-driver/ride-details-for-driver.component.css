@@ -1,0 +1,65 @@
+.info-card-holder {
+    margin: 0 -20px;
+    margin-top: 5vh;
+    background: white;
+    border: 1px solid rgb(199, 196, 196);
+    border-radius: 20px;
+    height: 84vh;
+    padding: 20px;
+}
+
+.left-col {
+    border-right: 1px solid black;
+    border-radius: 20px;
+    margin-right: 1px;
+    padding-right: 20px;
+}
+
+.right-col {
+    border-left: 1px solid black;
+    border-radius: 20px;
+    margin-right: -1px;
+}
+
+.section-title-style {
+    font-size: 25px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+input, label{
+    font-size: large;
+    font-weight: bold;
+}
+
+input {
+    margin-bottom: 10px;
+    height: 8vh !important;
+}
+
+.passengers-cont {
+    overflow: auto;
+    height: 55vh;
+}
+
+.passenger-card {
+    border: 1px solid rgb(85, 82, 82);
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: rgb(238, 233, 233);
+}
+
+img {
+    border-radius: 20px;
+    margin: 5px;
+}
+
+.map-style {
+    margin: 10px 0;
+    height: calc(100% - 20px); 
+    width: 100%;
+    margin-left: 10px;
+    border-radius: 20px;
+    border: 1px solid black;
+}

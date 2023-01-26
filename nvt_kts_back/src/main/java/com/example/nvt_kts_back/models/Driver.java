@@ -45,7 +45,8 @@ public class Driver extends User {
 
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<TimeSpan> activeTime;
-
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
     public Driver(String email, String password, String name, String surname, String city, String phone,
                   Boolean profileActivated, String picture, Boolean isBlocked, Boolean active, CarType carType,

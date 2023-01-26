@@ -1,21 +1,23 @@
 package com.example.nvt_kts_back.controllers;
 
+import com.example.nvt_kts_back.CustomExceptions.InvalidAuthTokenException;
+import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.*;
+import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.models.Coord;
 import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.models.Route;
-import com.example.nvt_kts_back.service.CoordService;
-import com.example.nvt_kts_back.service.DriverService;
+import com.example.nvt_kts_back.service.*;
 import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.example.nvt_kts_back.service.RideService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,8 @@ import java.util.Locale;
 public class RideController {
     @Autowired
     private RideService rideService;
-
+    @Autowired
+    private AuthService authService;
     @Autowired
     private CoordService coordService;
 
@@ -199,6 +202,39 @@ public class RideController {
     public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
     {
         this.rideService.changeRideState(id, state);
+    }
+
+    @GetMapping(value = "/user/history")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
+    @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<List<UserRideHistoryDTO>> getRegisteredUserRideHistory(HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = authService.verifyAuthTokenFromHeaderAndRetUser(request).getId();
+        } catch (InvalidAuthTokenException | UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(rideService.getRideHistoryForRegisteredUser(userId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/driver/history")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_ROLE)
+    @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<List<DriverRideHistoryDTO>> getDriverRideHistory(HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = authService.verifyAuthTokenFromHeaderAndRetUser(request).getId();
+        } catch (InvalidAuthTokenException | UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(rideService.getRideHistoryForDriver(userId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/admin/history")
+    @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)
+    @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<List<RideHistoryForAdminDTO>> getUserRideHistoryForAdmin(@RequestParam String email, HttpServletRequest request) {
+        return new ResponseEntity<>(rideService.getRideHistoryForAdmin(email), HttpStatus.OK);
     }
 
 }

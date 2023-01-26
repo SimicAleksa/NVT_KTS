@@ -1,0 +1,26 @@
+.page-holder {
+    margin: 0;
+    padding: 10vh 5vw;
+    padding-bottom: 6vh;
+    background-color: #eee;
+    min-height: 100vh;
+}
+
+.usr-email-form {
+    padding: 0 15vw;
+    margin-bottom: 2vh;
+}
+
+input {
+    color: grey;
+    font-size: 15px;
+    height: 6vh !important;
+}
+
+label {
+    font-size: medium;
+}
+
+button {
+    margin-top: 8px;
+}

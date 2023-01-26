@@ -1,0 +1,98 @@
+.info-card-holder {
+    margin: 0 -20px;
+    margin-top: 5vh;
+    background: white;
+    border: 1px solid rgb(199, 196, 196);
+    border-radius: 20px;
+    height: 84vh;
+    padding: 20px;
+}
+
+.left-col {
+    border-right: 1px solid black;
+    border-radius: 20px;
+    margin-right: 1px;
+}
+
+.right-col {
+    border-left: 1px solid black;
+    border-radius: 20px;
+    margin-right: -1px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.panel-title {
+    font-size: 25px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+textarea {
+    padding-top: 30px !important;
+}
+
+label {
+    font-size: 18px;
+    margin-left: 15px;
+}
+
+.review-txt-area {
+    font-size: 20px;
+    min-height: 60vh;
+    max-height: 60vh;
+    background-color: rgb(250, 250, 250);
+    margin-bottom: 15px;
+}
+
+.btn-style {
+    width: 100%;
+    border-radius: 20px;
+    margin: 0;
+    margin-top: 10px;
+    font-weight: 700;
+    height: 5vh;
+}
+
+.btn-style:hover {
+    width: 105%;
+    margin: 0 calc(2.5% * -1);
+    margin-top: 10px;
+}
+
+#new-review-btn {
+    background-color: rgb(62, 154, 230);
+    font-size: 15px;
+}
+
+.review-card {
+    margin: 10px;
+    border: 1px solid rgb(201, 196, 196);
+    border-radius: 40px 20px 40px 20px;
+    padding: 5px 20px;
+    background-color: rgb(235, 239, 243);
+}
+
+.card-txt-style {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 15px ;
+}
+
+.comment-style {
+    font-size: 20px ;
+}
+
+img {
+    width: 50px;
+    border-radius: 10px;
+}
+
+hr {
+    margin: 5px 0;
+}
+
+star-rating {
+    margin-top: 2px;
+    margin-right: 50px;
+}

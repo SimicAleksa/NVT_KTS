@@ -1,0 +1,58 @@
+<div class="info-card-holder row" *ngIf="showPanel">
+    <div class="col-5 left-col">
+        <p class="panel-title">Driver reviews section</p>
+        <div class="row">
+            <div class="form-outline flex-fill mb-0 form-floating">
+                <textarea [(ngModel)]="newReviewMess" type="text" id="name" class="form-control review-txt-area"></textarea>
+                <label class="form-label" for="name">Tell us what you think about this driver.</label>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="card-txt-style d-flex">
+                Rate the car:
+                <star-rating (ratingChange)="onCarRatingChange($event)" [hoverEnabled]="true" [rating]="newCarRating" [starType]="'svg'" [readOnly]="false"></star-rating>
+                Rate the driver:
+                <star-rating (ratingChange)="onDriverRatingChange($event)" [hoverEnabled]="true" [rating]="newDriverRating" [starType]="'svg'" [readOnly]="false"></star-rating>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-4">
+                <button id="new-review-btn" class="btn-style" (click)="submitReview()">Submit review</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-7 right-col">
+        
+        <div class="review-card row" *ngFor="let review of reviews">
+            <div class="row">
+                <div class="col-1">
+                    <img src="../../../../assets/images/pera.webp"/>
+                </div>
+                <div class="col-11 card-txt-style">
+                    {{review.reviewer.name}} {{review.reviewer.surname}}
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="card-txt-style d-flex">
+                    Car rating:
+                    <star-rating [starType]="'svg'" [rating]="review.carStars" [readOnly]="true"></star-rating>
+                    Driver rating:
+                    <star-rating [starType]="'svg'" [rating]="review.driverStars" [readOnly]="true"></star-rating>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row comment-style">
+                <p>{{review.comment}}</p>
+            </div>
+        </div>
+
+    </div>
+</div>

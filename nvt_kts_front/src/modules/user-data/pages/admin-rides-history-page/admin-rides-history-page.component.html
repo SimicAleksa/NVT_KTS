@@ -1,0 +1,29 @@
+<div class="row page-holder">
+    <div class="col">
+
+        <div class="row usr-email-form">
+            <div class="col-2"></div>
+            <div class="col-5">
+                <div class="form-outline flex-fill mb-0 form-floating">
+                    <input [(ngModel)]="usrEmail" type="email" id="email" class="form-control" placeholder="Email" name="email"/>
+                    <label class="form-label" for="email">User email</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <button (click)="onSubmitEmailBtnClick()" id="submit-btn" type="button" class="btn btn-primary btn-lg">Show rides history</button>
+            </div>
+        </div>
+
+        <app-ride-history-table *ngIf="showTable" 
+            id="history-table"
+            [rideHistory]="ridesHistory"
+            (rowClickedSignal)="detailsPanel.setUpData($event); scrollToDetailsPanel();">
+        </app-ride-history-table>
+
+        <app-ride-details-for-admin 
+            id="details-panel" 
+            #detailsPanel>
+        </app-ride-details-for-admin>
+
+    </div>
+</div>

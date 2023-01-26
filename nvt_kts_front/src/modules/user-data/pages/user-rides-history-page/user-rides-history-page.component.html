@@ -1,0 +1,27 @@
+<div class="row page-holder">
+    <div class="col">
+        <app-ride-history-table 
+            [rideHistory]="ridesHistory"
+            (rowClickedSignal)="detailsPanel.setUpData($event); scrollToDetailsPanel();"
+        >
+        </app-ride-history-table>
+        
+        <app-ride-details-for-user 
+            id="details-panel" 
+            #detailsPanel
+            (showReviewsBtnClickedSignal)="reviewsPanel.fetchReviews($event); scrollToReviewsPanel();"
+        >
+        </app-ride-details-for-user>
+        
+        <app-driver-reviews-for-user 
+            id="reviews-panel" 
+            #reviewsPanel
+            (errSignal)="popUpError.startPopUpShowTimeout($event)"
+            (successSignal)="popUpSuccess.startPopUpShowTimeout($event)"
+        >
+        </app-driver-reviews-for-user>
+    </div>
+
+    <app-pop-up #popUpError [duration]="6500"></app-pop-up>
+    <app-pop-up #popUpSuccess [duration]="6500" [isErrorPopUp]="false"></app-pop-up>
+</div>

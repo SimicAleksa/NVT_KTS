@@ -1,21 +1,23 @@
 package com.example.nvt_kts_back.service;
 
-import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
+import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
+import com.example.nvt_kts_back.DTOs.*;
+import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.models.RegisteredUser;
+import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.repository.DriverRepository;
 import com.example.nvt_kts_back.repository.RouteRepository;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
-import com.example.nvt_kts_back.DTOs.ReportParams;
+import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
-import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class RideService {
@@ -232,4 +235,60 @@ public class RideService {
         return retVal;
 
     }
+
+    public List<UserRideHistoryDTO> getRideHistoryForRegisteredUser(Long userId) {
+        List<UserRideHistoryDTO> rideHistory = new ArrayList<>();
+        for (Ride ride : rideRepository.findAllByPassengerId(userId))
+            rideHistory.add(new UserRideHistoryDTO(
+                    EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
+                    EntityToDTOMapper.mapDriverToDriverInfoForRideHistoryDTO(
+                            driverRepository.getReferenceById(ride.getDriver_id())
+                    )
+                )
+            );
+
+        return rideHistory;
+    }
+
+    public boolean userHadRideWitGivenDriverInLast3Days(Long passengerId, Long driverId) {
+        return rideRepository.findByPassengerIdAndDriverIdAndDate(
+                passengerId, driverId, LocalDateTime.now().minusDays(3), LocalDateTime.now()
+        ).size() > 0;
+    }
+
+    public List<DriverRideHistoryDTO> getRideHistoryForDriver(Long driverId) {
+        List<DriverRideHistoryDTO> rideHistory = new ArrayList<>();
+        for (Ride ride : rideRepository.findAllByDriverId(driverId))
+            rideHistory.add(new DriverRideHistoryDTO(
+                            EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
+                            ride.getPassengers().stream().map(
+                                            EntityToDTOMapper::mapUserToRegUserInfoForRideHistoryDTO
+                            ).collect(Collectors.toList())
+                        )
+                );
+
+        return rideHistory;
+    }
+
+    public List<RideHistoryForAdminDTO> getRideHistoryForAdmin(String usrEmail) {
+        User usr = userRepository.getByEmail(usrEmail).orElseThrow(UserDoesNotExistException::new);
+        String roleName = usr.getRole().getName();
+
+        List<Ride> rides = new ArrayList<>();
+        if (roleName.equals(Settings.USER_ROLE_NAME))
+            rides = rideRepository.findAllByPassengerId(usr.getId());
+        else if (roleName.equals(Settings.DRIVER_ROLE_NAME))
+            rides = rideRepository.findAllByDriverId(usr.getId());
+
+        List<RideHistoryForAdminDTO> rideHistory = new ArrayList<>();
+        for (Ride ride : rides)
+            rideHistory.add(new RideHistoryForAdminDTO(
+                        EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
+                        EntityToDTOMapper.mapUserToUserInfoForAdminRideHistoryDTO(usr)
+                    )
+            );
+
+        return rideHistory;
+    }
+
 }

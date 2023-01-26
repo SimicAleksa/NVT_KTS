@@ -21,8 +21,8 @@ public class Review {
     private String comment;
     @ManyToOne(fetch = FetchType.LAZY)
     private RegisteredUser reviewer;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Ride ride;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Driver driver;
 
 
 //    debata oko mergovanja, ako treba uzmi
