@@ -15,6 +15,7 @@ public class RideDTO {
 //    private DriverDTO driver;
     private Long driver;
     private RouteDTO route;
+    private int expectedDuration;
 
     public RideDTO(Ride ride){
         this.id = ride.getId();

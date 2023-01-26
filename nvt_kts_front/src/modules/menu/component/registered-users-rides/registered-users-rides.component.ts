@@ -7,6 +7,8 @@ import { RideForNotification } from 'src/modules/app/model/ride';
 import { RideService } from 'src/modules/reports/services/ride.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import { RideForDurationDTO } from 'src/modules/app/model/rideForDurationDTO';
+import { RideDtoWithExpectedDuration } from 'src/modules/app/model/rideDTOWithExpectedDuration';
 
 
 @Component({
@@ -19,6 +21,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   username: string = "registrovani1@gmail.com";
   usersRides: RideForNotification[];
+  usersDTSRIDE:RideDtoWithExpectedDuration;
   
   private stompClient: any;
   public ws: any;
@@ -33,6 +36,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
     this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
       this.usersRides = <RideForNotification[]> response;
+      console.log(<RideForNotification[]> response);
       this.addStringLocation();
       this.splitDate();
     });
@@ -55,10 +59,8 @@ export class RegisteredUsersRidesComponent implements OnInit {
   {
     this.stompClient.subscribe('/map-updates/ride-notification', (message: { body: string }) => {
       console.log(message.body)
-      alert("SOCKET AKTIVIRAN")
       let rideNotif:RideForNotification = JSON.parse(message.body);
       if(rideNotif.passengerEmail===this.username){
-        alert("SOCKET USAO")
         this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
           this.usersRides = <RideForNotification[]> response;
           this.addStringLocation();
@@ -66,6 +68,17 @@ export class RegisteredUsersRidesComponent implements OnInit {
         });
       }
     });
+
+
+    this.stompClient.subscribe('/map-updates/get-current-ride-duration', (message: { body: string }) => {
+      let rideDurationride:RideForDurationDTO = JSON.parse(message.body);
+
+      this.rideService.getUserDTSride(this.username).subscribe((response) => {
+          if(response.id===rideDurationride.id){
+            this.usersDTSRIDE = <RideDtoWithExpectedDuration> response;
+          }
+        });
+        });
   }
 
 

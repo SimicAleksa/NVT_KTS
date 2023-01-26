@@ -50,16 +50,16 @@ insert into route (start_location_id, end_location_id, routejson) values (4, 5, 
 
 insert into ride (end_date_time, distance, expected_duration,
                   price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
-                                                                         100, 16.3, 'RESERVED', '2012-09-17 18:47:52.069', 2,2);
+                                                                         100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 1,1);
 
 insert into ride (end_date_time, distance, expected_duration,
                   price, ride_state, start_date_time, driver_id, route_id) values ('2023-01-01 18:47:52.069', 54.3,
-                                                                                   100, 16.3, 'RESERVED', '2012-09-17 18:47:52.069', 2,2);
+                                                                                   100, 16.3, 'STARTED', '2012-09-17 18:47:52.069', 2,2);
 
-insert into ride_passengers(ride_id, registered_user_id) values (1, 4);
 insert into ride_passengers(ride_id, registered_user_id) values (1, 5);
-
 insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
+
+-- insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
 -- insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
 -- insert into ride_passengers(ride_id, registered_user_id) values (2, 4);
 -- insert into ride_passengers(ride_id, registered_user_id) values (1, 4);

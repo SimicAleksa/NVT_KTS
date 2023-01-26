@@ -15,9 +15,20 @@ public class RideNotificationDTO {
         this.distance = r.getDistance();
         this.state = r.getRideState().toString();
         this.startDateTime = setDateTimeIfExist(r);
-        this.startLocation = r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        this.startLocation = setStartLocationIfExist(r);
         this.startLocationString = "";
         this.id = r.getId();
+    }
+
+    private String setStartLocationIfExist(Ride r) {
+        try{
+            return r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        }
+        catch (Exception e)
+        {
+            return ",";
+        }
+
     }
 
     private String setDateTimeIfExist(Ride r) {

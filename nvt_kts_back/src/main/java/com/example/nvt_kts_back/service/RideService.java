@@ -1,8 +1,6 @@
 package com.example.nvt_kts_back.service;
 
-import com.example.nvt_kts_back.DTOs.DataForRideFromFromDTO;
-import com.example.nvt_kts_back.DTOs.RegisteredUserDTO;
-import com.example.nvt_kts_back.DTOs.RideNotificationDTO;
+import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.Driver;
@@ -12,7 +10,6 @@ import com.example.nvt_kts_back.repository.DriverRepository;
 import com.example.nvt_kts_back.repository.RouteRepository;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
-import com.example.nvt_kts_back.DTOs.ReportParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -227,11 +224,38 @@ public class RideService {
         {
             if (r.getRideState()==RideState.IN_PROGRESS || r.getRideState()==RideState.STARTED ||
                     r.getRideState()==RideState.SCHEDULED || r.getRideState()==RideState.WAITING_FOR_PAYMENT ||
-                    r.getRideState()==RideState.RESERVED)
+                    r.getRideState()==RideState.RESERVED) {
                 retVal.add(new RideNotificationDTO(r));
+                if(r.getRideState()==RideState.STARTED){
+                    retVal.add(new RideNotificationDTO(this.getDriversDrivingToStartRide(String.valueOf(r.getDriver_id()))));
+                }
+            }
         }
         Collections.sort(retVal, Comparator.comparing(RideNotificationDTO::getStartDateTime));
         return retVal;
+    }
+
+
+    public RideDTO getUsersDTSride(String email) {
+        RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
+        List<Ride> rides = ru.getHistoryOfRides();
+        RideDTO retVal=new RideDTO();
+        for(Ride r: rides)
+        {
+            if (r.getRideState()==RideState.STARTED){
+                retVal.setExpectedDuration(r.getExpectedDuration());
+                retVal.setDriver(r.getDriver_id());
+                retVal.setRoute(new RouteDTO(r.getRoute()));
+                retVal.setId(r.getId());
+                retVal.setRideState(r.getRideState());
+                break;
+            }
+        }
+        Ride rrrride = this.getDriversDrivingToStartRide(String.valueOf(retVal.getId()));
+        RideDTO returnRideDto = new RideDTO(rrrride);
+        returnRideDto.setExpectedDuration(rrrride.getExpectedDuration());
+
+        return returnRideDto;
     }
 
     // ova funkcija ce za zadati ride da pronadje sve potencijane vozace i da ih sortira po blizini

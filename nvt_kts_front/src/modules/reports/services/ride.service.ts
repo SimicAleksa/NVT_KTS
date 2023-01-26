@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReportParam } from 'src/modules/app/model/reportParams';
 import { RideForNotification } from 'src/modules/app/model/ride';
+import { RideDtoWithExpectedDuration } from 'src/modules/app/model/rideDTOWithExpectedDuration';
+import { RideForDurationDTO } from 'src/modules/app/model/rideForDurationDTO';
+import { Ride } from 'src/modules/maps/components/active-vehicle/Ride';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,7 @@ export class RideService {
   private driverNotificationRidesURL: string;
   private userNotificationRidesURL: string;
   private changeRideStateURL: string;
+  private getUserDTSrideURL: string;
 
 
   constructor(private http: HttpClient) { 
@@ -28,6 +32,7 @@ export class RideService {
     this.driverNotificationRidesURL = "api/rides/getDriverNotificationRides/";
     this.userNotificationRidesURL = "api/rides/getUserNotificationRides/";
     this.changeRideStateURL = "api/rides/changeRideState/";
+    this.getUserDTSrideURL = "api/rides/getUserDTSride/";
   }
 
 
@@ -66,6 +71,17 @@ export class RideService {
     });
   
   }
+
+
+  getUserDTSride(username: string): Observable<RideDtoWithExpectedDuration> {
+    return this.http.get<RideDtoWithExpectedDuration >(this.getUserDTSrideURL + username, {
+      headers: this.headers,
+      responseType: "json",
+    });
+  
+  }
+
+
 
   changeRideState(id: number, state: string) {
     this.http.get(this.changeRideStateURL + id + "/"+ state, {
