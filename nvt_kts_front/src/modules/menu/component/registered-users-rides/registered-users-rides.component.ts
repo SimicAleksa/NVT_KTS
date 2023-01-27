@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import GeocoderControl, {Geocoder, geocoders} from 'leaflet-control-geocoder';
 import { GeocodingCallback } from 'leaflet-control-geocoder/dist/geocoders';
@@ -9,6 +9,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { RideForDurationDTO } from 'src/modules/app/model/rideForDurationDTO';
 import { RideDtoWithExpectedDuration } from 'src/modules/app/model/rideDTOWithExpectedDuration';
+import { API_INCOMING_DRIVER, API_TRACKING_ROUTE } from 'src/config/map-urls';
 
 
 @Component({
@@ -19,9 +20,10 @@ import { RideDtoWithExpectedDuration } from 'src/modules/app/model/rideDTOWithEx
 export class RegisteredUsersRidesComponent implements OnInit {
 
 
-  username: string = "registrovani1@gmail.com";
+  username: string = "registrovani2@gmail.com";
   usersRides: RideForNotification[];
   usersDTSRIDE:RideDtoWithExpectedDuration;
+  usersTimeRemainingTillGettingARide:string;
   
   private stompClient: any;
   public ws: any;
@@ -30,6 +32,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
   constructor(
     
     private rideService: RideService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -76,9 +79,17 @@ export class RegisteredUsersRidesComponent implements OnInit {
       this.rideService.getUserDTSride(this.username).subscribe((response) => {
           if(response.id===rideDurationride.id){
             this.usersDTSRIDE = <RideDtoWithExpectedDuration> response;
+            let jedanTempic:RideDtoWithExpectedDuration =  <RideDtoWithExpectedDuration> response;
+            var minutes = Math.floor(jedanTempic.expectedDuration/60);
+            var secunds = jedanTempic.expectedDuration - minutes*60;
+            this.usersTimeRemainingTillGettingARide = minutes.toString()+"min "+secunds.toString().split('.')[0];
           }
         });
         });
+  }
+
+  seeIncDriver(ride_id:number){
+    this.router.navigate([API_INCOMING_DRIVER]);
   }
 
 
@@ -90,7 +101,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   view(id: number)
   {
-    // TODO ovdje kod da ga preusmjerim kod Alekse
+    this.router.navigate([API_TRACKING_ROUTE]);
   }
 
   sendReport(id: number)

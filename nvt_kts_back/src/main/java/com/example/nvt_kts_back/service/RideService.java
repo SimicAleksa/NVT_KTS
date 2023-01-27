@@ -258,6 +258,25 @@ public class RideService {
         return returnRideDto;
     }
 
+    public RideDTO getUsersInProgresssRide(String email) {
+        RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
+        List<Ride> rides = ru.getHistoryOfRides();
+        RideDTO retVal=new RideDTO();
+        for(Ride r: rides)
+        {
+            if (r.getRideState()==RideState.IN_PROGRESS){
+                retVal.setExpectedDuration(r.getExpectedDuration());
+                retVal.setDriver(r.getDriver_id());
+                retVal.setRoute(new RouteDTO(r.getRoute()));
+                retVal.setId(r.getId());
+                retVal.setRideState(r.getRideState());
+                break;
+            }
+        }
+        return retVal;
+    }
+
+
     // ova funkcija ce za zadati ride da pronadje sve potencijane vozace i da ih sortira po blizini
     public void findDriverList(DataForRideFromFromDTO rideDTO)
     {

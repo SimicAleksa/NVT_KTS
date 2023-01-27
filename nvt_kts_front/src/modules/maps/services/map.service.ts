@@ -13,6 +13,14 @@ export class MapService {
   private headers = new HttpHeaders({ "Content-Type": "application/json"});
   constructor(private http: HttpClient) { }
 
+  getUsersDrivingTOStartEmail(username:string):Observable<Ride>{
+    return this.http.get<Ride>("api/rides/getUserDTSride/"+username)
+  }
+
+  getUsersInProgressRideEmail(username:string):Observable<Ride>{
+    return this.http.get<Ride>("api/rides/getUserInProgressRide/"+username)
+  }
+
 
   getAllActiveDrivers(): Observable<Driver[]>{
     return this.http.get<Driver[]>("api/drivers/getDrivers")

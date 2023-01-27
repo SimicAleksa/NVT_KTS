@@ -234,6 +234,13 @@ public class RideController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getUserInProgressRide/{email}")
+    public ResponseEntity<RideDTO> getUserInProgressRide(@PathVariable("email") String email)
+    {
+        RideDTO retVal = this.rideService.getUsersInProgresssRide(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = "/changeRideState/{id}/{state}")
     public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
