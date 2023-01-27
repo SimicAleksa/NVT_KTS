@@ -148,6 +148,15 @@ public class RideController {
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
 
+
+    @GetMapping(value = "/getUsersFavoriteRouteWithId/{id}",produces = "application/json")
+    public ResponseEntity<RouteDTO> getUsersFavoriteRouteWithId(@PathVariable("id") String id) {
+        Route route = this.routeService.findById(Long.valueOf(id));
+        RouteDTO routeDTO = new RouteDTO(route);
+        return new ResponseEntity<>(routeDTO, HttpStatus.OK);
+    }
+
+
     @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
     public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
         Ride ride = this.rideService.getDriversStartedRide(id);

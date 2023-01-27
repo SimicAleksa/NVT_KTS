@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Ride } from '../components/active-vehicle/Ride';
 import { Driver } from '../components/active-vehicle/Driver';
 import { DataForRideForBack } from '../components/active-vehicle/DataForRideForBACK';
+import { Route } from '../components/active-vehicle/Route';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class MapService {
 
   private headers = new HttpHeaders({ "Content-Type": "application/json"});
   constructor(private http: HttpClient) { }
+
+  getUsersFavoriteRouteWithId(routeId:string):Observable<Route>{
+    return this.http.get<Route>("api/rides/getUsersFavoriteRouteWithId/"+routeId);
+  }
 
   getUsersDrivingTOStartEmail(username:string):Observable<Ride>{
     return this.http.get<Ride>("api/rides/getUserDTSride/"+username)
