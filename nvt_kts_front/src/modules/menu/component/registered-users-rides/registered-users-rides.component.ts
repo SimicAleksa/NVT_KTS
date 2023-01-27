@@ -82,7 +82,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
             let jedanTempic:RideDtoWithExpectedDuration =  <RideDtoWithExpectedDuration> response;
             var minutes = Math.floor(jedanTempic.expectedDuration/60);
             var secunds = jedanTempic.expectedDuration - minutes*60;
-            this.usersTimeRemainingTillGettingARide = minutes.toString()+"min "+secunds.toString().split('.')[0];
+            this.usersTimeRemainingTillGettingARide = minutes.toString()+"min "+secunds.toString().split('.')[0]+"sec";
           }
         });
         });

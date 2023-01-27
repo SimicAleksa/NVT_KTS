@@ -8,6 +8,8 @@ insert into my_users (email, password, name, surname, city, phone, profile_activ
 insert into my_users (email, password, name, surname, city, phone, profile_activated, picture, is_blocked, role_id) values ('registrovani1@gmail.com','sifra','Put','Putic','grad','42145135',true,'slika',false,1);
 insert into my_users (email, password, name, surname, city, phone, profile_activated, picture, is_blocked, role_id) values ('registrovani2@gmail.com','sifra','Isidora','Mladjic','grad','42145135',true,'slika',false,1);
 
+insert into my_users (email, password, name, surname, city, phone, profile_activated, picture, is_blocked, role_id) values ('so@gmail.com','sssifra','So','Soic','grad','42145135',true,'slika',false,2);
+
 insert into registered_user (id, is_busy, tokens) values (4, false, 345);
 insert into registered_user (id, is_busy, tokens) values (5, false, 12);
 
@@ -37,6 +39,7 @@ INSERT INTO COORD (latitude, longitude) values (45.240808, 19.8448008);
 insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (true, true, 'SUV', true, false, 1,3);
 insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (false, false, 'SEDAN', true, true, 2,6);
 insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (false, true, 'COUPE', true, true, 3,5);
+insert into driver (active, baby_allowed, car_type, is_driver_free, pet_allowed, id, current_coords_id) values (false, true, 'COUPE', true, true, 6,5);
 
 insert into change_profile_requests (name, surname, email, city, phone, picture, car_type, baby_allowed, pets_allowed) values ('Djurica', 'Djuric', 'djura@gmail.com', 'Samac','42145135', 'slika', 'SUV', true, false);
 insert into change_profile_requests (name, surname, email, city, phone, picture, car_type, baby_allowed, pets_allowed) values ('Simija', 'Radesic', 'zima@gmail.com', 'Samac','42145135', 'slika', 'SUV', false, false);

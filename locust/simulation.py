@@ -3,7 +3,7 @@ import json
 
 from locust import HttpUser, task, between, events
 from random import randrange
-
+import sys
 
 #Ovo treba da se dobavi iz baze
 start_and_end_points = [
@@ -57,12 +57,18 @@ license_plates = [
     'NS-241-CC'
 ]
 
-counter = 1
+counter = -1
+numberOfDriversPerSimulation = 0 
+allDrivers = []
+indicesOfDrivers = []
 
 
 @events.test_start.add_listener
 def on_test_start(environment, **kwargs):
-    pass
+    allDrivers = requests.get('http://localhost:8000/api/drivers/getAllDrivers').json()
+    for driver in allDrivers:
+        indicesOfDrivers.append(driver['id'])
+    numberOfDriversPerSimulation = sys.argv[5]
     # requests.delete('http://localhost:8000/api/rides')
     # requests.delete('http://localhost:8000/api/drivers')
 
@@ -73,19 +79,14 @@ class QuickstartUser(HttpUser):
  
 
     def on_start(self):
-        global counter
-
-        print("USAO U STARTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
-
-        self.driver = self.client.get('/api/drivers/getDriver/'+str(counter)).json()
+        global counter        
+        counter+=1
+        self.driver = self.client.get('/api/drivers/getDriver/'+str(indicesOfDrivers[counter])).json()
         self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
         self.driverINPROGRESSRide = self.client.get('/api/rides/getDriversINPROGRESSRide/'+str(self.driver['id'])).json()
-        if counter<3:
-            counter=counter+1
+
 
         if(self.driverSTARTEDRide['rideState']=="STARTED"):
-            print("Kreira VOznju za vozaca---")
-            print(self.driver)
             self.driving_to_start_point = True
             self.driving_the_route = False
             self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
@@ -195,7 +196,6 @@ class QuickstartUser(HttpUser):
         self.coordinatesOrgLen = len(self.coordinates)
 
 
-        print(self.routeGeoJSON)
         self.route = {
             'routeJSON': json.dumps(self.routeGeoJSON),
             'startLocation': {
