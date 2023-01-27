@@ -1,17 +1,17 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.CustomExceptions.RouteAlreadyInFavouritesException;
+import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.configurations.Settings;
-import com.example.nvt_kts_back.models.ChangeProfileRequest;
-import com.example.nvt_kts_back.models.RegisteredUser;
-import com.example.nvt_kts_back.models.Role;
-import com.example.nvt_kts_back.models.User;
+import com.example.nvt_kts_back.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 
 @Service
 public class RegisteredUserService {
-
+    @Autowired
+    private RouteService routeService;
     @Autowired
     private RegisteredUserRepository registeredUserRepository;
 
@@ -38,5 +38,18 @@ public class RegisteredUserService {
         ru.setRole(new Role(Settings.USER_ROLE_NAME));
         ru.setTokens(0.0);
         return registeredUserRepository.save(ru);
+    }
+
+    public void addRouteToFavourites(String userEmail, Long routeId) {
+        RegisteredUser registeredUser = registeredUserRepository.findByEmail(userEmail);
+        if (registeredUser == null)
+            throw new UserDoesNotExistException();
+
+        Route route = routeService.getRouteById(routeId);
+        if (registeredUser.getFavouriteRoutes().stream().anyMatch(r -> r.getId().equals(route.getId())))
+            throw new RouteAlreadyInFavouritesException();
+
+        registeredUser.getFavouriteRoutes().add(route);
+        registeredUserRepository.save(registeredUser);
     }
 }

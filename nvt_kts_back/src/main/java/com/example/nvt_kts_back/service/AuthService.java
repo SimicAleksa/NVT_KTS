@@ -83,11 +83,14 @@ public class AuthService {
     }
 
     public User verifyAuthTokenFromHeaderAndRetUser(HttpServletRequest request) {
+        return userService.getUserByEmail(getEmailFromHeader(request));
+    }
+
+    public String getEmailFromHeader(HttpServletRequest request) {
         String email = tokenUtils.getEmailDirectlyFromHeader(request);
         if (email == null)
             throw new InvalidAuthTokenException();
-
-        return userService.getUserByEmail(email);
+        return email;
     }
 
 }

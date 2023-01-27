@@ -17,7 +17,8 @@ public class RegisteredUser extends User {
     @Column
     private Boolean isBusy;
 
-    @Column Double tokens;
+    @Column
+    private Double tokens;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Route> favouriteRoutes;

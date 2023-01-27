@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.CustomExceptions.RouteDoesNotExistException;
 import com.example.nvt_kts_back.models.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,4 +15,11 @@ public class RouteService {
     public Route createRoute(Route route) {return routeRepository.save(route);}
 
     public Route saveRoute(Route route){return routeRepository.save(route);}
+
+    public Route getRouteById(Long id) {
+        Route route = routeRepository.getReferenceById(id);
+        if (route == null)
+            throw new RouteDoesNotExistException();
+        return route;
+    }
 }

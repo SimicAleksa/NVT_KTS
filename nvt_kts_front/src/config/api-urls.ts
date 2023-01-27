@@ -10,6 +10,7 @@ export const API_PASS_RESET_URL = API_BASE_URL + "/api/user/password-reset";
 export const API_USER_RIDE_HISTORY_URL = API_BASE_URL + "/api/rides/user/history";
 export const API_DRIVER_REVIEWS_URL = API_BASE_URL + "/api/drivers/reviews";
 export const API_NEW_REVIEWS_URL = API_BASE_URL + "/api/drivers/review/new";
+export const API_ADD_ROUTE_TO_FAV_URL = API_BASE_URL + "/api/registeredUsers/add-route-to-favourite";
 
 export const API_DRIVER_RIDE_HISTORY_URL = API_BASE_URL + "/api/rides/driver/history";
 
