@@ -14,4 +14,8 @@ public class RouteService {
     public Route createRoute(Route route) {return routeRepository.save(route);}
 
     public Route saveRoute(Route route){return routeRepository.save(route);}
+
+    public Route findById(Long routeID) {
+        return routeRepository.findById(routeID).orElse(null);
+    }
 }

@@ -29,6 +29,7 @@ export class SearchRoutesPageComponent implements OnInit {
   public distanceOfRideString:string;
   public priceOfRideString:string;
   public routeToOrdedJSON:any;
+  public addedAsFavorite:boolean = false;
 
   public now: Date = new Date();  //minimuim
   public temp1: Date = new Date(); //maksimum
@@ -282,6 +283,7 @@ export class SearchRoutesPageComponent implements OnInit {
       price: 0,
       reservedTime:"",
       linkedPassengers: this.selectedMails,
+      favoriteBoolean:false,
     }
     return sendIT;
   }
@@ -344,7 +346,9 @@ export class SearchRoutesPageComponent implements OnInit {
     }
     else{
       sendIT.linkedPassengers.push(this.userEmail);
+      sendIT.favoriteBoolean = this.addedAsFavorite;
       this.mapService.saveRide(sendIT);
+
       sendIT.linkedPassengers.pop();
       this.routeSelectedBoolean = false;
       this.userService.getUsersStateBasedOnHisRides(this.userEmail).subscribe((response) => {
@@ -353,5 +357,14 @@ export class SearchRoutesPageComponent implements OnInit {
       this.toastr.success("Successfully ordered");
     }
     console.log(sendIT);
+  }
+
+  addToFavoriteRoute(){
+    if(this.addedAsFavorite){
+      this.addedAsFavorite = false;
+    }
+    else{
+      this.addedAsFavorite = true;
+    }
   }
 }

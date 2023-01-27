@@ -119,7 +119,13 @@
 
 
       <div class="row">
-        <button type="button" class="btn btn-primary mt-1" (click)="onSubmit()" *ngIf="routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)">Order</button>
+        <div class="col">
+          <button type="button" class="btn btn-primary mt-1" style="width: 100%;" (click)="onSubmit()" *ngIf="routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)">Order</button>
+        </div>
+        <div class="col-1">
+          <button type="button" class="btn btn-light mt-1" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&!addedAsFavorite)">✰</button>
+          <button type="button" class="btn btn-light mt-1" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&addedAsFavorite)">⭐</button>
+        </div>
       </div>
     </div>
   </div>

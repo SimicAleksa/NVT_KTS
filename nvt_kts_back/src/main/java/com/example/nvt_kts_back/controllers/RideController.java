@@ -2,19 +2,13 @@ package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.enumerations.RideState;
-import com.example.nvt_kts_back.models.Coord;
-import com.example.nvt_kts_back.models.Ride;
-import com.example.nvt_kts_back.models.Route;
-import com.example.nvt_kts_back.service.CoordService;
-import com.example.nvt_kts_back.service.DriverService;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.service.RouteService;
+import com.example.nvt_kts_back.models.*;
+import com.example.nvt_kts_back.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-import com.example.nvt_kts_back.service.RideService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +35,9 @@ public class RideController {
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private RegisteredUserService registeredUserService;
 
     public RideController(RideService rideService, SimpMessagingTemplate simpMessagingTemplate){
         this.rideService = rideService;
@@ -89,6 +86,13 @@ public class RideController {
         ride.setDriver_id(3l);
 
         this.rideService.saveRide(ride);
+        if(dto.isFavoriteBoolean()) {
+            String usersEmail = ride.getPassengers().get(ride.getPassengers().size() - 1).getEmail();
+            Long routeID = ride.getRoute().getId();
+            RegisteredUser ru = this.registeredUserService.getByEmail(usersEmail);
+            ru.getFavouriteRoutes().add(this.routeService.findById(routeID));
+            this.registeredUserService.save(ru);
+        }
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

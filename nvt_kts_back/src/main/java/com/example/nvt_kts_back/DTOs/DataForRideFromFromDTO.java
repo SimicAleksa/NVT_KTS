@@ -20,4 +20,5 @@ public class DataForRideFromFromDTO {
     private int price;
     private String reservedTime;
     private List<String> linkedPassengers;
+    private boolean favoriteBoolean;
 }
