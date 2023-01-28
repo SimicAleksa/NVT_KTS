@@ -5,18 +5,19 @@ import { ChangePassword, ChangeProfileRequest, User } from 'src/modules/app/mode
 import { Router } from '@angular/router';
 
 
-
 @Component({
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.css']
+  selector: 'app-edit-profile-driver',
+  templateUrl: './edit-profile-driver.component.html',
+  styleUrls: ['./edit-profile-driver.component.css']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileDriverComponent implements OnInit {
+
+  carTypes: string[] = ["SUV", "HATCHBACK", "COUPE", "MINIVAN", "SEDAN", "VAN", "LIMOUSINE"];
 
   editForm: FormGroup;
   modalForm: FormGroup;
   username: string;
-  userData: User;
+  driverData: ChangeProfileRequest;
 
 
   constructor(
@@ -24,7 +25,7 @@ export class EditProfileComponent implements OnInit {
     private userDataService: UserDataService,
     private router: Router,
     ) {
-    this.username = "registrovani1@gmail.com";
+    this.username = "pera@gmail.com";
     this.createForm();
     this.createModalForm();
    }
@@ -48,7 +49,9 @@ export class EditProfileComponent implements OnInit {
       password: ["", [Validators.required, Validators.minLength(2)]],
       city: ["", [Validators.required, Validators.minLength(2)]],
       phone: ["", [Validators.required, Validators.minLength(2)]],
-
+      carType: ["", [Validators.required]],
+      babyAllowed: [false],
+      petsAllowed: [false],
     })
   }
 
@@ -116,14 +119,18 @@ export class EditProfileComponent implements OnInit {
   }
 
   changeEnteredData() {
-    let name: string = this.editForm.get("name")?.value ? this.editForm.get("name")?.value :  this.userData.name;
-    let surname: string = this.editForm.get("surname")?.value ? this.editForm.get("surname")?.value :  this.userData.surname;
-    let city: string = this.editForm.get("city")?.value ? this.editForm.get("city")?.value :  this.userData.city;
-    let phone: string = this.editForm.get("phone")?.value ? this.editForm.get("phone")?.value :  this.userData.phone;
+    let name: string = this.editForm.get("name")?.value ? this.editForm.get("name")?.value :  this.driverData.name;
+    let surname: string = this.editForm.get("surname")?.value ? this.editForm.get("surname")?.value :  this.driverData.surname;
+    let city: string = this.editForm.get("city")?.value ? this.editForm.get("city")?.value :  this.driverData.city;
+    let phone: string = this.editForm.get("phone")?.value ? this.editForm.get("phone")?.value :  this.driverData.phone;
+    let carType: string = this.editForm.get("carType")?.value;
+    let babyAllowed: boolean = this.editForm.get("babyAllowed")?.value;
+    let petsAllowed: boolean = this.editForm.get("petsAllowed")?.value;
+
    
-    let c: ChangeProfileRequest = {name: name, surname: surname, email: this.username, picture: "", city: city, phone: phone, carType: "",
-      petAllowed: false, babyAllowed: true, note:"", tokens: 0, blocked: false, password:""};
-    this.userDataService.saveUserChanges(c);
+    let c: ChangeProfileRequest = {name: name, surname: surname, email: this.username, picture: "", city: city, phone: phone, 
+            carType: carType, petAllowed: petsAllowed, babyAllowed: babyAllowed, note:"", tokens: 0, blocked: false, password:""};
+    this.userDataService.sendChangeRequest(c);
 
   }
 
@@ -137,8 +144,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   
-
-
   onModalSubmit()
   {
     this.displayStyle = "none";
@@ -149,15 +154,18 @@ export class EditProfileComponent implements OnInit {
 
   setInitialValues() {
     //let u: User = this.userDataService.getUserData(this.username);
-    this.userDataService.getUserData(this.username).subscribe((response) => {
-      this.userData = response;      
-      this.editForm.get("name")?.setValue(this.userData.name);
-      this.editForm.get("surname")?.setValue(this.userData.surname);
-      this.editForm.get("email")?.setValue(this.userData.email);
+    this.userDataService.getDriverData(this.username).subscribe((response) => {
+      this.driverData = response;      
+      this.editForm.get("name")?.setValue(this.driverData.name);
+      this.editForm.get("surname")?.setValue(this.driverData.surname);
+      this.editForm.get("email")?.setValue(this.driverData.email);
       this.editForm.get("password")?.setValue("lozinka");
-      this.editForm.get("city")?.setValue(this.userData.city);
-      this.editForm.get("phone")?.setValue(this.userData.phone);
-      document.getElementById("tokensLbl")!.innerHTML = this.userData.tokens.toString() + " ";
+      this.editForm.get("city")?.setValue(this.driverData.city);
+      this.editForm.get("phone")?.setValue(this.driverData.phone);
+      this.editForm.get("carType")?.setValue(this.driverData.carType);
+      this.editForm.get("babyAllowed")?.setValue(this.driverData.babyAllowed);
+      this.editForm.get("petsAllowed")?.setValue(this.driverData.petAllowed);
+
       
     });
     
@@ -165,5 +173,3 @@ export class EditProfileComponent implements OnInit {
   }
 
 }
-
-

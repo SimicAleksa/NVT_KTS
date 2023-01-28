@@ -1,0 +1,69 @@
+input
+{
+    font-size: large;
+}
+
+input.inModal
+{
+    margin: 3px;
+}
+
+#closeBtn, #confirmBtn
+{
+    font-size: large;
+    width: 20%;
+    height: 10%;
+    font-size: medium;
+}
+
+#paypalBtn {
+    font-size: large;
+    
+}
+
+#paypalDiv{
+    margin-right: 220px;
+}
+
+
+i {
+    font-size:xx-large; 
+    padding-right: 2%;
+}
+
+.circle {
+    width: 45%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+
+#btnChangeFiles {
+    width: 210px;
+    border: 1px solid;
+}
+
+#changePictureDiv
+{
+    padding-bottom: 20px;
+}
+
+#changePicMsg
+{
+    padding-top: 14px;
+    width: 250px;
+    font-size: large;
+}
+
+label
+{
+    font-size: medium;
+}
+
+#tokensLbl
+{
+    font-size: 25px;
+    margin-right: 5px;
+}

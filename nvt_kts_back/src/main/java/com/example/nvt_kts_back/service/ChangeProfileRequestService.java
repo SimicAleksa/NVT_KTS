@@ -46,7 +46,6 @@ public class ChangeProfileRequestService {
     }
 
     public void saveRequest(ChangeProfileRequest dto) {
-        System.out.println("ovdje cu printati podatke");
         this.userRepository.updatePersonalData(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPicture(), dto.getCity(), dto.getPhone());
         User u = userRepository.findByEmail(dto.getEmail());
 
@@ -57,5 +56,9 @@ public class ChangeProfileRequestService {
         ChangeProfileRequest r = this.changeProfileRequestRepository.findByEmail(dto.getEmail());
         this.changeProfileRequestRepository.delete(r);
 
+    }
+
+    public void saveDriverRequest(ChangeProfileRequest dto) {
+        this.changeProfileRequestRepository.save(dto);
     }
 }

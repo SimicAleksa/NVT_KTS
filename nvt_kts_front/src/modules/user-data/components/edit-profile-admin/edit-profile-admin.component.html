@@ -1,0 +1,234 @@
+
+<!--<button
+  style="margin: 50px; padding: 10px"
+  type="button"
+  class="btn btn-primary"
+  (click)="openPopup()">Show Data
+</button>
+-->
+<form [formGroup]="modalForm" (submit)="onModalSubmit()">
+    <div
+      class="modal"
+      tabindex="-1"
+      role="dialog"
+      [ngStyle]="{'display':displayStyle}">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Change password</h2>
+          </div>
+          
+          <div class="modal-body">
+            
+              <div class="container">
+                
+                <div class="row">
+                  <div class="col-6">
+                    <label>Enter new password</label>
+                  </div>
+                  <div class="col-6">
+                      <input 
+                        class="form-control inModal"
+                        formControlName="editPassword"
+                        type="password"
+                        id="newPass"
+                        appCustomAttribute
+                        appCustomValidation
+                      />
+  
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-6">
+                    <label>Repeat new password</label>
+                  </div>
+                  <div class="col-6">
+                      <input 
+                        class="form-control inModal"
+                        formControlName="repeated"
+                        type="password"
+                        id="repeatedPass"
+                        appCustomAttribute
+                        appCustomValidation
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="modalForm.controls.repeated.touched && modalForm.hasError('invalid')
+                        "
+                      >
+                        Passwords do not match</small
+                      >
+  
+                  </div>
+                </div>
+  
+              </div>
+        
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="closeBtn"
+                    (click)="closePopup()">
+              Close
+            </button>
+  
+  
+            <!--
+            <button type="button" class="btn btn-primary" id="confirmBtn"
+                    (click)="confirm()">
+              Confirm
+            </button> -->
+  
+            <button
+              id="confirmBtn"
+              class="btn btn-primary"
+              type="submit"
+              [disabled]="modalForm.invalid"
+            >
+              Confirm
+            </button>
+  
+        
+  
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  
+  
+  <form [formGroup]="editForm" (submit)="onSubmit()" class="mx-1 mx-md-6">
+    <div class="d-flex justify-content-center">
+      <img class="circle" src="../../../../assets/images/pera.webp" />
+    </div>
+      
+  
+    <div id="changePictureDiv" class="d-flex flex-row align-items-center mb-10">
+      <i class="bi bi-image"></i>
+      <p id ="changePicMsg">Change profile picture</p>
+      <input id="files" type="file" >
+    </div>
+  
+  
+    <div class="d-flex flex-row align-items-center mb-4">
+      <i class="bi bi-person-fill fa-lg"></i>
+      <div class="form-outline flex-fill mb-0">
+        <input 
+        value="konj"
+        class="form-control"
+        formControlName="name"
+        type="text"
+        id="name"
+        
+        appCustomAttribute
+        appCustomValidation
+      />
+      </div>
+      <div (click)="nameChanged()">
+        <i class="bi bi-pencil-square" ></i>
+      </div>
+    </div>
+  
+    <div class="d-flex flex-row align-items-center mb-4">
+      <i class="bi bi-person-fill fa-lg"></i>
+      <div class="form-outline flex-fill mb-0">
+        <input 
+        class="form-control"
+        formControlName="surname"
+        type="text"
+        id="surname"
+        placeholder="Peric"
+        appCustomAttribute
+        appCustomValidation
+      />      
+    </div>
+      <div (click)="surnameChanged()">
+        <i class="bi bi-pencil-square" ></i>
+      </div>
+  </div>
+  
+    <!--<div class="d-flex flex-row align-items-center mb-4">
+      <i class="bi bi-envelope-at-fill"></i>
+      <div class="form-outline flex-fill mb-0">
+        <input 
+        class="form-control"
+        formControlName="email"
+        type="text"
+        id="email"
+        placeholder="pera@gmail.com"
+        appCustomAttribute
+        appCustomValidation
+      />
+      </div>
+      <div (click)="emailChanged()">
+        <i class="bi bi-pencil-square" ></i>
+      </div>
+    </div>
+  -->
+  
+    <div class="d-flex flex-row align-items-center mb-4">
+      <i class="bi bi-lock-fill"></i>
+      <div class="form-outline flex-fill mb-0">
+        <input 
+        class="form-control"
+        formControlName="password"
+        type="password"
+        id="password"
+        placeholder="*"
+        appCustomAttribute
+        appCustomValidation
+      />
+      </div>
+      <div (click)="openPopup()">
+        <i class="bi bi-pencil-square" ></i>
+        
+      </div>
+    </div>
+  
+    
+  
+    <div class="d-flex flex-row align-items-center mb-4">
+      <i class="bi bi-buildings-fill"></i>
+      <div class="form-outline flex-fill mb-0">
+        <input 
+        class="form-control"
+        formControlName="city"
+        type="text"
+        id="city"
+        placeholder="Teslic"
+        appCustomAttribute
+        appCustomValidation
+      />
+      </div>
+      <div (click)="cityChanged()">
+        <i class="bi bi-pencil-square" ></i>
+      </div>
+    </div>
+  
+    <div class="d-flex flex-row align-items-center mb-4">
+      <i class="bi bi-telephone-fill"></i>
+      <div class="form-outline flex-fill mb-0">
+        <input 
+        class="form-control"
+        formControlName="phone"
+        type="text"
+        id="phone"
+        placeholder="0654123656"
+        appCustomAttribute
+        appCustomValidation
+      />
+      </div>
+      <div (click)="phoneChanged()">
+        <i class="bi bi-pencil-square" ></i>
+      </div>
+    </div>
+  
+  
+    <div class="justify-content-center ">
+      <button id="registerButton" type="submit" class="btn btn-primary btn-lg" style="float: right;" >Save changes</button>
+    </div>
+    
+  </form>
+    

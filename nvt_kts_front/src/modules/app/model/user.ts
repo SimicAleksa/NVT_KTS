@@ -2,7 +2,7 @@ export interface User{
     name: string;
     surname: string;
     email:string;
-    picture: string;
+    picture: any;
     city: string;
     phone: string;
     note: string;
@@ -14,7 +14,7 @@ export interface ChangeProfileRequest {
     name: string;
     surname: string;
     email:string;
-    picture: string;
+    picture: any;
     city: string;
     phone: string;
     carType: string;
@@ -27,7 +27,6 @@ export interface ChangeProfileRequest {
 }
 
 export interface ChangePassword {
+    password: string;
     username: string;
-    new: string;
-    old: string;
 }

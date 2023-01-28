@@ -5,13 +5,12 @@ import { ChangePassword, ChangeProfileRequest, User } from 'src/modules/app/mode
 import { Router } from '@angular/router';
 
 
-
 @Component({
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.css']
+  selector: 'app-edit-profile-admin',
+  templateUrl: './edit-profile-admin.component.html',
+  styleUrls: ['./edit-profile-admin.component.css']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileAdminComponent implements OnInit {
 
   editForm: FormGroup;
   modalForm: FormGroup;
@@ -165,5 +164,3 @@ export class EditProfileComponent implements OnInit {
   }
 
 }
-
-

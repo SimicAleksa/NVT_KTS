@@ -125,4 +125,8 @@ public class DriverService {
     public boolean getDrivesActiveStatus(String email) {
         return this.driverRepository.findByEmail(email).getActive();
     }
+
+    public Driver findByEmail(String email) {
+        return this.driverRepository.findByEmail(email);
+    }
 }

@@ -8,6 +8,8 @@ export const CLIENT_RESET_PASS_URL = "login/reset-password/:email";
 export const CLIENT_REGISTRATION_URL = "registrationPage";
 export const CLIENT_ADD_DRIVER_URL = "addDriverPage";
 export const CLIENT_EDIT_PROF_URL = "editProfilePage";
+export const DRIVER_EDIT_PROF_URL = "editProfileDriverPage";
+export const ADMIN_EDIT_PROF_URL = "editProfileAdminPage";
 export const CLIENT_APPROVEC_CHANGES_URL = "approveChangesPage";
 export const CLIENT_BLOCK_USER_URL = "blockUser";
 

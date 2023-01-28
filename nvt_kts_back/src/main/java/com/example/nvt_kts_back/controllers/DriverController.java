@@ -1,12 +1,8 @@
 package com.example.nvt_kts_back.controllers;
 
-import com.example.nvt_kts_back.DTOs.CoordsDTO;
-import com.example.nvt_kts_back.DTOs.DriverDTO;
-import com.example.nvt_kts_back.DTOs.RideDTO;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.Ride;
+import com.example.nvt_kts_back.DTOs.*;
+import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.service.UserService;
-import com.example.nvt_kts_back.models.ChangeProfileRequest;
 import com.example.nvt_kts_back.models.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -116,5 +112,13 @@ public class DriverController {
         Boolean b = this.driverService.getDrivesActiveStatus(email);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
+
+    @GetMapping("/getDriverData/{email}")
+    public ResponseEntity<ChangeProfileRequest> getDriverData(@PathVariable("email") String email) {
+        Driver d = driverService.findByEmail(email);
+        ChangeProfileRequest c = new ChangeProfileRequest(d);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
 
 }

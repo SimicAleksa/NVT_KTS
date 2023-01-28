@@ -14,6 +14,10 @@ import { ApproveChangesComponent } from './components/approve-changes/approve-ch
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockUserPageComponent } from './pages/block-user-page/block-user-page.component';
 import { BlockUserComponent } from './components/block-user/block-user.component';
+import { EditProfileDriverComponent } from './components/edit-profile-driver/edit-profile-driver.component';
+import { EditProfileAdminComponent } from './components/edit-profile-admin/edit-profile-admin.component';
+import { EditProfileAdminPageComponent } from './pages/edit-profile-admin-page/edit-profile-admin-page.component';
+import { EditProfileDriverPageComponent } from './pages/edit-profile-driver-page/edit-profile-driver-page.component';
 
 
 
@@ -29,6 +33,10 @@ import { BlockUserComponent } from './components/block-user/block-user.component
     ApproveChangesComponent,
     BlockUserPageComponent,
     BlockUserComponent,
+    EditProfileDriverComponent,
+    EditProfileAdminComponent,
+    EditProfileAdminPageComponent,
+    EditProfileDriverPageComponent,
   ],
   imports: [
     CommonModule,

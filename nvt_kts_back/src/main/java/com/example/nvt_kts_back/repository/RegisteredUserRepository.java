@@ -20,4 +20,8 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
     @Modifying
     @Query("update RegisteredUser u set u.tokens=?2 where u.email =?1")
     void setTokens(String email, Double newTokens);
+
+    @Modifying
+    @Query("update RegisteredUser u set u.name=?1, u.surname=?2, u.city=?3, u.phone=?4 where u.email =?5")
+    void updateData(String name, String surname, String city, String phone, String email);
 }

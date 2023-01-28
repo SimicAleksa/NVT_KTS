@@ -3,11 +3,9 @@ package com.example.nvt_kts_back.controllers;
 import com.example.nvt_kts_back.CustomExceptions.InvalidDTOAttributesValuesException;
 import com.example.nvt_kts_back.CustomExceptions.InvalidTempCodeException;
 import com.example.nvt_kts_back.CustomExceptions.PasswordResetTempCodeDoesNotExistException;
+import com.example.nvt_kts_back.DTOs.ChangePasswordDTO;
 import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.RegisteredUser;
-import com.example.nvt_kts_back.models.Role;
-import com.example.nvt_kts_back.models.User;
+import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.DTOs.UserDTO;
 import com.example.nvt_kts_back.service.UserService;
@@ -103,6 +101,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+
+
     @PostMapping("/new-register-user")
     public ResponseEntity<HttpStatus> addNewRegisteredUser(@RequestBody RegisteredUser rUser) {
         //TODO
@@ -148,16 +149,15 @@ public class UserController {
         this.userService.blockUser(newNote, email);
     }
 
-    @PostMapping("/sendChangeRequest")
-    public void sendChangeRequest(@RequestBody User user) {
-        System.out.println("Usla sam u ovo");
-        return;
-    }
 
     @PostMapping("/sendChangePasswordRequest")
-    public void sendChangePasswordRequest(@RequestBody User user) {
-        System.out.println("Usla sam i u drugo");
-        return;
+    public void sendChangePasswordRequest(@RequestBody ChangePasswordDTO dto) {
+        userService.changePassword(dto);
+    }
+
+    @PostMapping("/saveUserChanges")
+    public void saveUserChanges(@RequestBody ChangeProfileRequest dto) {
+        userService.updateUserData(dto);
     }
 
 

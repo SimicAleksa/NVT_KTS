@@ -18,6 +18,8 @@ export class UserDataService {
   private addUserUrl: string;
   private getAllUsersURL: string;
   private getUserURL: string;
+  private getDriverURL: string;
+
   private addNoteURL: string;
   private blockUserURL: string;
   private addTokensURL: string;
@@ -26,6 +28,7 @@ export class UserDataService {
   private getAllRegisteredUsersMailsURL: string;
 
   private sendChangeRequestURL: string;
+  private saveUserChangesURL: string;
   private sendChangePasswordRequestURL: string;
 
 
@@ -39,7 +42,10 @@ export class UserDataService {
     this.addDriverUrl = 'http://localhost:8000/driver/addDriver';
     this.addUserUrl = 'api/registeredUsers/addUser';
     this.getAllUsersURL = "api/user/getAllUsers";
+    
+    this.getDriverURL = "api/drivers/getDriverData/";
     this.getUserURL = "api/registeredUsers/getUserData/";
+
     this.addNoteURL = "api/user/addNote";
     this.blockUserURL = "api/user/blockUser";
     this.addTokensURL = "api/registeredUsers/addTokens/";
@@ -47,7 +53,9 @@ export class UserDataService {
     this.getDrivesActiveStatusURL = "api/drivers/getDrivesActiveStatus/";
     
     this.getAllRegisteredUsersMailsURL = "api/registeredUsers/getAllRegisteredUsersMails";
-    this.sendChangeRequestURL = "api/user/sendChangeRequest";
+    this.sendChangeRequestURL = "api/changeProfileRequests/sendChangeRequest";
+
+    this.saveUserChangesURL = "api/user/saveUserChanges";
     this.sendChangePasswordRequestURL = "api/user/sendChangePasswordRequest"
   }
 
@@ -153,6 +161,13 @@ export class UserDataService {
     });
   }
 
+  getDriverData(email: string): Observable<ChangeProfileRequest> {
+    return this.http.get<ChangeProfileRequest>(this.getDriverURL + email, {
+      headers: this.headers,
+      responseType: "json",
+    });
+  }
+
 
   addTokens(value: string, username: string) {
     return this.http.get<User>(this.addTokensURL + username + "/" + value, {
@@ -174,6 +189,14 @@ export class UserDataService {
 
   sendChangeRequest(user: ChangeProfileRequest) {
     this.http.post(this.sendChangeRequestURL, user, {
+      headers: this.headers,
+      responseType: "json",      
+    }).subscribe(() => {
+    });
+  }
+
+  saveUserChanges(user: ChangeProfileRequest) {
+    this.http.post(this.saveUserChangesURL, user, {
       headers: this.headers,
       responseType: "json",      
     }).subscribe(() => {
