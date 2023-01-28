@@ -1,7 +1,5 @@
 package com.example.nvt_kts_back.repository;
 
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,6 +14,9 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> getByEmail(String email);
 
 //    Optional<Driver> findById(Long id);
+    @Query("select u from User u where u.id=?1")
+    Optional<User> findById(Long id);
+
 
     @Query("select u from User u where u.email=?1")
     User findByEmail(String email);

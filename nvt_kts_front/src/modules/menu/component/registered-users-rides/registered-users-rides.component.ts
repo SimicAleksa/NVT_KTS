@@ -11,6 +11,7 @@ import { StringDTO } from 'src/modules/app/model/stringDTO';
 import { RideForDurationDTO } from 'src/modules/app/model/rideForDurationDTO';
 import { RideDtoWithExpectedDuration } from 'src/modules/app/model/rideDTOWithExpectedDuration';
 import { API_INCOMING_DRIVER, API_TRACKING_ROUTE } from 'src/config/map-urls';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -33,12 +34,13 @@ export class RegisteredUsersRidesComponent implements OnInit {
   constructor(
 
     private rideService: RideService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
 
-    alert("Treba da se desi");
+    this.toastr.success("VOLIM TE KRETENU MALI PUFNASTI");
     this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
       this.usersRides = <RideForNotification[]> response;

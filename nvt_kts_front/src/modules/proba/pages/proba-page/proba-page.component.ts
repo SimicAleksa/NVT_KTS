@@ -1,3 +1,4 @@
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -8,18 +9,51 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProbaPageComponent implements OnInit {
 
-  fruits = [ 'Apple', 'Apricot', 'Avocado 🥑', 'Banana', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blueberry', 'Boysenberry', 'Currant', 'Cherry', 'Coconut', 'Cranberry', 'Cucumber', 'Custard apple', 'Damson', 'Date', 'Dragonfruit', 'Durian', 'Elderberry', 'Feijoa', 'Fig', 'Gooseberry', 'Grape', 'Raisin', 'Grapefruit', 'Guava', 'Honeyberry', 'Huckleberry', 'Jabuticaba', 'Jackfruit', 'Jambul', 'Juniper berry', 'Kiwifruit', 'Kumquat', 'Lemon', 'Lime', 'Loquat', 'Longan', 'Lychee', 'Mango', 'Mangosteen', 'Marionberry', 'Melon', 'Cantaloupe', 'Honeydew', 'Watermelon', 'Miracle fruit', 'Mulberry', 'Nectarine', 'Nance', 'Olive', 'Orange', 'Clementine', 'Mandarine', 'Tangerine', 'Papaya', 'Passionfruit', 'Peach', 'Pear', 'Persimmon', 'Plantain', 'Plum', 'Pineapple', 'Pomegranate', 'Pomelo', 'Quince', 'Raspberry', 'Salmonberry', 'Rambutan', 'Redcurrant', 'Salak', 'Satsuma', 'Soursop', 'Star fruit', 'Strawberry', 'Tamarillo', 'Tamarind', 'Yuzu'];
-  selectedFruits :string[]=[];
-  constructor(){}
+  selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message: string;
+  imageName: any;
+
+  constructor(private httpClient: HttpClient){}
   ngOnInit(): void {
   }
 
-  saveSelectedFruit(e:any) {
-    let fruitFromPage=e.target.value;
-    this.selectedFruits.push(String(fruitFromPage));
-    // this.fruits = this.fruits.filter(x => x === fruitFromPage);
-    alert(this.selectedFruits);
- }
+  public onFileChanged(event:any) {
+    this.selectedFile = event.target.files[0];
+  }
 
+  onUpload() {
+    console.log(this.selectedFile);
+    
+    //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+  
+    //Make a call to the Spring Boot Application to save the image
+    this.httpClient.post('api/user/imgUploadPROBA', uploadImageData, { observe: 'response' })
+      .subscribe((response) => {
+        if (response.status === 200) {
+          this.message = 'Image uploaded successfully';
+        } else {
+          this.message = 'Image not uploaded successfully';
+        }
+      }
+      );
+  }
 
+  //Gets called when the user clicks on retieve image button to get the image from back end
+  getImage() {
+  //Make a call to Sprinf Boot to get the Image Bytes.
+  this.httpClient.get('api/user/imgUploadPROBAGET')
+    .subscribe(
+      res => {
+        console.log(res);
+        this.retrieveResonse = res;
+        this.base64Data = this.retrieveResonse['picture'];
+        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+      }
+    );
+  }
 }

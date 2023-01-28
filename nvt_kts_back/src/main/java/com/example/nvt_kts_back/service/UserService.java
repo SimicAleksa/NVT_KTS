@@ -114,6 +114,14 @@ public class UserService {
 
     }
 
+    public void save(User tem) {
+        this.userRepository.save(tem);
+    }
+
+    public User findById(Long userId) {
+        return this.userRepository.findById(userId).get();
+    }
+
 
     /*public ArrayList<ArrayList<UserDTO>> findChangedUsers() {
         ArrayList<ChangeProfileRequest> users = this.userRepository.findChangedProfiles();

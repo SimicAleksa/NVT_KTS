@@ -20,13 +20,25 @@ public class RideNotificationDTO {
         this.distance = r.getDistance();
         this.state = r.getRideState().toString();
         this.startDateTime = setDateTimeIfExist(r);
-        this.endLocation = r.getRoute().getEndLocation().getLatitude() + "," + r.getRoute().getEndLocation().getLongitude();
+        this.endLocation = setEndLocationIfExist(r);
         this.startLocation = setStartLocationIfExist(r);
         this.startLocationString = "";
         this.endLocationString = "";
         this.id = r.getId();
         this.approvedBy = r.getApprovedBy();
     }
+
+    private String setEndLocationIfExist(Ride r) {
+        try{
+            return r.getRoute().getEndLocation().getLatitude() + "," + r.getRoute().getEndLocation().getLongitude();
+        }
+        catch (Exception e)
+        {
+            return ",";
+        }
+
+    }
+
 
     private String setStartLocationIfExist(Ride r) {
         try{
@@ -36,8 +48,9 @@ public class RideNotificationDTO {
         {
             return ",";
         }
-
     }
+
+
 
     private String setDateTimeIfExist(Ride r) {
         if(r.getStartDateTime()!=null){
@@ -54,7 +67,6 @@ public class RideNotificationDTO {
         this.startLocationString = "";
         this.id = r.getId();
         this.setPassengerEmail(email);
-        this.approvedBy = r.getApprovedBy();
     }
 
     public String getPassengerEmail() {
@@ -111,29 +123,5 @@ public class RideNotificationDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEndLocation() {
-        return endLocation;
-    }
-
-    public void setEndLocation(String endLocation) {
-        this.endLocation = endLocation;
-    }
-
-    public String getEndLocationString() {
-        return endLocationString;
-    }
-
-    public void setEndLocationString(String endLocationString) {
-        this.endLocationString = endLocationString;
-    }
-
-    public String getApprovedBy() {
-        return approvedBy;
-    }
-
-    public void setApprovedBy(String approvedBy) {
-        this.approvedBy = approvedBy;
     }
 }

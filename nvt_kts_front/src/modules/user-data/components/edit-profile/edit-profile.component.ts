@@ -111,7 +111,8 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit()
   {
-    let picture: number[] = this.findPictureBytes();
+    this.findPictureBytes();
+    // let picture: number[] = this.findPictureBytes();
     /*var reader = new FileReader();
     var fileByteArray = [];
     reader.readAsArrayBuffer(myFile);
@@ -127,19 +128,13 @@ export class EditProfileComponent implements OnInit {
 
   }
 
-  findPictureBytes(): number[] {
-    
-    let inp : HTMLInputElement = document.querySelector("#files")!;
-    let value: string = inp.value;
-    let root: string[] = value.split("\\");
-    let size: number = root.length;
-    let full: string = "C:\\Users\\Nevena\\Desktop\\" + root.at(size - 1);
-    alert("Putanja bi trebalo da je " + full);
-   
-    
-
+  findPictureBytes(){
+    // let inp : HTMLInputElement = document.querySelector("#files")!;
+    // let value: string = inp.value;
+    // console.log(value)
   }
-
+  
+ 
   
 
 
