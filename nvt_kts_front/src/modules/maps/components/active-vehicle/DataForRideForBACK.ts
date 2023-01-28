@@ -10,4 +10,5 @@ export interface DataForRideForBack{
     price: number;
     reservedTime:string;
     linkedPassengers: string[];
+    favoriteBoolean:boolean;
 }

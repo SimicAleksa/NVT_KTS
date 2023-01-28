@@ -6,6 +6,7 @@ import { Coord } from '../../components/active-vehicle/Coords';
 import { DataForRideForBack } from '../../components/active-vehicle/DataForRideForBACK';
 import { Route } from '../../components/active-vehicle/Route';
 import { MapService } from '../../services/map.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-routes-page',
@@ -29,6 +30,7 @@ export class SearchRoutesPageComponent implements OnInit {
   public distanceOfRideString:string;
   public priceOfRideString:string;
   public routeToOrdedJSON:any;
+  public addedAsFavorite:boolean = false;
 
   public now: Date = new Date();  //minimuim
   public temp1: Date = new Date(); //maksimum
@@ -36,6 +38,8 @@ export class SearchRoutesPageComponent implements OnInit {
   public maxDate:string;
   public selectedDateTime:Date = new Date();
   public reservedCheckBoxChecked:boolean;
+  public quickOrdedWithFavorite:string="";
+  public quickOrdedWithFavoriteBoolean:boolean=false;
 
   public userEmail:string = "registrovani2@gmail.com";
   carTypes: string[] = ["SUV", "HATCHBACK", "COUPE", "MINIVAN", "SEDAN", "VAN", "LIMOUSINE"];
@@ -43,13 +47,34 @@ export class SearchRoutesPageComponent implements OnInit {
   public emails: string[];
   private selectedMails :string[]=[];
 
-  constructor(private toastr: ToastrService, private mapService: MapService, private userService: UserDataService) { 
+  constructor(private toastr: ToastrService, private mapService: MapService,
+              private userService: UserDataService, private activRoute: ActivatedRoute) { 
     setInterval(() => {
       this.now = new Date();
     }, 1);
   }
 
   ngOnInit(): void {
+
+    this.activRoute.queryParams.subscribe(params => {
+      console.log(params['order']);
+      this.quickOrdedWithFavorite = params['order'];
+      if(this.quickOrdedWithFavorite!=="" && this.quickOrdedWithFavorite!==undefined){
+          this.quickOrdedWithFavoriteBoolean=true;
+          this.routeSelectedBoolean = true;
+          this.whenFavoriteIsSelected();
+      }
+      else{
+        this.quickOrdedWithFavoriteBoolean=false;
+      }
+    })
+      
+
+
+
+
+
+
     this.minDate= this.now.toISOString().slice(0,16)
     this.maxDate = new Date(this.temp1.setHours(this.temp1.getHours()+5)).toISOString().slice(0,16)
     this.userService.getAllRegisteredUsersMails().subscribe((response) => {
@@ -163,6 +188,16 @@ export class SearchRoutesPageComponent implements OnInit {
     this.routeToOrded = this.selectedRouteEmitedValue.route;
     this.variableReset();
     this.variableSetUp();
+  }
+
+  whenFavoriteIsSelected(){
+    this.routeToOrded = //poziv naci u bazi taj nroute id ILI samo proslediti iz drugog dela
+    this.mapService.getUsersFavoriteRouteWithId(this.quickOrdedWithFavorite).subscribe((response) => {
+      this.routeToOrded = JSON.parse(response.routeJSON); 
+      console.log(JSON.parse(response.routeJSON))
+      this.variableReset();
+      this.variableSetUp();
+    });
   }
 
   changeRidePref(radioType:any): void{
@@ -282,6 +317,7 @@ export class SearchRoutesPageComponent implements OnInit {
       price: 0,
       reservedTime:"",
       linkedPassengers: this.selectedMails,
+      favoriteBoolean:false,
     }
     return sendIT;
   }
@@ -344,7 +380,9 @@ export class SearchRoutesPageComponent implements OnInit {
     }
     else{
       sendIT.linkedPassengers.push(this.userEmail);
+      sendIT.favoriteBoolean = this.addedAsFavorite;
       this.mapService.saveRide(sendIT);
+
       sendIT.linkedPassengers.pop();
       this.routeSelectedBoolean = false;
       this.userService.getUsersStateBasedOnHisRides(this.userEmail).subscribe((response) => {
@@ -353,5 +391,14 @@ export class SearchRoutesPageComponent implements OnInit {
       this.toastr.success("Successfully ordered");
     }
     console.log(sendIT);
+  }
+
+  addToFavoriteRoute(){
+    if(this.addedAsFavorite){
+      this.addedAsFavorite = false;
+    }
+    else{
+      this.addedAsFavorite = true;
+    }
   }
 }

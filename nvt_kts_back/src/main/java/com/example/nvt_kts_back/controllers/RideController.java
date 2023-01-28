@@ -39,6 +39,9 @@ public class RideController {
     @Autowired
     private DataForRideFromFromService dataForRideFromFromService;
 
+    @Autowired
+    private RegisteredUserService registeredUserService;
+
     public RideController(RideService rideService, SimpMessagingTemplate simpMessagingTemplate){
         this.rideService = rideService;
         this.simpMessagingTemplate = simpMessagingTemplate;
@@ -63,6 +66,7 @@ public class RideController {
         Route route = new Route(routeFormFrontDTO);
 
         Ride ride = new Ride();
+        //za simulaciju msm testiranje treba Started state
         ride.setRideState(RideState.WAITING_FOR_PAYMENT);
         ride.setRoute(route);
         ride.setDistance(dto.getDistance());
@@ -78,8 +82,18 @@ public class RideController {
             System.out.println(localDateTime);
             ride.setStartDateTime(localDateTime);
         }
+        // za simulaciju treba id od drivera da se podesi
 
         this.rideService.saveRide(ride);
+        if(dto.isFavoriteBoolean()) {
+            String usersEmail = ride.getPassengers().get(ride.getPassengers().size() - 1).getEmail();
+            Long routeID = ride.getRoute().getId();
+            RegisteredUser ru = this.registeredUserService.getByEmail(usersEmail);
+            ru.getFavouriteRoutes().add(this.routeService.findById(routeID));
+            this.registeredUserService.save(ru);
+        }
+
+
         // TODO ovdje treba obavijestiti sve uvezane da se desila voznja
         this.simpMessagingTemplate.convertAndSend("/map-updates/new-waiting-for-payment", new StringDTO());
 
@@ -91,8 +105,12 @@ public class RideController {
 
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
-        Ride ride = this.rideService.createRide(new Ride(rideDTO), rideDTO.getDriver());
+        Ride ride = new Ride(rideDTO);
+        ride.setExpectedDuration(rideDTO.getExpectedDuration());
+        ride = this.rideService.createRide(ride, rideDTO.getDriver());
+
         RideDTO returnRideDTO = new RideDTO(ride);
+        returnRideDTO.setExpectedDuration(rideDTO.getExpectedDuration());
 
         this.simpMessagingTemplate.convertAndSend("/map-updates/new-ride", returnRideDTO);
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
@@ -103,6 +121,17 @@ public class RideController {
         Ride ride = this.rideService.changeRide(id);
         RideDTO returnRideDTO = new RideDTO(ride);
         this.simpMessagingTemplate.convertAndSend("/map-updates/ended-ride", returnRideDTO);
+        return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/updateDriverIncomingTimeForRide/{id}", produces = "application/json")
+    public ResponseEntity<RideDTO> updateDriverIncomingTimeForRide(@PathVariable("id") long id,@RequestBody ExpectedDurationDto expectedDurationDto) {
+        Ride ride = this.rideService.getDriversDrivingToStartRide(String.valueOf(id));
+        ride.setExpectedDuration(expectedDurationDto.getExpectedDuration());
+        RideDTO returnRideDTO = new RideDTO(ride);
+        returnRideDTO.setExpectedDuration(ride.getExpectedDuration());
+        this.rideService.saveRide(ride);
+        this.simpMessagingTemplate.convertAndSend("/map-updates/get-current-ride-duration", returnRideDTO);
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
 
@@ -125,6 +154,15 @@ public class RideController {
         }
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
+
+
+    @GetMapping(value = "/getUsersFavoriteRouteWithId/{id}",produces = "application/json")
+    public ResponseEntity<RouteDTO> getUsersFavoriteRouteWithId(@PathVariable("id") String id) {
+        Route route = this.routeService.findById(Long.valueOf(id));
+        RouteDTO routeDTO = new RouteDTO(route);
+        return new ResponseEntity<>(routeDTO, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
     public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
@@ -207,6 +245,22 @@ public class RideController {
         ArrayList<RideNotificationDTO> retVal = this.rideService.finUsersUpcomingRides(email);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
+
+
+    @GetMapping(value = "/getUserDTSride/{email}")
+    public ResponseEntity<RideDTO> getUserDTSride(@PathVariable("email") String email)
+    {
+        RideDTO retVal = this.rideService.getUsersDTSride(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getUserInProgressRide/{email}")
+    public ResponseEntity<RideDTO> getUserInProgressRide(@PathVariable("email") String email)
+    {
+        RideDTO retVal = this.rideService.getUsersInProgresssRide(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = "/changeRideState/{id}/{state}")
     public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )

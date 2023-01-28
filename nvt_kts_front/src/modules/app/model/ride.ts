@@ -9,5 +9,5 @@ export interface RideForNotification{
     id: number,
     passengerEmail: string,
     approvedBy: string,
-
+    expectedDuration:number
 }

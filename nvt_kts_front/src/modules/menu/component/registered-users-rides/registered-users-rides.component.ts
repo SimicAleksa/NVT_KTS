@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
+import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import GeocoderControl, {Geocoder, geocoders} from 'leaflet-control-geocoder';
 import { GeocodingCallback } from 'leaflet-control-geocoder/dist/geocoders';
@@ -8,6 +8,9 @@ import { RideService } from 'src/modules/reports/services/ride.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { StringDTO } from 'src/modules/app/model/stringDTO';
+import { RideForDurationDTO } from 'src/modules/app/model/rideForDurationDTO';
+import { RideDtoWithExpectedDuration } from 'src/modules/app/model/rideDTOWithExpectedDuration';
+import { API_INCOMING_DRIVER, API_TRACKING_ROUTE } from 'src/config/map-urls';
 
 
 @Component({
@@ -15,25 +18,26 @@ import { StringDTO } from 'src/modules/app/model/stringDTO';
   templateUrl: './registered-users-rides.component.html',
   styleUrls: ['./registered-users-rides.component.css']
 })
-
-
 export class RegisteredUsersRidesComponent implements OnInit {
 
 
   username: string = "registrovani1@gmail.com";
   usersRides: RideForNotification[];
-  
+  usersDTSRIDE:RideDtoWithExpectedDuration;
+  usersTimeRemainingTillGettingARide:string;
+
   private stompClient: any;
   public ws: any;
 
 
   constructor(
-    
+
     private rideService: RideService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    
+
     alert("Treba da se desi");
     this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
@@ -61,7 +65,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
     let that = this;
     //alert(that.ws.readyState + " je stanje");
     this.stompClient.connect({}, function () {
-      
+
       that.openGlobalSocket();
       //alert(that.ws.readyState + " je stanje");
     });
@@ -83,9 +87,24 @@ export class RegisteredUsersRidesComponent implements OnInit {
       }
     });
 
+    this.stompClient.subscribe('/map-updates/get-current-ride-duration', (message: { body: string }) => {
+      let rideDurationride:RideForDurationDTO = JSON.parse(message.body);
+
+      this.rideService.getUserDTSride(this.username).subscribe((response) => {
+        if(response.id===rideDurationride.id){
+          this.usersDTSRIDE = <RideDtoWithExpectedDuration> response;
+          let jedanTempic:RideDtoWithExpectedDuration =  <RideDtoWithExpectedDuration> response;
+          var minutes = Math.floor(jedanTempic.expectedDuration/60);
+          var secunds = jedanTempic.expectedDuration - minutes*60;
+          this.usersTimeRemainingTillGettingARide = minutes.toString()+"min "+secunds.toString().split('.')[0]+"sec";
+        }
+      });
+    });
+
+
     this.stompClient.subscribe('/map-updates/everyone-approved', (message: { body: string }) => {
       let object: StringDTO = JSON.parse(message.body);
-      let id: number = object.numberValue;      
+      let id: number = object.numberValue;
       alert("SOCKET AKTIVIRAN jer su svi odobrili TODO: izbaciti obavjestenje");
       // sad znam da je voznja sa ID-em 2 odobrena od strane svih
       // ako ima saljem mu alert da je odobrena i na frontu prebacujem stanje u STARTED
@@ -95,13 +114,13 @@ export class RegisteredUsersRidesComponent implements OnInit {
         {
           ride.state = "STARTED";
         }
-      }      
-      
+      }
+
     });
 
     this.stompClient.subscribe('/map-updates/no-drivers-available', (message: { body: string }) => {
       let object: StringDTO = JSON.parse(message.body);
-      let id: number = object.numberValue;      
+      let id: number = object.numberValue;
       alert("SOCKET AKTIVIRAN jer nema vozaca TODO: izbaciti obavjestenje");
       alert("Your ride is declined because there are no available drivers");
       // sad znam da je voznja sa ID-em 2 odobrena od strane svih
@@ -112,15 +131,15 @@ export class RegisteredUsersRidesComponent implements OnInit {
         {
           ride.state = "DECLINED";
         }
-      }      
-      
+      }
+
     });
 
     this.stompClient.subscribe('/map-updates/ride-status-changed', (message: { body: string }) => {
       let object: StringDTO = JSON.parse(message.body);
       let id: number = object.numberValue;
       let state: string = object.value;
-      const map: { [id: string]: string; } = createRideStateDictionary();     
+      const map: { [id: string]: string; } = createRideStateDictionary();
       //const map = {};
 
       alert("SOCKET AKTIVIRAN jer se promijenilo stanje voznje");
@@ -133,14 +152,17 @@ export class RegisteredUsersRidesComponent implements OnInit {
             this.usersRides = <RideForNotification[]> response;
             this.addStringLocation();
             this.splitDate();
-          }); 
+          });
           // i obavijesticu korisnika da mu se zavrsila voznja
           alert("Your ride " + map[state]);
         }
-      }      
-      
+      }
+
     });
 
+  }
+  seeIncDriver(ride_id:number){
+    this.router.navigate([API_INCOMING_DRIVER]);
   }
 
   rejectRide(id: number)
@@ -151,7 +173,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   acceptRide(id: number)
   {
-    
+
     this.rideService.acceptRideUser(id, this.username).subscribe((response) => {
       let dto: StringDTO = <StringDTO> response;
       if (dto.value=="OK")
@@ -191,7 +213,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   view(id: number)
   {
-    // TODO ovdje kod da ga preusmjerim kod Alekse
+    this.router.navigate([API_TRACKING_ROUTE]);
   }
 
   sendReport(id: number)
@@ -212,7 +234,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
       let lista:string[] = datetime.split("T");
       if(ride.state==="IN_PROGRESS" || ride.state==="RESERVED")
         ride.startDateTime = lista[1].slice(0, 5);
-      else if (ride.state =='WAITING_FOR_PAYMENT' && ride.startDateTime!="2035") 
+      else if (ride.state =='WAITING_FOR_PAYMENT' && ride.startDateTime!="2035")
       {
         ride.startDateTime = lista[1].slice(0, 5) + " " + lista[0];
       }
@@ -221,7 +243,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
     }
   }
 
-  
+
 
   setRideStatus(id: number, status: string) {
     for (let ride of this.usersRides)
@@ -244,16 +266,16 @@ export class RegisteredUsersRidesComponent implements OnInit {
       geocoder.geocode(ride.startLocation, function(results: any) {
         let k : string = results[0]["name"];
         let l: string [] = k.split(',');
-        let rezultat: string = l[0] + "," + l[1] + "," + l[2]; 
+        let rezultat: string = l[0] + "," + l[1] + "," + l[2];
         ride.startLocationString = rezultat;
-          } 
+          }
       );
       geocoder.geocode(ride.endLocation, function(results: any) {
         let k : string = results[0]["name"];
         let l: string [] = k.split(',');
-        let rezultat: string = l[0] + "," + l[1] + "," + l[2]; 
+        let rezultat: string = l[0] + "," + l[1] + "," + l[2];
         ride.endLocationString = rezultat;
-          } 
+          }
       );
     }
   }
@@ -268,6 +290,6 @@ function createRideStateDictionary(): { [id: string]: string; } {
   map["RESERVED"] = "is reserved";
   map["IN_PROGRESS"] = "has started"
   return map;
-  
+
 }
 

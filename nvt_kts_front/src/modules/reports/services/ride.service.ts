@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReportParam } from 'src/modules/app/model/reportParams';
 import { RideForNotification } from 'src/modules/app/model/ride';
+import { RideDtoWithExpectedDuration } from 'src/modules/app/model/rideDTOWithExpectedDuration';
+import { RideForDurationDTO } from 'src/modules/app/model/rideForDurationDTO';
+import { Ride } from 'src/modules/maps/components/active-vehicle/Ride';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +22,10 @@ export class RideService {
   private userNotificationRidesURL: string;
   private changeRideStateURL: string;
   private acceptRideURL: string;
+  private getUserDTSrideURL: string;
 
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     //this.driverReportDataUrl = 'http://localhost:8000/driver/getDriverReportData';
     this.driverReportDataUrl = "api/rides/getDriverReportData";
     this.userReportDataUrl = "api/rides/getUserReportData";
@@ -30,27 +34,28 @@ export class RideService {
     this.userNotificationRidesURL = "api/rides/getUserNotificationRides/";
     this.changeRideStateURL = "api/rides/changeRideState/";
     this.acceptRideURL = "api/rides/acceptRideUser/";
+    this.getUserDTSrideURL = "api/rides/getUserDTSride/";
   }
 
 
   getDriverDataForReport(params: ReportParam): Observable<Map<string, Map<string, number>>> {
     return this.http.post<Map<string, Map<string, number>>>(this.driverReportDataUrl, params, {
       headers: this.headers,
-      responseType: "json",      
+      responseType: "json",
     });
   }
 
   getUserDataForReport(params: ReportParam): Observable<Map<string, Map<string, number>>> {
     return this.http.post<Map<string, Map<string, number>>>(this.userReportDataUrl, params, {
       headers: this.headers,
-      responseType: "json",      
+      responseType: "json",
     });
   }
 
   getAdminDataForReport(params: ReportParam): Observable<Map<string, Map<string, number>>> {
     return this.http.post<Map<string, Map<string, number>>>(this.adminReportDataUrl, params, {
       headers: this.headers,
-      responseType: "json",      
+      responseType: "json",
     });
   }
 
@@ -66,13 +71,24 @@ export class RideService {
       headers: this.headers,
       responseType: "json",
     });
-  
+
   }
+
+
+  getUserDTSride(username: string): Observable<RideDtoWithExpectedDuration> {
+    return this.http.get<RideDtoWithExpectedDuration >(this.getUserDTSrideURL + username, {
+      headers: this.headers,
+      responseType: "json",
+    });
+
+  }
+
+
 
   changeRideState(id: number, state: string) {
     this.http.get(this.changeRideStateURL + id + "/"+ state, {
       headers: this.headers,
-      responseType: "json",      
+      responseType: "json",
     }).subscribe(() => {
     });
   }

@@ -53,10 +53,16 @@
                         <p>To: {{ride.endLocationString}}</p>
                     </div>
                     <div class="row">
+                        <div class="col-11">
+                            <p>Time till arrival: {{usersTimeRemainingTillGettingARide}} </p>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-4">
                         </div>
                         <div class="col-8">
-                            <button class="btn btn-primary" (click)="report(ride.id)">View vehicle position</button>
+                            <!-- <button class="btn btn-primary" (click)="report(ride.id)">View vehicle position</button> -->
+                            <button class="btn btn-primary" (click)="seeIncDriver(ride.id)">View vehicle position</button>
                         </div>
                     </div>
                 </div>

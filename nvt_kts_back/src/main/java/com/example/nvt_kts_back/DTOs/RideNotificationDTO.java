@@ -20,12 +20,23 @@ public class RideNotificationDTO {
         this.distance = r.getDistance();
         this.state = r.getRideState().toString();
         this.startDateTime = setDateTimeIfExist(r);
-        this.startLocation = r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
         this.endLocation = r.getRoute().getEndLocation().getLatitude() + "," + r.getRoute().getEndLocation().getLongitude();
+        this.startLocation = setStartLocationIfExist(r);
         this.startLocationString = "";
         this.endLocationString = "";
         this.id = r.getId();
         this.approvedBy = r.getApprovedBy();
+    }
+
+    private String setStartLocationIfExist(Ride r) {
+        try{
+            return r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        }
+        catch (Exception e)
+        {
+            return ",";
+        }
+
     }
 
     private String setDateTimeIfExist(Ride r) {

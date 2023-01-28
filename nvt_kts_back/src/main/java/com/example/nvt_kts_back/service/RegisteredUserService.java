@@ -52,4 +52,8 @@ public class RegisteredUserService {
         }
         return retVal;
     }
+
+    public void save(RegisteredUser ru) {
+        this.registeredUserRepository.save(ru);
+    }
 }
