@@ -28,6 +28,12 @@ import { AdminRidesHistoryPageComponent } from './pages/admin-rides-history-page
 import { RideDetailsForAdminComponent } from './components/ride-details-for-admin/ride-details-for-admin.component';
 import { FavouriteRoutesPageComponent } from './pages/favourite-routes-page/favourite-routes-page.component';
 import { FavouriteRoutesListComponent } from './components/favourite-routes-list/favourite-routes-list.component';
+import { EditProfileDriverComponent } from './components/edit-profile-driver/edit-profile-driver.component';
+import { EditProfileAdminComponent } from './components/edit-profile-admin/edit-profile-admin.component';
+import { EditProfileAdminPageComponent } from './pages/edit-profile-admin-page/edit-profile-admin-page.component';
+import { EditProfileDriverPageComponent } from './pages/edit-profile-driver-page/edit-profile-driver-page.component';
+
+
 
 @NgModule({
   declarations: [
@@ -51,6 +57,10 @@ import { FavouriteRoutesListComponent } from './components/favourite-routes-list
     RideDetailsForAdminComponent,
     FavouriteRoutesPageComponent,
     FavouriteRoutesListComponent,
+    EditProfileDriverComponent,
+    EditProfileAdminComponent,
+    EditProfileAdminPageComponent,
+    EditProfileDriverPageComponent,
   ],
   imports: [
     CommonModule,

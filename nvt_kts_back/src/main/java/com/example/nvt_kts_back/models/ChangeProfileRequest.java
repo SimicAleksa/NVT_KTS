@@ -24,8 +24,9 @@ public class ChangeProfileRequest {
     @Column
     private String phone;
 
+    @Lob
     @Column
-    private String picture;
+    private byte[] picture;
 
     @Column
     private String carType;
@@ -104,11 +105,11 @@ public class ChangeProfileRequest {
         this.phone = phone;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 

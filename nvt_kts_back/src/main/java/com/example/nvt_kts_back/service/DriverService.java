@@ -66,31 +66,25 @@ public class DriverService {
 
     }
 
-    private long findActiveMinutes(List<TimeSpan> spans) {
+    public long findActiveMinutes(List<TimeSpan> spans) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime dayBefore = now.minusDays(1);
         long result = 0;
         Collections.reverse(spans);
         for (int i = 0; i<spans.size(); i++)
         {
-            System.out.println("Pocetno vrijeme trenutnog spana je: " + spans.get(i).getStartTime());
             // ako je cijeli u 24h
             if (spans.get(i).getStartTime().isAfter(dayBefore))
             {
-                System.out.println("Usla sam u ovaj sto je cijeli ");
-
                 long r = ChronoUnit.MINUTES.between(spans.get(i).getStartTime(), spans.get(i).getEndTime());
-                System.out.println(r + " je trenutno");
                 result += r;
             }
             else if (spans.get(i).getEndTime().isAfter(dayBefore))
             {
-                System.out.println("Usla sam u djelimicni");
                 // ovo je prelaz. Sada treba staviti da uzima samo dio njega
                 result += ChronoUnit.MINUTES.between(dayBefore, spans.get(i).getEndTime());
             }
             else {
-                System.out.println("Usla sam u rezanje");
                 // ako je skroz van
                 spans.subList(i, spans.size()).clear();
             }
@@ -139,6 +133,18 @@ public class DriverService {
 
     public boolean getDrivesActiveStatus(String email) {
         return this.driverRepository.findByEmail(email).getActive();
+    }
+
+    public Driver findByEmail(String email) {
+        return this.driverRepository.findByEmail(email);
+    }
+
+    public Driver getByEmail(String email) {
+        return this.driverRepository.findByEmail(email);
+    }
+
+    public void save(Driver tem) {
+        this.driverRepository.save(tem);
     }
 
     public List<ReviewToShowDTO> getDriverReviews(Long driverId) {

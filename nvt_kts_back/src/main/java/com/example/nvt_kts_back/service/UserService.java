@@ -2,6 +2,7 @@ package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.CustomExceptions.InvalidDTOAttributesValuesException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
+import com.example.nvt_kts_back.DTOs.ChangePasswordDTO;
 import com.example.nvt_kts_back.DTOs.PasswordResetDTO;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.models.*;
@@ -65,6 +66,14 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void changePassword(final ChangePasswordDTO passwordResetDTO) {
+        User user = userRepository.getByEmail(passwordResetDTO.getUsername())
+                .orElseThrow(UserDoesNotExistException::new);
+
+        user.setPassword(new BCryptPasswordEncoder().encode(passwordResetDTO.getPassword()));
+        userRepository.save(user);
+    }
+
     public Driver updateDriverCoords(long id, double latitude,double longitude){
         Driver driver = this.driverService.findById(String.valueOf(id));
         Coord driverCurrentCoord = this.coordService.findCoordbyId(driver.getCurrentCoords().getId());
@@ -111,6 +120,18 @@ public class UserService {
     public void blockUser(boolean blocked, String email) {
         this.userRepository.updateIsBlocked(blocked, email);
 
+    }
+
+    public void save(User tem) {
+        this.userRepository.save(tem);
+    }
+
+    public User findById(Long userId) {
+        return this.userRepository.findById(userId).get();
+    }
+
+    public void updateUserData(ChangeProfileRequest dto) {
+        this.registeredUserRepository.updateData(dto.getName(), dto.getSurname(), dto.getCity(), dto.getPhone(), dto.getEmail());
     }
 
 

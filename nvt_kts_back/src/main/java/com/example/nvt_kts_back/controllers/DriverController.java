@@ -5,12 +5,9 @@ import com.example.nvt_kts_back.CustomExceptions.NoRideInLast3DaysException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.configurations.Settings;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.service.AuthService;
+import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.service.UserService;
-import com.example.nvt_kts_back.models.ChangeProfileRequest;
-import com.example.nvt_kts_back.models.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,10 +19,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Deflater;
+
+import static com.example.nvt_kts_back.controllers.RegisteredUserController.decompressBytes;
 
 @RestController
 @RequestMapping("api/drivers")
@@ -151,4 +154,40 @@ public class DriverController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/getDriverData/{email}")
+    public ResponseEntity<ChangeProfileRequest> getDriverData(@PathVariable("email") String email) {
+        Driver d = driverService.findByEmail(email);
+        ChangeProfileRequest c = new ChangeProfileRequest(d);
+        c.setPicture(decompressBytes(c.getPicture()));
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
+    public static byte[] compressBytes(byte[] data) {
+        Deflater deflater = new Deflater();
+        deflater.setInput(data);
+        deflater.finish();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] buffer = new byte[1024];
+        while (!deflater.finished()) {
+            int count = deflater.deflate(buffer);
+            outputStream.write(buffer, 0, count);
+        }
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+        }
+        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+        return outputStream.toByteArray();
+    }
+
+
+    @PostMapping("/imgUploadPROBA/{email}")
+    public ResponseEntity.BodyBuilder imgUploadPROBA(@RequestParam("imageFile") MultipartFile file, @PathVariable("email") String email) throws IOException {
+        Driver tem = this.driverService.getByEmail(email);
+        tem.setPicture(compressBytes(file.getBytes()));
+        this.driverService.save(tem);
+        return ResponseEntity.status(HttpStatus.OK);
+    }
+
+
 }

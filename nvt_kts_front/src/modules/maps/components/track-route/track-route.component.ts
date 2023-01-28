@@ -29,17 +29,14 @@ export class TrackRouteComponent implements OnInit {
   rideLayer: L.LayerGroup;
   mainGroup: LayerGroup[] = [];
   driver:Driver;
+  username: string = "registrovani2@gmail.com";
   ride:Ride;
   private stompClient: any;
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
-
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!!!!!!!!!!!!!!!!VOZAC JE ZAKUCAN DO NJEGA TREBA DOCI PREKO PUTNIKOVIH VOZNJI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     this.initializeWebSocketConnection();
-    this.mapService.getPassangersDrivingTheRouteRide("3").subscribe((ret) => {
+    this.mapService.getUsersInProgressRideEmail(this.username).subscribe((ret) => {
       this.ride=ret;
       let color = Math.floor(Math.random() * 16777215).toString(16);
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();

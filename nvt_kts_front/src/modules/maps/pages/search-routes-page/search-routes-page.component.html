@@ -1,16 +1,18 @@
-<div class="container" style="padding-top: 50px;">
+<section style="background-color: rgb(246, 240, 214)">
+<div class="container" style="padding-top: 50px; ">
   <div class="row">
     <div class="col-8">
       <div style="height: 90vh;">
-        <app-map
+        <app-map *ngIf="!quickOrdedWithFavoriteBoolean"
             (selectedRouteData)="recieveSelectedRoute($event)" 
             (routeSelectedBoolean)="recieveIsRouteSelected($event)">
         </app-map>
+        <p *ngIf="quickOrdedWithFavoriteBoolean">Now thats a lot of empty space</p>
       </div>
     </div>
     <div class="col">
       <div class="row">
-        <div class="col border border-dark rounded">
+        <div class="col border border-white rounded" *ngIf="!quickOrdedWithFavoriteBoolean">
           <div><label>Ride preference</label></div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="quickTime" (change)="changeRidePref($event)">
@@ -39,7 +41,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col border border-dark rounded mt-4">
+        <div class="col border border-white rounded mt-4">
           <div><label>Additional options</label></div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="baby" value="option1">
@@ -51,7 +53,7 @@
           </div>
         </div>
       </div>
-      <div class="row border border-dark rounded mt-4">
+      <div class="row border border-white rounded mt-4">
         <div><label>Car type</label></div>
         <div class="row">
           <div class="col">
@@ -97,7 +99,7 @@
             <label style="margin-bottom: 0px;">Price: {{priceOfRideString}} rsd<p style="font-weight: 50; font-size: smaller;"> *price of vehicle type not included</p></label><br>
         </div>
       </div> 
-      <div class="row border border-dark rounded mt-4">
+      <div class="row border border-white rounded mt-4">
         <div class="col">
           <input class="form-check-input" type="checkbox" id="reserve" (change)="reservedCheckBoxCheckedFinction()">
           <label class="form-check-label">&nbsp;Reserve</label>
@@ -106,19 +108,27 @@
             <input type="datetime-local" [min]="minDate" [max]="maxDate" [(ngModel)]="selectedDateTime" *ngIf="reservedCheckBoxChecked">
         </div>
       </div> 
-      <div class="row" style="height: 420px;">
-        <textarea style="height: 50%;" disabled>{{routeToOrdedJSON}}</textarea>
-      </div>
 
-
-      <div class="row" style="height: 420px;">
-        <textarea> </textarea>
-      </div>
+      <form id="addLinkedForm" action="/action_page.php" method="get">
+        <label for="browser">Add linked passengers:</label>
+        <input id="addLinkedInput" type="text"  list="codes" (change)="saveSelectedFruit($event)">
+        <datalist id="codes">
+            <option *ngFor="let fruit of emails">{{fruit}} </option>
+        </datalist>
+        <label id="maxLimitLbl" class="maxLimitLbl"> Max number of linked passengers id 4!</label>
+      </form>
 
 
       <div class="row">
-        <button type="button" class="btn btn-primary mt-1" (click)="onSubmit()" >Order</button>
+        <div class="col">
+          <button type="button" class="btn btn-primary mt-1" style="width: 100%;" (click)="onSubmit()" *ngIf="routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)">Order</button>
+        </div>
+        <div class="col-1">
+          <button type="button" class="btn btn-light mt-1" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&!addedAsFavorite) && !quickOrdedWithFavoriteBoolean">✰</button>
+          <button type="button" class="btn btn-light mt-1" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&addedAsFavorite) && !quickOrdedWithFavoriteBoolean">⭐</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+</section>

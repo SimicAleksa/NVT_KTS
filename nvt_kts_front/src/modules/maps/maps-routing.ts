@@ -6,6 +6,7 @@ import { SimpleRouteSearchComponent } from './components/simple-route-search/sim
 import { SimpleRoutesSearchPageComponent } from './pages/simple-routes-search-page/simple-routes-search-page.component';
 import { TrackIncDriverComponent } from './components/track-inc-driver/track-inc-driver.component';
 import { TrackRouteComponent } from './components/track-route/track-route.component';
+import { TempForQueryComponent } from './components/temp-for-query/temp-for-query.component'; 
 export const routes: Routes = [
   {
     path:"routeSearch",
@@ -30,7 +31,11 @@ export const routes: Routes = [
   {
     path:"allVehiclesOnMap",
     component :VehiclesOnMapComponent
-  }
+  },
+  {
+    path:"tempForQuery",
+    component :TempForQueryComponent
+  },
 
 ];
 

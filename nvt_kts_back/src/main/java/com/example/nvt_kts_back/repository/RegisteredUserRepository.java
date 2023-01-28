@@ -32,4 +32,8 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
                         "WHERE u.id = :userId"
     )
     Optional<RegisteredUser> getRegUserWithFavouriteRoutesByUserId(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("update RegisteredUser u set u.name=?1, u.surname=?2, u.city=?3, u.phone=?4 where u.email =?5")
+    void updateData(String name, String surname, String city, String phone, String email);
 }

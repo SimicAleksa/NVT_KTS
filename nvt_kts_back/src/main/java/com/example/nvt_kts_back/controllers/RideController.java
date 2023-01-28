@@ -5,19 +5,20 @@ import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
-import com.example.nvt_kts_back.models.Coord;
-import com.example.nvt_kts_back.models.Ride;
-import com.example.nvt_kts_back.models.Route;
 import com.example.nvt_kts_back.service.*;
-import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.*;
+import com.example.nvt_kts_back.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.example.nvt_kts_back.service.RideService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,12 @@ public class RideController {
     @Autowired
     private DriverService driverService;
 
+    @Autowired
+    private DataForRideFromFromService dataForRideFromFromService;
+
+    @Autowired
+    private RegisteredUserService registeredUserService;
+
     public RideController(RideService rideService, SimpMessagingTemplate simpMessagingTemplate){
         this.rideService = rideService;
         this.simpMessagingTemplate = simpMessagingTemplate;
@@ -50,7 +57,6 @@ public class RideController {
 
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
     public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
-        System.out.println(dto.toString());
         RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
         routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());
 
@@ -68,21 +74,51 @@ public class RideController {
         Route route = new Route(routeFormFrontDTO);
 
         Ride ride = new Ride();
-        ride.setRideState(RideState.STARTED);
-        ride.setDriver_id(3l);
+        //za simulaciju msm testiranje treba Started state
+        ride.setRideState(RideState.WAITING_FOR_PAYMENT);
         ride.setRoute(route);
+        ride.setDistance(dto.getDistance());
+        ride.setExpectedDuration(dto.getDuration());
+        ride.setPrice(dto.getPrice());
 
-//        this.routeService.saveRoute(new Route(routeFormFrontDTO));
+        ride.setPassengers(this.rideService.getLinkedPassangersFromStringArray(dto.getLinkedPassengers(),ride));
+
+        if(!dto.getReservedTime().equals("")){
+            String tempDateTime = dto.getReservedTime().replace('T',' ');
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime localDateTime = LocalDateTime.parse(tempDateTime,dateTimeFormatter);
+            System.out.println(localDateTime);
+            ride.setStartDateTime(localDateTime);
+        }
+        // za simulaciju treba id od drivera da se podesi
+
         this.rideService.saveRide(ride);
+        if(dto.isFavoriteBoolean()) {
+            String usersEmail = ride.getPassengers().get(ride.getPassengers().size() - 1).getEmail();
+            Long routeID = ride.getRoute().getId();
+            RegisteredUser ru = this.registeredUserService.getByEmail(usersEmail);
+            ru.getFavouriteRoutes().add(this.routeService.findById(routeID));
+            this.registeredUserService.save(ru);
+        }
 
 
+        // TODO ovdje treba obavijestiti sve uvezane da se desila voznja
+        this.simpMessagingTemplate.convertAndSend("/map-updates/new-waiting-for-payment", new StringDTO());
+
+        DataForRideFromFrom dataForRide = new DataForRideFromFrom(dto, ride.getId());
+        //System.out.println("ID VOZNJE KOJA JE SADA UBACENA JEEE" + ride.getId());
+        this.dataForRideFromFromService.save(dataForRide);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
-        Ride ride = this.rideService.createRide(new Ride(rideDTO), rideDTO.getDriver());
+        Ride ride = new Ride(rideDTO);
+        ride.setExpectedDuration(rideDTO.getExpectedDuration());
+        ride = this.rideService.createRide(ride, rideDTO.getDriver());
+
         RideDTO returnRideDTO = new RideDTO(ride);
+        returnRideDTO.setExpectedDuration(rideDTO.getExpectedDuration());
 
         this.simpMessagingTemplate.convertAndSend("/map-updates/new-ride", returnRideDTO);
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
@@ -93,6 +129,17 @@ public class RideController {
         Ride ride = this.rideService.changeRide(id);
         RideDTO returnRideDTO = new RideDTO(ride);
         this.simpMessagingTemplate.convertAndSend("/map-updates/ended-ride", returnRideDTO);
+        return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/updateDriverIncomingTimeForRide/{id}", produces = "application/json")
+    public ResponseEntity<RideDTO> updateDriverIncomingTimeForRide(@PathVariable("id") long id,@RequestBody ExpectedDurationDto expectedDurationDto) {
+        Ride ride = this.rideService.getDriversDrivingToStartRide(String.valueOf(id));
+        ride.setExpectedDuration(expectedDurationDto.getExpectedDuration());
+        RideDTO returnRideDTO = new RideDTO(ride);
+        returnRideDTO.setExpectedDuration(ride.getExpectedDuration());
+        this.rideService.saveRide(ride);
+        this.simpMessagingTemplate.convertAndSend("/map-updates/get-current-ride-duration", returnRideDTO);
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
 
@@ -115,6 +162,15 @@ public class RideController {
         }
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
+
+
+    @GetMapping(value = "/getUsersFavoriteRouteWithId/{id}",produces = "application/json")
+    public ResponseEntity<RouteDTO> getUsersFavoriteRouteWithId(@PathVariable("id") String id) {
+        Route route = this.routeService.findById(Long.valueOf(id));
+        RouteDTO routeDTO = new RouteDTO(route);
+        return new ResponseEntity<>(routeDTO, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
     public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
@@ -198,10 +254,37 @@ public class RideController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+
+    @GetMapping(value = "/getUserDTSride/{email}")
+    public ResponseEntity<RideDTO> getUserDTSride(@PathVariable("email") String email)
+    {
+        RideDTO retVal = this.rideService.getUsersDTSride(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getUserInProgressRide/{email}")
+    public ResponseEntity<RideDTO> getUserInProgressRide(@PathVariable("email") String email)
+    {
+        RideDTO retVal = this.rideService.getUsersInProgresssRide(email);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+
     @GetMapping(value = "/changeRideState/{id}/{state}")
     public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
     {
+        // TODO mozda ovdje staviti da se svi obavjestavaju da je promijenjeno stanje
         this.rideService.changeRideState(id, state);
+        this.simpMessagingTemplate.convertAndSend("/map-updates/ride-status-changed", new StringDTO(state, id));
+    }
+
+    @GetMapping(value = "/acceptRideUser/{id}/{email}")
+    public ResponseEntity<StringDTO> acceptRideUser(@PathVariable("id") Long id, @PathVariable("email") String email)
+    {
+        boolean b = this.rideService.tryAcceptRideUser(id, email);
+        if (b) return new ResponseEntity<>(new StringDTO("OK"), HttpStatus.OK);
+        return new ResponseEntity<>(new StringDTO("NO_TOKENS"), HttpStatus.OK);
+
     }
 
     @GetMapping(value = "/user/history")

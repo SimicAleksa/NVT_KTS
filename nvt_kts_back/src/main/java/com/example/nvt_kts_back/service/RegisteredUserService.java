@@ -73,4 +73,18 @@ public class RegisteredUserService {
         registeredUserRepository.save(usr);
     }
 
+
+    public ArrayList<String> getMails() {
+        ArrayList<String> retVal = new ArrayList<>();
+        List<RegisteredUser> all = this.registeredUserRepository.findAll();
+        for (RegisteredUser r: all)
+        {
+            retVal.add(r.getEmail());
+        }
+        return retVal;
+    }
+
+    public void save(RegisteredUser ru) {
+        this.registeredUserRepository.save(ru);
+    }
 }

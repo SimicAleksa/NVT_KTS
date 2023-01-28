@@ -22,4 +22,9 @@ public class RouteService {
             throw new RouteDoesNotExistException();
         return route;
     }
+
+    public Route findById(Long routeID) {
+        return routeRepository.findById(routeID).orElse(null);
+    }
+
 }

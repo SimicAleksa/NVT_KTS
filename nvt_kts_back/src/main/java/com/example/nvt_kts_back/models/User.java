@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.models;
 
+import com.example.nvt_kts_back.DTOs.UserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,8 +33,10 @@ public class User implements UserDetails {
     private String phone;
     @Column
     private Boolean profileActivated;
+
     @Column
-    private String picture;
+    @Lob
+    private byte[] picture;
     @Column
     private Boolean isBlocked;
     @Column
@@ -43,7 +46,7 @@ public class User implements UserDetails {
     private Role role;
 
     public User(String email, String password, String name, String surname, String city, String phone,
-                Boolean profileActivated, String picture, Boolean isBlocked, Role role) {
+                Boolean profileActivated, byte[] picture, Boolean isBlocked, Role role) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -54,6 +57,10 @@ public class User implements UserDetails {
         this.picture = picture;
         this.isBlocked = isBlocked;
         this.role = role;
+    }
+    public User(UserDTO userDTO) {
+        this.email = userDTO.getEmail();
+        this.picture = userDTO.getPicture();
     }
 
     @Override

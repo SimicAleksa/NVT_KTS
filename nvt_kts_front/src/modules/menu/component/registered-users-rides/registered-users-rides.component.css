@@ -71,3 +71,8 @@ input {
 {
     display: none;
 }
+
+#waiting
+{
+    font-size: 17px;
+}

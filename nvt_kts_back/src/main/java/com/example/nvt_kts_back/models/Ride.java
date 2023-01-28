@@ -45,12 +45,17 @@ public class Ride {
     @Column
     private Long driver_id;
 
+    @Column
+    private String approvedBy;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="ride_passengers", joinColumns = @JoinColumn(name="ride_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="registered_user_id", referencedColumnName = "id"))
     private List<RegisteredUser> passengers;
 //    @OneToMany(mappedBy = "ride", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    private List<Review> reviews;
+
+
 
 
     @OneToOne(cascade = CascadeType.ALL)

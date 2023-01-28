@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
 import { ReportParam } from 'src/modules/app/model/reportParams';
@@ -10,6 +10,8 @@ import { RideService } from '../../services/ride.service';
   styleUrls: ['./admin-chart.component.css']
 })
 export class AdminChartComponent implements OnInit {
+
+  @Output() errSignal = new EventEmitter<string>();
 
   dateForm: FormGroup;
   data:Map<string, Map<string, number>>;
@@ -34,8 +36,19 @@ export class AdminChartComponent implements OnInit {
   ngOnInit(): void {
     
   }
+
+  emitError(errMessage: string): boolean {
+    this.errSignal.emit(errMessage);
+    return false;
+  }
+
+
   onSubmit()
   {
+    alert("Ovdje cu da prikazem");
+    this.emitError("Testiranje da li rade popupi");
+    //this.errSignal.emit(errMessage);
+
     if (this.myChartDistance)
     {
       this.myChartDistance.destroy();

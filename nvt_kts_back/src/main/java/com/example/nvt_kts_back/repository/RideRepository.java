@@ -37,7 +37,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
     List<Long> findDriversThatDrive();
 
 
-    @Query("select r from Ride r where r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START' or r.rideState='STARTED' or r.rideState='SCHEDULED' or r.rideState='RESERVED' and r.driver_id=?1 order by start_date_time")
+    @Query("select r from Ride r where r.driver_id=?1 and (r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START' or r.rideState='STARTED' or r.rideState='SCHEDULED' or r.rideState='RESERVED') order by start_date_time")
     ArrayList<Ride> findDriversUpcomingRides(Long id);
 
 

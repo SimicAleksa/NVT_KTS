@@ -34,8 +34,20 @@ public class ChangeProfileRequestController {
     @PostMapping(value="/saveChanges", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveChanges(@RequestBody ChangeProfileRequest dto)
     {
-        System.out.println("Primila sam korisnika i njegov mejl je " + dto.getEmail());
         this.changeProfileRequestService.saveRequest(dto);
     }
+
+    @PostMapping(value="/sendChangeRequest", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void sendChangeRequest(@RequestBody ChangeProfileRequest dto)
+    {
+        System.out.println("Primila sam korisnika i njegov mejl je " + dto.getEmail());
+        this.changeProfileRequestService.saveDriverRequest(dto);
+    }
+
+
+
+
+
+
 
 }

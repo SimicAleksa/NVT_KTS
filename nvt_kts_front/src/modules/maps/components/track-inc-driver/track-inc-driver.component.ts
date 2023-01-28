@@ -32,15 +32,12 @@ export class TrackIncDriverComponent implements OnInit {
   driver:Driver;
   ride:Ride;
   private stompClient: any;
+  username: string = "registrovani2@gmail.com";
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
-
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!!!!!!!!!!!!!!!!VOZAC JE ZAKUCAN DO NJEGA TREBA DOCI PREKO PUTNIKOVIH VOZNJI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     this.initializeWebSocketConnection();
-    this.mapService.getPassangersDrivingToStartRide("3").subscribe((ret) => {
+    this.mapService.getUsersDrivingTOStartEmail(this.username).subscribe((ret) => {
       this.ride=ret;
       let color = Math.floor(Math.random() * 16777215).toString(16);
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();

@@ -7,16 +7,74 @@ public class RideNotificationDTO {
     String startDateTime;
     double distance;
     String startLocation;
+    String endLocation;
     String state;
     String startLocationString;
+    String endLocationString;
     Long id;
+    String passengerEmail;
+
+    String approvedBy;
+
     public RideNotificationDTO(Ride r) {
         this.distance = r.getDistance();
         this.state = r.getRideState().toString();
-        this.startDateTime = r.getStartDateTime().toString();
+        this.startDateTime = setDateTimeIfExist(r);
+        this.endLocation = setEndLocationIfExist(r);
+        this.startLocation = setStartLocationIfExist(r);
+        this.startLocationString = "";
+        this.endLocationString = "";
+        this.id = r.getId();
+        this.approvedBy = r.getApprovedBy();
+    }
+
+    private String setEndLocationIfExist(Ride r) {
+        try{
+            return r.getRoute().getEndLocation().getLatitude() + "," + r.getRoute().getEndLocation().getLongitude();
+        }
+        catch (Exception e)
+        {
+            return ",";
+        }
+
+    }
+
+
+    private String setStartLocationIfExist(Ride r) {
+        try{
+            return r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        }
+        catch (Exception e)
+        {
+            return ",";
+        }
+    }
+
+
+
+    private String setDateTimeIfExist(Ride r) {
+        if(r.getStartDateTime()!=null){
+            return r.getStartDateTime().toString();
+        }
+        return "2035";
+    }
+
+    public RideNotificationDTO(Ride r, String email) {
+        this.distance = r.getDistance();
+        this.state = r.getRideState().toString();
         this.startLocation = r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        this.endLocation = r.getRoute().getEndLocation().getLatitude() + "," + r.getRoute().getEndLocation().getLongitude();
         this.startLocationString = "";
         this.id = r.getId();
+        this.setPassengerEmail(email);
+    }
+
+    public String getPassengerEmail() {
+        return passengerEmail;
+    }
+
+    public void setPassengerEmail(String passengerEmail) {
+        this.passengerEmail = passengerEmail;
     }
 
     public String getStartDateTime() {

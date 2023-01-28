@@ -3,7 +3,7 @@ import json
 
 from locust import HttpUser, task, between, events
 from random import randrange
-
+import sys
 
 #Ovo treba da se dobavi iz baze
 start_and_end_points = [
@@ -57,12 +57,18 @@ license_plates = [
     'NS-241-CC'
 ]
 
-counter = 1
+counter = -1
+numberOfDriversPerSimulation = 0 
+allDrivers = []
+indicesOfDrivers = []
 
 
 @events.test_start.add_listener
 def on_test_start(environment, **kwargs):
-    pass
+    allDrivers = requests.get('http://localhost:8000/api/drivers/getAllDrivers').json()
+    for driver in allDrivers:
+        indicesOfDrivers.append(driver['id'])
+    numberOfDriversPerSimulation = sys.argv[5]
     # requests.delete('http://localhost:8000/api/rides')
     # requests.delete('http://localhost:8000/api/drivers')
 
@@ -73,19 +79,14 @@ class QuickstartUser(HttpUser):
  
 
     def on_start(self):
-        global counter
-
-        print("USAO U STARTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
-
-        self.driver = self.client.get('/api/drivers/getDriver/'+str(counter)).json()
+        global counter        
+        counter+=1
+        self.driver = self.client.get('/api/drivers/getDriver/'+str(indicesOfDrivers[counter])).json()
         self.driverSTARTEDRide = self.client.get('/api/rides/getDriversSTARTEDRide/'+str(self.driver['id'])).json()
         self.driverINPROGRESSRide = self.client.get('/api/rides/getDriversINPROGRESSRide/'+str(self.driver['id'])).json()
-        if counter<3:
-            counter=counter+1
+
 
         if(self.driverSTARTEDRide['rideState']=="STARTED"):
-            print("Kreira VOznju za vozaca---")
-            print(self.driver)
             self.driving_to_start_point = True
             self.driving_the_route = False
             self.departure = (self.driver['currentCoords']['latitude'],self.driver['currentCoords']['longitude'])
@@ -115,11 +116,18 @@ class QuickstartUser(HttpUser):
     def update_vehicle_coordinates(self):
         if len(self.coordinates) > 0:
             new_coordinate = self.coordinates.pop(0)
-            print(new_coordinate)
             self.client.put(f"/api/drivers/updateDriverLocation/{self.driver['id']}", json={
                 'latitude':new_coordinate[1],
                 'longitude':new_coordinate[0]
             })
+            if(len(self.coordinates)==self.coordinatesOrgLen-1):
+                self.howMuchToRemovePerTick = self.duration/(len(self.coordinates)+1)
+            if(self.ride['rideState']=="DRIVING_TO_START"):
+                self.duration = self.duration - self.howMuchToRemovePerTick
+                self.client.put(f"/api/rides/updateDriverIncomingTimeForRide/{self.driver['id']}", json={
+                'expectedDuration':self.duration
+                })
+
         elif len(self.coordinates) == 0 and self.driving_to_start_point:
             self.end_ride()
             self.departure = self.destination
@@ -156,7 +164,7 @@ class QuickstartUser(HttpUser):
         else:
             brojac = 0
             for step in self.routeGeoJSON['coordinates']:
-                if(brojac%3==0):
+                if(brojac%2==0):
                     self.coordinates.append([step['lng'],step['lat']])
                 brojac=brojac+1
         
@@ -173,7 +181,7 @@ class QuickstartUser(HttpUser):
         else:
             brojac = 0
             for step in self.routeGeoJSON['coordinates']:
-                if(brojac%3==0):
+                if(brojac%2==0):
                     self.coordinates.append([step['lng'],step['lat']])
                 brojac=brojac+1
 
@@ -181,8 +189,12 @@ class QuickstartUser(HttpUser):
         response = requests.get(f'https://routing.openstreetmap.de/routed-car/route/v1/driving/{self.departure[1]},{self.departure[0]};{self.destination[1]},{self.destination[0]}?geometries=geojson&overview=false&alternatives=true&steps=true')
         self.routeGeoJSON = response.json()
         self.coordinates = []
+        self.duration=self.routeGeoJSON['routes'][0]['duration']
         for step in self.routeGeoJSON['routes'][0]['legs'][0]['steps']:
             self.coordinates = [*self.coordinates, *step['geometry']['coordinates']]
+        
+        self.coordinatesOrgLen = len(self.coordinates)
+
 
         self.route = {
             'routeJSON': json.dumps(self.routeGeoJSON),
@@ -200,7 +212,8 @@ class QuickstartUser(HttpUser):
         self.ride = self.client.post('/api/rides/createRide', json={
             'route': self.route,
             'rideState': 4,
-            'driver': self.driver['id']
+            'driver': self.driver['id'],
+            'expectedDuration':self.duration
         }).json()
 
     def end_ride(self):

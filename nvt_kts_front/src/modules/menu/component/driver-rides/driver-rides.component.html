@@ -24,13 +24,14 @@
                         <p>From: {{ride.startLocationString}}</p>
                     </div>
                     <div class="row">
-                        <div class="col-5">
-                            <p>At: {{ride.startDateTime}}h </p>
-                        </div>
-                        <div class="col-7">
-                            <p>distance: {{ride.distance}} km </p>
+                        <p>To: {{ride.endLocationString}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-11">
+                            <p>Started at: {{ride.startDateTime}}h </p>
                         </div>
                     </div>
+                    <!--
                     <div class="row">
                         <div class="col-6">
                         </div>
@@ -49,21 +50,22 @@
                             <button id="sendReasonBtn" class="btn btn-primary" (click)="sendReason(ride.id)" >Send</button>
                         </div>
                     </div>
+                    -->
                 </div>
            
-                <div class="container cardDiv" *ngIf="ride.state === 'SCHEDULED'">
+                <div class="container cardDiv" *ngIf="ride.state === 'STARTED'">
                     <div class="row">
-                        <label class="title-label">Upcoming ride</label>    
+                        <label class="title-label"> <i id="notificationIcon" class="bi bi-bell-fill"></i>  You have been assigned a new ride:</label>    
                     </div>
                     <div class="row">
                         <p>From:  {{ride.startLocationString}}</p>
                     </div>
                     <div class="row">
+                        <p>To: {{ride.endLocationString}}</p>
+                    </div>
+                    <div class="row">
                         <div class="col-5">
-                            <p>Starting at: {{ride.startDateTime}}h</p>
-                        </div>
-                        <div class="col-7">
-                            <p>distance:  {{ride.distance}} km </p>
+                            <p>Starting at: <label>Now</label></p>
                         </div>
                     </div>
                     <div class="row">
@@ -72,7 +74,7 @@
                         <div class="col-3">
                             <button class="btn btn-primary" (click)="start(ride.id)">Start</button>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <button class="btn btn-warning" (click)="report(ride.id)">Report!</button>
                         </div>
                     </div>
@@ -93,8 +95,13 @@
                     <div class="row">
                         <p>From: {{ride.startLocationString}}</p>
                     </div>
+                    
                     <div class="row">
-                        <div class="col-11">
+                        <p>To: {{ride.endLocationString}}</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
                             <p>Started at: {{ride.startDateTime}}h </p>
                         </div>
                     </div>
@@ -118,7 +125,6 @@
             <button id="toggleBtn" class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
                 <i id="buttonIcon" class="bi bi-arrow-left-square-fill fs-7" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
             </button>
-            <h3>Sample Content...</h3>
         </div>
     </div>
 </div>

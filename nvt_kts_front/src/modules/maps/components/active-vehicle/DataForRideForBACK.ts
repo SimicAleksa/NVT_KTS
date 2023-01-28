@@ -9,4 +9,6 @@ export interface DataForRideForBack{
     duration: number;
     price: number;
     reservedTime:string;
+    linkedPassengers: string[];
+    favoriteBoolean:boolean;
 }

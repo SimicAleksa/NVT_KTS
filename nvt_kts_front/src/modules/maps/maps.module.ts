@@ -14,6 +14,7 @@ import { SimpleRouteSearchComponent } from './components/simple-route-search/sim
 import { SimpleRoutesSearchPageComponent } from './pages/simple-routes-search-page/simple-routes-search-page.component';
 import { TrackIncDriverComponent } from './components/track-inc-driver/track-inc-driver.component';
 import { TrackRouteComponent } from './components/track-route/track-route.component';
+import { TempForQueryComponent } from './components/temp-for-query/temp-for-query.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TrackRouteComponent } from './components/track-route/track-route.compon
     SimpleRouteSearchComponent,
     SimpleRoutesSearchPageComponent,
     TrackIncDriverComponent,
-    TrackRouteComponent
+    TrackRouteComponent,
+    TempForQueryComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes),FormsModule,LeafletModule],
 })

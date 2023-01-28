@@ -1,10 +1,12 @@
 import { Component, OnInit,VERSION } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { MapLocation } from 'src/modules/app/model/mapLocation';
+import { UserDataService } from 'src/modules/user-data/services/user-data.service';
 import { Coord } from '../../components/active-vehicle/Coords';
 import { DataForRideForBack } from '../../components/active-vehicle/DataForRideForBACK';
 import { Route } from '../../components/active-vehicle/Route';
 import { MapService } from '../../services/map.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-routes-page',
@@ -17,6 +19,7 @@ export class SearchRoutesPageComponent implements OnInit {
   public selectedEndLocation!:MapLocation;
 
   public routeSelectedBoolean:boolean = false;
+  public didUserAlreadyOrder:boolean;
   public selectedRouteEmitedValue:any;
   public ListOfRoutes = [];
   public routeToOrded:any;
@@ -27,6 +30,7 @@ export class SearchRoutesPageComponent implements OnInit {
   public distanceOfRideString:string;
   public priceOfRideString:string;
   public routeToOrdedJSON:any;
+  public addedAsFavorite:boolean = false;
 
   public now: Date = new Date();  //minimuim
   public temp1: Date = new Date(); //maksimum
@@ -34,21 +38,124 @@ export class SearchRoutesPageComponent implements OnInit {
   public maxDate:string;
   public selectedDateTime:Date = new Date();
   public reservedCheckBoxChecked:boolean;
+  public quickOrdedWithFavorite:string="";
+  public quickOrdedWithFavoriteBoolean:boolean=false;
 
-
+  public userEmail:string = "registrovani2@gmail.com";
   carTypes: string[] = ["SUV", "HATCHBACK", "COUPE", "MINIVAN", "SEDAN", "VAN", "LIMOUSINE"];
 
-  constructor(private toastr: ToastrService, private mapService: MapService) { 
+  public emails: string[];
+  private selectedMails :string[]=[];
+
+  constructor(private toastr: ToastrService, private mapService: MapService,
+              private userService: UserDataService, private activRoute: ActivatedRoute) { 
     setInterval(() => {
       this.now = new Date();
     }, 1);
   }
 
   ngOnInit(): void {
+
+    this.activRoute.queryParams.subscribe(params => {
+      console.log(params['order']);
+      this.quickOrdedWithFavorite = params['order'];
+      if(this.quickOrdedWithFavorite!=="" && this.quickOrdedWithFavorite!==undefined){
+          this.quickOrdedWithFavoriteBoolean=true;
+          this.routeSelectedBoolean = true;
+          this.whenFavoriteIsSelected();
+      }
+      else{
+        this.quickOrdedWithFavoriteBoolean=false;
+      }
+    })
+      
+
+
+
+
+
+
     this.minDate= this.now.toISOString().slice(0,16)
     this.maxDate = new Date(this.temp1.setHours(this.temp1.getHours()+5)).toISOString().slice(0,16)
-    console.log(this.minDate)
-    console.log(this.maxDate)
+    this.userService.getAllRegisteredUsersMails().subscribe((response) => {
+      this.emails = <string[]>response;
+      this.emails = this.emails.filter(x => x !== this.userEmail);
+    });
+      this.userService.getUsersStateBasedOnHisRides(this.userEmail).subscribe((response) => {
+        this.didUserAlreadyOrder = response;
+    });
+  }
+
+  saveSelectedFruit(e:any) {
+    let fruitFromPage=e.target.value;
+    this.emails = this.emails.filter(x => x !== fruitFromPage);
+    this.tryToAddPassenger(String(fruitFromPage));
+    this.deleteInnerHTML();
+    
+  }
+
+  tryToAddPassenger(email: string)
+  {
+    if (this.selectedMails.length == 4)
+    {
+      this.showMessage();
+    }
+    else
+    {
+      this.selectedMails.push(String(email));
+      this.createDiv(email);  // DODALA JA
+      let msg = <HTMLInputElement> document.getElementById('maxLimitLbl');
+      msg.classList.add("maxLimitLbl");
+    }
+  }
+
+
+  showMessage()
+  {
+    let msg = <HTMLInputElement> document.getElementById('maxLimitLbl');
+    msg.classList.remove("maxLimitLbl");
+  }
+
+
+  deleteInnerHTML()
+  {
+    let input = <HTMLInputElement> document.getElementById('addLinkedInput');
+    input.value = "";
+  }
+
+  createDiv(value: string) {
+    let label = document.createElement('label');
+    label.setAttribute('class', 'locationName');
+    label.innerHTML = value;
+
+    let button = document.createElement('button');
+    button.setAttribute( 'type', 'button');
+    button.setAttribute('class', "btn-close");
+    button.setAttribute('area-label', "Close");
+    button.setAttribute("style", "width: 7px; height: 7px; padding-bottom: 0px; margin-bottom: 5px; margin-left: 5px;")
+    let that = this;
+    button.addEventListener("click", function(){that.deleteDiv(value)}, false);
+
+    let innerDiv = document.createElement('div');
+    innerDiv.appendChild(label);
+    innerDiv.appendChild(button);
+    let outerDiv = document.createElement('div');
+    outerDiv.setAttribute("class", "selectedStart row");
+    outerDiv.setAttribute("id", value);
+    outerDiv.setAttribute("style", "width: max-content; height:20px; border-radius: 8px; background-color: white;padding-left: 5px;margin: 5px; padding-top:2px")
+    outerDiv.appendChild(innerDiv);
+    let containingDiv = document.getElementById('addLinkedForm'); // DODALA JA
+    containingDiv?.appendChild(outerDiv);
+  }
+
+  deleteDiv(divId: string)
+  {
+    var element = document.getElementById(divId);
+    element?.parentNode?.removeChild(element);
+
+    this.emails.push(divId)
+    const index = this.selectedMails.indexOf(divId);
+    this.selectedMails.splice(index, 1);
   }
 
   recieveSentSelectedStartLocation(emitedValue: MapLocation){
@@ -81,6 +188,16 @@ export class SearchRoutesPageComponent implements OnInit {
     this.routeToOrded = this.selectedRouteEmitedValue.route;
     this.variableReset();
     this.variableSetUp();
+  }
+
+  whenFavoriteIsSelected(){
+    this.routeToOrded = //poziv naci u bazi taj nroute id ILI samo proslediti iz drugog dela
+    this.mapService.getUsersFavoriteRouteWithId(this.quickOrdedWithFavorite).subscribe((response) => {
+      this.routeToOrded = JSON.parse(response.routeJSON); 
+      console.log(JSON.parse(response.routeJSON))
+      this.variableReset();
+      this.variableSetUp();
+    });
   }
 
   changeRidePref(radioType:any): void{
@@ -198,7 +315,9 @@ export class SearchRoutesPageComponent implements OnInit {
       route: route,
       duration: 0,
       price: 0,
-      reservedTime:""
+      reservedTime:"",
+      linkedPassengers: this.selectedMails,
+      favoriteBoolean:false,
     }
     return sendIT;
   }
@@ -251,6 +370,7 @@ export class SearchRoutesPageComponent implements OnInit {
     this.startAndEndLocationForBack(sendIT);
     this.routeJsonSetUp(sendIT);
     this.setUpReservedTime(sendIT);
+
     if(sendIT.carTypes.length===0){
       this.toastr.warning("At least one type of vehicle must be checked");
     }
@@ -259,9 +379,26 @@ export class SearchRoutesPageComponent implements OnInit {
       this.toastr.warning("You can only reserve 5h upfront");
     }
     else{
-      console.log(sendIT);
+      sendIT.linkedPassengers.push(this.userEmail);
+      sendIT.favoriteBoolean = this.addedAsFavorite;
       this.mapService.saveRide(sendIT);
+
+      sendIT.linkedPassengers.pop();
+      this.routeSelectedBoolean = false;
+      this.userService.getUsersStateBasedOnHisRides(this.userEmail).subscribe((response) => {
+        this.didUserAlreadyOrder = response;
+      });
+      this.toastr.success("Successfully ordered");
     }
-    // console.log(sendIT);
+    console.log(sendIT);
+  }
+
+  addToFavoriteRoute(){
+    if(this.addedAsFavorite){
+      this.addedAsFavorite = false;
+    }
+    else{
+      this.addedAsFavorite = true;
+    }
   }
 }

@@ -12,5 +12,5 @@ public class FBLoginDTO {
     private String authToken;
     private String name;
     private String surname;
-    private String picturePath;
+    private byte[] picturePath;
 }
