@@ -36,11 +36,17 @@ public class UserController {
     @PostMapping("/imgUploadPROBA")
     public ResponseEntity.BodyBuilder imgUploadPROBA(@RequestParam("imageFile") MultipartFile file) throws IOException {
         System.out.println(file.getBytes());
-        User tem = new User(this.userService.findDTOByEmail("registrovani1@gmail.com"));
+        User tem = this.userService.findById(4l);
         tem.setPicture(compressBytes(file.getBytes()));
-        tem.setRole(new Role(Settings.USER_ROLE_NAME));
-        tem.setIsBlocked(false);
-        tem.setProfileActivated(true);
+//        tem.setRole(new Role(Settings.USER_ROLE_NAME));
+//        tem.setIsBlocked(false);
+//        tem.setProfileActivated(true);
+//        tem.setName("DJURO");
+//        tem.setPassword("SIFRAS");
+//        tem.setNote("NOTE");
+//        tem.setPhone("31232132");
+//        tem.setCity("SABC");
+//        tem.setSurname("AAAAAic");
         this.userService.save(tem);
         return ResponseEntity.status(HttpStatus.OK);
     }
@@ -64,8 +70,8 @@ public class UserController {
 
 
     @GetMapping("/imgUploadPROBAGET")
-    public User imgUploadPROBA() {
-        User user = this.userService.findById(7l);
+    public UserDTO imgUploadPROBA() {
+        UserDTO user =  new UserDTO(this.userService.findById(4l));
         user.setPicture(decompressBytes(user.getPicture()));
         return user;
     }

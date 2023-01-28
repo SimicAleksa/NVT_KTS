@@ -17,6 +17,9 @@ export class EditProfileComponent implements OnInit {
   modalForm: FormGroup;
   username: string;
   userData: User;
+  retrievedImage: any;
+  selectedFile: File;
+  isNewPictureSelected:boolean=false;
 
 
   constructor(
@@ -31,7 +34,7 @@ export class EditProfileComponent implements OnInit {
 
 
    displayStyle = "none";
-  
+
   openPopup() {
     this.displayStyle = "block";
   }
@@ -39,7 +42,7 @@ export class EditProfileComponent implements OnInit {
     this.displayStyle = "none";
   }
 
- 
+
    createForm() {
     this.editForm = this.fb.group({
       name: ["", [Validators.required, Validators.minLength(2)]],
@@ -76,7 +79,20 @@ export class EditProfileComponent implements OnInit {
     this.editForm.controls['password'].disable();
     this.editForm.controls['city'].disable();
     this.editForm.controls['phone'].disable();
+
   }
+
+  onFileChanged(event:any){
+    this.selectedFile = event.target.files[0];
+    this.isNewPictureSelected=true;
+  }
+
+  onChangePicture(){
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    this.userDataService.saveChangedImage(uploadImageData,this.username);
+  }
+
 
   nameChanged()
   {
@@ -93,7 +109,7 @@ export class EditProfileComponent implements OnInit {
     this.editForm.controls['email'].enable();
   }
 
- 
+
   cityChanged()
   {
     this.editForm.controls['city'].enable();
@@ -112,32 +128,31 @@ export class EditProfileComponent implements OnInit {
   onSubmit()
   {
     this.changePasswordIfEntered();
-    this.changeEnteredData(); 
+    this.changeEnteredData();
+    if(this.isNewPictureSelected){
+      this.onChangePicture()
+    }
   }
-
   changeEnteredData() {
     let name: string = this.editForm.get("name")?.value ? this.editForm.get("name")?.value :  this.userData.name;
     let surname: string = this.editForm.get("surname")?.value ? this.editForm.get("surname")?.value :  this.userData.surname;
     let city: string = this.editForm.get("city")?.value ? this.editForm.get("city")?.value :  this.userData.city;
     let phone: string = this.editForm.get("phone")?.value ? this.editForm.get("phone")?.value :  this.userData.phone;
-   
+
     let c: ChangeProfileRequest = {name: name, surname: surname, email: this.username, picture: "", city: city, phone: phone, carType: "",
       petAllowed: false, babyAllowed: true, note:"", tokens: 0, blocked: false, password:""};
     this.userDataService.saveUserChanges(c);
 
   }
 
-  changePasswordIfEntered()
-  {
-    if (this.modalForm.get("editPassword")!.value!="")
-    {
+  changePasswordIfEntered() {
+    if (this.modalForm.get("editPassword")!.value != "") {
       let l: ChangePassword = {password: this.modalForm.get("editPassword")!.value, username: this.username}
       this.userDataService.sendChangePasswordRequest(l);
     }
+
+
   }
-
-  
-
 
   onModalSubmit()
   {
@@ -150,7 +165,7 @@ export class EditProfileComponent implements OnInit {
   setInitialValues() {
     //let u: User = this.userDataService.getUserData(this.username);
     this.userDataService.getUserData(this.username).subscribe((response) => {
-      this.userData = response;      
+      this.userData = response;
       this.editForm.get("name")?.setValue(this.userData.name);
       this.editForm.get("surname")?.setValue(this.userData.surname);
       this.editForm.get("email")?.setValue(this.userData.email);
@@ -158,10 +173,15 @@ export class EditProfileComponent implements OnInit {
       this.editForm.get("city")?.setValue(this.userData.city);
       this.editForm.get("phone")?.setValue(this.userData.phone);
       document.getElementById("tokensLbl")!.innerHTML = this.userData.tokens.toString() + " ";
-      
+
+      console.log(response)
+      var retrieveResonse = response;
+      var base64Data = retrieveResonse.picture;
+      this.retrievedImage = 'data:image/jpeg;base64,' + base64Data;
+
     });
-    
-    
+
+
   }
 
 }
