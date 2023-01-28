@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class RegUserForReviewDTO {
     private String name;
     private String surname;
-    private String picture;
+    private byte[] picture;
 
 }

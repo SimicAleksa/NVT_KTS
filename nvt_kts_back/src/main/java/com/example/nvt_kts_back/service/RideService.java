@@ -5,11 +5,7 @@ import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
-import com.example.nvt_kts_back.models.DataForRideFromFrom;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.Ride;
-import com.example.nvt_kts_back.models.RegisteredUser;
-import com.example.nvt_kts_back.models.User;
+import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import com.example.nvt_kts_back.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.lang.reflect.Array;
 import java.sql.SQLOutput;
@@ -24,6 +21,9 @@ import java.util.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
+
+import static com.example.nvt_kts_back.service.DriverService.findActiveMinutes;
 
 @Service
 public class RideService {
@@ -46,8 +46,6 @@ public class RideService {
     @Autowired
     private DataForRideFromFromRepository dataForRideFromFromRepository;
 
-    @Autowired
-    private DriverService driverService;
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
@@ -301,13 +299,15 @@ public class RideService {
     {
         for (Driver d : this.driverRepository.findAll())
         {
-            if (this.driverService.findActiveMinutes(d.getActiveTime())>480)
+            if (findActiveMinutes(d.getActiveTime())>480)
             {
                 d.setActive(false);
                 this.driverRepository.save(d);
             }
         }
     }
+
+
 
     private Driver findAnyDriver(DataForRideFromFrom rideDTO) {
         ArrayList<Driver> activeFilteredDrivers = findActiveFilteredDrivers(rideDTO);

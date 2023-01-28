@@ -11,5 +11,5 @@ public class RegUserInfoForRideHistoryDTO {
     private String name;
     private String surname;
     private String phone;
-    private String picture;
+    private byte[] picture;
 }

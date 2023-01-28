@@ -13,7 +13,7 @@ public class DriverInfoForRideHistoryDTO {
     private String name;
     private String surname;
     private String phone;
-    private String picture;
+    private byte[] picture;
     private CarType carType;
     private Boolean babyAllowed;
     private Boolean petAllowed;

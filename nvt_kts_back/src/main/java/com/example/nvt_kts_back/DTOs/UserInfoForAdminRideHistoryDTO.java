@@ -15,7 +15,7 @@ public class UserInfoForAdminRideHistoryDTO {
     private String surname;
     private String city;
     private String phone;
-    private String picture;
+    private byte[] picture;
     private Boolean isBlocked;
     private String role;
 }

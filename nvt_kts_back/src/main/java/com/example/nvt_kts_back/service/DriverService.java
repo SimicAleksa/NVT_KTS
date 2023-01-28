@@ -66,7 +66,7 @@ public class DriverService {
 
     }
 
-    public long findActiveMinutes(List<TimeSpan> spans) {
+    public static long findActiveMinutes(List<TimeSpan> spans) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime dayBefore = now.minusDays(1);
         long result = 0;
