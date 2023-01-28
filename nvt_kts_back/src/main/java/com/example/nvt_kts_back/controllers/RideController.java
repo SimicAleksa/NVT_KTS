@@ -2,19 +2,13 @@ package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.enumerations.RideState;
-import com.example.nvt_kts_back.models.Coord;
-import com.example.nvt_kts_back.models.Ride;
-import com.example.nvt_kts_back.models.Route;
-import com.example.nvt_kts_back.service.CoordService;
-import com.example.nvt_kts_back.service.DriverService;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.service.RouteService;
+import com.example.nvt_kts_back.models.*;
+import com.example.nvt_kts_back.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-import com.example.nvt_kts_back.service.RideService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +35,9 @@ public class RideController {
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private DataForRideFromFromService dataForRideFromFromService;
 
     public RideController(RideService rideService, SimpMessagingTemplate simpMessagingTemplate){
         this.rideService = rideService;
@@ -83,6 +80,12 @@ public class RideController {
         }
 
         this.rideService.saveRide(ride);
+        // TODO ovdje treba obavijestiti sve uvezane da se desila voznja
+        this.simpMessagingTemplate.convertAndSend("/map-updates/new-waiting-for-payment", new StringDTO());
+
+        DataForRideFromFrom dataForRide = new DataForRideFromFrom(dto, ride.getId());
+        //System.out.println("ID VOZNJE KOJA JE SADA UBACENA JEEE" + ride.getId());
+        this.dataForRideFromFromService.save(dataForRide);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -208,7 +211,18 @@ public class RideController {
     @GetMapping(value = "/changeRideState/{id}/{state}")
     public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
     {
+        // TODO mozda ovdje staviti da se svi obavjestavaju da je promijenjeno stanje
         this.rideService.changeRideState(id, state);
+        this.simpMessagingTemplate.convertAndSend("/map-updates/ride-status-changed", new StringDTO(state, id));
+    }
+
+    @GetMapping(value = "/acceptRideUser/{id}/{email}")
+    public ResponseEntity<StringDTO> acceptRideUser(@PathVariable("id") Long id, @PathVariable("email") String email)
+    {
+        boolean b = this.rideService.tryAcceptRideUser(id, email);
+        if (b) return new ResponseEntity<>(new StringDTO("OK"), HttpStatus.OK);
+        return new ResponseEntity<>(new StringDTO("NO_TOKENS"), HttpStatus.OK);
+
     }
 
 }

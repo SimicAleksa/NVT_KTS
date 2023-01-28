@@ -7,17 +7,25 @@ public class RideNotificationDTO {
     String startDateTime;
     double distance;
     String startLocation;
+    String endLocation;
     String state;
     String startLocationString;
+    String endLocationString;
     Long id;
     String passengerEmail;
+
+    String approvedBy;
+
     public RideNotificationDTO(Ride r) {
         this.distance = r.getDistance();
         this.state = r.getRideState().toString();
         this.startDateTime = setDateTimeIfExist(r);
         this.startLocation = r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        this.endLocation = r.getRoute().getEndLocation().getLatitude() + "," + r.getRoute().getEndLocation().getLongitude();
         this.startLocationString = "";
+        this.endLocationString = "";
         this.id = r.getId();
+        this.approvedBy = r.getApprovedBy();
     }
 
     private String setDateTimeIfExist(Ride r) {
@@ -31,9 +39,11 @@ public class RideNotificationDTO {
         this.distance = r.getDistance();
         this.state = r.getRideState().toString();
         this.startLocation = r.getRoute().getStartLocation().getLatitude() + "," + r.getRoute().getStartLocation().getLongitude();
+        this.endLocation = r.getRoute().getEndLocation().getLatitude() + "," + r.getRoute().getEndLocation().getLongitude();
         this.startLocationString = "";
         this.id = r.getId();
         this.setPassengerEmail(email);
+        this.approvedBy = r.getApprovedBy();
     }
 
     public String getPassengerEmail() {
@@ -90,5 +100,29 @@ public class RideNotificationDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEndLocation() {
+        return endLocation;
+    }
+
+    public void setEndLocation(String endLocation) {
+        this.endLocation = endLocation;
+    }
+
+    public String getEndLocationString() {
+        return endLocationString;
+    }
+
+    public void setEndLocationString(String endLocationString) {
+        this.endLocationString = endLocationString;
+    }
+
+    public String getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(String approvedBy) {
+        this.approvedBy = approvedBy;
     }
 }

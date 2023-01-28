@@ -9,7 +9,7 @@ public class RegisteredUserDTO {
     private String name;
     private String surname;
     private String email;
-    private String picture;
+    private byte[] picture;
 
     private String city;
     private String phone;
@@ -66,11 +66,11 @@ public class RegisteredUserDTO {
         this.surname = surname;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 

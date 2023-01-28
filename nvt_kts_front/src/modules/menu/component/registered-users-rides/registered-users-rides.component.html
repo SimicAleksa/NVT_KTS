@@ -1,3 +1,4 @@
+
 <div class="offcanvas offcanvas-end w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
     <div class="offcanvas-header">
         <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas">My rides</h6>
@@ -14,6 +15,9 @@
                     </div>
                     <div class="row">
                         <p>From: {{ride.startLocationString}}</p>
+                    </div>
+                    <div class="row">
+                        <p>To: {{ride.endLocationString}}</p>
                     </div>
                     <div class="row">
                         <div class="col-11">
@@ -38,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="container cardDiv" *ngIf="ride.state === 'DRIVING_TO_START'">
+                <div class="container cardDiv" *ngIf="ride.state === 'STARTED'">
                     <div class="row">
                         <label class="title-label">Upcoming ride</label>    
                     </div>
@@ -46,9 +50,7 @@
                         <p>From: {{ride.startLocationString}}</p>
                     </div>
                     <div class="row">
-                        <div class="col-11">
-                            <p>Started at: {{ride.startDateTime}}h </p>
-                        </div>
+                        <p>To: {{ride.endLocationString}}</p>
                     </div>
                     <div class="row">
                         <div class="col-4">
@@ -59,12 +61,15 @@
                     </div>
                 </div>
 
-                <div class="container cardDiv" *ngIf="ride.state === 'SCHEDULED' || ride.state === 'RESERVED'">
+                <div class="container cardDiv" *ngIf="ride.state === 'RESERVED'">
                     <div class="row">
                         <label class="title-label">Reserved ride</label>    
                     </div>
                     <div class="row">
                         <p>From: {{ride.startLocationString}}</p>
+                    </div>
+                    <div class="row">
+                        <p>To: {{ride.endLocationString}}</p>
                     </div>
                     <div class="row">
                         <div class="col-11">
@@ -74,7 +79,7 @@
                     
                 </div>
 
-                <div class="container cardDiv" *ngIf="ride.state === 'WAITING_FOR_PAYMENT'">
+                <div class="container cardDiv" *ngIf="ride.state === 'WAITING_FOR_PAYMENT' && alreadyApproved(ride)">
                     <div class="row">
                         <label class="title-label"> <i id= "notificationIcon" class="bi bi-hourglass-split"></i> Pending rides</label>    
                     </div>
@@ -82,16 +87,44 @@
                         <p>From: {{ride.startLocationString}}</p>
                     </div>
                     <div class="row">
-                        <div class="col-11">
-                            <p>Started at: {{ride.startDateTime}}h </p>
-                        </div>
+                        <p>To: {{ride.endLocationString}}</p>
+                    </div>
+                    <div class="row" *ngIf="ride.startDateTime!='TBD'">
+                        <p>At: {{ride.startDateTime}}</p>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <p>  Waiting for ride to be approved</p>
+                            <label id="waiting">  Waiting for ride to be approved...</label>
                         </div>
                     </div>
                 </div>
+
+                <div class="container cardDiv" *ngIf="ride.state === 'WAITING_FOR_PAYMENT' && !alreadyApproved(ride)">
+                    <div class="row">
+                        <label class="title-label"> <i id= "notificationIcon" class="bi bi-bell-fill" style="color: orange;"></i> You have a new ride</label>    
+                    </div>
+                    <div class="row">
+                        <p>From: {{ride.startLocationString}}</p>
+                    </div>
+                    <div class="row">
+                        <p>To: {{ride.endLocationString}}</p>
+                    </div>
+                    <div class="row" *ngIf="ride.startDateTime!='TBD'">
+                        <p>At: {{ride.startDateTime}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-success" (click)="acceptRide(ride.id)"> Accept </button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-danger" (click)="rejectRide(ride.id)"> Reject </button>
+                        </div>
+                    </div>
+                </div>
+
+
             </li>
         </ul>
         </div>
@@ -104,7 +137,6 @@
             <button id="toggleBtn" class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
                 <i id="buttonIcon" class="bi bi-arrow-left-square-fill fs-7" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
             </button>
-            <h3>Sample Content...</h3>
         </div>
     </div>
 </div>

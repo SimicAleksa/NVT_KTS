@@ -111,8 +111,37 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit()
   {
-    alert("Vasi podaci su sacuvani");
+    let picture: number[] = this.findPictureBytes();
+    /*var reader = new FileReader();
+    var fileByteArray = [];
+    reader.readAsArrayBuffer(myFile);
+    reader.onloadend = function (evt) {
+        if (evt.target?.readyState == FileReader.DONE) {
+          var arrayBuffer = evt.target.result,
+              array = new Uint8Array(arrayBuffer);
+          for (var i = 0; i < array.length; i++) {
+              fileByteArray.push(array[i]);
+            }
+        }
+    }*/
+
   }
+
+  findPictureBytes(): number[] {
+    
+    let inp : HTMLInputElement = document.querySelector("#files")!;
+    let value: string = inp.value;
+    let root: string[] = value.split("\\");
+    let size: number = root.length;
+    let full: string = "C:\\Users\\Nevena\\Desktop\\" + root.at(size - 1);
+    alert("Putanja bi trebalo da je " + full);
+   
+    
+
+  }
+
+  
+
 
   onModalSubmit()
   {

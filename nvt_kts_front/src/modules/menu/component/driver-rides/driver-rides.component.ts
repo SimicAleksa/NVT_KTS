@@ -16,7 +16,7 @@ import { UserDataService } from 'src/modules/user-data/services/user-data.servic
 })
 export class DriverRidesComponent implements OnInit {
 
-  username: string = "djura@gmail.com";
+  username: string = "zima@gmail.com";
   driverRides: RideForNotification[];
 
   constructor(
@@ -55,7 +55,14 @@ export class DriverRidesComponent implements OnInit {
     {
       let datetime: string = ride.startDateTime;
       let lista:string[] = datetime.split("T");
-      ride.startDateTime = lista[1].slice(0, 5);
+      if(ride.state==="IN_PROGRESS" || ride.state==="RESERVED")
+        ride.startDateTime = lista[1].slice(0, 5);
+      else if (ride.state =='WAITING_FOR_PAYMENT' && ride.startDateTime!="2035") 
+      {
+        ride.startDateTime = lista[1].slice(0, 5) + " " + lista[0];
+      }
+      else
+        ride.startDateTime = "TBD"
     }
   }
 
@@ -72,21 +79,22 @@ export class DriverRidesComponent implements OnInit {
     // nakon sto smo prijavili da nismo zapoceli voznju, treba tu voznju obrisati iz baze (i sa slike)
     this.setRideStatus(id, "DECLINED");
     this.rideService.changeRideState(id, "DECLINED");
+    // TODO mozda poslati svima da je voznja odbijena
   }
 
   start(id:number)
   {
     this.setRideStatus(id, "IN_PROGRESS");
-
+    this.rideService.changeRideState(id, "IN_PROGRESS");
   }
 
   end(id:number)
   {
     this.setRideStatus(id, "ENDED");
-
+    this.rideService.changeRideState(id, "ENDED");
   }
 
-  accept(id:number)
+  /*accept(id:number)
   {
     this.setRideStatus(id, "SCHEDULED");
     // ovdje treba voznji postaviti status u started ili tako nesot 
@@ -97,7 +105,7 @@ export class DriverRidesComponent implements OnInit {
     const e = document.getElementById("reasonDiv-" + id);
     e?.classList.remove("reasonDiv");
 
-  }
+  }*/
 
   sendReason(id: number)
   {
@@ -135,6 +143,13 @@ export class DriverRidesComponent implements OnInit {
         //let r: RideForNotification = that.driverRides.at(i)!;
         ride.startLocationString = rezultat;
         //that.driverRides.splice(i, 0, r);
+          } 
+      );
+      geocoder.geocode(ride.endLocation, function(results: any) {
+        let k : string = results[0]["name"];
+        let l: string [] = k.split(',');
+        let rezultat: string = l[0] + "," + l[1] + "," + l[2]; 
+        ride.endLocationString = rezultat;
           } 
       );
     }

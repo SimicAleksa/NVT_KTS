@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class NvtKtsBackApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(NvtKtsBackApplication.class, args);
 //        String str1 = "23.01.2023. 12:30";
 //        String str2 = "03.02.2023.";

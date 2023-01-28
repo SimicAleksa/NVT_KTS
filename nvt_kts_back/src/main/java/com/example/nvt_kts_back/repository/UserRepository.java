@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Modifying
     @Query("update User u set u.name=?2, u.surname=?3, u.picture=?4, u.city=?5, u.phone=?6 where u.email =?1")
-    void updatePersonalData(String email, String name, String surname, String picture, String city, String phone);
+    void updatePersonalData(String email, String name, String surname, byte[] picture, String city, String phone);
 
 
     @Query("select u.note from User u where u.email =?1")

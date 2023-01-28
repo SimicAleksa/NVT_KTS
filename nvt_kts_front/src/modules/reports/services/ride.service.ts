@@ -18,6 +18,7 @@ export class RideService {
   private driverNotificationRidesURL: string;
   private userNotificationRidesURL: string;
   private changeRideStateURL: string;
+  private acceptRideURL: string;
 
 
   constructor(private http: HttpClient) { 
@@ -28,6 +29,7 @@ export class RideService {
     this.driverNotificationRidesURL = "api/rides/getDriverNotificationRides/";
     this.userNotificationRidesURL = "api/rides/getUserNotificationRides/";
     this.changeRideStateURL = "api/rides/changeRideState/";
+    this.acceptRideURL = "api/rides/acceptRideUser/";
   }
 
 
@@ -73,5 +75,17 @@ export class RideService {
       responseType: "json",      
     }).subscribe(() => {
     });
+  }
+
+  // ova funkcija ca prvo da proveri da li korisnik ima dovoljno tokena
+  // ako nema, vraca  notokens
+  // ako ima vraca ok
+
+  acceptRideUser(id: number, username: string) {
+    return this.http.get(this.acceptRideURL + id + "/" + username, {
+      headers: this.headers,
+      responseType: "json",
+    });
+
   }
 }

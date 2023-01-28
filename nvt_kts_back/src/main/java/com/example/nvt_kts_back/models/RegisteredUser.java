@@ -28,7 +28,7 @@ public class RegisteredUser extends User {
 
 
     public RegisteredUser(String email, String password, String name, String surname, String city, String phone,
-                          Boolean profileActivated, String picture, Boolean isBlocked, Role role, Boolean isBusy) {
+                          Boolean profileActivated, byte[] picture, Boolean isBlocked, Role role, Boolean isBusy) {
         super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked, role);
         this.isBusy = isBusy;
         this.favouriteRoutes = new ArrayList<>();
@@ -37,7 +37,7 @@ public class RegisteredUser extends User {
     }
 
     public RegisteredUser(ChangeProfileRequest c) {
-        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, "", false,new Role(Settings.USER_ROLE_NAME));
+        super(c.getEmail(), c.getPassword(), c.getName(), c.getSurname(), c.getCity(), c.getPhone(), false, new byte[]{}, false,new Role(Settings.USER_ROLE_NAME));
         this.isBusy = false;
     }
 }

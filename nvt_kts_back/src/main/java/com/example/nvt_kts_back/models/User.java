@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @Column
     private Boolean profileActivated;
     @Column
-    private String picture;
+    private byte[] picture;
     @Column
     private Boolean isBlocked;
 
@@ -43,7 +43,7 @@ public class User implements UserDetails {
     private Role role;
 
     public User(String email, String password, String name, String surname, String city, String phone,
-                Boolean profileActivated, String picture, Boolean isBlocked, Role role) {
+                Boolean profileActivated, byte[] picture, Boolean isBlocked, Role role) {
         this.email = email;
         this.password = password;
         this.name = name;

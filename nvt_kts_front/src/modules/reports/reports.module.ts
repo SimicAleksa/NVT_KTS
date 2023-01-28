@@ -9,22 +9,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisteredUserPageComponent } from './pages/registered-user-page/registered-user-page.component';
 import { AdminReportPageComponent } from './pages/admin-report-page/admin-report-page.component';
 import { AdminChartComponent } from './components/admin-chart/admin-chart.component';
+import { PopUpModule } from "../pop-up/pop-up.module";
 
 
 
 @NgModule({
-  declarations: [
-    DriverChartComponent,
-    RegisteredUserChartComponent,
-    DriverReportPageComponent,
-    RegisteredUserPageComponent,
-    AdminReportPageComponent,
-    AdminChartComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes)
-  ]
+    declarations: [
+        DriverChartComponent,
+        RegisteredUserChartComponent,
+        DriverReportPageComponent,
+        RegisteredUserPageComponent,
+        AdminReportPageComponent,
+        AdminChartComponent
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes),
+        PopUpModule
+    ]
 })
 export class ReportsModule { }
