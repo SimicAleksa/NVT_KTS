@@ -19,6 +19,9 @@ export class EditProfileComponent implements OnInit {
   userData: User;
   changeProfileRequest: ChangeProfileRequest;
   changePassword: ChangePassword;
+  retrievedImage: any;
+  selectedFile: File;
+  isNewPictureSelected:boolean=false;
 
 
   constructor(
@@ -71,6 +74,7 @@ export class EditProfileComponent implements OnInit {
     return null;
 }
 
+
   ngOnInit(): void {
     this.editForm.controls['name'].disable();
     this.editForm.controls['surname'].disable();
@@ -78,7 +82,20 @@ export class EditProfileComponent implements OnInit {
     this.editForm.controls['password'].disable();
     this.editForm.controls['city'].disable();
     this.editForm.controls['phone'].disable();
+
   }
+
+  onFileChanged(event:any){
+    this.selectedFile = event.target.files[0];
+    this.isNewPictureSelected=true;
+  }
+
+  onChangePicture(){
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    this.userDataService.saveChangedImage(uploadImageData,this.username);
+  }
+
 
   nameChanged()
   {
@@ -117,10 +134,11 @@ export class EditProfileComponent implements OnInit {
     this.changePassword = this.modalForm.value;
     this.changePassword.username = this.username;
     this.userDataService.sendChangeRequest(this.changeProfileRequest);
-    this.userDataService.sendChangePasswordRequest(this.changePassword);
+    this.userDataService.sendChangePasswordRequest(this.changePassword); 
 
-    
-   
+    if(this.isNewPictureSelected){
+      this.onChangePicture()
+    }
   }
 
 
@@ -145,6 +163,11 @@ export class EditProfileComponent implements OnInit {
       this.editForm.get("city")?.setValue(this.userData.city);
       this.editForm.get("phone")?.setValue(this.userData.phone);
       document.getElementById("tokensLbl")!.innerHTML = this.userData.tokens.toString() + " ";
+
+      console.log(response)
+      var retrieveResonse = response;
+      var base64Data = retrieveResonse.picture;
+      this.retrievedImage = 'data:image/jpeg;base64,' + base64Data;
       
     });
     

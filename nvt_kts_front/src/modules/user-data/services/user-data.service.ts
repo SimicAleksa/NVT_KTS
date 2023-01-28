@@ -167,7 +167,6 @@ export class UserDataService {
       responseType: "json",      
     })
   }
-
   getUsersStateBasedOnHisRides(userEmail:string): Observable<boolean>{
     return this.http.get<boolean>("api/registeredUsers/getUserStateBasedOnRide/"+userEmail)
   }
@@ -179,6 +178,14 @@ export class UserDataService {
     }).subscribe(() => {
     });
   }
+
+  saveChangedImage(uploadImageData: FormData,userEmail:string) {
+    this.http.post('api/registeredUsers/imgUploadPROBA/'+userEmail, uploadImageData)
+    .subscribe((response) => {
+    
+    });
+  }
+
 
   sendChangePasswordRequest(pass: ChangePassword) {
     this.http.post(this.sendChangePasswordRequestURL, pass, {

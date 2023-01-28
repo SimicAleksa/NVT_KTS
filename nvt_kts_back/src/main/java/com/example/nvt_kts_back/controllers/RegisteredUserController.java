@@ -13,11 +13,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.nvt_kts_back.service.RegisteredUserService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.stream.events.EntityReference;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 @RestController
 @RequestMapping("api/registeredUsers")
@@ -39,7 +45,49 @@ public class RegisteredUserController {
     public ResponseEntity<RegisteredUserDTO> getUserData(@PathVariable("email") String email) {
         RegisteredUser r = registeredUserService.getByEmail(email);
         RegisteredUserDTO u = new RegisteredUserDTO(r);
+        u.setPicture(decompressBytes(u.getPicture()));
         return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+    public static byte[] decompressBytes(byte[] data) {
+        Inflater inflater = new Inflater();
+        inflater.setInput(data);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] buffer = new byte[1024];
+        try {
+            while (!inflater.finished()) {
+                int count = inflater.inflate(buffer);
+                outputStream.write(buffer, 0, count);
+            }
+            outputStream.close();
+        } catch (IOException | DataFormatException ignored) {
+        }
+        return outputStream.toByteArray();
+    }
+
+    @PostMapping("/imgUploadPROBA/{email}")
+    public ResponseEntity.BodyBuilder imgUploadPROBA(@RequestParam("imageFile") MultipartFile file,@PathVariable("email") String email) throws IOException {
+        RegisteredUser tem = this.registeredUserService.getByEmail(email);
+        tem.setPicture(compressBytes(file.getBytes()));
+        this.registeredUserService.save(tem);
+        return ResponseEntity.status(HttpStatus.OK);
+    }
+
+    public static byte[] compressBytes(byte[] data) {
+        Deflater deflater = new Deflater();
+        deflater.setInput(data);
+        deflater.finish();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] buffer = new byte[1024];
+        while (!deflater.finished()) {
+            int count = deflater.deflate(buffer);
+            outputStream.write(buffer, 0, count);
+        }
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+        }
+        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+        return outputStream.toByteArray();
     }
 
     @GetMapping("/addTokens/{email}/{value}")
