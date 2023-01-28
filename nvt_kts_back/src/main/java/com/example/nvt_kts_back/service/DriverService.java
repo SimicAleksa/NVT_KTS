@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.models.Driver;
+import com.example.nvt_kts_back.models.RegisteredUser;
 import com.example.nvt_kts_back.models.TimeSpan;
 import com.example.nvt_kts_back.repository.RideRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
@@ -128,5 +129,13 @@ public class DriverService {
 
     public Driver findByEmail(String email) {
         return this.driverRepository.findByEmail(email);
+    }
+
+    public Driver getByEmail(String email) {
+        return this.driverRepository.findByEmail(email);
+    }
+
+    public void save(Driver tem) {
+        this.driverRepository.save(tem);
     }
 }

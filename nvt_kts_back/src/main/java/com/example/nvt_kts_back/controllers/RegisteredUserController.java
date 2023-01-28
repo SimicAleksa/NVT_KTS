@@ -48,6 +48,7 @@ public class RegisteredUserController {
         u.setPicture(decompressBytes(u.getPicture()));
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
+
     public static byte[] decompressBytes(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);

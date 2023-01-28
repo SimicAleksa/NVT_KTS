@@ -24,6 +24,7 @@ public class ChangeProfileRequest {
     @Column
     private String phone;
 
+    @Lob
     @Column
     private byte[] picture;
 

@@ -19,6 +19,10 @@ export class EditProfileDriverComponent implements OnInit {
   username: string;
   driverData: ChangeProfileRequest;
 
+  retrievedImage: any;
+  selectedFile: File;
+  isNewPictureSelected:boolean=false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -81,6 +85,19 @@ export class EditProfileDriverComponent implements OnInit {
     this.editForm.controls['phone'].disable();
   }
 
+  onFileChanged(event:any){
+    this.selectedFile = event.target.files[0];
+    this.isNewPictureSelected=true;
+  }
+
+  onChangePicture(){
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    this.userDataService.saveChangedImageDriver(uploadImageData,this.username);
+  }
+
+
+
   nameChanged()
   {
     this.editForm.controls['name'].enable();
@@ -102,10 +119,6 @@ export class EditProfileDriverComponent implements OnInit {
     this.editForm.controls['city'].enable();
   }
 
-  addMoney()
-  {
-    this.router.navigate(["paypal"]);
-  }
 
   phoneChanged()
   {
@@ -116,6 +129,10 @@ export class EditProfileDriverComponent implements OnInit {
   {
     this.changePasswordIfEntered();
     this.changeEnteredData(); 
+    if(this.isNewPictureSelected){
+      this.onChangePicture()
+    }
+    window.location.reload();
   }
 
   changeEnteredData() {
@@ -166,7 +183,12 @@ export class EditProfileDriverComponent implements OnInit {
       this.editForm.get("babyAllowed")?.setValue(this.driverData.babyAllowed);
       this.editForm.get("petsAllowed")?.setValue(this.driverData.petAllowed);
 
-      
+      console.log(response)
+      var retrieveResonse = response;
+      var base64Data = retrieveResonse.picture;
+      this.retrievedImage = 'data:image/jpeg;base64,' + base64Data;
+
+
     });
     
     

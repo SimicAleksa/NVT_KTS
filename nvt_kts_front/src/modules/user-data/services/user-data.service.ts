@@ -209,6 +209,13 @@ export class UserDataService {
     });
   }
 
+  saveChangedImageDriver(uploadImageData: FormData,userEmail:string) {
+    this.http.post('api/drivers/imgUploadPROBA/'+userEmail, uploadImageData)
+    .subscribe((response) => {
+
+    });
+  }
+
 
   sendChangePasswordRequest(pass: ChangePassword) {
     this.http.post(this.sendChangePasswordRequestURL, pass, {

@@ -132,6 +132,8 @@ export class EditProfileComponent implements OnInit {
     if(this.isNewPictureSelected){
       this.onChangePicture()
     }
+    window.location.reload();
+    
   }
   changeEnteredData() {
     let name: string = this.editForm.get("name")?.value ? this.editForm.get("name")?.value :  this.userData.name;
