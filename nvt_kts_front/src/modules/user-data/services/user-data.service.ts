@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ChangeProfileRequest, User } from 'src/modules/app/model/user';
+import { ChangePassword, ChangeProfileRequest, User } from 'src/modules/app/model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,9 @@ export class UserDataService {
   private getDrivesActiveStatusURL: string;
   private getAllRegisteredUsersMailsURL: string;
 
+  private sendChangeRequestURL: string;
+  private sendChangePasswordRequestURL: string;
+
 
 
   //private usersUrl: string;
@@ -44,6 +47,8 @@ export class UserDataService {
     this.getDrivesActiveStatusURL = "api/drivers/getDrivesActiveStatus/";
     
     this.getAllRegisteredUsersMailsURL = "api/registeredUsers/getAllRegisteredUsersMails";
+    this.sendChangeRequestURL = "api/user/sendChangeRequest";
+    this.sendChangePasswordRequestURL = "api/user/sendChangePasswordRequest"
   }
 
   getDrivesActiveStatus(username: string) {
@@ -165,6 +170,22 @@ export class UserDataService {
 
   getUsersStateBasedOnHisRides(userEmail:string): Observable<boolean>{
     return this.http.get<boolean>("api/registeredUsers/getUserStateBasedOnRide/"+userEmail)
+  }
+
+  sendChangeRequest(user: ChangeProfileRequest) {
+    this.http.post(this.sendChangeRequestURL, user, {
+      headers: this.headers,
+      responseType: "json",      
+    }).subscribe(() => {
+    });
+  }
+
+  sendChangePasswordRequest(pass: ChangePassword) {
+    this.http.post(this.sendChangePasswordRequestURL, pass, {
+      headers: this.headers,
+      responseType: "json",      
+    }).subscribe(() => {
+    });
   }
   
 }

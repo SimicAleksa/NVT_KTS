@@ -25,3 +25,9 @@ export interface ChangeProfileRequest {
     blocked: boolean;
     tokens: number;
 }
+
+export interface ChangePassword {
+    username: string;
+    new: string;
+    old: string;
+}

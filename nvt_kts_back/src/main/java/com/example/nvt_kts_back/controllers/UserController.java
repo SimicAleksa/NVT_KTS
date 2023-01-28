@@ -148,6 +148,18 @@ public class UserController {
         this.userService.blockUser(newNote, email);
     }
 
+    @PostMapping("/sendChangeRequest")
+    public void sendChangeRequest(@RequestBody User user) {
+        System.out.println("Usla sam u ovo");
+        return;
+    }
+
+    @PostMapping("/sendChangePasswordRequest")
+    public void sendChangePasswordRequest(@RequestBody User user) {
+        System.out.println("Usla sam i u drugo");
+        return;
+    }
+
 
 
 

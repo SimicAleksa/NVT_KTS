@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserDataService } from '../../services/user-data.service';
-import { User } from 'src/modules/app/model/user';
+import { ChangePassword, ChangeProfileRequest, User } from 'src/modules/app/model/user';
 import { Router } from '@angular/router';
 
 
@@ -17,6 +17,8 @@ export class EditProfileComponent implements OnInit {
   modalForm: FormGroup;
   username: string;
   userData: User;
+  changeProfileRequest: ChangeProfileRequest;
+  changePassword: ChangePassword;
 
 
   constructor(
@@ -111,31 +113,15 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit()
   {
-    this.findPictureBytes();
-    // let picture: number[] = this.findPictureBytes();
-    /*var reader = new FileReader();
-    var fileByteArray = [];
-    reader.readAsArrayBuffer(myFile);
-    reader.onloadend = function (evt) {
-        if (evt.target?.readyState == FileReader.DONE) {
-          var arrayBuffer = evt.target.result,
-              array = new Uint8Array(arrayBuffer);
-          for (var i = 0; i < array.length; i++) {
-              fileByteArray.push(array[i]);
-            }
-        }
-    }*/
+    this.changeProfileRequest = this.editForm.value;
+    this.changePassword = this.modalForm.value;
+    this.changePassword.username = this.username;
+    this.userDataService.sendChangeRequest(this.changeProfileRequest);
+    this.userDataService.sendChangePasswordRequest(this.changePassword);
 
+    
+   
   }
-
-  findPictureBytes(){
-    // let inp : HTMLInputElement = document.querySelector("#files")!;
-    // let value: string = inp.value;
-    // console.log(value)
-  }
-  
- 
-  
 
 
   onModalSubmit()
