@@ -20,7 +20,7 @@ public class RegisteredUser extends User {
     @Column
     private Double tokens;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Route> favouriteRoutes;
     @ManyToMany(mappedBy = "passengers")
     private List<Ride> historyOfRides;

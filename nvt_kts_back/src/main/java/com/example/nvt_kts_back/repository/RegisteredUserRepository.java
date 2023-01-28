@@ -1,11 +1,14 @@
 package com.example.nvt_kts_back.repository;
 
 import com.example.nvt_kts_back.models.RegisteredUser;
+import com.example.nvt_kts_back.models.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -22,4 +25,11 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
     void setTokens(String email, Double newTokens);
 
     Optional<RegisteredUser> getById(Long id);
+
+    @Query(
+            "SELECT u FROM RegisteredUser u " +
+                    "LEFT JOIN FETCH u.favouriteRoutes " +
+                        "WHERE u.id = :userId"
+    )
+    Optional<RegisteredUser> getRegUserWithFavouriteRoutesByUserId(@Param("userId") Long userId);
 }

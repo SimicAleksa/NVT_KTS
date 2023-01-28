@@ -26,6 +26,8 @@ import { RideDetailsForDriverComponent } from './components/ride-details-for-dri
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { AdminRidesHistoryPageComponent } from './pages/admin-rides-history-page/admin-rides-history-page.component';
 import { RideDetailsForAdminComponent } from './components/ride-details-for-admin/ride-details-for-admin.component';
+import { FavouriteRoutesPageComponent } from './pages/favourite-routes-page/favourite-routes-page.component';
+import { FavouriteRoutesListComponent } from './components/favourite-routes-list/favourite-routes-list.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { RideDetailsForAdminComponent } from './components/ride-details-for-admi
     RideDetailsForDriverComponent,
     AdminRidesHistoryPageComponent,
     RideDetailsForAdminComponent,
+    FavouriteRoutesPageComponent,
+    FavouriteRoutesListComponent,
   ],
   imports: [
     CommonModule,

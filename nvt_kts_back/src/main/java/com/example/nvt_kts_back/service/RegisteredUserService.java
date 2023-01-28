@@ -2,11 +2,17 @@ package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.CustomExceptions.RouteAlreadyInFavouritesException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
+import com.example.nvt_kts_back.DTOs.RouteInfoForDriveHistory;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.models.*;
+import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RegisteredUserService {
@@ -52,4 +58,19 @@ public class RegisteredUserService {
         registeredUser.getFavouriteRoutes().add(route);
         registeredUserRepository.save(registeredUser);
     }
+
+    public List<RouteInfoForDriveHistory> getAllUsersFavouriteRoutes(Long userId) {
+        RegisteredUser usr =  registeredUserRepository.getRegUserWithFavouriteRoutesByUserId(userId)
+                .orElseThrow(UserDoesNotExistException::new);
+        return usr.getFavouriteRoutes().stream()
+                .map(EntityToDTOMapper::mapRouteToRouteInfoForDriveHistory).collect(Collectors.toList());
+    }
+
+    public void removeRouteFromFavourites(Long userId, Long routeId) {
+        RegisteredUser usr =  registeredUserRepository.getRegUserWithFavouriteRoutesByUserId(userId)
+                .orElseThrow(UserDoesNotExistException::new);
+        usr.getFavouriteRoutes().removeIf(route -> route.getId().equals(routeId));
+        registeredUserRepository.save(usr);
+    }
+
 }

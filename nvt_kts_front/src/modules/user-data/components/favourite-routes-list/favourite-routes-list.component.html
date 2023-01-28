@@ -1,0 +1,54 @@
+<div class="table-card">
+    <div><p class="title-style">FAVOURITE ROUTES</p></div>
+    <div class="row">
+        <div class="col left-col">
+            <div class="routes-holder">
+                <div><p class="title-style" *ngIf="!(routes.length > 0)">You have no favourite routes at the moment</p></div>
+                
+                <div class="row route-card" 
+                        *ngFor="let route of routes; index as i" 
+                        (click)="setupRouteLineOnMap(routes.at(i)); setSelected(i)" 
+                        [class.selected]="selectedRoute === i"
+                    >
+                    <div class="col">
+                        <div class="form-outline flex-fill mb-0 form-floating">
+                            <input [value]="route.routeJSON.waypoints[0].name" type="text" id="startLocation" class="form-control" disabled/>
+                            <label class="form-label" for="startLocation">START LOCATION</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-outline flex-fill mb-0 form-floating">
+                            <input [value]="route.routeJSON.waypoints[1].name" type="text" id="endLocation" class="form-control" disabled/>
+                            <label class="form-label" for="endLocation">END LOCATION</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button
+                            (click)="$event.stopPropagation(); goToNewRidePageForTheSelectedRoute(i);"
+                            class="new-ride-btn"
+                        >
+                            <img src="../../../../assets/images/car-icon.png">
+                        </button>
+                    </div>
+                    <div class="col-1">
+                        <button
+                            (click)="$event.stopPropagation(); removeRouteFromFavourites(i);"
+                            class="del-btn"
+                        >
+                            <img src="../../../../assets/images/delete-icon.png">
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+            <div class="col right-col">
+                <div class="map-style" 
+                    leaflet
+                    [leafletOptions]="options"
+                    [leafletLayers]="mainGroup"
+            ></div>
+        </div>
+    </div>
+</div>

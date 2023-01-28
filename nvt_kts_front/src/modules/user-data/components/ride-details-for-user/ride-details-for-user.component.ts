@@ -20,7 +20,6 @@ export class RideDetailsForUserComponent implements OnInit {
   public rideLayer: L.LayerGroup;
 
   public details: any;
-  driver: any;
   
   constructor(private reqMaker: APIRequestMaker) { 
     this.showPanel = false;
@@ -42,14 +41,20 @@ export class RideDetailsForUserComponent implements OnInit {
   }
 
   setUpData(details: any): void {
-    console.log(details);
     this.details = details;
     this.setupRouteLineOnMap()
     this.showPanel = true;
   }
 
   goToNewRidePage(): void {
-    //TO DO
+    /*
+      Informacije o ruti dobijaju se preko "this.details.ride.route"
+
+      Do dugmeta koje trigeruje ovu funkciju dolazi se preko istorije voznji,
+      stisne je neki red u tabeli od ponudjenih, i onda na panelu za detalje
+      stoji plavo dugme skroz levo pri dnu
+    */ 
+    console.log(this.details);
   }
 
   showDriverReviews(): void {

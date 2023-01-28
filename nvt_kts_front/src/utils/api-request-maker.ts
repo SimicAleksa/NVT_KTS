@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { API_LOGIN_URL, API_SEND_PASS_RESET_EMAIL_URL, API_PASS_RESET_URL, API_FB_LOGIN_URL, API_DRIVER_REVIEWS_URL, API_NEW_REVIEWS_URL, API_USER_RIDE_HISTORY_URL, API_DRIVER_RIDE_HISTORY_URL, API_ADMIN_RIDE_HISTORY_URL, API_ADD_ROUTE_TO_FAV_URL } from "../config/api-urls";
+import { API_LOGIN_URL, API_SEND_PASS_RESET_EMAIL_URL, API_PASS_RESET_URL, API_FB_LOGIN_URL, API_DRIVER_REVIEWS_URL, API_NEW_REVIEWS_URL, API_USER_RIDE_HISTORY_URL, API_DRIVER_RIDE_HISTORY_URL, API_ADMIN_RIDE_HISTORY_URL, API_ADD_ROUTE_TO_FAV_URL, API_GET_ALL_FAV_ROUTES, API_REMOVE_ROUTE_FROM_FAV } from "../config/api-urls";
 
 
 @Injectable({ providedIn: 'root' })
@@ -45,6 +45,14 @@ export class APIRequestMaker {
 
   createNewFavoriteRouteRequest(routeId: number) {
     return this.getRequest('PUT', API_ADD_ROUTE_TO_FAV_URL+"?routeId="+routeId);
+  }
+
+  createGetAllFavouriteRoutesRequest() {
+    return this.getRequest('GET', API_GET_ALL_FAV_ROUTES);
+  }
+
+  createRemoveRouteFromFavouritesRequest(routeId: number) {
+    return this.getRequest('PUT', API_REMOVE_ROUTE_FROM_FAV+"?routeId="+routeId);
   }
 
   getRequest(requestType: string, api_url: string,data: any = null) {

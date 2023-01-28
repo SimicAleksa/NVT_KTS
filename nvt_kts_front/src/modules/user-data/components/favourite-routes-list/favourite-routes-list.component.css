@@ -1,0 +1,93 @@
+.title-style {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.table-card {
+    border: 1px solid rgb(209, 208, 208);
+    border-radius: 20px;
+    background: white;
+    display: table;
+    padding: 10px;
+    margin: 0 -20px;
+    height: 84vh;
+    max-height: 84vh;
+    display: block;
+    overflow-y: hidden;
+} 
+
+.left-col {
+    border-right: 1px solid black;
+    border-radius: 20px;
+    margin-right: 1px;
+}
+
+.right-col {
+    border-left: 1px solid black;
+    border-radius: 20px;
+    margin-right: -1px;
+}
+
+input, label{
+    font-size: large;
+    font-weight: bold;
+}
+
+input {
+    height: 7vh !important;
+}
+
+.map-style {
+    margin: 10px 0;
+    height: calc(100% - 20px); 
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+.routes-holder {
+    height: 70vh;
+    padding: 20px;
+    margin-right: 20px;
+    overflow-y: auto;
+}
+
+.route-card {
+    border: 1px solid black;
+    border-radius: 20px 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgb(248, 246, 244);
+}
+
+.route-card:hover {
+    background-color: blanchedalmond;
+}
+
+.selected {
+    background-color: rgb(197, 194, 190);
+}
+
+
+button {
+    height: 5vh;
+    width: 5vh;
+    margin: 1vh 0;
+    padding: 0;
+    border-radius: 10px;
+}
+
+.del-btn {
+    background-color: rgb(231, 75, 75);
+}
+
+.new-ride-btn {
+    background-color: rgb(68, 192, 223);
+}
+
+img {
+    height: 4vh;
+    width: 4vh;
+}
