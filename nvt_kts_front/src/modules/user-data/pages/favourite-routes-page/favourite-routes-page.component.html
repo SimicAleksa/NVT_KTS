@@ -1,0 +1,8 @@
+<div class="row page-holder">
+    <app-favourite-routes-list 
+        [routes]="routes"
+        (succSignal)="popUp.startPopUpShowTimeout($event); fetchFavouriteRoutes();"
+    >
+    </app-favourite-routes-list>
+    <app-pop-up #popUp [duration]="6500" [isErrorPopUp]="false"></app-pop-up>
+<div>

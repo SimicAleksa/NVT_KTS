@@ -42,7 +42,6 @@ export class DriverReviewsForUserComponent implements OnInit {
   getDriverReviewsObservable() {
     return {
       next: (retData: any) => {
-        console.log(retData.body);
         this.reviews = retData.body;
       },
       error: (err: any) => {

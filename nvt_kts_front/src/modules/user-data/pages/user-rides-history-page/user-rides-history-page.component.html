@@ -10,7 +10,8 @@
             id="details-panel" 
             #detailsPanel
             (showReviewsBtnClickedSignal)="reviewsPanel.fetchReviews($event); scrollToReviewsPanel();"
-        >
+            (errSignal)="popUpError.startPopUpShowTimeout($event)"
+            (successSignal)="popUpSuccess.startPopUpShowTimeout($event)">
         </app-ride-details-for-user>
         
         <app-driver-reviews-for-user 

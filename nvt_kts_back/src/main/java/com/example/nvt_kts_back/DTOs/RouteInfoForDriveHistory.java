@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteInfoForDriveHistory {
+    private Long routeId;
     private CoordDTO startLocation;
     private CoordDTO endLocation;
     private String routeJSON;

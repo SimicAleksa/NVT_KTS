@@ -13,4 +13,5 @@ export const CLIENT_BLOCK_USER_URL = "blockUser";
 export const CLIENT_REG_USR_RIDES_HISTORY_URL = "user/rides-history";
 export const CLIENT_DRIVER_RIDES_HISTORY_URL = "driver/rides-history";
 export const CLIENT_ADMIN_RIDES_HISTORY_URL = "admin/rides-history";
+export const CLIENT_USER_FAV_ROUTES = "user/favourite-routes";
 

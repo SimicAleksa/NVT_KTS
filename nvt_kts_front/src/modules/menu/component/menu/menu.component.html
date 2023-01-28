@@ -1,5 +1,8 @@
 <nav>
     <span *ngIf="role === 'USER'">
+        <button (click)="onFavouriteRoutesBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='FAVOURITE_ROUTES'}">
+            FAVOURITE ROUTES
+        </button>
         <button (click)="onUserRidesHistoryBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}">
             RIDES HISTORY
         </button>

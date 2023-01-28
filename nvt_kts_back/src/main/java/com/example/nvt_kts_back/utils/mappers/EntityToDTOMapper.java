@@ -19,6 +19,7 @@ public class EntityToDTOMapper {
 
     public static RouteInfoForDriveHistory mapRouteToRouteInfoForDriveHistory(Route route) {
         return new RouteInfoForDriveHistory(
+                route.getId(),
                 mapCoordToCoordDTO(route.getStartLocation()),
                 mapCoordToCoordDTO(route.getEndLocation()),
                 route.getRouteJSON()
