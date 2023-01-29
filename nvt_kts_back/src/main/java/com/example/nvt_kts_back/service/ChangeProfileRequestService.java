@@ -1,5 +1,6 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.enumerations.CarType;
 import com.example.nvt_kts_back.models.ChangeProfileRequest;
 import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.User;
@@ -46,12 +47,20 @@ public class ChangeProfileRequestService {
     }
 
     public void saveRequest(ChangeProfileRequest dto) {
-        this.userRepository.updatePersonalData(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPicture(), dto.getCity(), dto.getPhone());
+        /*this.userRepository.updatePersonalData(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPicture(), dto.getCity(), dto.getPhone());
         User u = userRepository.findByEmail(dto.getEmail());
 
-        this.driverRepository.updateCarData(u.getId(), dto.isBabyAllowed(), dto.isPetsAllowed());
-        //this.driverRepository.updateCarType(u.getId(), "com.example.nvt_kts_back.enumerations.CarType.HATCHBACK");
-        //this.driverRepository.updateCarType(u.getId(), "HATCHBACK");
+        this.driverRepository.updateCarData(u.getId(), dto.isBabyAllowed(), dto.isPetsAllowed());*/
+        Driver d = this.driverRepository.findByEmail(dto.getEmail());
+        d.setName(dto.getName());
+        d.setSurname(dto.getSurname());
+        d.setCity(dto.getCity());
+        d.setPhone(dto.getPhone());
+        d.setCarType(CarType.valueOf(dto.getCarType()));
+        d.setBabyAllowed(dto.isBabyAllowed());
+        d.setPetAllowed(dto.isPetsAllowed());
+        this.driverRepository.save(d);
+
 
         ChangeProfileRequest r = this.changeProfileRequestRepository.findByEmail(dto.getEmail());
         this.changeProfileRequestRepository.delete(r);

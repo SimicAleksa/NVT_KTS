@@ -57,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/unauth/**", "/h2-console/**", "/h2-console", "/api/drivers/**",
                         "/api/rides/**","/api/routes/**","/socket/**","/map-updates/**",
-                        "/api/user/**", "/api/messages/**","/api/registeredUsers/**", "/api/changeProfileRequests/**").permitAll()
+                        "/api/user/**", "/api/messages/**","/api/registeredUsers/**",
+                        "/api/changeProfileRequests/**", "/api/mail/**").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(

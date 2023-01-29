@@ -36,7 +36,6 @@ public class MessageController {
     public ResponseEntity<List<Message>> getUserMessages()
     {
         List<Message> retVal = this.messageService.getUsersMessages("zima@gmail.com");
-        System.out.println("Duzina poruka je " + retVal.size());
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
@@ -56,7 +55,6 @@ public class MessageController {
 
     @PostMapping(value = "/addMessage", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Message> sendMessage(@RequestBody Message message, HttpServletRequest request) {
-        //System.out.println("Trenutna putanja je " + request.getRequestURI());
         this.messageService.saveMessage(message);
         this.simpMessagingTemplate.convertAndSend("/map-updates/add-message", message);
         return new ResponseEntity<>(message, HttpStatus.OK);

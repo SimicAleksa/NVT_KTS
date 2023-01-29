@@ -52,9 +52,8 @@ export class RegistrationFormComponent implements OnInit {
   onSubmit() {
     this.user = this.registrationForm.value;
     this.userDataService.addUser(this.user);
+    this.userDataService.sendRegistrationEmail(this.user.email);
   }
-  
-  
 }
 
 

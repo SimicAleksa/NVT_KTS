@@ -30,6 +30,8 @@ export class UserDataService {
   private sendChangeRequestURL: string;
   private saveUserChangesURL: string;
   private sendChangePasswordRequestURL: string;
+  private activateProfileURL: string;
+  private sendRegistrationEmailURL: string;
 
 
 
@@ -39,7 +41,7 @@ export class UserDataService {
     this.getChangedProfilesUrl = 'api/changeProfileRequests/getChangedProfiles';
     this.saveChangesUrl = 'api/changeProfileRequests/saveChanges';
     this.declineChangesUrl = 'api/changeProfileRequests/declineChanges';
-    this.addDriverUrl = 'http://localhost:8000/driver/addDriver';
+    this.addDriverUrl = 'api/drivers/addDriver';
     this.addUserUrl = 'api/registeredUsers/addUser';
     this.getAllUsersURL = "api/user/getAllUsers";
 
@@ -57,6 +59,26 @@ export class UserDataService {
 
     this.saveUserChangesURL = "api/user/saveUserChanges";
     this.sendChangePasswordRequestURL = "api/user/sendChangePasswordRequest"
+
+    this.activateProfileURL = "api/user/activateProfile/";
+    this.sendRegistrationEmailURL = "api/mail/sendRegistrationEmail/";
+
+  }
+
+  activateProfile(email: string) {
+    this.http.post(this.activateProfileURL + email, {
+      headers: this.headers,
+      responseType: "json",
+    }).subscribe(() => {
+    });
+  }
+
+  sendRegistrationEmail(email: string) {
+    this.http.get(this.sendRegistrationEmailURL + email, {
+      headers: this.headers,
+      responseType: "json",
+    }).subscribe(() => {
+    });
   }
 
   getDrivesActiveStatus(username: string) {

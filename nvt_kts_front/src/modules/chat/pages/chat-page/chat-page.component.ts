@@ -89,8 +89,22 @@ export class ChatPageComponent implements OnInit {
     this.stompClient.subscribe('/map-updates/add-message', (message: { body: string }) => {
       //this.messageService.saveMessage();
       let m: Message =JSON.parse(message.body);
-      this.currentMessages?.push(m);
-      let param: ReportParam = JSON.parse(message.body);
+      console.log(m);
+
+      if (m.sender==this.userEmail || m.receiver == this.usersFriend)
+      {
+        this.messageService.getUserMessageMap(this.userEmail).subscribe((response) => {
+          this.messagesMap = new Map(Object.entries(response));
+          this.currentMessages = this.messagesMap.get(this.usersFriend);
+          this.messageService.getUsersToShowInMessages(this.userEmail).subscribe((response) => {
+            this.messagePersons = response;
+            this.addLastMessages();    
+          })
+        });
+      }
+      
+      // sad treba pogledati cija je poruka i onda vidjeti hocemo li je prikazati
+      
     });
   }
 
@@ -99,12 +113,7 @@ export class ChatPageComponent implements OnInit {
       let element : HTMLInputElement = (<HTMLInputElement>document.getElementById('textAreaExample2'));
       this.messageService.sendMessage(element.value, this.userEmail, this.usersFriend);
       element.value = "";
-      // sad saljem na back poruku, a na backu se to salje dalje na socket
-      //this.messageService.gadjajMladjino();
-      // sad jos samo da posaljem poruku konobaru
   }
-
- 
 
     
 

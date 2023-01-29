@@ -105,8 +105,7 @@ public class DriverController {
 
     @PostMapping("/addDriver")
     public void addDriver(@RequestBody ChangeProfileRequest driver) {
-        Driver d = new Driver(driver);
-        driverService.addDriver(d);
+        driverService.addDriverFromRequest(driver);
     }
 
     @GetMapping("/getActiveMinutes/{email}")

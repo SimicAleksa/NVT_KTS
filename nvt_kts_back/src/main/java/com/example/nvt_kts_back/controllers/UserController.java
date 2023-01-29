@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -164,6 +165,11 @@ public class UserController {
     @PostMapping("/saveUserChanges")
     public void saveUserChanges(@RequestBody ChangeProfileRequest dto) {
         userService.updateUserData(dto);
+    }
+
+    @PostMapping("/activateProfile/{email}")
+    public void activateProfile(@PathVariable("email") String email) {
+        userService.activateProfile(email);
     }
 
 

@@ -47,4 +47,21 @@ public class EmailService {
 
         return mail;
     }
+
+    @Async
+    public void sendPasswordConfirmMail(String email) {
+        System.out.println(email + " je mejl na koji saljem");
+        //javaMailSender.send(makeMail(email, "Naslov", "probni sadrzaj mejla"));
+
+        javaMailSender.send(
+                makeMail(
+                        email,
+                        "Registration confirmation",
+                        "You have registered to Uber application. If this wasn't you, simply ignore this message." +
+                                "Otherwise, click this <a href=\"" + Settings.CONFIRM_PASS_PAGE_URL + email +
+                                "\">link</a>"
+                )
+        );
+        System.out.println("Poruka uspjesno poslata, a mejl je bio " + email);
+    }
 }

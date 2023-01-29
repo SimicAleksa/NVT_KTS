@@ -50,24 +50,24 @@
                         </div>
 
                         <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.carType == user.at(1)?.carType ? '': 'hasChanged'">
-                          <i class="bi bi-telephone-fill"></i>
+                          <i class="bi bi-car-front-fill"></i>
                           <label> {{user.at(0)?.carType}}</label>
                           <i class="bi bi-arrow-right"></i>
                           <label> {{user.at(1)?.carType}}</label>
                         </div>
 
                         <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.babyAllowed == user.at(1)?.babyAllowed ? '': 'hasChanged'">
-                          <i class="bi bi-telephone-fill"></i>
+                          <h2 id="babyLbl" >Babies</h2>
                           <label> {{user.at(0)?.babyAllowed}}</label>
                           <i class="bi bi-arrow-right"></i>
                           <label> {{user.at(1)?.babyAllowed}}</label>
                         </div>
 
-                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.petAllowed == user.at(1)?.petAllowed ? '': 'hasChanged'">
-                          <i class="bi bi-telephone-fill"></i>
-                          <label> {{user.at(0)?.petAllowed}}</label>
+                        <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.petsAllowed == user.at(1)?.petsAllowed ? '': 'hasChanged'">
+                          <h2 id="petLbl">Pets</h2>
+                          <label> {{user.at(0)?.petsAllowed}}</label>
                           <i class="bi bi-arrow-right"></i>
-                          <label> {{user.at(1)?.petAllowed}}</label>
+                          <label> {{user.at(1)?.petsAllowed}}</label>
                         </div>
                       
                         <div class="justify-content-center ">

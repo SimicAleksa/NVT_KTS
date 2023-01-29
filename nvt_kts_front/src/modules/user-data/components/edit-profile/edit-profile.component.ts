@@ -142,7 +142,7 @@ export class EditProfileComponent implements OnInit {
     let phone: string = this.editForm.get("phone")?.value ? this.editForm.get("phone")?.value :  this.userData.phone;
 
     let c: ChangeProfileRequest = {name: name, surname: surname, email: this.username, picture: "", city: city, phone: phone, carType: "",
-      petAllowed: false, babyAllowed: true, note:"", tokens: 0, blocked: false, password:""};
+      petsAllowed: false, babyAllowed: true, note:"", tokens: 0, blocked: false, password:""};
     this.userDataService.saveUserChanges(c);
 
   }

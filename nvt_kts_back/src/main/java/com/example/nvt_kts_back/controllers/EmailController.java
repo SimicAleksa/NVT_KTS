@@ -35,4 +35,17 @@ public class EmailController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Async
+    @GetMapping(value = "/sendRegistrationEmail/{email}")
+    //@CrossOrigin(origins = Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    public ResponseEntity<HttpStatus> confirmRegistration(@PathVariable final String email) {
+        try {
+            emailService.sendPasswordConfirmMail(email);
+        } catch (UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
