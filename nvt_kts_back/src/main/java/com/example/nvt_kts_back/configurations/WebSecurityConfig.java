@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/unauth/**", "/h2-console/**","/socket/**", "/h2-console","/map-updates/**").permitAll()
+                .antMatchers("/api/unauth/**", "/h2-console/**","/socket/**", "/h2-console","/map-updates/**","/api/mail/**").permitAll()
                 //"/api/routes/**", "/api/user/**", "/api/messages/**","/api/registeredUsers/**", "/api/changeProfileRequests/** , "/api/drivers/**""
                 .anyRequest().authenticated().and()
                 .cors().and()

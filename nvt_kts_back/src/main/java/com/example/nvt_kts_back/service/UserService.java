@@ -155,4 +155,11 @@ public class UserService {
     public RegisteredUser getRegUserById(Long usrId) {
         return registeredUserRepository.getById(usrId).orElseThrow(UserDoesNotExistException::new);
     }
+
+    public void activateProfile(String email) {
+        System.out.println("Mejl koji trazim je " + email);
+        User u = this.userRepository.findByEmail(email);
+        u.setProfileActivated(true);
+        this.userRepository.save(u);
+    }
 }

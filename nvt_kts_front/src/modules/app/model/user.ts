@@ -18,7 +18,7 @@ export interface ChangeProfileRequest {
     city: string;
     phone: string;
     carType: string;
-    petAllowed: boolean;
+    petsAllowed: boolean;
     babyAllowed: boolean; 
     password: string;
     note: string;

@@ -4,12 +4,16 @@ import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { RouterModule } from '@angular/router';
 import {routes} from './chat-routing';
+import { ConfirmRegistrationComponent } from './components/confirm-registration/confirm-registration.component';
+import { ConfirmRegistrationPageComponent } from './pages/confirm-registration-page/confirm-registration-page.component';
 
 
 @NgModule({
   declarations: [
     ChatPageComponent,
-    ChatComponent
+    ChatComponent,
+    ConfirmRegistrationComponent,
+    ConfirmRegistrationPageComponent
   ],
   imports: [
     CommonModule,

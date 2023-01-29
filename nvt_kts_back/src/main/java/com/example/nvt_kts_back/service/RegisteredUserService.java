@@ -1,12 +1,15 @@
 package com.example.nvt_kts_back.service;
 
+import com.example.nvt_kts_back.CustomExceptions.RoleDoesNotExistException;
 import com.example.nvt_kts_back.CustomExceptions.RouteAlreadyInFavouritesException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.RouteInfoForDriveHistory;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.models.*;
+import com.example.nvt_kts_back.repository.RoleRepository;
 import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 
@@ -20,6 +23,12 @@ public class RegisteredUserService {
     private RouteService routeService;
     @Autowired
     private RegisteredUserRepository registeredUserRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     public RegisteredUser createRegisteredUser(RegisteredUser registeredUser) {return registeredUserRepository.save(registeredUser); }
 
@@ -35,13 +44,13 @@ public class RegisteredUserService {
         Double currentTokens = this.registeredUserRepository.findTokensByEmail(email);
         Double newTokens = currentTokens + value;
         this.registeredUserRepository.setTokens(email, newTokens);
-
-
     }
 
-    public RegisteredUser saveUser(ChangeProfileRequest user) {
-        RegisteredUser ru = new RegisteredUser(user);
-        ru.setRole(new Role(Settings.USER_ROLE_NAME));
+    public RegisteredUser saveUser(ChangeProfileRequest c) {
+        RegisteredUser ru = new RegisteredUser(c);
+        ru.setRole(roleRepository.getByName(Settings.USER_ROLE_NAME).orElseThrow(RoleDoesNotExistException::new));
+        ru.setPassword(new BCryptPasswordEncoder().encode(c.getPassword()));
+        ru.setProfileActivated(false);
         ru.setTokens(0.0);
         return registeredUserRepository.save(ru);
     }

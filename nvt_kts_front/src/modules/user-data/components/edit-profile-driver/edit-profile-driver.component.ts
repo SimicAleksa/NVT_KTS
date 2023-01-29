@@ -146,7 +146,7 @@ export class EditProfileDriverComponent implements OnInit {
 
    
     let c: ChangeProfileRequest = {name: name, surname: surname, email: this.username, picture: "", city: city, phone: phone, 
-            carType: carType, petAllowed: petsAllowed, babyAllowed: babyAllowed, note:"", tokens: 0, blocked: false, password:""};
+            carType: carType, petsAllowed: petsAllowed, babyAllowed: babyAllowed, note:"", tokens: 0, blocked: false, password:""};
     this.userDataService.sendChangeRequest(c);
 
   }
@@ -181,7 +181,7 @@ export class EditProfileDriverComponent implements OnInit {
       this.editForm.get("phone")?.setValue(this.driverData.phone);
       this.editForm.get("carType")?.setValue(this.driverData.carType);
       this.editForm.get("babyAllowed")?.setValue(this.driverData.babyAllowed);
-      this.editForm.get("petsAllowed")?.setValue(this.driverData.petAllowed);
+      this.editForm.get("petsAllowed")?.setValue(this.driverData.petsAllowed);
 
       console.log(response)
       var retrieveResonse = response;

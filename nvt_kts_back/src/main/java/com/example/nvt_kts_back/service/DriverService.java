@@ -1,19 +1,20 @@
 package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.CustomExceptions.NoRideInLast3DaysException;
+import com.example.nvt_kts_back.CustomExceptions.RoleDoesNotExistException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.NewReviewDTO;
 import com.example.nvt_kts_back.DTOs.ReviewToShowDTO;
-import com.example.nvt_kts_back.models.Driver;
-import com.example.nvt_kts_back.models.RegisteredUser;
-import com.example.nvt_kts_back.models.Review;
-import com.example.nvt_kts_back.models.TimeSpan;
+import com.example.nvt_kts_back.configurations.Settings;
+import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.repository.RideRepository;
+import com.example.nvt_kts_back.repository.RoleRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
 import com.example.nvt_kts_back.utils.mappers.DTOToEntityMapper;
 import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import com.google.gson.JsonStreamParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.DriverRepository;
 
@@ -37,6 +38,9 @@ public class DriverService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     public void addDriver(Driver driver) {
         driverRepository.save(driver);
@@ -166,5 +170,16 @@ public class DriverService {
         newReview.setDriver(driver);
         driver.getReviews().add(newReview);
         driverRepository.save(driver);
+    }
+
+    public void addDriverFromRequest(ChangeProfileRequest c) {
+        Driver d = new Driver(c);
+
+        d.setRole(roleRepository.getByName(Settings.DRIVER_ROLE_NAME).orElseThrow(RoleDoesNotExistException::new));
+        d.setPassword(new BCryptPasswordEncoder().encode(c.getPassword()));
+        d.setProfileActivated(false);
+        d.setActive(false);
+        d.setIsDriverFree(true);
+        driverRepository.save(d);
     }
 }

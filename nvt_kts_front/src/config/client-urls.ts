@@ -4,6 +4,7 @@ export const CLIENT_RECOVER_PASS_URL = "login/recover-password";
 export const CLIENT_RESET_PASS_URL = "login/reset-password/:email";
 
 
+
 //user-data module urls
 export const CLIENT_REGISTRATION_URL = "registrationPage";
 export const CLIENT_ADD_DRIVER_URL = "addDriverPage";

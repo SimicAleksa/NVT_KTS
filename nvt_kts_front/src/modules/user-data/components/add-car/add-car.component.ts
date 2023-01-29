@@ -61,6 +61,7 @@ export class AddCarComponent implements OnInit {
     this.router.navigate(["wines"]);*/
     this.driver = this.registrationForm.value;
     this.userDataService.addDriver(this.driver);
+    this.userDataService.sendRegistrationEmail(this.driver.email);
   }
 
  

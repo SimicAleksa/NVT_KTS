@@ -8,6 +8,15 @@ i {
     font-size:30px; 
     padding-right: 10px;
     margin-left: 10px;
+    margin-right: 27px;
+}
+
+#babyLbl {
+    margin-right: 20px;
+}
+
+#petLbl {
+    margin-right: 40px;
 }
 
 .hasChanged {

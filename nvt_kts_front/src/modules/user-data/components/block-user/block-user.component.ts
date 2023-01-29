@@ -13,6 +13,7 @@ export class BlockUserComponent implements OnInit {
   modalForm: FormGroup;
   displayStyle = "none";
   currentUser : string;
+  username: string = "admin@gmail.com"
 
   constructor(
     private userDataService : UserDataService, 
@@ -61,6 +62,7 @@ export class BlockUserComponent implements OnInit {
   ngOnInit(): void {
     this.userDataService.getAllUserData().subscribe((response) => {
       this.users = response;      
+      this.users = this.users.filter(x => x.email !== this.username)
     });
   }
 
