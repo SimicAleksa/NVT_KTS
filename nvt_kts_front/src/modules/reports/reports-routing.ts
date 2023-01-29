@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { RoleGuard } from '../app/guards/role.guard';
 import { DriverChartComponent } from './components/driver-chart/driver-chart.component';
 import { RegisteredUserChartComponent } from './components/registered-user-chart/registered-user-chart.component';
 import { AdminReportPageComponent } from './pages/admin-report-page/admin-report-page.component';
@@ -7,13 +8,22 @@ import { RegisteredUserPageComponent } from './pages/registered-user-page/regist
 export const routes: Routes = [
   {
     path:"driverChart",
-    component : DriverReportPageComponent},
-    {
-      path:"registeredUserChart",
-      component : RegisteredUserPageComponent},
-    {
-      path:"adminChart",
-      component : AdminReportPageComponent},
+    component : DriverReportPageComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"DRIVER"}
+  },
+  {
+    path:"registeredUserChart",
+    component : RegisteredUserPageComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"USER"}
+  },
+  {
+    path:"adminChart",
+    component : AdminReportPageComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"ADMIN"}
+  },
     
 
 ];

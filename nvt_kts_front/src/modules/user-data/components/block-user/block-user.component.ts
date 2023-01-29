@@ -13,7 +13,7 @@ export class BlockUserComponent implements OnInit {
   modalForm: FormGroup;
   displayStyle = "none";
   currentUser : string;
-  username: string = "admin@gmail.com"
+  username: string = String(localStorage.getItem('email'));
 
   constructor(
     private userDataService : UserDataService, 

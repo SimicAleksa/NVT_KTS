@@ -24,7 +24,7 @@ export class RegisteredUserChartComponent implements OnInit {
     private fb: FormBuilder
   ) {
         this.createForm();
-        this.userEmail = "registrovani1@gmail.com";
+        this.userEmail = String(localStorage.getItem('email'));
    }
 
    createForm() {

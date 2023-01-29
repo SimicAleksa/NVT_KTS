@@ -27,7 +27,7 @@ export class EditProfileComponent implements OnInit {
     private userDataService: UserDataService,
     private router: Router,
     ) {
-    this.username = "registrovani1@gmail.com";
+    this.username = String(localStorage.getItem('email'));
     this.createForm();
     this.createModalForm();
    }

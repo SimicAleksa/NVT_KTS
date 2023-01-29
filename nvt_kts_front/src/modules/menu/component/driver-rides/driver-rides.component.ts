@@ -16,7 +16,7 @@ import { UserDataService } from 'src/modules/user-data/services/user-data.servic
 })
 export class DriverRidesComponent implements OnInit {
 
-  username: string = "zima@gmail.com";
+  username: string = String(localStorage.getItem('email'));
   driverRides: RideForNotification[];
 
   constructor(

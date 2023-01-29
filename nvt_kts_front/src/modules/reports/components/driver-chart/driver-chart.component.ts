@@ -24,7 +24,7 @@ export class DriverChartComponent implements OnInit {
       private rideService: RideService,
       private fb: FormBuilder) { 
         this.createForm();
-        this.userEmail = "pera@gmail.com";
+        this.userEmail = String(localStorage.getItem('email'));
     }
 
     createForm() {

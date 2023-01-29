@@ -29,7 +29,7 @@ export class EditProfileDriverComponent implements OnInit {
     private userDataService: UserDataService,
     private router: Router,
     ) {
-    this.username = "pera@gmail.com";
+    this.username = String(localStorage.getItem('email'));
     this.createForm();
     this.createModalForm();
    }

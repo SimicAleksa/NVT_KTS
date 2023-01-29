@@ -10,7 +10,7 @@ import { UserDataService } from 'src/modules/user-data/services/user-data.servic
 
 export class PaypalComponent implements OnInit {
   value:string = "2";
-  username: string = "registrovani1@gmail.com";
+  username: string = String(localStorage.getItem('email'));
 
   constructor(
     private userDataService : UserDataService, 

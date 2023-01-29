@@ -32,7 +32,8 @@ export class ChatPageComponent implements OnInit {
     private messageService: MessageService, 
     //private webSocketService: WebSocketService,
   ) { 
-    this.userEmail = "zima@gmail.com";
+    this.userEmail = String(localStorage.getItem('email'));
+    //TODO pogledaj da li si dobavila
     this.usersFriend = "pera@gmail.com";
   }
 

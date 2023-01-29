@@ -22,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisteredUsersRidesComponent implements OnInit {
 
 
-  username: string = "registrovani1@gmail.com";
+  username: string = String(localStorage.getItem('email'));
   usersRides: RideForNotification[];
   usersDTSRIDE:RideDtoWithExpectedDuration;
   usersTimeRemainingTillGettingARide:string;
