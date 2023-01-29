@@ -12,6 +12,7 @@ import com.example.nvt_kts_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -109,8 +110,6 @@ public class UserController {
     }
 
 
-
-
     @PostMapping("/new-register-user")
     public ResponseEntity<HttpStatus> addNewRegisteredUser(@RequestBody RegisteredUser rUser) {
         //TODO
@@ -130,14 +129,15 @@ public class UserController {
     }
 
 
-    @GetMapping(value="/getUserDTOForChat/{email}")
+    /*@GetMapping(value="/getUserDTOForChat/{email}")
     public ResponseEntity<UserDTO> getUserDataToShow(@PathVariable("email") String email)
     {
         UserDTO retVal = this.userService.findDTOByEmail(email);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping(value="/getAllUsers")
+    @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)
     public ResponseEntity<ArrayList<UserDTO>> getAllUsers()
     {
         ArrayList<UserDTO> retVal = this.userService.getAllDTOs();
@@ -145,12 +145,14 @@ public class UserController {
     }
 
     @GetMapping(value="/addNote/{newNote}/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)
     public void addNote(@PathVariable("newNote") String newNote, @PathVariable("email") String email)
     {
         this.userService.addNote(newNote, email);
     }
 
     @GetMapping(value="/blockUser/{block}/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)
     public void blockUser(@PathVariable("block") boolean newNote, @PathVariable("email") String email)
     {
         this.userService.blockUser(newNote, email);
@@ -158,16 +160,19 @@ public class UserController {
 
 
     @PostMapping("/sendChangePasswordRequest")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ADMIN_ROLE)
     public void sendChangePasswordRequest(@RequestBody ChangePasswordDTO dto) {
         userService.changePassword(dto);
     }
 
     @PostMapping("/saveUserChanges")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ADMIN_ROLE)
     public void saveUserChanges(@RequestBody ChangeProfileRequest dto) {
         userService.updateUserData(dto);
     }
 
     @PostMapping("/activateProfile/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ROLE)
     public void activateProfile(@PathVariable("email") String email) {
         userService.activateProfile(email);
     }

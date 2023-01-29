@@ -104,15 +104,19 @@ public class DriverController {
     }
 
     @PostMapping("/addDriver")
+    @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)
     public void addDriver(@RequestBody ChangeProfileRequest driver) {
         driverService.addDriverFromRequest(driver);
     }
 
     @GetMapping("/getActiveMinutes/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public long getActiveMinutes(@PathVariable("email") String email) {
         return this.driverService.getActiveMinutes(email);
     }
+    // TODO ovdje ce biti jos jedan poziv, pa ne znam hoce li biti samo od strane drivera
     @PostMapping("/changeDriverActiveStatus/{email}/{active}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_ROLE)
     public void changeDriverActiveStatus(@PathVariable("email") String email, @PathVariable("active") boolean active)
     {
         this.driverService.changeDriverActiveStatus(email, active);
@@ -154,6 +158,7 @@ public class DriverController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/getDriverData/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_ROLE)
     public ResponseEntity<ChangeProfileRequest> getDriverData(@PathVariable("email") String email) {
         Driver d = driverService.findByEmail(email);
         ChangeProfileRequest c = new ChangeProfileRequest(d);
@@ -181,6 +186,7 @@ public class DriverController {
 
 
     @PostMapping("/imgUploadPROBA/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ADMIN_ROLE)
     public ResponseEntity.BodyBuilder imgUploadPROBA(@RequestParam("imageFile") MultipartFile file, @PathVariable("email") String email) throws IOException {
         Driver tem = this.driverService.getByEmail(email);
         tem.setPicture(compressBytes(file.getBytes()));

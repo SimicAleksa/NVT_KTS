@@ -52,6 +52,7 @@ public class RegisteredUserController {
     }
 
     @GetMapping("/getUserData/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ADMIN_ROLE)
     public ResponseEntity<RegisteredUserDTO> getUserData(@PathVariable("email") String email) {
         RegisteredUser r = registeredUserService.getByEmail(email);
         RegisteredUserDTO u = new RegisteredUserDTO(r);
@@ -76,6 +77,7 @@ public class RegisteredUserController {
     }
 
     @PostMapping("/imgUploadPROBA/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ADMIN_ROLE)
     public ResponseEntity.BodyBuilder imgUploadPROBA(@RequestParam("imageFile") MultipartFile file,@PathVariable("email") String email) throws IOException {
         RegisteredUser tem = this.registeredUserService.getByEmail(email);
         tem.setPicture(compressBytes(file.getBytes()));
@@ -102,10 +104,12 @@ public class RegisteredUserController {
     }
 
     @GetMapping("/addTokens/{email}/{value}")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public void addTokens(@PathVariable("email") String email, @PathVariable("value") Double value) {
         this.registeredUserService.addTokens(email, value);
     }
 
+    //TODO: ovo moze neulogovani
     @PostMapping("/addUser")
     public User addUser(@RequestBody ChangeProfileRequest user) {
         return registeredUserService.saveUser(user);
@@ -124,7 +128,9 @@ public class RegisteredUserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    // TODO:  ovo bi trebalo da moze samo registrovani kad narucuje slozenu voznju
     @GetMapping("/getAllRegisteredUsersMails")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<ArrayList<String>> getAllRegisteredUsersMails()
     {
         ArrayList<String> retVal = this.registeredUserService.getMails();

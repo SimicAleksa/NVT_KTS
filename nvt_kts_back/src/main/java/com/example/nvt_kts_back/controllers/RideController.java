@@ -220,6 +220,7 @@ public class RideController {
     public Ride addRide(@RequestBody Ride ride) {return  rideService.createRide(ride);}
 
     @PostMapping(value="/getDriverReportData")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_ROLE)
     public ResponseEntity<HashMap<String, HashMap<String, Double>>> getDriverReportData(@RequestBody ReportParams params)
     {
         HashMap<String, HashMap<String, Double>> retVal = this.rideService.getDriverReportData(params);
@@ -227,6 +228,7 @@ public class RideController {
     }
 
     @PostMapping(value="/getUserReportData")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<HashMap<String, HashMap<String, Double>>> getUserReportData(@RequestBody ReportParams params)
     {
         HashMap<String, HashMap<String, Double>> retVal = this.rideService.getUserReportData(params);
@@ -234,6 +236,7 @@ public class RideController {
     }
 
     @PostMapping(value="/getAdminReportData")
+    @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)
     public ResponseEntity<HashMap<String, HashMap<String, Double>>> getAdminReportData(@RequestBody ReportParams params)
     {
         HashMap<String, HashMap<String, Double>> retVal = this.rideService.getAdminReportData(params);
@@ -241,6 +244,7 @@ public class RideController {
     }
 
     @GetMapping(value = "/getDriverNotificationRides/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_ROLE)
     public ResponseEntity<ArrayList<RideNotificationDTO>> findDriversUpcomingRides(@PathVariable("email") String email)
     {
         ArrayList<RideNotificationDTO> retVal = this.rideService.findDriversUpcomingRides(email);
@@ -248,6 +252,7 @@ public class RideController {
     }
 
     @GetMapping(value = "/getUserNotificationRides/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<ArrayList<RideNotificationDTO>> findUsersUpcomingRides(@PathVariable("email") String email)
     {
         ArrayList<RideNotificationDTO> retVal = this.rideService.finUsersUpcomingRides(email);
@@ -271,6 +276,7 @@ public class RideController {
 
 
     @GetMapping(value = "/changeRideState/{id}/{state}")
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ROLE)
     public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
     {
         // TODO mozda ovdje staviti da se svi obavjestavaju da je promijenjeno stanje
@@ -279,6 +285,7 @@ public class RideController {
     }
 
     @GetMapping(value = "/acceptRideUser/{id}/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<StringDTO> acceptRideUser(@PathVariable("id") Long id, @PathVariable("email") String email)
     {
         boolean b = this.rideService.tryAcceptRideUser(id, email);

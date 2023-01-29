@@ -10,6 +10,9 @@ public class Settings {
     public static final String PRE_AUTH_ADMIN_ROLE = "hasRole('ADMIN')";
     public static final String PRE_AUTH_DRIVER_ROLE = "hasRole('DRIVER')";
     public static final String PRE_AUTH_USER_ROLE = "hasRole('USER')";
+    public static final String PRE_AUTH_DRIVER_USER_ROLE = "hasAnyRole('DRIVER','USER')";
+
+    public static final String PRE_AUTH_DRIVER_USER_ADMIN_ROLE = "hasAnyRole('DRIVER','USER', 'ADMIN')";
 
     public static final String RESET_PASS_PAGE_URL = CROSS_ORIGIN_FRONTEND_PATH + "/login/reset-password/";
     public static final String CONFIRM_PASS_PAGE_URL = CROSS_ORIGIN_FRONTEND_PATH + "/chat/confirmRegistration/";
