@@ -36,6 +36,7 @@ export class MenuComponent implements OnInit {
   onLogoutBtnClick(): void {
     localStorage.removeItem('role');
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
     this.updateRole();
 
     this.currentActiveBtn = 'LOGIN';

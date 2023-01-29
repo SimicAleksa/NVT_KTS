@@ -29,7 +29,7 @@ export class TrackRouteComponent implements OnInit {
   rideLayer: L.LayerGroup;
   mainGroup: LayerGroup[] = [];
   driver:Driver;
-  username: string = "registrovani2@gmail.com";
+  username: string = String(localStorage.getItem('email'));
   ride:Ride;
   private stompClient: any;
   constructor(private mapService: MapService) { }

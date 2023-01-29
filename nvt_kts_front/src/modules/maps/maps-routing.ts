@@ -7,30 +7,41 @@ import { SimpleRoutesSearchPageComponent } from './pages/simple-routes-search-pa
 import { TrackIncDriverComponent } from './components/track-inc-driver/track-inc-driver.component';
 import { TrackRouteComponent } from './components/track-route/track-route.component';
 import { TempForQueryComponent } from './components/temp-for-query/temp-for-query.component'; 
+import { RoleGuard } from '../app/guards/role.guard';
 export const routes: Routes = [
   {
     path:"routeSearch",
-    component : SearchRoutesPageComponent
+    component : SearchRoutesPageComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"USER"}
   },
   {
     path:"simpleRouteSearch",
-    component : SimpleRoutesSearchPageComponent
+    component : SimpleRoutesSearchPageComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"USER"}
   },
   {
     path:"activeVehicle",
-    component :ActiveVehicleComponent
+    component :ActiveVehicleComponent,
   },
   {
     path:"driverRouting",
-    component :TrackRouteComponent
+    component :TrackRouteComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"USER"}
   },
   {
     path:"incomingDriver",
-    component :TrackIncDriverComponent
+    component :TrackIncDriverComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"USER"}
   },
   {
     path:"allVehiclesOnMap",
-    component :VehiclesOnMapComponent
+    component :VehiclesOnMapComponent,
+    canActivate: [RoleGuard],
+    data:{expectedRoles:"USER"}
   },
   {
     path:"tempForQuery",

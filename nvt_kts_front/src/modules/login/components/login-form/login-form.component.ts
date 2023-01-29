@@ -1,5 +1,6 @@
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import jwtDecode from 'jwt-decode';
 import { MenuService } from 'src/modules/menu/service/menu-service';
 import { FieldValidator } from 'src/utils/field-validator';
 import { APIRequestMaker } from "../../../../utils/api-request-maker";
@@ -55,7 +56,6 @@ export class LoginFormComponent implements OnInit {
       email: this.email,
       password: this.password
     }
-
     this.reqMaker.createLoginRequest(data).subscribe(this.getSystemLoginObservable());
   }
 
@@ -79,7 +79,9 @@ export class LoginFormComponent implements OnInit {
       next: (retData: any) => {
         if (retData.body === undefined)
           return;
+        const tokenData : any = jwtDecode(retData.body.accessToken)
         localStorage.setItem('token', retData.body.accessToken);
+        localStorage.setItem('email', tokenData['sub']);
         localStorage.setItem('role', retData.body.role);
       },
 

@@ -56,6 +56,7 @@ public class DriverController {
     }
 
     @PutMapping(value = "/updateDriverLocation/{id}", consumes = "application/json", produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<DriverDTO> updateDriverLocation(@PathVariable("id") long id, @RequestBody CoordsDTO coordsDTO) {
         Driver driver = this.userService.updateDriverCoords(id, coordsDTO.getLatitude(), coordsDTO.getLongitude());
         DriverDTO returnDriverDTO = new DriverDTO(driver);
@@ -63,6 +64,7 @@ public class DriverController {
         return new ResponseEntity<>(returnDriverDTO, HttpStatus.OK);
     }
     @DeleteMapping(value = "/deleteAllDrivers" ,produces = "text/plain")
+    //hmmm simulacija?
     public ResponseEntity<String> deleteAllDrivers() {
         this.userService.deleteAllUsers();
         return new ResponseEntity<>("All drivers deleted!", HttpStatus.OK);
@@ -70,6 +72,7 @@ public class DriverController {
 
 //    VOZACI KONI NISU U STANJU VOZNJE,ALI SU AKTIVNI
     @GetMapping(value = "/getDrivers",produces = "application/json")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<List<DriverDTO>> getRides() {
         List<Driver> drivers = this.driverService.findDriversWhoDonTDriveRN();
         List<DriverDTO> driverDTOS = new ArrayList<>();
@@ -87,6 +90,7 @@ public class DriverController {
 //    }
 //
     @GetMapping("/getDriver/{id}")
+    //hmmm simulacija? (na ovo za sad ostavi bez autorizacije)
     public ResponseEntity<DriverDTO> getDriver(@PathVariable String id){
         Driver driver = this.driverService.findById(id);
         DriverDTO returnDriverDTO = new DriverDTO(driver);
@@ -94,6 +98,7 @@ public class DriverController {
     }
 
     @GetMapping("/getAllDrivers")
+    //hmmm simulacija?
     public ResponseEntity<List<DriverDTO>> getAllDrivers() {
         List<Driver> drivers = this.driverService.findAll();
         List<DriverDTO> driverDTOS = new ArrayList<>();

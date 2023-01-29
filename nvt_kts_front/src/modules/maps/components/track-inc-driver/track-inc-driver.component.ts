@@ -32,7 +32,7 @@ export class TrackIncDriverComponent implements OnInit {
   driver:Driver;
   ride:Ride;
   private stompClient: any;
-  username: string = "registrovani2@gmail.com";
+  username: string = String(localStorage.getItem('email'));
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {

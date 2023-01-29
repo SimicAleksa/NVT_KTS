@@ -41,7 +41,7 @@ export class SearchRoutesPageComponent implements OnInit {
   public quickOrdedWithFavorite:string="";
   public quickOrdedWithFavoriteBoolean:boolean=false;
 
-  public userEmail:string = "registrovani2@gmail.com";
+  public userEmail:string = String(localStorage.getItem('email'));
   carTypes: string[] = ["SUV", "HATCHBACK", "COUPE", "MINIVAN", "SEDAN", "VAN", "LIMOUSINE"];
 
   public emails: string[];
@@ -55,7 +55,6 @@ export class SearchRoutesPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.activRoute.queryParams.subscribe(params => {
       console.log(params['order']);
       this.quickOrdedWithFavorite = params['order'];

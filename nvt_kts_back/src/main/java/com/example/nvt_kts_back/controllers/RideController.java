@@ -56,7 +56,7 @@ public class RideController {
     }
 
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
-
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
         RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
         routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());
@@ -112,7 +112,9 @@ public class RideController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
         Ride ride = new Ride(rideDTO);
         ride.setExpectedDuration(rideDTO.getExpectedDuration());
@@ -126,6 +128,7 @@ public class RideController {
     }
 
     @PutMapping(value = "/changeRide/{id}", produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<RideDTO> changeRide(@PathVariable("id") long id) {
         Ride ride = this.rideService.changeRide(id);
         RideDTO returnRideDTO = new RideDTO(ride);
@@ -134,6 +137,7 @@ public class RideController {
     }
 
     @PutMapping(value = "/updateDriverIncomingTimeForRide/{id}", produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<RideDTO> updateDriverIncomingTimeForRide(@PathVariable("id") long id,@RequestBody ExpectedDurationDto expectedDurationDto) {
         Ride ride = this.rideService.getDriversDrivingToStartRide(String.valueOf(id));
         ride.setExpectedDuration(expectedDurationDto.getExpectedDuration());
@@ -146,6 +150,7 @@ public class RideController {
 
 
     @PutMapping(value = "/changeRideToPROGRESS/{id}", produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<RideDTO> changeRideToINPROGRESS(@PathVariable("id") long id) {
         Ride ride = this.rideService.changeRideToINPROGRESS(id);
         RideDTO returnRideDTO = new RideDTO(ride);
@@ -155,6 +160,7 @@ public class RideController {
 
 
     @GetMapping(value = "/getRides",produces = "application/json")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<List<RideDTO>> getRides() {
         List<Ride> rides = this.rideService.findAllInProgressAndDTS();
         List<RideDTO> rideDTOs = new ArrayList<>();
@@ -164,7 +170,7 @@ public class RideController {
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
 
-
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @GetMapping(value = "/getUsersFavoriteRouteWithId/{id}",produces = "application/json")
     public ResponseEntity<RouteDTO> getUsersFavoriteRouteWithId(@PathVariable("id") String id) {
         Route route = this.routeService.findById(Long.valueOf(id));
@@ -174,6 +180,7 @@ public class RideController {
 
 
     @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
         Ride ride = this.rideService.getDriversStartedRide(id);
         RideDTO rideDTO;
@@ -187,6 +194,7 @@ public class RideController {
     }
 
     @GetMapping(value = "/getDriversINPROGRESSRide/{id}",produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<RideDTO> getDriversINPROGRESSRide(@PathVariable("id") String id) {
         Ride ride = this.rideService.getDriversINPROGRESSRide(id);
         RideDTO rideDTO;
@@ -198,6 +206,7 @@ public class RideController {
     }
 
     @GetMapping(value = "/getDriversDTSRide/{id}",produces = "application/json")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<RideDTO> getDriversDTSRide(@PathVariable("id") String id) {
         Ride ride = this.rideService.getDriversDrivingToStartRide(id);
         RideDTO rideDTO;
@@ -209,6 +218,7 @@ public class RideController {
     }
 
     @DeleteMapping(value = "/deleteAllVehicles",produces = "text/plain")
+    //hmmm simulacija?
     public ResponseEntity<String> deleteAllVehicles() {
         this.rideService.deleteAllRides();
         this.simpMessagingTemplate.convertAndSend("/map-updates/delete-all-rides", "Delete all rides");
@@ -257,6 +267,7 @@ public class RideController {
 
 
     @GetMapping(value = "/getUserDTSride/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<RideDTO> getUserDTSride(@PathVariable("email") String email)
     {
         RideDTO retVal = this.rideService.getUsersDTSride(email);
@@ -264,6 +275,7 @@ public class RideController {
     }
 
     @GetMapping(value = "/getUserInProgressRide/{email}")
+    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<RideDTO> getUserInProgressRide(@PathVariable("email") String email)
     {
         RideDTO retVal = this.rideService.getUsersInProgresssRide(email);
