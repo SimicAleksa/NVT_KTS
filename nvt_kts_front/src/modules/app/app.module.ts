@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider } from '@abacritt/angularx-social-login';
 
 import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
@@ -65,11 +65,14 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
         }
       } as SocialAuthServiceConfig,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ReferrerInterceptor,
-      multi: true
-    }
+    [
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ReferrerInterceptor,
+        multi: true
+      },
+      
+    ]
   ],
   bootstrap: [AppComponent],
 })

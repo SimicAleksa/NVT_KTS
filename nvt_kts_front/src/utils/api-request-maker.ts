@@ -56,9 +56,9 @@ export class APIRequestMaker {
   }
 
   getRequest(requestType: string, api_url: string,data: any = null) {
-    let header = {
-      headers: new HttpHeaders().set('Authorization',  `Bearer ${localStorage.getItem("token") || 'invalid'}`)
-    }
-    return this.httpClient.request(new HttpRequest(requestType, api_url, data, header));
+    // let header = {
+    //   headers: new HttpHeaders().set('Authorization',  `Bearer ${localStorage.getItem("token") || 'invalid'}`)
+    // }
+    return this.httpClient.request(new HttpRequest(requestType, api_url, data));
   }
 }

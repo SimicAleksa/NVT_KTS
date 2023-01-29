@@ -22,7 +22,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@SuppressWarnings("deprecation")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
@@ -55,9 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/unauth/**", "/h2-console/**", "/h2-console", "/api/drivers/**",
-                        "/api/rides/**","/api/routes/**","/socket/**","/map-updates/**",
-                        "/api/user/**", "/api/messages/**","/api/registeredUsers/**", "/api/changeProfileRequests/**").permitAll()
+                .antMatchers("/api/unauth/**", "/h2-console/**","/socket/**", "/h2-console","/map-updates/**").permitAll()
+                //"/api/routes/**", "/api/user/**", "/api/messages/**","/api/registeredUsers/**", "/api/changeProfileRequests/** , "/api/drivers/**""
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(

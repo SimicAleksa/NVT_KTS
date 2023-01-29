@@ -1,5 +1,7 @@
 package com.example.nvt_kts_back.configurations;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 public class Settings {
     public static final String CROSS_ORIGIN_FRONTEND_PATH = "http://localhost:4200";
 
@@ -10,6 +12,7 @@ public class Settings {
     public static final String PRE_AUTH_ADMIN_ROLE = "hasRole('ADMIN')";
     public static final String PRE_AUTH_DRIVER_ROLE = "hasRole('DRIVER')";
     public static final String PRE_AUTH_USER_ROLE = "hasRole('USER')";
+    public static final String PRE_AUTH_DRIVER_USER_ROLE = "hasAnyRole('DRIVER','USER')";
 
     public static final String RESET_PASS_PAGE_URL = CROSS_ORIGIN_FRONTEND_PATH + "/login/reset-password/";
 

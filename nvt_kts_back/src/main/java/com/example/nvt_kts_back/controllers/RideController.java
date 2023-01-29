@@ -56,6 +56,7 @@ public class RideController {
     }
 
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
+
     public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
         RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
         routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());

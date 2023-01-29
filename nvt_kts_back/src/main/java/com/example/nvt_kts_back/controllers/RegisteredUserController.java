@@ -158,8 +158,8 @@ public class RegisteredUserController {
     }
 
     @PutMapping("/remove-route-from-favourites")
-    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
+    @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ROLE)
     public ResponseEntity<HttpStatus> removeRouteFromFavourites(@RequestParam Long routeId, HttpServletRequest request) {
         try {
             registeredUserService.removeRouteFromFavourites(authService.verifyAuthTokenFromHeaderAndRetUser(request).getId(), routeId);
