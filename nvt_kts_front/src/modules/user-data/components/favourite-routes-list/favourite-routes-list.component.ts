@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { geoJSON, latLng, LayerGroup, tileLayer } from 'leaflet';
 import { APIRequestMaker } from 'src/utils/api-request-maker';
@@ -21,7 +22,7 @@ export class FavouriteRoutesListComponent implements OnInit {
   public selectedRoute: number;
   private routeLayerDeletable: boolean;
 
-  constructor(private reqMaker: APIRequestMaker) {
+  constructor(private reqMaker: APIRequestMaker,private router:Router) {
     this.routes = new Array;
     this.selectedRoute = 0;
     this.routeLayerDeletable = false;
@@ -43,21 +44,11 @@ export class FavouriteRoutesListComponent implements OnInit {
   }
 
   goToNewRidePageForTheSelectedRoute(routeIndex: number): void {
-    /*
-      Plavo dugme sa slikom auta trigeruje ovu funkciju, ako nema omiljenih ruta dodatih
-        za korisnika, samo treba otici na istoriju, pa kliknuti neki red u tabeli i 
-        u detaljima voznje dodati preko dugmeta rutu u omiljene i vratiti se na ovu stranicu
-    */ 
+    this.router.navigate(
+      ['/maps/routeSearch'],
+      { queryParams: { order: String(this.routes.at(routeIndex)['routeId']) } }
+    );
 
-    /* 
-        routeIndex -> indeks rute iz liste "this.routes"
-        informacije rute se mogu dobiti sa "this.routes.at(routeIndex)"
-        ili "this.routes[routeIndex]"
-
-        odavde mozes da ruterom odes na stranicu za kreiranje voznje i da kao argumente
-        url-a stavis id selektovane rute pa posle preuzmes podatke sa back-a ili kako
-        god da ti je lakse
-    */
   } 
 
   removeRouteFromFavourites(routeIndex: number): void {
@@ -111,18 +102,32 @@ export class FavouriteRoutesListComponent implements OnInit {
       })
     };;
 
-    let markerLayer1 = L.marker(
-          [temRoute.waypoints[0].location[1], temRoute.waypoints[0].location[0]], 
-          markerIcon
-        );
+    var markerLayer1;
+    var markerLayer2;
+    if("routesIndex" in temRoute){
+      markerLayer1 = L.marker(
+        [temRoute.waypoints[0].latLng['lat'], temRoute.waypoints[0].latLng['lng']], 
+        markerIcon
+      );
 
-    let markerLayer2 = L.marker(
-      [temRoute.waypoints[1].location[1], temRoute.waypoints[1].location[0]], 
-      markerIcon
-    );
+      markerLayer2 = L.marker(
+        [temRoute.waypoints[temRoute.waypoints.length-1].latLng['lat'], temRoute.waypoints[temRoute.waypoints.length-1].latLng['lng']], 
+        markerIcon
+      );
+    }
+    else{
+      markerLayer1 = L.marker(
+            [temRoute.waypoints[0].location[1], temRoute.waypoints[0].location[0]], 
+            markerIcon
+          );
 
-    markerLayer1.addTo(geoLayerRouteGroup);
-    markerLayer2.addTo(geoLayerRouteGroup);
+      markerLayer2 = L.marker(
+        [temRoute.waypoints[temRoute.waypoints.length-1].location[1], temRoute.waypoints[temRoute.waypoints.length-1].location[0]], 
+        markerIcon
+      );
+    }
+    markerLayer1?.addTo(geoLayerRouteGroup);
+    markerLayer2?.addTo(geoLayerRouteGroup);
     this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     this.routeLayerDeletable = true;
   }

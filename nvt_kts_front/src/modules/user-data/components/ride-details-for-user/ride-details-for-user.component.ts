@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { geoJSON, latLng, LayerGroup, tileLayer } from 'leaflet';
 import { APIRequestMaker } from 'src/utils/api-request-maker';
@@ -21,7 +22,7 @@ export class RideDetailsForUserComponent implements OnInit {
 
   public details: any;
   
-  constructor(private reqMaker: APIRequestMaker) { 
+  constructor(private reqMaker: APIRequestMaker,private router:Router) { 
     this.showPanel = false;
     this.details = null;
 
@@ -47,14 +48,11 @@ export class RideDetailsForUserComponent implements OnInit {
   }
 
   goToNewRidePage(): void {
-    /*
-      Informacije o ruti dobijaju se preko "this.details.ride.route"
-
-      Do dugmeta koje trigeruje ovu funkciju dolazi se preko istorije voznji,
-      stisne je neki red u tabeli od ponudjenih, i onda na panelu za detalje
-      stoji plavo dugme skroz levo pri dnu
-    */ 
-    console.log(this.details);
+    console.log(this.details.ride.route.routeId);
+    this.router.navigate(
+      ['/maps/routeSearch'],
+      { queryParams: { order: String(this.details.ride.route.routeId) } }
+    );
   }
 
   showDriverReviews(): void {
@@ -113,19 +111,32 @@ export class RideDetailsForUserComponent implements OnInit {
         iconAnchor: [18, 45],
       })
     };;
+    var markerLayer1;
+    var markerLayer2;
+    if("routesIndex" in temRoute){
+      markerLayer1 = L.marker(
+        [temRoute.waypoints[0].latLng['lat'], temRoute.waypoints[0].latLng['lng']], 
+        markerIcon
+      );
 
-    let markerLayer1 = L.marker(
-          [temRoute.waypoints[0].location[1], temRoute.waypoints[0].location[0]], 
-          markerIcon
-        );
+      markerLayer2 = L.marker(
+        [temRoute.waypoints[temRoute.waypoints.length-1].latLng['lat'], temRoute.waypoints[temRoute.waypoints.length-1].latLng['lng']], 
+        markerIcon
+      );
+    }
+    else{
+      markerLayer1 = L.marker(
+            [temRoute.waypoints[0].location[1], temRoute.waypoints[0].location[0]], 
+            markerIcon
+          );
 
-    let markerLayer2 = L.marker(
-      [temRoute.waypoints[1].location[1], temRoute.waypoints[1].location[0]], 
-      markerIcon
-    );
-        
-    markerLayer1.addTo(geoLayerRouteGroup);
-    markerLayer2.addTo(geoLayerRouteGroup);
+      markerLayer2 = L.marker(
+        [temRoute.waypoints[temRoute.waypoints.length-1].location[1], temRoute.waypoints[temRoute.waypoints.length-1].location[0]], 
+        markerIcon
+      );
+    }
+    markerLayer1?.addTo(geoLayerRouteGroup);
+    markerLayer2?.addTo(geoLayerRouteGroup);
     this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
   }
  
