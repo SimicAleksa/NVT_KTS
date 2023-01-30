@@ -89,6 +89,7 @@ public class DriverController {
 //        return userService.addNewDriver(driver);
 //    }
 //
+    //TODO OBAVLJANJE voznje - integracioni
     @GetMapping("/getDriver/{id}")
     //hmmm simulacija? (na ovo za sad ostavi bez autorizacije)
     public ResponseEntity<DriverDTO> getDriver(@PathVariable String id){

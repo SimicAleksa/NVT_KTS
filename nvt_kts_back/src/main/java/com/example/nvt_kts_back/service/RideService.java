@@ -217,12 +217,14 @@ public class RideService {
         return retVal;
     }
 
+    //TODO ODBIJANJE voznje - jedninicni
     public void changeRideState(Long id, String state) {
         Ride r = rideRepository.findById(id).get();
         r.setRideState(RideState.valueOf(state));
         rideRepository.save(r);
     }
 
+    //TODO ODBIJANJE voznje - jedinicni
     public ArrayList<RideNotificationDTO> finUsersUpcomingRides(String email) {
         RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
         List<Ride> rides = ru.getHistoryOfRides();
@@ -467,6 +469,7 @@ public class RideService {
         }
     }
 
+    //TODO ZAKAZIVANJE voznje - Jedninicni
     public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) {
         List<RegisteredUser> registeredUsers = new ArrayList<>();
         for(String passEmail : linkedPassengers){

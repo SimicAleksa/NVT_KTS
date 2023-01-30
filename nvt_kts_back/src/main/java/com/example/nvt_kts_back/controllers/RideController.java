@@ -55,6 +55,7 @@ public class RideController {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
+    //TODO ZAKAZIVANJE voznje - INTEGRACIONI
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
@@ -170,6 +171,7 @@ public class RideController {
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
 
+    //TODO ZAKAZIVANJE voznje - integracioni
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @GetMapping(value = "/getUsersFavoriteRouteWithId/{id}",produces = "application/json")
     public ResponseEntity<RouteDTO> getUsersFavoriteRouteWithId(@PathVariable("id") String id) {
@@ -262,6 +264,7 @@ public class RideController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    //TODO ODBIJANJE voznje - integracioni
     @GetMapping(value = "/getUserNotificationRides/{email}")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<ArrayList<RideNotificationDTO>> findUsersUpcomingRides(@PathVariable("email") String email)
@@ -279,6 +282,7 @@ public class RideController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    //TODO OBAVLJANJE voznje - integracioni
     @GetMapping(value = "/getUserInProgressRide/{email}")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<RideDTO> getUserInProgressRide(@PathVariable("email") String email)
@@ -288,11 +292,12 @@ public class RideController {
     }
 
 
+    //TODO ODBIJANJE voznje - integracioni
+    //TODO OBAVLJANJE voznje - integracioni
     @GetMapping(value = "/changeRideState/{id}/{state}")
     @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ROLE)
     public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
     {
-        // TODO mozda ovdje staviti da se svi obavjestavaju da je promijenjeno stanje
         this.rideService.changeRideState(id, state);
         this.simpMessagingTemplate.convertAndSend("/map-updates/ride-status-changed", new StringDTO(state, id));
     }

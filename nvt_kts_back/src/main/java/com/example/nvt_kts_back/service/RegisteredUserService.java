@@ -82,7 +82,7 @@ public class RegisteredUserService {
         registeredUserRepository.save(usr);
     }
 
-
+    //TODO ZAKAZIVANJE voznje - jedinicni
     public ArrayList<String> getMails() {
         ArrayList<String> retVal = new ArrayList<>();
         List<RegisteredUser> all = this.registeredUserRepository.findAll();

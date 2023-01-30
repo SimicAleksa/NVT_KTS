@@ -128,7 +128,7 @@ public class RegisteredUserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    // TODO:  ovo bi trebalo da moze samo registrovani kad narucuje slozenu voznju
+    //TODO ZAKAZIVANJE voznje - integracioni
     @GetMapping("/getAllRegisteredUsersMails")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<ArrayList<String>> getAllRegisteredUsersMails()
@@ -137,6 +137,8 @@ public class RegisteredUserController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    //TODO ZAKAZIVANJE voznje - integracioni
+    //TODO OBAVLJANJE voznje - integracioni
     @GetMapping(value="/getUserStateBasedOnRide/{email}")
     public boolean getUserStateBasedOnRide(@PathVariable("email") String email)
     {
