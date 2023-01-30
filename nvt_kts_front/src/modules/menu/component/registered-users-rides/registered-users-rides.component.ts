@@ -39,20 +39,21 @@ export class RegisteredUsersRidesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.toastr.success("VOLIM TE KRETENU MALI PUFNASTI");
     this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
       this.usersRides = <RideForNotification[]> response;
       this.addStringLocation();
       this.splitDate();
     });
+    console.log(this.usersRides);
+    
   }
 
   alreadyApproved(ride: RideForNotification)
   {
     //alert(ride.approvedBy + " je lista za " + ride.id);
-    let users = ride.approvedBy.split("$");
+    ride.approvedBy = ride.approvedBy ? ride.approvedBy:""
+    let users = ride.approvedBy.split(";");
     if (users.includes(this.username))
     {
       return true;

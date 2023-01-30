@@ -99,7 +99,7 @@ public class RideService {
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
         ride.setRideState(RideState.NOT_FOUND);
-        return  this.rideRepository.findByDriverAndRideStateDTS(temp).orElse(ride);
+        return this.rideRepository.findByDriverAndRideStateDTS(temp).orElse(ride);
     }
 
     public void deleteAllRides(){
@@ -239,6 +239,7 @@ public class RideService {
                 }
             }
         }
+        System.out.println("Duzina voznji je:"+ retVal.size());
         Collections.sort(retVal, Comparator.comparing(RideNotificationDTO::getStartDateTime));
         return retVal;
     }
@@ -259,7 +260,7 @@ public class RideService {
                 break;
             }
         }
-        Ride rrrride = this.getDriversDrivingToStartRide(String.valueOf(retVal.getId()));
+        Ride rrrride = this.getDriversDrivingToStartRide(String.valueOf(retVal.getDriver()));
         RideDTO returnRideDto = new RideDTO(rrrride);
         returnRideDto.setExpectedDuration(rrrride.getExpectedDuration());
 
@@ -515,9 +516,9 @@ public class RideService {
         }
         else
         {
-            ride.setApprovedBy(ride.getApprovedBy()+"$" + email);
+            ride.setApprovedBy(ride.getApprovedBy()+";" + email);
         }
-        if (ride.getApprovedBy()!=null && !ride.getApprovedBy().equals("") && ride.getApprovedBy().split("\\$").length == ride.getPassengers().size())
+        if (ride.getApprovedBy()!=null && !ride.getApprovedBy().equals("") && ride.getApprovedBy().split(";").length == ride.getPassengers().size())
         {
             //System.out.println(ride.getId() + " je prethhodno sacuvani ID");
             //System.out.println(this.dataForRideFromFromRepository.findById(ride.getId()).get() + " je cijeli objekat ");
