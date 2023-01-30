@@ -23,7 +23,7 @@ INSERT INTO my_users (email, password, name, surname, city, phone, profile_activ
 
 INSERT INTO registered_user (id, is_busy, tokens)
     VALUES
-      (1, true, 10000),
+      (1, true, 5000),
       (2, false, 245);
 
 INSERT INTO driver (id, active, car_type, baby_allowed, pet_allowed, is_driver_free, current_coords_id, license_plate_number)
