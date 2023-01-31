@@ -16,7 +16,10 @@ INSERT INTO COORD (latitude, longitude)
 
 INSERT INTO my_users (email, password, name, surname, city, phone, profile_activated, picture, is_blocked, role_id, note)
     VALUES ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'ime', 'prezime', 'grad', '42145135', true, 'slika', false, 1, null),
-            ('djura@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Djura','Djuric','grad','42145135',true,'slika',false, 1, null),
+            ('djura@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Djura','Djuric','grad','42145135',false,'slika',false, 1, null),
+           ('goran@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Goran','Goric','grad','42145135',true,'slika',false, 1, null),
+           ('zoran@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Xoran','Xoric','grad','42145135',false,'slika',true, 1, null),
+           ('anastasija@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Anastasija','Lolic','grad','42145135',true,'slika',false, 1, null),
             ('registrovani1@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Put','Putic','grad','42145135',true,'slika',false,2, null),
             ('registrovani2@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Isidora', 'Mladjic', 'grad', '42145135', true, 'slika', false, 2, null),
             ('pera@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'John', 'Doe', 'New York', '123-456-7890', true, 'picture.jpg', false, 2, null);
@@ -24,12 +27,15 @@ INSERT INTO my_users (email, password, name, surname, city, phone, profile_activ
 INSERT INTO registered_user (id, is_busy, tokens)
     VALUES
       (1, true, 5000),
-      (2, false, 245);
+      (2, false, 245),
+      (3, true, 1000),
+      (4, true, 2000),
+      (5, true, 3000);
 
 INSERT INTO driver (id, active, car_type, baby_allowed, pet_allowed, is_driver_free, current_coords_id, license_plate_number)
-    VALUES (3, true, 'SEDAN', true, true, true, 3, 'NS 8734 SN'), -- Blocked
-            (4, true, 'SUV', false, true, false, 4 , 'NS 834 FN'), -- Blocked
-           (5, true, 'SUV', false, true, false, 5 , 'NS 834 FN'); -- Blocked
+    VALUES (6, true, 'SEDAN', true, true, true, 3, 'NS 8734 SN'), -- Blocked
+            (7, true, 'SUV', false, true, false, 4 , 'NS 834 FN'), -- Blocked
+           (8, true, 'SUV', false, true, false, 5 , 'NS 834 FN'); -- Blocked
 
 
 INSERT INTO route (start_location_id, end_location_id, routejson)

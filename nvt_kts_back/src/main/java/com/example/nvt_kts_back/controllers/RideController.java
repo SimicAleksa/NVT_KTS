@@ -58,7 +58,7 @@ public class RideController {
     //TODO ZAKAZIVANJE voznje - INTEGRACIONI
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
-    public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto){
+    public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto) throws Exception {
         RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
         routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());
 

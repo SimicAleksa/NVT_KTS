@@ -5,6 +5,7 @@ import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
+import com.example.nvt_kts_back.exception.RegisteredUserNotFound;
 import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import com.example.nvt_kts_back.repository.*;
@@ -469,13 +470,19 @@ public class RideService {
         }
     }
 
-    //TODO ZAKAZIVANJE voznje - Jedninicni
-    public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) {
+    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen)
+    public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) throws Exception{
         List<RegisteredUser> registeredUsers = new ArrayList<>();
         for(String passEmail : linkedPassengers){
-            registeredUsers.add(this.registeredUserRepository.findByEmail(passEmail));
-            RideNotificationDTO dto = new RideNotificationDTO(ride,passEmail);
-            this.simpMessagingTemplate.convertAndSend("/map-updates/ride-notification", dto);
+            RegisteredUser registeredUser = this.registeredUserRepository.findByEmail(passEmail);
+            if(registeredUser==null){
+                throw new RegisteredUserNotFound("Registered user not found");
+            }
+            else {
+                registeredUsers.add(registeredUser);
+                RideNotificationDTO dto = new RideNotificationDTO(ride, passEmail);
+                this.simpMessagingTemplate.convertAndSend("/map-updates/ride-notification", dto);
+            }
         }
         return registeredUsers;
     }

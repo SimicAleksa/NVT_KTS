@@ -88,7 +88,9 @@ public class RegisteredUserService {
         List<RegisteredUser> all = this.registeredUserRepository.findAll();
         for (RegisteredUser r: all)
         {
-            retVal.add(r.getEmail());
+            if(!r.getIsBlocked() && r.isEnabled()) {
+                retVal.add(r.getEmail());
+            }
         }
         return retVal;
     }
