@@ -20,9 +20,11 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
     Optional<Ride> findById(long id);
 
+    //TODO mora se 5 (odradjeno)
     @Query("select r from Ride r where r.driver_id=?1 and r.rideState='STARTED'")
     Optional<Ride> findByDriverAndRideStateSTARTED(Long id);
 
+    //TODO mora se 6 (nevena)
     @Query("select r from Ride r where r.driver_id=?1 and r.rideState='IN_PROGRESS'")
     Optional<Ride> findByDriverAndRideStateINPROGRESS(Long id);
 

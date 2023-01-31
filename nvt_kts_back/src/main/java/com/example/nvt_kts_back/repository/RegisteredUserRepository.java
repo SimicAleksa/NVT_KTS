@@ -26,6 +26,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 
     Optional<RegisteredUser> getById(Long id);
 
+    //TODO Zakazivanje voznje - jedinicni (odradjeno)
     @Query(
             "SELECT u FROM RegisteredUser u " +
                     "LEFT JOIN FETCH u.favouriteRoutes " +

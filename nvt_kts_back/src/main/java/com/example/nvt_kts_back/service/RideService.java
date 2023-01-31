@@ -60,6 +60,7 @@ public class RideService {
         return rideRepository.save(returnRide);
     }
 
+    //TODO mora se 2 (nevena)
     public Ride changeRide(long id){
         Ride ride = this.rideRepository.findById(id).orElseThrow(()->
                 new NotFoundException("Ride does not exist"));
@@ -67,6 +68,7 @@ public class RideService {
         return this.rideRepository.save(ride);
     }
 
+    //TODO mora se 4 (nevena)
     public Ride changeRideToINPROGRESS(long id){
         Ride ride = this.rideRepository.findById(id).orElseThrow(()->
                 new NotFoundException("Ride does not exist"));
@@ -89,6 +91,7 @@ public class RideService {
         return  this.rideRepository.findByDriverAndRideStateSTARTED(temp).orElse(ride);
     }
 
+    //TODO mora se 6 (nevena)
     public Ride getDriversINPROGRESSRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
@@ -96,6 +99,7 @@ public class RideService {
         return  this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
     }
 
+    //TODO mora se 3 (odradjeno)
     public Ride getDriversDrivingToStartRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();

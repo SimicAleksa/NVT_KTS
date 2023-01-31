@@ -134,6 +134,7 @@ public class RideController {
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
 
+    //TODO mora se 2 (nevena)
     @PutMapping(value = "/changeRide/{id}", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> changeRide(@PathVariable("id") long id) {
@@ -155,7 +156,7 @@ public class RideController {
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
 
-
+    //TODO mora se 4 (nevena)
     @PutMapping(value = "/changeRideToPROGRESS/{id}", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> changeRideToINPROGRESS(@PathVariable("id") long id) {
@@ -188,7 +189,6 @@ public class RideController {
         return new ResponseEntity<>(routeDTO, HttpStatus.OK);
     }
 
-
     @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
@@ -203,6 +203,7 @@ public class RideController {
         return new ResponseEntity<>(rideDTO, HttpStatus.OK);
     }
 
+    //TODO mora se 6 (nevena)
     @GetMapping(value = "/getDriversINPROGRESSRide/{id}",produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> getDriversINPROGRESSRide(@PathVariable("id") String id) {
