@@ -7,7 +7,6 @@ import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.service.*;
 import com.example.nvt_kts_back.models.*;
-import com.example.nvt_kts_back.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 @RestController
 @RequestMapping("api/rides")
@@ -269,7 +267,7 @@ public class RideController {
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<ArrayList<RideNotificationDTO>> findUsersUpcomingRides(@PathVariable("email") String email)
     {
-        ArrayList<RideNotificationDTO> retVal = this.rideService.finUsersUpcomingRides(email);
+        ArrayList<RideNotificationDTO> retVal = this.rideService.findUsersUpcomingRides(email);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 

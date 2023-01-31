@@ -6,6 +6,7 @@ import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.exception.RegisteredUserNotFound;
+import com.example.nvt_kts_back.exception.RideNotFoundException;
 import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import com.example.nvt_kts_back.repository.*;
@@ -14,10 +15,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Collections;
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.*;
 
 import java.time.LocalDateTime;
@@ -86,7 +84,7 @@ public class RideService {
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
         ride.setRideState(RideState.NOT_FOUND);
-        return  this.rideRepository.findByDriverAndRideStateSTARTED(temp).orElse(ride);
+        return this.rideRepository.findByDriverAndRideStateSTARTED(temp).orElse(ride);
     }
 
     public Ride getDriversINPROGRESSRide(String id){
@@ -96,6 +94,7 @@ public class RideService {
         return  this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
     }
 
+    // TODO ODBIJANJE voznje - jedninicni
     public Ride getDriversDrivingToStartRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
@@ -219,32 +218,34 @@ public class RideService {
     }
 
     //TODO ODBIJANJE voznje - jedninicni
-    public void changeRideState(Long id, String state) {
-        Ride r = rideRepository.findById(id).get();
+    public Ride changeRideState(Long id, String state) {
+        Ride r = rideRepository.findById(id).orElseThrow(RideNotFoundException::new);
         r.setRideState(RideState.valueOf(state));
-        rideRepository.save(r);
+        return rideRepository.save(r);
     }
 
     //TODO ODBIJANJE voznje - jedinicni
-    public ArrayList<RideNotificationDTO> finUsersUpcomingRides(String email) {
+    public ArrayList<RideNotificationDTO> findUsersUpcomingRides(String email) {
         RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
+        if(ru==null) throw new RegisteredUserNotFound("Registered user not found");
         List<Ride> rides = ru.getHistoryOfRides();
         ArrayList<RideNotificationDTO> retVal = new ArrayList<>();
         for(Ride r: rides)
         {
-            if (r.getRideState()==RideState.IN_PROGRESS || r.getRideState()==RideState.STARTED ||
-                    r.getRideState()==RideState.WAITING_FOR_PAYMENT ||
-                    r.getRideState()==RideState.RESERVED) {
+            if (r.getRideState()== RideState.IN_PROGRESS || r.getRideState()== RideState.STARTED ||
+                    r.getRideState()== RideState.WAITING_FOR_PAYMENT ||
+                    r.getRideState()== RideState.RESERVED) {
                 RideNotificationDTO dto = new RideNotificationDTO(r);
                 retVal.add(dto);
-                if(r.getRideState()==RideState.STARTED){
+                if(r.getRideState()== RideState.STARTED){
                     retVal.add(new RideNotificationDTO(this.getDriversDrivingToStartRide(String.valueOf(r.getDriver_id()))));
                 }
             }
         }
-        System.out.println("Duzina voznji je:"+ retVal.size());
         Collections.sort(retVal, Comparator.comparing(RideNotificationDTO::getStartDateTime));
         return retVal;
+
+
     }
 
 
@@ -254,7 +255,7 @@ public class RideService {
         RideDTO retVal=new RideDTO();
         for(Ride r: rides)
         {
-            if (r.getRideState()==RideState.STARTED){
+            if (r.getRideState()== RideState.STARTED){
                 retVal.setExpectedDuration(r.getExpectedDuration());
                 retVal.setDriver(r.getDriver_id());
                 retVal.setRoute(new RouteDTO(r.getRoute()));
@@ -276,7 +277,7 @@ public class RideService {
         RideDTO retVal=new RideDTO();
         for(Ride r: rides)
         {
-            if (r.getRideState()==RideState.IN_PROGRESS){
+            if (r.getRideState()== RideState.IN_PROGRESS){
                 retVal.setExpectedDuration(r.getExpectedDuration());
                 retVal.setDriver(r.getDriver_id());
                 retVal.setRoute(new RouteDTO(r.getRoute()));
@@ -338,7 +339,7 @@ public class RideService {
             {
                 LocalDateTime existedStart = r.getStartDateTime();
                 LocalDateTime existedEnd = existedStart.plusMinutes(r.getExpectedDuration());
-                if (r.getRideState()==RideState.RESERVED && !((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
+                if (r.getRideState()== RideState.RESERVED && !((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
                 {
                     // nista ne treba da se desi
                     free = false;

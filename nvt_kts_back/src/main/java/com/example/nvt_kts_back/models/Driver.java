@@ -99,7 +99,7 @@ public class Driver extends User {
     public boolean hasStartedOrCurrentRides() {
         for (Ride r : historyOfRides)
         {
-            if (r.getRideState()== RideState.STARTED || r.getRideState()==RideState.IN_PROGRESS) return true;
+            if (r.getRideState()== RideState.STARTED || r.getRideState()== RideState.IN_PROGRESS) return true;
         }
         return false;
     }

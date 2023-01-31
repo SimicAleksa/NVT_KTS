@@ -2,7 +2,6 @@ package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
-import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.exception.RegisteredUserNotFound;
 import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
