@@ -17,10 +17,10 @@ export class MenuComponent implements OnInit {
     this.role = '';
     this.updateRole();
     
-    if (this.role === "USER")
-      this.currentActiveBtn = "HOME";
-    else
+    if (this.role === "UNREGISTERED")
       this.currentActiveBtn = "LOGIN";
+    else
+      this.currentActiveBtn = "ALL ACTIVE VEHICLES";
   }
 
   ngOnInit(): void {

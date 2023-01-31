@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col passengers-cont">
 
-                <div class="row passenger-card">
+                <div class="row passenger-card" *ngFor="let passenger of details.passengers;">
                     <div class="col-4">
                         <div class="row">
                             <img src="../../../../assets/images/pera.webp">
@@ -33,13 +33,13 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].name" type="text" id="name" class="form-control" disabled/>
+                                    <input [value]="passenger.name" type="text" id="name" class="form-control" disabled/>
                                     <label class="form-label" for="name">NAME</label>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].surname" type="text" id="surname" class="form-control" disabled/>
+                                    <input [value]="passenger.surname" type="text" id="surname" class="form-control" disabled/>
                                     <label class="form-label" for="surname">SURNAME</label>
                                 </div>         
                             </div>
@@ -47,7 +47,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].phone" type="text" id="phoneNumber" class="form-control" disabled/>
+                                    <input [value]="passenger.phone" type="text" id="phoneNumber" class="form-control" disabled/>
                                     <label class="form-label" for="phoneNumber">PHONE NUMBER</label>
                                 </div>
                             </div>
@@ -55,166 +55,6 @@
                     </div>
                 </div>
             
-                <div class="row passenger-card">
-                    <div class="col-4">
-                        <div class="row">
-                            <img src="../../../../assets/images/pera.webp">
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].name" type="text" id="name" class="form-control" disabled/>
-                                    <label class="form-label" for="name">NAME</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].surname" type="text" id="surname" class="form-control" disabled/>
-                                    <label class="form-label" for="surname">SURNAME</label>
-                                </div>         
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].phone" type="text" id="phoneNumber" class="form-control" disabled/>
-                                    <label class="form-label" for="phoneNumber">PHONE NUMBER</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row passenger-card">
-                    <div class="col-4">
-                        <div class="row">
-                            <img src="../../../../assets/images/pera.webp">
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].name" type="text" id="name" class="form-control" disabled/>
-                                    <label class="form-label" for="name">NAME</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].surname" type="text" id="surname" class="form-control" disabled/>
-                                    <label class="form-label" for="surname">SURNAME</label>
-                                </div>         
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].phone" type="text" id="phoneNumber" class="form-control" disabled/>
-                                    <label class="form-label" for="phoneNumber">PHONE NUMBER</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row passenger-card">
-                    <div class="col-4">
-                        <div class="row">
-                            <img src="../../../../assets/images/pera.webp">
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].name" type="text" id="name" class="form-control" disabled/>
-                                    <label class="form-label" for="name">NAME</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].surname" type="text" id="surname" class="form-control" disabled/>
-                                    <label class="form-label" for="surname">SURNAME</label>
-                                </div>         
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].phone" type="text" id="phoneNumber" class="form-control" disabled/>
-                                    <label class="form-label" for="phoneNumber">PHONE NUMBER</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row passenger-card">
-                    <div class="col-4">
-                        <div class="row">
-                            <img src="../../../../assets/images/pera.webp">
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].name" type="text" id="name" class="form-control" disabled/>
-                                    <label class="form-label" for="name">NAME</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].surname" type="text" id="surname" class="form-control" disabled/>
-                                    <label class="form-label" for="surname">SURNAME</label>
-                                </div>         
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].phone" type="text" id="phoneNumber" class="form-control" disabled/>
-                                    <label class="form-label" for="phoneNumber">PHONE NUMBER</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row passenger-card">
-                    <div class="col-4">
-                        <div class="row">
-                            <img src="../../../../assets/images/pera.webp">
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].name" type="text" id="name" class="form-control" disabled/>
-                                    <label class="form-label" for="name">NAME</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].surname" type="text" id="surname" class="form-control" disabled/>
-                                    <label class="form-label" for="surname">SURNAME</label>
-                                </div>         
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline flex-fill mb-0 form-floating">
-                                    <input [value]="details.passengers[0].phone" type="text" id="phoneNumber" class="form-control" disabled/>
-                                    <label class="form-label" for="phoneNumber">PHONE NUMBER</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     

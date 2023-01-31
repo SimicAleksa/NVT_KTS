@@ -56,10 +56,10 @@ export const routes: Routes = [
       data:{expectedRoles:"ADMIN"}
       },
 
-    { path: CLIENT_REG_USR_RIDES_HISTORY_URL, component: UserRidesHistoryPageComponent},
-    { path: CLIENT_DRIVER_RIDES_HISTORY_URL, component: DriverRidesHistoryPageComponent},
-    { path: CLIENT_ADMIN_RIDES_HISTORY_URL, component: AdminRidesHistoryPageComponent},
-    { path: CLIENT_USER_FAV_ROUTES, component: FavouriteRoutesPageComponent}
+    { path: CLIENT_REG_USR_RIDES_HISTORY_URL, component: UserRidesHistoryPageComponent, canActivate: [RoleGuard], data:{expectedRoles:"USER"}},
+    { path: CLIENT_DRIVER_RIDES_HISTORY_URL, component: DriverRidesHistoryPageComponent, canActivate: [RoleGuard], data:{expectedRoles:"DRIVER"}},
+    { path: CLIENT_ADMIN_RIDES_HISTORY_URL, component: AdminRidesHistoryPageComponent, canActivate: [RoleGuard], data:{expectedRoles:"ADMIN"}},
+    { path: CLIENT_USER_FAV_ROUTES, component: FavouriteRoutesPageComponent, canActivate: [RoleGuard], data:{expectedRoles:"USER"}}
 ];
 
 

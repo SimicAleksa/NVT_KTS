@@ -13,10 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Collections;
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.*;
 
 import java.time.LocalDateTime;
@@ -565,7 +562,7 @@ public class RideService {
 
     public List<UserRideHistoryDTO> getRideHistoryForRegisteredUser(Long userId) {
         List<UserRideHistoryDTO> rideHistory = new ArrayList<>();
-        for (Ride ride : rideRepository.findAllByPassengerId(userId))
+        for (Ride ride : rideRepository.findAllThatEndedByPassengerId(userId))
             rideHistory.add(new UserRideHistoryDTO(
                     EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
                     EntityToDTOMapper.mapDriverToDriverInfoForRideHistoryDTO(
@@ -578,14 +575,14 @@ public class RideService {
     }
 
     public boolean userHadRideWitGivenDriverInLast3Days(Long passengerId, Long driverId) {
-        return rideRepository.findByPassengerIdAndDriverIdAndDate(
+        return rideRepository.findThatEndedByPassengerIdAndDriverIdAndDate(
                 passengerId, driverId, LocalDateTime.now().minusDays(3), LocalDateTime.now()
         ).size() > 0;
     }
 
     public List<DriverRideHistoryDTO> getRideHistoryForDriver(Long driverId) {
         List<DriverRideHistoryDTO> rideHistory = new ArrayList<>();
-        for (Ride ride : rideRepository.findAllByDriverId(driverId))
+        for (Ride ride : rideRepository.findAllThatEndedByDriverId(driverId))
             rideHistory.add(new DriverRideHistoryDTO(
                             EntityToDTOMapper.mapRideToRideHistoryInfoDTO(ride),
                             ride.getPassengers().stream().map(
@@ -603,9 +600,9 @@ public class RideService {
 
         List<Ride> rides = new ArrayList<>();
         if (roleName.equals(Settings.USER_ROLE_NAME))
-            rides = rideRepository.findAllByPassengerId(usr.getId());
+            rides = rideRepository.findAllThatEndedByPassengerId(usr.getId());
         else if (roleName.equals(Settings.DRIVER_ROLE_NAME))
-            rides = rideRepository.findAllByDriverId(usr.getId());
+            rides = rideRepository.findAllThatEndedByDriverId(usr.getId());
 
         List<RideHistoryForAdminDTO> rideHistory = new ArrayList<>();
         for (Ride ride : rides)
