@@ -1,4 +1,5 @@
 package com.example.nvt_kts_back.service;
+import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.CoordsDTO;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
@@ -113,6 +114,13 @@ public class ZakazivanjeVoznjeRegisteredUserServiceUnitTest {
         when(this.registeredUserRepository.findByEmail("testingismail@gmail.com")).thenReturn(registeredUser2);
         when(this.registeredUserRepository.findByEmail("mailfortesting@gmail.com")).thenReturn(registeredUser1);
         when(this.registeredUserRepository.findAll()).thenReturn(registeredUsers);
+        List<Route> favoriteRoutes = new ArrayList<>();
+        favoriteRoutes.add(route);
+        registeredUser1.setFavouriteRoutes(favoriteRoutes);
+        when(this.registeredUserRepository.getRegUserWithFavouriteRoutesByUserId(1l)).thenReturn(java.util.Optional.of(registeredUser1));
+        List<Route> favoriteRoutesEmpty = new ArrayList<>();
+        registeredUser2.setFavouriteRoutes(favoriteRoutesEmpty);
+        when(this.registeredUserRepository.getRegUserWithFavouriteRoutesByUserId(2l)).thenReturn(java.util.Optional.of(registeredUser2));
     }
 
     @Test
@@ -127,7 +135,15 @@ public class ZakazivanjeVoznjeRegisteredUserServiceUnitTest {
     @Test
     public void getAllUsersFavouriteRoutes_validData_SizeOfFavorites(){
         Assertions.assertAll(
-                ()->Assertions.assertEquals(0,this.registeredUserService.getAllUsersFavouriteRoutes(1l).size())
+                ()->Assertions.assertEquals(1,this.registeredUserService.getAllUsersFavouriteRoutes(1l).size()),
+                ()->Assertions.assertEquals(0,this.registeredUserService.getAllUsersFavouriteRoutes(2l).size())
+        );
+    }
+
+    @Test
+    public void getAllUsersFavouriteRoutes_inValidData_UserDoesNotExistException(){
+        Assertions.assertAll(
+                ()->Assertions.assertThrows(UserDoesNotExistException.class,()->this.registeredUserService.getAllUsersFavouriteRoutes(5l))
         );
     }
 

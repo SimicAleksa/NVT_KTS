@@ -22,7 +22,7 @@ import java.util.Objects;
 
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-public class ZakazivanjeVoznjeRegisteredRideControllerIntegrationTest {
+public class ZakazivanjeVoznjeRideControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 

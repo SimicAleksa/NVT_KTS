@@ -470,7 +470,7 @@ public class RideService {
         }
     }
 
-    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen) | hajde ponovo
+    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen) | hajde ponovo (odradjen ponovo)
     public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) throws Exception{
         List<RegisteredUser> registeredUsers = new ArrayList<>();
         for(String passEmail : linkedPassengers){
