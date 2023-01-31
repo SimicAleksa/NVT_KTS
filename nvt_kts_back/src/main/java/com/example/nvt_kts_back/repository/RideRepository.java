@@ -1,7 +1,6 @@
 package com.example.nvt_kts_back.repository;
 
 import com.example.nvt_kts_back.enumerations.RideState;
-import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.Ride;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -54,25 +53,27 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
     @Query(
             "SELECT DISTINCT r FROM Ride r " +
                     "JOIN FETCH r.passengers p " +
-                    "WHERE p.id = :userId"
+                    "WHERE p.id = :userId AND r.rideState = 'ENDED'"
     )
-    List<Ride> findAllByPassengerId(@Param("userId") Long userId);
+    List<Ride> findAllThatEndedByPassengerId(@Param("userId") Long userId);
 
     @Query(
             "SELECT r FROM Ride r " +
                     "JOIN r.passengers p " +
                     "WHERE p.id = :passengerId AND " +
                         "r.driver_id = :driverId AND " +
+                        "r.rideState = 'ENDED' AND " +
                         "r.startDateTime BETWEEN :startDate AND :endDate"
     )
-    List<Ride> findByPassengerIdAndDriverIdAndDate(@Param("passengerId") Long passengerId, @Param("driverId") Long driverId,
-                                                   @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    List<Ride> findThatEndedByPassengerIdAndDriverIdAndDate(@Param("passengerId") Long passengerId, @Param("driverId") Long driverId,
+                                                            @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query(
             "SELECT DISTINCT r FROM Ride r " +
                     "JOIN FETCH r.passengers p " +
-                    "WHERE r.driver_id = :driverId"
+                    "WHERE r.driver_id = :driverId AND " +
+                        "r.rideState = 'ENDED'"
     )
-    List<Ride> findAllByDriverId(@Param("driverId") Long driverId);
+    List<Ride> findAllThatEndedByDriverId(@Param("driverId") Long driverId);
 
 }

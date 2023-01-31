@@ -1,6 +1,8 @@
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
+import { API_ALL_ACTIVE_VEHICLES_URL } from 'src/config/map-urls';
 import { MenuService } from 'src/modules/menu/service/menu-service';
 import { FieldValidator } from 'src/utils/field-validator';
 import { APIRequestMaker } from "../../../../utils/api-request-maker";
@@ -21,7 +23,8 @@ export class LoginFormComponent implements OnInit {
 
 
   constructor(private reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator, 
-              private menuService: MenuService, private authService: SocialAuthService) {
+              private menuService: MenuService, private authService: SocialAuthService,
+              private router: Router) {
     this.email = "";
     this.password = "";
 
@@ -79,7 +82,8 @@ export class LoginFormComponent implements OnInit {
       next: (retData: any) => {
         if (retData.body === undefined)
           return;
-        const tokenData : any = jwtDecode(retData.body.accessToken)
+        
+        const tokenData : any = jwtDecode(retData.body.accessToken);
         localStorage.setItem('token', retData.body.accessToken);
         localStorage.setItem('email', tokenData['sub']);
         localStorage.setItem('role', retData.body.role);
@@ -105,7 +109,10 @@ export class LoginFormComponent implements OnInit {
       next: (retData: any) => {
         if (retData.body === undefined)
           return;
+
+        const tokenData : any = jwtDecode(retData.body.accessToken);
         localStorage.setItem('token', retData.body.accessToken);
+        localStorage.setItem('email', tokenData['sub']);
         localStorage.setItem('role', retData.body.role);
       },
 
@@ -122,8 +129,7 @@ export class LoginFormComponent implements OnInit {
 
   redirectAfterLogin() {
     this.menuService.updateMenu();
-    //TODO router.navigate
-    alert("Logged");
+    this.router.navigate([API_ALL_ACTIVE_VEHICLES_URL]);
   }
 
   signInWithGoogle(): void {
