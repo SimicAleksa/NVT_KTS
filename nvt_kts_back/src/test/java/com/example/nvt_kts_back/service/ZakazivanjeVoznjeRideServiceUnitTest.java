@@ -69,7 +69,7 @@ public class ZakazivanjeVoznjeRideServiceUnitTest {
     }
 
     @Test
-    public void getLinkedPassangersFromStringArray_RegisteredUserNotFound(){
+    public void getLinkedPassangersFromStringArray_oneInvalidEmail_RegisteredUserNotFound(){
         List<String> emails = new ArrayList<>();
         emails.add("mailfortesting@gmail.com");
         emails.add("testingismail@gmail.com");
@@ -87,7 +87,7 @@ public class ZakazivanjeVoznjeRideServiceUnitTest {
     }
 
     @Test
-    public void getLinkedPassangersFromStringArray_ReturnsCorrectValues(){
+    public void getLinkedPassangersFromStringArray_validEmails_ReturnsCorrectValues(){
         List<RegisteredUser> registeredUsers;
         List<String> emails = new ArrayList<>();
         emails.add("mailfortesting@gmail.com");
