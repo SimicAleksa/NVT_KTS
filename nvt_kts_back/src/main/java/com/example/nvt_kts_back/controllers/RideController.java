@@ -53,12 +53,16 @@ public class RideController {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    //TODO ZAKAZIVANJE voznje - INTEGRACIONI
+    //TODO ZAKAZIVANJE voznje - INTEGRACIONI (odradjeno)
     @PostMapping(value = "/createRideFromFront",consumes = "application/json", produces = "application/json")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<DataForRideFromFromDTO> createRideFromFront(@RequestBody DataForRideFromFromDTO dto) throws Exception {
         RouteFormFrontDTO routeFormFrontDTO = new RouteFormFrontDTO();
         routeFormFrontDTO.setRouteJSON(dto.getRoute().getRouteJSON());
+
+        if(dto.getCarTypes().size()==0){
+            return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
+        }
 
         CoordsDTO coordsDTOStartLoc = new CoordsDTO();
         coordsDTOStartLoc.setLatitude(dto.getRoute().getStartLocation().getLatitude());
@@ -108,6 +112,8 @@ public class RideController {
         DataForRideFromFrom dataForRide = new DataForRideFromFrom(dto, ride.getId());
         //System.out.println("ID VOZNJE KOJA JE SADA UBACENA JEEE" + ride.getId());
         this.dataForRideFromFromService.save(dataForRide);
+        if(ride.getPassengers().size()!=dto.getLinkedPassengers().size())
+            return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -169,11 +175,13 @@ public class RideController {
         return new ResponseEntity<>(rideDTOs, HttpStatus.OK);
     }
 
-    //TODO ZAKAZIVANJE voznje - integracioni
+    //TODO ZAKAZIVANJE voznje - integracioni (odradjeno)
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @GetMapping(value = "/getUsersFavoriteRouteWithId/{id}",produces = "application/json")
     public ResponseEntity<RouteDTO> getUsersFavoriteRouteWithId(@PathVariable("id") String id) {
         Route route = this.routeService.findById(Long.valueOf(id));
+        if(route==null)
+            return new ResponseEntity<>(new RouteDTO(),HttpStatus.NOT_FOUND);
         RouteDTO routeDTO = new RouteDTO(route);
         return new ResponseEntity<>(routeDTO, HttpStatus.OK);
     }

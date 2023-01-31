@@ -124,7 +124,7 @@ public class RegisteredUserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    //TODO ZAKAZIVANJE voznje - integracioni
+    //TODO ZAKAZIVANJE voznje - integracioni (odradjeno)
     @GetMapping("/getAllRegisteredUsersMails")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<ArrayList<String>> getAllRegisteredUsersMails()
@@ -133,7 +133,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-    //TODO ZAKAZIVANJE voznje - integracioni
+    //TODO ZAKAZIVANJE voznje - integracioni (odradjeno)
     //TODO OBAVLJANJE voznje - integracioni
     @GetMapping(value="/getUserStateBasedOnRide/{email}")
     public boolean getUserStateBasedOnRide(@PathVariable("email") String email)
@@ -147,6 +147,7 @@ public class RegisteredUserController {
         }
         return false;
     }
+
     @GetMapping("/favourite-routes")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)
