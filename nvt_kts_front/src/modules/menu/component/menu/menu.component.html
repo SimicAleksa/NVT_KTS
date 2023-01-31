@@ -1,52 +1,89 @@
-<nav>
-    <span *ngIf="role === 'USER'">
-        <button (click)="onFavouriteRoutesBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='FAVOURITE_ROUTES'}">
-            FAVOURITE ROUTES
-        </button>
-        <button (click)="onUserRidesHistoryBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}">
-            RIDES HISTORY
-        </button>
-    </span>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+            
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='FAVOURITE_ROUTES'}" *ngIf="role === 'USER'">
+                <a class="nav-link"  (click)="onFavouriteRoutesBtnClick()">FAVOURITE ROUTES</a>
+            </li>
+            <!--Dodati ngif za tip korisnika-->
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}" *ngIf="role === 'USER'">
+                <a class="nav-link" (click)="onUserRidesHistoryBtnClick()" >RIDES HISTORY</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}" *ngIf="role === 'DRIVER'">
+                <a class="nav-link" (click)="onDriverRidesHistoryBtnClick()" >RIDES HISTORY</a>
+            </li>
 
-    <span *ngIf="role === 'DRIVER'">
-        <button (click)="onDriverRidesHistoryBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}">
-            RIDES HISTORY
-        </button>
-    </span>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}" *ngIf="role === 'ADMIN'">
+                <a class="nav-link" (click)="onAdminRidesHistoryBtnClick()" >RIDES HISTORY</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='EDIT PROFILE'}" *ngIf="role === 'USER'">
+                <a class="nav-link" (click)="onUserEditProfileBtnClick()" >EDIT PROFILE</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='EDIT PROFILE'}" *ngIf="role === 'DRIVER'">
+                <a class="nav-link" (click)="onDriverEditProfileBtnClick()" >EDIT PROFILE</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='EDIT PROFILE'}" *ngIf="role === 'ADMIN'">
+                <a class="nav-link" (click)="onAdminEditProfileBtnClick()" >EDIT PROFILE</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='REPORTS'}" *ngIf="role === 'USER'">
+                <a class="nav-link" (click)="onUserReportBtnClick()">REPORTS</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='REPORTS'}" *ngIf="role === 'DRIVER'">
+                <a class="nav-link" (click)="onDriverReportBtnClick()" >REPORTS</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='REPORTS'}" *ngIf="role === 'ADMIN'">
+                <a class="nav-link" (click)="onAdminReportBtnClick()" >REPORTS</a>
+            </li>
 
-    <span *ngIf="role === 'ADMIN'">
-        <button (click)="onAdminRidesHistoryBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='HISTORY'}">
-            RIDES HISTORY
-        </button>
-    </span>
 
-    <button (click)="onAllActiveVehiclesBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='ALL ACTIVE VEHICLES'}">
-        🚘
-    </button>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='CHAT'}" *ngIf="role === 'USER'">
+                <a class="nav-link" (click)="onChatBtnClick()">SUPPORT</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='CHAT'}" *ngIf="role === 'DRIVER'">
+                <a class="nav-link" (click)="onChatBtnClick()" >SUPPORT</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='CHAT'}" *ngIf="role === 'ADMIN'">
+                <a class="nav-link" (click)="onChatBtnClick()" >CHAT</a>
+            </li>
 
-    <!-- ------- Treba posle staviti u meni registrovanog korisnika!!!!!  --------->
-    <!-- ----------------------------------------------------------------------  -->
-    <button (click)="onRouteSearchBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='ROUTE SEARCH'}">
-        🔎🗺
-    </button>
-    <!-- ----------------------------------------------------------------------  -->
-    <!-- ----------------------------------------------------------------------  -->
 
-    <span *ngIf="role !== 'UNREGISTERED'">
-        <button (click)="onLogoutBtnClick()">
-            LOGOUT
-        </button>
-    </span>
 
-    <span *ngIf="role === 'UNREGISTERED'">
-        <button (click)="onSimpleRouteSearchBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='SIMPLE ROUTE SEARCH'}">
-            🔎🗺
-        </button>
-        <button (click)="onRegisterBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='REGISTER'}">
-            REGISTER
-        </button>
-        <button (click)="onLoginBtnClick()" [ngClass]="{'curr-active': currentActiveBtn==='LOGIN'}">
-            LOGIN
-        </button>
-    </span>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='ADD DRIVER'}" *ngIf="role === 'ADMIN'">
+                <a class="nav-link" (click)="onAddDriverBtnClick()"> ADD DRIVER</a>
+            </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='VIEW USERS'}" *ngIf="role === 'ADMIN'">
+                <a class="nav-link" (click)="onViewUsersBtnClick()" >VIEW USERS</a>
+            </li>
+
+
+
+
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='ALL ACTIVE VEHICLES'}">
+                <a class="nav-link" (click)="onAllActiveVehiclesBtnClick()" >🚘</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='ROUTE SEARCH'}"  *ngIf="role == 'USER'">
+                <a class="nav-link" (click)="onRouteSearchBtnClick()" >  🔎🗺</a>
+            </li>
+
+
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='LOGOUT'}" *ngIf="role !== 'UNREGISTERED'">
+                <a class="nav-link"  (click)="onLogoutBtnClick()">LOGOUT</a>
+            </li>
+
+
+
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='SIMPLE ROUTE SEARCH'}" *ngIf="role === 'UNREGISTERED'">
+                <a class="nav-link" (click)="onSimpleRouteSearchBtnClick()" > 🔎🗺</a>
+            </li>
+
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='REGISTER'}" *ngIf="role === 'UNREGISTERED'">
+                <a class="nav-link" (click)="onRegisterBtnClick()"> REGISTER</a>
+            </li>
+
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='LOGIN'}" *ngIf="role === 'UNREGISTERED'">
+                <a class="nav-link" (click)="onLoginBtnClick()">LOGIN </a>
+            </li>
+          
+        </ul>
+    </div>
 </nav>

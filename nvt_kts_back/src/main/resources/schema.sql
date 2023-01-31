@@ -21,7 +21,7 @@ INSERT INTO my_users (email, password, name, surname, city, phone, profile_activ
             ('registrovani2@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Isidora', 'Mladjic', 'grad', '42145135', true, 'slika', false, 1, null),
             ('john.doe@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'John', 'Doe', 'New York', '123-456-7890', true, 'picture.jpg', false, 1, null),
             ('sarah.johnson@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Sarah', 'Johnson', 'Houston', '123-456-7890', true, 'picture.jpg', false, 1, null),
-            ('pera@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Pera','Peric','grad','42145135',true,'slika', true, 2, 'vozio pijan'),
+            ('pera@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Pera','Peric','grad','42145135',true,'slika', false, 2, 'vozio pijan'),
             ('zima@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Sima','Simic','grad','42145135', true, 'slika', true, 2, 'neki razlog'),
             ('michael.brown@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Michael', 'Brown', 'Philadelphia', '123-456-7890', true, 'picture.jpg', false, 2, null),
             ('ashley.taylor@example.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Ashley', 'Taylor', 'San Diego', '123-456-7890', true, 'picture.jpg', false, 2, null),
