@@ -72,4 +72,12 @@ input {
     display: none;
 }
 
+#flexSwitchCheckDefault
+{
+    margin-top: 300px;
+    padding-top: 300px;
+    color: red;
+    background-color: red;
+}
+
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ADMIN_EDIT_PROF_URL, CLIENT_ADD_DRIVER_URL, CLIENT_ADMIN_RIDES_HISTORY_URL, CLIENT_BLOCK_USER_URL, CLIENT_DRIVER_RIDES_HISTORY_URL, CLIENT_EDIT_PROF_URL, CLIENT_LOGIN_URL, CLIENT_REGISTRATION_URL, CLIENT_REG_USR_RIDES_HISTORY_URL, CLIENT_USER_FAV_ROUTES, DRIVER_EDIT_PROF_URL } from 'src/config/client-urls';
+import { ADMIN_EDIT_PROF_URL, CLIENT_ADD_DRIVER_URL, CLIENT_ADMIN_RIDES_HISTORY_URL, CLIENT_APPROVEC_CHANGES_URL, CLIENT_BLOCK_USER_URL, CLIENT_DRIVER_RIDES_HISTORY_URL, CLIENT_EDIT_PROF_URL, CLIENT_LOGIN_URL, CLIENT_REGISTRATION_URL, CLIENT_REG_USR_RIDES_HISTORY_URL, CLIENT_USER_FAV_ROUTES, DRIVER_EDIT_PROF_URL } from 'src/config/client-urls';
 import { API_ALL_ACTIVE_VEHICLES_URL, API_ROUTE_SEARCH, API_SIMPLE_ROUTE_SEARCH } from 'src/config/map-urls';
 import { CLIENT_CHAT_URL } from 'src/config/other-urls';
 import { CLIENT_REPORTS_URL, DRIVER_REPORTS_URL, ADMIN_REPORTS_URL } from 'src/config/reports-urls';
@@ -103,6 +103,11 @@ export class MenuComponent implements OnInit {
   onViewUsersBtnClick(): void { 
     this.currentActiveBtn = 'VIEW USERS';
     this.router.navigate([CLIENT_BLOCK_USER_URL]);
+  }
+////////////////////
+  onChangedProfilesBtnClick(): void { 
+    this.currentActiveBtn = 'CHANGED PROFILES';
+    this.router.navigate([CLIENT_APPROVEC_CHANGES_URL]);
   }
 
   onUserEditProfileBtnClick(): void { 

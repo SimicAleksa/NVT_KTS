@@ -54,6 +54,9 @@
             <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='VIEW USERS'}" *ngIf="role === 'ADMIN'">
                 <a class="nav-link" (click)="onViewUsersBtnClick()" >VIEW USERS</a>
             </li>
+            <li class="nav-item"  [ngClass]="{'curr-active': currentActiveBtn==='CHANGED PROFILES'}" *ngIf="role === 'ADMIN'">
+                <a class="nav-link" (click)="onChangedProfilesBtnClick()">CHANGED PROFILES</a>
+            </li>
 
 
 
