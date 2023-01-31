@@ -1,4 +1,4 @@
-nav {
+/*nav {
     position: fixed;
     top: 0;
     left: 0;
@@ -51,4 +51,26 @@ button:hover::before {
 .curr-active {
   background: linear-gradient(to bottom, transparent, rgba(254, 255, 253, 0.959));
 }
-  
+  */
+
+a 
+{
+  font-size: larger;
+}
+
+li {
+  width: 120px;
+}
+
+.curr-active {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+}

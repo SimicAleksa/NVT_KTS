@@ -39,14 +39,14 @@ export class RegisteredUsersRidesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.toastr.success("PUFNA");
     this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
       this.usersRides = <RideForNotification[]> response;
       this.addStringLocation();
       this.splitDate();
     });
-    console.log(this.usersRides);
-    
   }
 
   alreadyApproved(ride: RideForNotification)

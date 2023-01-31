@@ -71,3 +71,9 @@ input {
 {
     display: none;
 }
+
+#offcanvas
+{
+    padding-top: 50px;
+}
+
