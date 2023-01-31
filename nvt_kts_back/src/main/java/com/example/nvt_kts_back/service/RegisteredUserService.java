@@ -67,7 +67,7 @@ public class RegisteredUserService {
         registeredUser.getFavouriteRoutes().add(route);
         registeredUserRepository.save(registeredUser);
     }
-
+    //TODO ZAKAZIVANJE voznje - pa vrv jedinicni, radi se jer se cuva omiljena voznja
     public List<RouteInfoForDriveHistory> getAllUsersFavouriteRoutes(Long userId) {
         RegisteredUser usr =  registeredUserRepository.getRegUserWithFavouriteRoutesByUserId(userId)
                 .orElseThrow(UserDoesNotExistException::new);
@@ -82,7 +82,7 @@ public class RegisteredUserService {
         registeredUserRepository.save(usr);
     }
 
-    //TODO ZAKAZIVANJE voznje - jedinicni
+    //TODO ZAKAZIVANJE voznje - jedinicni (odradjen)
     public ArrayList<String> getMails() {
         ArrayList<String> retVal = new ArrayList<>();
         List<RegisteredUser> all = this.registeredUserRepository.findAll();

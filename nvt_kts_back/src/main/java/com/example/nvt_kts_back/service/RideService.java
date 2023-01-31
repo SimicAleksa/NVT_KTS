@@ -470,7 +470,7 @@ public class RideService {
         }
     }
 
-    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen)
+    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen) | hajde ponovo
     public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) throws Exception{
         List<RegisteredUser> registeredUsers = new ArrayList<>();
         for(String passEmail : linkedPassengers){
@@ -479,9 +479,11 @@ public class RideService {
                 throw new RegisteredUserNotFound("Registered user not found");
             }
             else {
-                registeredUsers.add(registeredUser);
-                RideNotificationDTO dto = new RideNotificationDTO(ride, passEmail);
-                this.simpMessagingTemplate.convertAndSend("/map-updates/ride-notification", dto);
+                if(!registeredUser.getIsBlocked() && registeredUser.isEnabled()){
+                    registeredUsers.add(registeredUser);
+                    RideNotificationDTO dto = new RideNotificationDTO(ride, passEmail);
+                    this.simpMessagingTemplate.convertAndSend("/map-updates/ride-notification", dto);
+                }
             }
         }
         return registeredUsers;

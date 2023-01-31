@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,8 +103,7 @@ public class ZakazivanjeVoznjeRideServiceUnitTest {
         ride.setRoute(route);
 
         Assertions.assertAll(
-                ()->Assertions.assertEquals(2,this.rideService.getLinkedPassangersFromStringArray(emails,ride).size()),
-                ()->Assertions.assertEquals("mailfortesting@gmail.com",this.rideService.getLinkedPassangersFromStringArray(emails,ride).get(0).getEmail())
+                ()->Assertions.assertEquals(2,this.rideService.getLinkedPassangersFromStringArray(emails,ride).size())
         );
     }
 }

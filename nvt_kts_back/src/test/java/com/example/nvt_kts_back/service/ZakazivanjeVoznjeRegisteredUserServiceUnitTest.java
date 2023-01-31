@@ -1,10 +1,13 @@
 package com.example.nvt_kts_back.service;
+import com.example.nvt_kts_back.DTOs.CoordsDTO;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.exception.RegisteredUserNotFound;
 import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,7 +29,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:application-test.properties")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ZakazivanjeVOznjeRegisteredUserService {
+public class ZakazivanjeVoznjeRegisteredUserServiceUnitTest {
     @Autowired
     private RegisteredUserService registeredUserService;
 
@@ -34,7 +37,7 @@ public class ZakazivanjeVOznjeRegisteredUserService {
     private RegisteredUserRepository registeredUserRepository;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws JSONException {
         RegisteredUser registeredUser1 = new RegisteredUser();
         registeredUser1.setId(13l);
         registeredUser1.setIsBusy(true);
@@ -68,7 +71,7 @@ public class ZakazivanjeVOznjeRegisteredUserService {
         registeredUser3.setIsBusy(true);
         registeredUser3.setTokens(1000.00);
         registeredUser3.setCity("Kraljevo");
-        registeredUser3.setEmail("notactivated@gmail.com");
+        registeredUser3.setEmail("notactivat32ed@gmail.com");
         registeredUser3.setIsBlocked(false);
         registeredUser3.setName("Ranko");
         registeredUser3.setSurname("Goric");
@@ -97,6 +100,15 @@ public class ZakazivanjeVOznjeRegisteredUserService {
         registeredUsers.add(registeredUser3);
         registeredUsers.add(registeredUser4);
 
+        Route route = new Route();
+        JSONObject obj = new JSONObject();
+
+        obj.put("neki","random Json Objekat");
+
+        route.setRouteJSON(obj.toString());
+        route.setStartLocation(new Coord(12.12,13.13));
+        route.setEndLocation(new Coord(14.14,14.14));
+
 
         when(this.registeredUserRepository.findByEmail("testingismail@gmail.com")).thenReturn(registeredUser2);
         when(this.registeredUserRepository.findByEmail("mailfortesting@gmail.com")).thenReturn(registeredUser1);
@@ -106,7 +118,16 @@ public class ZakazivanjeVOznjeRegisteredUserService {
     @Test
     public void getMails_ReturnListOfMails(){
         Assertions.assertAll(
-                ()->Assertions.assertEquals(2,this.registeredUserService.getMails().size())
+                ()->Assertions.assertEquals(2,this.registeredUserService.getMails().size()),
+                ()->Assertions.assertEquals("mailfortesting@gmail.com",this.registeredUserService.getMails().get(0)),
+                ()->Assertions.assertFalse(this.registeredUserService.getMails().contains("notactivat32ed@gmail.com"))
+        );
+    }
+
+    @Test
+    public void getAllUsersFavouriteRoutes_validData_SizeOfFavorites(){
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(0,this.registeredUserService.getAllUsersFavouriteRoutes(1l).size())
         );
     }
 
