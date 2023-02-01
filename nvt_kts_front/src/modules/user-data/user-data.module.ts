@@ -32,7 +32,7 @@ import { EditProfileDriverComponent } from './components/edit-profile-driver/edi
 import { EditProfileAdminComponent } from './components/edit-profile-admin/edit-profile-admin.component';
 import { EditProfileAdminPageComponent } from './pages/edit-profile-admin-page/edit-profile-admin-page.component';
 import { EditProfileDriverPageComponent } from './pages/edit-profile-driver-page/edit-profile-driver-page.component';
-
+import { SidebarsModule } from '../sidebars/sidebars.module';
 
 
 @NgModule({
@@ -69,7 +69,8 @@ import { EditProfileDriverPageComponent } from './pages/edit-profile-driver-page
     RouterModule.forChild(routes),
     StarRatingModule,
     PopUpModule,
-    LeafletModule
+    LeafletModule,
+    SidebarsModule,
   ],
   exports: [
     CommonModule,

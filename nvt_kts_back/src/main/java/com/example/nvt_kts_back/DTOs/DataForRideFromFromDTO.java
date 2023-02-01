@@ -1,6 +1,5 @@
 package com.example.nvt_kts_back.DTOs;
 
-import com.example.nvt_kts_back.enumerations.RideState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

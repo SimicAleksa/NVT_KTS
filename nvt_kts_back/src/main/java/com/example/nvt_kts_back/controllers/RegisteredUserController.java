@@ -5,13 +5,11 @@ import com.example.nvt_kts_back.CustomExceptions.RouteDoesNotExistException;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.RegisteredUserDTO;
 import com.example.nvt_kts_back.DTOs.RouteInfoForDriveHistory;
-import com.example.nvt_kts_back.DTOs.UserDTO;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.models.Ride;
 import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.service.AuthService;
-import com.example.nvt_kts_back.service.UserService;
 import com.example.nvt_kts_back.models.ChangeProfileRequest;
 import com.example.nvt_kts_back.models.RegisteredUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.nvt_kts_back.service.RegisteredUserService;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.stream.events.EntityReference;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.DataFormatException;
@@ -128,7 +124,7 @@ public class RegisteredUserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    // TODO:  ovo bi trebalo da moze samo registrovani kad narucuje slozenu voznju
+    //TODO ZAKAZIVANJE voznje - integracioni (odradjeno)
     @GetMapping("/getAllRegisteredUsersMails")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<ArrayList<String>> getAllRegisteredUsersMails()
@@ -137,6 +133,8 @@ public class RegisteredUserController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    //TODO ZAKAZIVANJE voznje - integracioni (odradjeno)
+    //TODO OBAVLJANJE voznje - integracioni
     @GetMapping(value="/getUserStateBasedOnRide/{email}")
     public boolean getUserStateBasedOnRide(@PathVariable("email") String email)
     {
@@ -149,6 +147,7 @@ public class RegisteredUserController {
         }
         return false;
     }
+
     @GetMapping("/favourite-routes")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     @CrossOrigin(Settings.CROSS_ORIGIN_FRONTEND_PATH)

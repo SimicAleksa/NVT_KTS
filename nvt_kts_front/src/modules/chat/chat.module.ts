@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import {routes} from './chat-routing';
 import { ConfirmRegistrationComponent } from './components/confirm-registration/confirm-registration.component';
 import { ConfirmRegistrationPageComponent } from './pages/confirm-registration-page/confirm-registration-page.component';
+import { SidebarsModule } from '../sidebars/sidebars.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ConfirmRegistrationPageComponent } from './pages/confirm-registration-p
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SidebarsModule,
   ]
 })
 export class ChatModule { }

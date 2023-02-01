@@ -17,9 +17,7 @@ export const routes: Routes = [
   },
   {
     path:"simpleRouteSearch",
-    component : SimpleRoutesSearchPageComponent,
-    canActivate: [RoleGuard],
-    data:{expectedRoles:"USER"}
+    component : SimpleRoutesSearchPageComponent
   },
   {
     path:"activeVehicle",
