@@ -37,7 +37,10 @@ public class RegisteredUserService {
     }
 
     public RegisteredUser getByEmail(String email) {
-        return this.registeredUserRepository.findByEmail(email);
+        RegisteredUser registeredUser = this.registeredUserRepository.findByEmail(email);
+        if (registeredUser == null)
+            throw new UserDoesNotExistException();
+        return registeredUser;
     }
 
     public void addTokens(String email, Double value) {

@@ -48,7 +48,7 @@ public class DriverService {
 
     public Driver findById(String id){
         Long temp = Long.valueOf(id);
-        return driverRepository.findById(temp).get();
+        return driverRepository.findById(temp).orElseThrow(UserDoesNotExistException::new);
     }
 
     public List<Driver> findDriversWhoDonTDriveRN(){

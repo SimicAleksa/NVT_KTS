@@ -283,8 +283,12 @@ public class RideController {
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<RideDTO> getUserInProgressRide(@PathVariable("email") String email)
     {
-        RideDTO retVal = this.rideService.getUsersInProgresssRide(email);
-        return new ResponseEntity<>(retVal, HttpStatus.OK);
+        try {
+            RideDTO retVal = this.rideService.getUsersInProgresssRide(email);
+            return new ResponseEntity<>(retVal, HttpStatus.OK);
+        } catch (UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 

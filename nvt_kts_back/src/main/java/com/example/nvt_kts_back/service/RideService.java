@@ -265,6 +265,9 @@ public class RideService {
 
     public RideDTO getUsersInProgresssRide(String email) {
         RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
+        if (ru == null)
+            throw new UserDoesNotExistException();
+
         List<Ride> rides = ru.getHistoryOfRides();
         RideDTO retVal=new RideDTO();
         for(Ride r: rides)
