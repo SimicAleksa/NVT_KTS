@@ -1,9 +1,7 @@
 package com.example.nvt_kts_back.ride_procces_tests.controller_tests.registered_user_controller_tests;
 
 import com.example.nvt_kts_back.DTOs.AuthTokenDTO;
-import com.example.nvt_kts_back.DTOs.DriverDTO;
 import com.example.nvt_kts_back.DTOs.LoginDTO;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GetUserStateBasedOnRideTests {
+public class RegUserControllerGetUserStateBasedOnRideTests {
     @Autowired
     private TestRestTemplate restTemplate;
     private HttpHeaders headers;

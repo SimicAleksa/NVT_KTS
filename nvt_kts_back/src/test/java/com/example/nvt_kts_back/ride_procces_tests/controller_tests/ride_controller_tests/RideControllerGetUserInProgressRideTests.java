@@ -2,7 +2,6 @@ package com.example.nvt_kts_back.ride_procces_tests.controller_tests.ride_contro
 
 
 import com.example.nvt_kts_back.DTOs.AuthTokenDTO;
-import com.example.nvt_kts_back.DTOs.DriverDTO;
 import com.example.nvt_kts_back.DTOs.LoginDTO;
 import com.example.nvt_kts_back.DTOs.RideDTO;
 import org.junit.Before;
@@ -21,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GetUserInProgressRideTests {
+public class RideControllerGetUserInProgressRideTests {
     @Autowired
     private TestRestTemplate restTemplate;
     private HttpHeaders headersRegisteredUser;
