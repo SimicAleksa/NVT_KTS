@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("api/rides")
@@ -136,6 +137,7 @@ public class RideController {
 
     // TODO ja (odradjeno)
     @PutMapping(value = "/changeRide/{id}", produces = "application/json")
+    //hmmm simulacija?
     public ResponseEntity<RideDTO> changeRide(@PathVariable("id") long id) {
         try
         {

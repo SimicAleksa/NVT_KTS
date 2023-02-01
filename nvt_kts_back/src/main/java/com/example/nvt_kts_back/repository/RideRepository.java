@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.repository;
 
 import com.example.nvt_kts_back.enumerations.RideState;
+import com.example.nvt_kts_back.models.Driver;
 import com.example.nvt_kts_back.models.Ride;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +20,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
     Optional<Ride> findById(long id);
 
-    // TODO ja
+    //TODO mora se 5 (odradjeno)
     @Query("select r from Ride r where r.driver_id=?1 and r.rideState='STARTED'")
     Optional<Ride> findByDriverAndRideStateSTARTED(Long id);
 

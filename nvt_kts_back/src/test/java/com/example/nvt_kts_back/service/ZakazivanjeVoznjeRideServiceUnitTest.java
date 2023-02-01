@@ -63,9 +63,39 @@ public class ZakazivanjeVoznjeRideServiceUnitTest {
         registeredUser2.setPhone("06555239642");
         registeredUser2.setProfileActivated(true);
 
+        RegisteredUser registeredUser3 = new RegisteredUser();
+        registeredUser3.setId(11l);
+        registeredUser3.setIsBusy(true);
+        registeredUser3.setTokens(1000.00);
+        registeredUser3.setCity("Kraljevo");
+        registeredUser3.setEmail("notactivat32ed@gmail.com");
+        registeredUser3.setIsBlocked(false);
+        registeredUser3.setName("Ranko");
+        registeredUser3.setSurname("Goric");
+        registeredUser3.setRole(new Role(Settings.USER_ROLE_NAME));
+        registeredUser3.setPassword("$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O");
+        registeredUser3.setPhone("06555239642");
+        registeredUser3.setProfileActivated(false);
+
+        RegisteredUser registeredUser4 = new RegisteredUser();
+        registeredUser4.setId(10l);
+        registeredUser4.setIsBusy(true);
+        registeredUser4.setTokens(1000.00);
+        registeredUser4.setCity("Kraljevo");
+        registeredUser4.setEmail("notactivated@gmail.com");
+        registeredUser4.setIsBlocked(true);
+        registeredUser4.setName("Ranko");
+        registeredUser4.setSurname("Goric");
+        registeredUser4.setRole(new Role(Settings.USER_ROLE_NAME));
+        registeredUser4.setPassword("$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O");
+        registeredUser4.setPhone("06555239642");
+        registeredUser4.setProfileActivated(true);
+
 
         when(this.registeredUserRepository.findByEmail("testingismail@gmail.com")).thenReturn(registeredUser2);
         when(this.registeredUserRepository.findByEmail("mailfortesting@gmail.com")).thenReturn(registeredUser1);
+        when(this.registeredUserRepository.findByEmail("notactivat32ed@gmail.com")).thenReturn(registeredUser3);
+        when(this.registeredUserRepository.findByEmail("notactivated@gmail.com")).thenReturn(registeredUser4);
     }
 
     @Test
@@ -105,4 +135,27 @@ public class ZakazivanjeVoznjeRideServiceUnitTest {
                 ()->Assertions.assertEquals(2,this.rideService.getLinkedPassangersFromStringArray(emails,ride).size())
         );
     }
+
+    @Test
+    public void getLinkedPassangersFromStringArray_validEmailsBlockedAndNotActivatedUsers_ReturnsCorrectValues(){
+        List<RegisteredUser> registeredUsers;
+        List<String> emails = new ArrayList<>();
+        emails.add("mailfortesting@gmail.com");
+        emails.add("testingismail@gmail.com");
+        emails.add("notactivat32ed@gmail.com");
+        emails.add("notactivated@gmail.com");
+
+        Ride ride = new Ride();
+        ride.setRideState(RideState.STARTED);
+        Route route = new Route();
+        route.setStartLocation(new Coord(11.11,12.12));
+        route.setEndLocation(new Coord(13.13,14.14));
+        route.setRouteJSON("");
+        ride.setRoute(route);
+
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(2,this.rideService.getLinkedPassangersFromStringArray(emails,ride).size())
+        );
+    }
+
 }

@@ -15,7 +15,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import com.example.nvt_kts_back.repository.RideRepository;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.*;
 
 import java.time.LocalDateTime;
@@ -474,7 +477,7 @@ public class RideService {
         }
     }
 
-    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen) | hajde ponovo
+    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen) | hajde ponovo (odradjen ponovo)
     public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) throws Exception{
         List<RegisteredUser> registeredUsers = new ArrayList<>();
         for(String passEmail : linkedPassengers){
