@@ -120,7 +120,7 @@ public class RideController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-
+    // TODO ZAKAZIVANJE DODATNO ALEKSA
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
@@ -152,6 +152,7 @@ public class RideController {
         }
     }
 
+    // TODO zakazivanje DODATNO integracioni
     @PutMapping(value = "/updateDriverIncomingTimeForRide/{id}", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> updateDriverIncomingTimeForRide(@PathVariable("id") long id,@RequestBody ExpectedDurationDto expectedDurationDto) {
@@ -205,7 +206,7 @@ public class RideController {
         return new ResponseEntity<>(routeDTO, HttpStatus.OK);
     }
 
-
+    // TODO DODATNO ALEKSA
     @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
@@ -232,6 +233,7 @@ public class RideController {
         return new ResponseEntity<>(rideDTO, HttpStatus.OK);
     }
 
+    // TODO DODATNO ALEKSA
     @GetMapping(value = "/getDriversDTSRide/{id}",produces = "application/json")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<RideDTO> getDriversDTSRide(@PathVariable("id") String id) {
@@ -340,6 +342,7 @@ public class RideController {
 
     }
 
+    // TODO zakazivanje NEVENA
     @GetMapping(value = "/acceptRideUser/{id}/{email}")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<StringDTO> acceptRideUser(@PathVariable("id") Long id, @PathVariable("email") String email)
