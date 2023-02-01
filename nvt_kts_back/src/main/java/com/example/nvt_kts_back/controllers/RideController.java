@@ -342,7 +342,7 @@ public class RideController {
 
     }
 
-    // TODO zakazivanje NEVENA
+    // TODO zakazivanje NEVENA (odradjeno)
     @GetMapping(value = "/acceptRideUser/{id}/{email}")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<StringDTO> acceptRideUser(@PathVariable("id") Long id, @PathVariable("email") String email)

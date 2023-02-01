@@ -227,6 +227,10 @@ public class RideService {
     public Ride changeRideState(Long id, String state) {
         Ride r = rideRepository.findById(id).orElseThrow(RideNotFoundException::new);
         r.setRideState(RideState.valueOf(state));
+        if (state.equals(RideState.IN_PROGRESS.toString()))
+        {
+            r.setStartDateTime(LocalDateTime.now());
+        }
         return rideRepository.save(r);
     }
 
@@ -300,7 +304,7 @@ public class RideService {
     // TODO NEVENA - nema sta da se testira, samo su pozivi za dalje
     public Driver findDriver(DataForRideFromFrom rideDTO) {
         deactivateDrivers();
-        if (rideDTO.getDateTime().equals("")) {
+        if (rideDTO.getDateTime()==null) {
             return findDriverForNow(rideDTO);
         }
         return findAnyDriver(rideDTO);
@@ -335,24 +339,28 @@ public class RideService {
     private Driver findOneFreeAtReservedTime(ArrayList<Driver> activeFilteredDrivers, DataForRideFromFrom rideDto) {
         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String start = rideDto.getDateTime().replace('T', ' ');
+        start = start.substring(0, 16);
         LocalDateTime rideStart = LocalDateTime.parse(start, formatter1);
         LocalDateTime rideEnd = rideStart.plusMinutes(rideDto.getDuration());
-
         //outerloop:
         for (Driver d: activeFilteredDrivers)
         {
-            ArrayList<Ride> rides = (ArrayList<Ride>) d.getHistoryOfRides();
+            List<Ride> rides = d.getHistoryOfRides();
             boolean free = true;
             for (Ride r : rides)
             {
-                LocalDateTime existedStart = r.getStartDateTime();
-                LocalDateTime existedEnd = existedStart.plusMinutes(r.getExpectedDuration());
-                if (r.getRideState()== RideState.RESERVED && !((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
+                if (r.getRideState()== RideState.RESERVED)
                 {
-                    // nista ne treba da se desi
-                    free = false;
-                    break;
+                    LocalDateTime existedStart = r.getStartDateTime();
+                    LocalDateTime existedEnd = existedStart.plusMinutes(r.getExpectedDuration());
+                    if (!((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
+                    {
+                        // nista ne treba da se desi
+                        free = false;
+                        break;
+                    }
                 }
+
             }
             // sad smo obisli sve rideove
             if (free)

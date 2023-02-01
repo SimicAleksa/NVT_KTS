@@ -22,7 +22,15 @@ VALUES ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyo
        ('anastasija@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Anastasija','Lolic','grad','42145135',true,'slika',false, 1, null),
        ('registrovani1@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Put','Putic','grad','42145135',true,'slika',false,2, null),
        ('registrovani2@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'Isidora', 'Mladjic', 'grad', '42145135', true, 'slika', false, 2, null),
-       ('pera@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'John', 'Doe', 'New York', '123-456-7890', true, 'picture.jpg', false, 2, null);
+       ('pera@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O', 'John', 'Doe', 'New York', '123-456-7890', true, 'picture.jpg', false, 2, null),
+       ('nomoneysadge@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','Less','grad','42145135',true,'slika',false, 1, null),
+       ('nijeplatiozadnji@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Nije','Zadnji','grad','42145135',true,'slika',false, 1, null),
+       ('jesteplatiozadnji@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Jeste','Zadnji','grad','42145135',true,'slika',false, 1, null),
+       ('dobradrivertest@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Jeste','Zadnji','grad','42145135',true,'slika',false, 1, null),
+       ('batakojiceka@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Bata','Ceka','grad','42145135',true,'slika',false, 1, null),
+       ('aaaaaaaaaaaaaaa@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Aaaa','Aaaa','grad','42145135',true,'slika',false, 1, null),
+       ('bbbbbbbbbbbbbbbbbb@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Bbbbbbbbbbbb','Bbbbb','grad','42145135',true,'slika',false, 1, null),
+       ('zaRezervisanje@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null);
 
 INSERT INTO registered_user (id, is_busy, tokens)
 VALUES
@@ -30,7 +38,15 @@ VALUES
 (2, true, 2500),
 (3, true, 1000),
 (4, true, 2000),
-(5, true, 3000);
+(5, true, 3000),
+(9, true, 10),
+(10, true, 3000),
+(11, true, 3500),
+(12, true, 3500),
+(13, true, 5500),
+(14, true, 1234),
+(15, true, 1254),
+(16, true, 1254);
 
 INSERT INTO driver (id, active, car_type, baby_allowed, pet_allowed, is_driver_free, current_coords_id, license_plate_number)
 VALUES (6, true, 'SEDAN', true, true, true, 3, 'NS 8734 SN'),
@@ -55,8 +71,51 @@ VALUES ('DRIVING_TO_START', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:5
 INSERT INTO ride (ride_state, price, start_date_time, end_date_time, expected_duration, distance, route_id, driver_id)
 VALUES ('STARTED', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:52.069', 100, 54.3, 1, 7);
 
+INSERT INTO ride (ride_state, price, expected_duration, distance, route_id)
+VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1);
+
+INSERT INTO ride (ride_state, price, expected_duration, distance, route_id)
+VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1);
+
+INSERT INTO ride (ride_state, price, expected_duration, distance, route_id)
+VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1);
+
+INSERT INTO ride (ride_state, price, expected_duration, distance, route_id)
+VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1);
+
+INSERT INTO ride (ride_state, price, expected_duration, distance, route_id)
+VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1);
+
+INSERT INTO ride (ride_state, price, expected_duration, distance, route_id)
+VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1);
+
+INSERT INTO ride (ride_state, price, expected_duration, distance, route_id, start_date_time)
+VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1, '2023-02-05 18:47:52.069');
+
+
 INSERT INTO ride_passengers(ride_id, registered_user_id)
-VALUES (1, 2);
+VALUES (1, 2),(4,9),(4,2),(5,10),(5,11),(6,12),(7,13),(8,14),(9,15), (10,16);
 
 INSERT INTO REGISTERED_USER_FAVOURITE_ROUTES (REGISTERED_USER_ID,FAVOURITE_ROUTES_ID)
 VALUES (2, 1);
+
+insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE)
+values(4,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21);
+
+insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE)
+values(5,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21);
+
+insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE)
+values(6,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21);
+
+insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE)
+values(7,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21);
+
+insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE)
+values(8,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21);
+
+insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE)
+values(9,false,'LIMOUSINE',100,false,45.19,19.21);
+
+insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE, DATE_TIME)
+values(10,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21, '2023-02-05 18:47:52.069');

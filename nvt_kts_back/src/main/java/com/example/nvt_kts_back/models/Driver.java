@@ -36,7 +36,7 @@ public class Driver extends User {
 
     @OneToMany(cascade = CascadeType.PERSIST,orphanRemoval = true)
     @JoinColumn(name = "driver_id")
-    private List<Ride> historyOfRides;
+    private List<Ride> historyOfRides = new ArrayList<>();
 
     @Column
     private String licensePlateNumber;
