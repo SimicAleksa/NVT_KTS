@@ -297,9 +297,8 @@ public class RideService {
     }
 
 
-    // TODO NEVENA
+    // TODO NEVENA - nema sta da se testira, samo su pozivi za dalje
     public Driver findDriver(DataForRideFromFrom rideDTO) {
-        // prvo imam jedan veliki if da vidimo ako je rezervacija da dodijeli bilo koga, a ako nije, onda ima pameti
         deactivateDrivers();
         if (rideDTO.getDateTime().equals("")) {
             return findDriverForNow(rideDTO);
@@ -307,7 +306,7 @@ public class RideService {
         return findAnyDriver(rideDTO);
     }
 
-    // TODO NEVENA
+    // TODO NEVENA - ovdje isto nema sta, ali sam testirala ostale
     public void deactivateDrivers()
     {
         for (Driver d : this.driverRepository.findAll())
@@ -432,7 +431,7 @@ public class RideService {
     }
 
     // TODO ZAKAZIVANJE NEVENA
-    private ArrayList<Driver> sortByDistance(ArrayList<Driver> freeNow, DataForRideFromFrom rideDTO) {
+    /*private ArrayList<Driver> sortByDistance(ArrayList<Driver> freeNow, DataForRideFromFrom rideDTO) {
         for (int i = 0; i < freeNow.size()-1; i++)
         {
             // Find the minimum element in unsorted array
@@ -448,7 +447,7 @@ public class RideService {
             freeNow.set(i, temp);
         }
         return freeNow;
-    }
+    }*/
 
     // TODO NEVENA
     private ArrayList<Driver> filterFreeAfter(ArrayList<Driver> activeFilteredDrivers) {
@@ -539,7 +538,7 @@ public class RideService {
 
     // TODO zakazivanje NEVENA
     private boolean acceptRide(Long id, String email) {
-        Ride ride = rideRepository.findById(id).get();
+        Ride ride = rideRepository.findById(id).orElseThrow(RideNotFoundException:: new);
         String old = ride.getApprovedBy();
         if (old==null || old.equals(""))
         {
@@ -590,10 +589,9 @@ public class RideService {
         double price = ride.getPrice();
         for (RegisteredUser ru : ride.getPassengers())
         {
-            ru.setTokens(ru.getTokens() - price);
+            ru.setTokens(ru.getTokens() - price/ride.getPassengers().size());
             this.userRepository.save(ru);
         }
-
     }
 
     public List<UserRideHistoryDTO> getRideHistoryForRegisteredUser(Long userId) {

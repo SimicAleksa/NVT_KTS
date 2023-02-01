@@ -70,6 +70,7 @@ public class DriverService {
 
     }
 
+    // TODO DODATNO NEVENA
     public static long findActiveMinutes(List<TimeSpan> spans) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime dayBefore = now.minusDays(1);

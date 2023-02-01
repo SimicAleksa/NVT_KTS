@@ -29,7 +29,8 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @Query("SELECT d FROM Driver d JOIN FETCH d.reviews r JOIN FETCH r.reviewer WHERE d.id = :id")
     Optional<Driver> findByIdWithReviews(@Param("id") Long id);
 
-    @Query("select d from Driver d where d.active=true and (d.babyAllowed=true or d.babyAllowed=?1) and (d.petAllowed=true or d.petAllowed=?2)")
+    // TODO NEVENA
+    @Query("select d from Driver d where d.isBlocked=false and (d.babyAllowed=true or d.babyAllowed=?1) and (d.petAllowed=true or d.petAllowed=?2)")
     ArrayList<Driver> findDriversByPetBabyActive(boolean babyAllowed, boolean petAllowed);
 
 
