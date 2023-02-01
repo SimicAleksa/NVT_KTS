@@ -37,9 +37,7 @@ export const routes: Routes = [
   },
   {
     path:"allVehiclesOnMap",
-    component :VehiclesOnMapComponent,
-    canActivate: [RoleGuard],
-    data:{expectedRoles:"USER"}
+    component :VehiclesOnMapComponent
   },
   {
     path:"tempForQuery",

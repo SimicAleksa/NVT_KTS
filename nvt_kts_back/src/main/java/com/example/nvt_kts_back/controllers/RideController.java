@@ -185,7 +185,6 @@ public class RideController {
 
 
     @GetMapping(value = "/getRides",produces = "application/json")
-    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<List<RideDTO>> getRides() {
         List<Ride> rides = this.rideService.findAllInProgressAndDTS();
         List<RideDTO> rideDTOs = new ArrayList<>();
