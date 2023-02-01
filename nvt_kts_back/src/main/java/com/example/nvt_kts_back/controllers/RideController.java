@@ -5,6 +5,8 @@ import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
+import com.example.nvt_kts_back.exception.NotFoundException;
+import com.example.nvt_kts_back.exception.RideNotFoundException;
 import com.example.nvt_kts_back.service.*;
 import com.example.nvt_kts_back.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,13 +134,20 @@ public class RideController {
         return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
     }
 
+    // TODO ja (odradjeno)
     @PutMapping(value = "/changeRide/{id}", produces = "application/json")
-    //hmmm simulacija?
     public ResponseEntity<RideDTO> changeRide(@PathVariable("id") long id) {
-        Ride ride = this.rideService.changeRide(id);
-        RideDTO returnRideDTO = new RideDTO(ride);
-        this.simpMessagingTemplate.convertAndSend("/map-updates/ended-ride", returnRideDTO);
-        return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
+        try
+        {
+            Ride ride = this.rideService.changeRide(id);
+            RideDTO returnRideDTO = new RideDTO(ride);
+            this.simpMessagingTemplate.convertAndSend("/map-updates/ended-ride", returnRideDTO);
+            return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
+        }
+        catch (NotFoundException e)
+        {
+            return new ResponseEntity<>(new RideDTO(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping(value = "/updateDriverIncomingTimeForRide/{id}", produces = "application/json")
@@ -154,13 +163,22 @@ public class RideController {
     }
 
 
+    // TODO ja (odradjeno)
     @PutMapping(value = "/changeRideToPROGRESS/{id}", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> changeRideToINPROGRESS(@PathVariable("id") long id) {
-        Ride ride = this.rideService.changeRideToINPROGRESS(id);
-        RideDTO returnRideDTO = new RideDTO(ride);
-        this.simpMessagingTemplate.convertAndSend("/map-updates/change-RIDE-to-in-PROGRESS", returnRideDTO);
-        return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
+        try
+        {
+            Ride ride = this.rideService.changeRideToINPROGRESS(id);
+            RideDTO returnRideDTO = new RideDTO(ride);
+            this.simpMessagingTemplate.convertAndSend("/map-updates/change-RIDE-to-in-PROGRESS", returnRideDTO);
+            return new ResponseEntity<>(returnRideDTO, HttpStatus.OK);
+        }
+        catch (NotFoundException e)
+        {
+            return new ResponseEntity<>(new RideDTO(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 
@@ -201,8 +219,8 @@ public class RideController {
         return new ResponseEntity<>(rideDTO, HttpStatus.OK);
     }
 
+    // TODO Nevena (odradjeno)
     @GetMapping(value = "/getDriversINPROGRESSRide/{id}",produces = "application/json")
-    //hmmm simulacija?
     public ResponseEntity<RideDTO> getDriversINPROGRESSRide(@PathVariable("id") String id) {
         Ride ride = this.rideService.getDriversINPROGRESSRide(id);
         RideDTO rideDTO;
@@ -298,14 +316,27 @@ public class RideController {
     }
 
 
-    //TODO ODBIJANJE voznje - integracioni
+    //TODO ODBIJANJE voznje - integracioni (odradjeno)
     //TODO OBAVLJANJE voznje - integracioni
     @GetMapping(value = "/changeRideState/{id}/{state}")
     @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ROLE)
-    public void changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
+    public ResponseEntity<StringDTO> changeRideState(@PathVariable("id") Long id, @PathVariable("state") String state )
     {
-        this.rideService.changeRideState(id, state);
-        this.simpMessagingTemplate.convertAndSend("/map-updates/ride-status-changed", new StringDTO(state, id));
+        try
+        {
+            this.rideService.changeRideState(id, state);
+            this.simpMessagingTemplate.convertAndSend("/map-updates/ride-status-changed", new StringDTO(state, id));
+            return new ResponseEntity<>(new StringDTO("OK"), HttpStatus.OK);
+        }
+        catch (RideNotFoundException e)
+        {
+            return new ResponseEntity<>(new StringDTO("RIDE NOT FOUND"), HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(new StringDTO("RIDE NOT FOUND"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping(value = "/acceptRideUser/{id}/{email}")

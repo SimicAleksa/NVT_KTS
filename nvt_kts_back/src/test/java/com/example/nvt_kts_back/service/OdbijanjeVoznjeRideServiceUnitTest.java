@@ -2,11 +2,13 @@ package com.example.nvt_kts_back.service;
 
 import com.example.nvt_kts_back.DTOs.RideDTO;
 import com.example.nvt_kts_back.enumerations.RideState;
+import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.exception.RegisteredUserNotFound;
 import com.example.nvt_kts_back.exception.RideNotFoundException;
 import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.repository.RegisteredUserRepository;
 import com.example.nvt_kts_back.repository.RideRepository;
+import org.aspectj.weaver.ast.Not;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -146,9 +148,6 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         Ride ride4 = createRideFromStateAndId(RideState.STARTED, 4L);
         rides1.add(ride4);
         Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").size(), 4);
-
-
-
     }
 
     private RegisteredUser createRegisteredUSer() {
@@ -168,4 +167,67 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         ride.setStartDateTime(LocalDateTime.now().minusMinutes(rideId));
         return ride;
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void changeRide_validParams_CorrectValues(){
+        Ride ride = createRideFromStateAndId(RideState.IN_PROGRESS, 1L);
+        when(this.rideRepository.findById(1L)).thenReturn(Optional.of(ride));
+        this.rideService.changeRide(1L);
+        Assertions.assertEquals(ride.getRideState(), RideState.ENDED);
+    }
+
+    // TODO staviti onu neku petlju
+    @Test
+    public void changeRide_invalidId_NotFoundException(){
+        Assertions.assertThrows(NotFoundException.class,() ->this.rideService.changeRide(2L));
+        Assertions.assertThrows(NotFoundException.class,() ->this.rideService.changeRide(1L));
+    }
+
+    ////////////////////////////////////////////////
+    @Test
+    public void changeRideToINPROGRESS_validParams_CorrectValues(){
+        Ride ride = createRideFromStateAndId(RideState.IN_PROGRESS, 1L);
+        when(this.rideRepository.findById(1L)).thenReturn(Optional.of(ride));
+        this.rideService.changeRideToINPROGRESS(1L);
+        Assertions.assertEquals(ride.getRideState(), RideState.IN_PROGRESS);
+
+        Ride ride2 = createRideFromStateAndId(RideState.WAITING_FOR_PAYMENT, 2L);
+        when(this.rideRepository.findById(2L)).thenReturn(Optional.of(ride2));
+        this.rideService.changeRideToINPROGRESS(2L);
+        Assertions.assertEquals(ride2.getRideState(), RideState.IN_PROGRESS);
+    }
+
+    // TODO staviti onu neku petlju
+    @Test
+    public void changeRideToINPROGRESS_invalidId_NotFoundException(){
+        Assertions.assertThrows(NotFoundException.class,() ->this.rideService.changeRideToINPROGRESS(2L));
+        Assertions.assertThrows(NotFoundException.class,() ->this.rideService.changeRideToINPROGRESS(1L));
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void getDriversINPROGRESSRide_StringAsLong_NumberFormatException()
+    {
+        Assertions.assertThrows(NumberFormatException.class,() ->this.rideService.getDriversINPROGRESSRide("Cannot be parsed"));
+        Assertions.assertThrows(NumberFormatException.class,() ->this.rideService.getDriversINPROGRESSRide("46547456763598567655"));
+    }
+
+    @Test
+    public void getDriversINPROGRESSRide_validParams_CorrectValues()
+    {
+        /*when(this.rideRepository.findByDriverAndRideStateDTS(5L)).thenReturn(null);
+        Assertions.assertEquals(this.rideService.getDriversINPROGRESSRide("5").getRideState(), RideState.NOT_FOUND);*/
+
+        Ride ride1 = new Ride();
+        ride1.setRideState(RideState.IN_PROGRESS);
+        ride1.setDistance(77);
+        ride1.setPassengers(null);
+        when(this.rideRepository.findByDriverAndRideStateINPROGRESS(6L)).thenReturn(Optional.of(ride1));
+        Assertions.assertEquals(this.rideService.getDriversINPROGRESSRide("6").getRideState(), RideState.IN_PROGRESS);
+        Assertions.assertEquals(this.rideService.getDriversINPROGRESSRide("6").getDistance(), 77);
+    }
+
+
 }

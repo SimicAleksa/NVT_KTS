@@ -58,6 +58,7 @@ public class RideService {
         return rideRepository.save(returnRide);
     }
 
+    // TODO Nevena (odradjeno)
     public Ride changeRide(long id){
         Ride ride = this.rideRepository.findById(id).orElseThrow(()->
                 new NotFoundException("Ride does not exist"));
@@ -65,6 +66,7 @@ public class RideService {
         return this.rideRepository.save(ride);
     }
 
+    // TODO Nevena (odradjeno)
     public Ride changeRideToINPROGRESS(long id){
         Ride ride = this.rideRepository.findById(id).orElseThrow(()->
                 new NotFoundException("Ride does not exist"));
@@ -87,14 +89,15 @@ public class RideService {
         return this.rideRepository.findByDriverAndRideStateSTARTED(temp).orElse(ride);
     }
 
+    //TODO Nevena (odradjeno)
     public Ride getDriversINPROGRESSRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
         ride.setRideState(RideState.NOT_FOUND);
-        return  this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
+        return this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
     }
 
-    // TODO ODBIJANJE voznje - jedninicni
+    // TODO ODBIJANJE voznje - jedninicni (odradjeno)
     public Ride getDriversDrivingToStartRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
