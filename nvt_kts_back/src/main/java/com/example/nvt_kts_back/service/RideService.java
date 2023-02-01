@@ -82,7 +82,7 @@ public class RideService {
         return this.rideRepository.findAll();
     }
 
-    // TODO DODATNO ALEKSA
+    // TODO DODATNO ALEKSA (odradjeno)
     public Ride getDriversStartedRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
@@ -187,7 +187,7 @@ public class RideService {
         return r.getEndDateTime().isAfter(startDate) && r.getEndDateTime().isBefore(endDateTime);
     }
 
-    // TODO DODATNO ALEKSA
+    // TODO DODATNO ALEKSA (odradjeno) (samo u repo)
     public List<Ride> findAllInProgressAndDTS() {
         return this.rideRepository.findAllInProgressAndDTSRides();
     }
@@ -211,7 +211,7 @@ public class RideService {
         return map;
     }
 
-    // TODO DODATNO ALEKSA
+    // TODO DODATNO ALEKSA (odradjeno)
     public ArrayList<RideNotificationDTO> findDriversUpcomingRides(String email) {
         Driver d= this.driverRepository.findByEmail(email);
         List<Ride> rides = rideRepository.findDriversUpcomingRides(d.getId());
@@ -277,7 +277,7 @@ public class RideService {
         return returnRideDto;
     }
 
-    // TODO DODATNO ALEKSA
+    // TODO DODATNO ALEKSA (odradjeno)
     public RideDTO getUsersInProgresssRide(String email) {
         RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
         List<Ride> rides = ru.getHistoryOfRides();
@@ -450,7 +450,7 @@ public class RideService {
         return freeNow;
     }
 
-    // TODO NEVENA
+    // TODO NEVENA - preuzeto (odradjeno)
     private ArrayList<Driver> filterFreeAfter(ArrayList<Driver> activeFilteredDrivers) {
         // sad treba proci kroz vozace i uzeti samo one koji nemaju scheduled
         ArrayList<Driver> retVal = new ArrayList<>();
@@ -464,7 +464,7 @@ public class RideService {
         return retVal;
     }
 
-    // TODO zakazivanje NEVENA
+    // TODO zakazivanje NEVENA - preuzeto (odradjeno)
     private ArrayList<Driver> filterFreeNow(ArrayList<Driver> activeFilteredDrivers) {
         // sad treba proci kroz vozace i uzeti samo one koji nemaju ni trenutnu voznju, ni scheduled
         ArrayList<Driver> retVal = new ArrayList<>();
@@ -528,7 +528,7 @@ public class RideService {
         return declineRide(id);
     }
 
-    // TODO zakazivanje NEVENA
+    // TODO zakazivanje NEVENA - preuzeto (odradjeno)
     // Metoda vraca false nakon sto odbije voznju
     private boolean declineRide(Long id) {
         Ride ride = rideRepository.findById(id).get();
