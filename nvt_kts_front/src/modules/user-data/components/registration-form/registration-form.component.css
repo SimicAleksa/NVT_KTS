@@ -31,3 +31,8 @@ button
 {
     padding-top: 50px;
 }
+
+#alreadyExistLbl {
+    margin-left: 50px;
+    color: red;
+}

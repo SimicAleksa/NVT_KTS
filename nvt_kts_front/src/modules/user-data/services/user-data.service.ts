@@ -7,8 +7,7 @@ import { ChangePassword, ChangeProfileRequest, User } from 'src/modules/app/mode
   providedIn: 'root'
 })
 export class UserDataService {
-
-
+ 
 
   private headers = new HttpHeaders({ "Content-Type": "application/json"});
   private getChangedProfilesUrl: string;
@@ -32,6 +31,7 @@ export class UserDataService {
   private sendChangePasswordRequestURL: string;
   private activateProfileURL: string;
   private sendRegistrationEmailURL: string;
+  private checkIfExistsURL: string;
 
 
 
@@ -62,7 +62,20 @@ export class UserDataService {
 
     this.activateProfileURL = "api/user/activateProfile/";
     this.sendRegistrationEmailURL = "api/mail/sendRegistrationEmail/";
+    this.checkIfExistsURL = "api/user/checkIfExist/";
 
+  }
+
+  public dumbMethod()
+  {
+    return "Nevena";
+  }
+
+  checkIfAlreadyExists(email: string) {
+    return this.http.get(this.checkIfExistsURL + email, {
+      headers: this.headers,
+      responseType: "json",
+    })
   }
 
   activateProfile(email: string) {

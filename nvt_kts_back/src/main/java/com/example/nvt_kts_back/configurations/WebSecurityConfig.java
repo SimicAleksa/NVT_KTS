@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/api/drivers/getAllDrivers","/api/drivers/getDriver/**","/api/rides/getDriversSTARTEDRide/**",
                 "/api/rides/getDriversINPROGRESSRide/**","/api/drivers/updateDriverLocation/**","/api/rides/updateDriverIncomingTimeForRide/**",
                 "/api/rides/changeRide/**","/api/rides/changeRideToPROGRESS/**","/api/rides/createRide",
-                "/api/drivers/getDrivers","/api/rides/getRides","/api/registeredUsers/addUser").permitAll()
+                "/api/drivers/getDrivers","/api/rides/getRides","/api/registeredUsers/addUser", "/api/user/checkIfExist/**").permitAll()
                 //"/api/routes/**", "/api/user/**", "/api/messages/**","/api/registeredUsers/**", "/api/changeProfileRequests/** , "/api/drivers/**""
                 .anyRequest().authenticated().and()
                 .cors().and()

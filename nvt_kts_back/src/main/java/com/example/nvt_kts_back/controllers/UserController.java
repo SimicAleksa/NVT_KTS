@@ -178,6 +178,10 @@ public class UserController {
     }
 
 
-
+    @GetMapping(value="/checkIfExist/{email}")
+    public boolean checkIfExist(@PathVariable("email") String email)
+    {
+        return this.userService.alreadyExists(email);
+    }
 
 }
