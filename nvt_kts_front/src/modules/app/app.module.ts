@@ -39,8 +39,9 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     MenuModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
-
+      timeOut:20000,
+      tapToDismiss:false,
+      positionClass: 'toast-bottom-right'
     }),
     SocialLoginModule,
     ChatModule,

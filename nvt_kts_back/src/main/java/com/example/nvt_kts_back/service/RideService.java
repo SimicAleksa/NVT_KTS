@@ -304,7 +304,7 @@ public class RideService {
     // TODO NEVENA - nema sta da se testira, samo su pozivi za dalje
     public Driver findDriver(DataForRideFromFrom rideDTO) {
         deactivateDrivers();
-        if (rideDTO.getDateTime()==null) {
+        if (rideDTO.getDateTime()==null || rideDTO.getDateTime().equals("")) {
             return findDriverForNow(rideDTO);
         }
         return findAnyDriver(rideDTO);
@@ -337,10 +337,8 @@ public class RideService {
 
     // TODO NEVENA
     private Driver findOneFreeAtReservedTime(ArrayList<Driver> activeFilteredDrivers, DataForRideFromFrom rideDto) {
-        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String start = rideDto.getDateTime().replace('T', ' ');
-        start = start.substring(0, 16);
-        LocalDateTime rideStart = LocalDateTime.parse(start, formatter1);
+        LocalDateTime rideStart = getRideStartFromString(rideDto.getDateTime());
+
         LocalDateTime rideEnd = rideStart.plusMinutes(rideDto.getDuration());
         //outerloop:
         for (Driver d: activeFilteredDrivers)
@@ -369,6 +367,16 @@ public class RideService {
             }
         }
         return null;
+    }
+
+    private LocalDateTime getRideStartFromString(String dateTime) {
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String start = dateTime.replace('T', ' ');
+        if (start.length()>=16)
+        {
+            start = start.substring(0, 16);
+        }
+        return LocalDateTime.parse(start, formatter1);
     }
 
 

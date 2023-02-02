@@ -13,13 +13,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.security.Key;
 import java.time.Duration;
 
-public class HomePage {
+public class NarucivanjeHomePage {
     private WebDriver driver;
 
     private static String URL_HOME = "http://localhost:4200/login";
 
     private static String EMAIL = "seleBrateMojhihixD@gmail.com";
+    private static String EMAIL_NOMONEY = "nomoneysadgeSelen@gmail.com";
+
+    private static String EMAILPRVIPRIHVATIO = "nijeplatiozadnji@gmail.com";
+    private static String EMAILPOSLEDNJIPRIHVATIO = "jesteplatiozadnji@gmail.com";
+
     private static String PASSWORD = "sifra123";
+    private boolean money;
+    private boolean lastPayed;
 
     @FindBy(css = "app-login-form > form > div.row.card-style > div.row > span")
     private WebElement logIn;
@@ -33,7 +40,8 @@ public class HomePage {
     @FindBy(css = "#login-btn")
     private WebElement logInButton;
 
-    public HomePage(WebDriver driver) {
+    public NarucivanjeHomePage(WebDriver driver,boolean money,boolean lastPayed) {
+        this.money = money;
         this.driver = driver;
         driver.get(URL_HOME);
         PageFactory.initElements(driver,this);
@@ -45,9 +53,20 @@ public class HomePage {
         return isLoadedPage;
     }
 
+    public void enterEmailPlatio(){
+        emailInput.clear();
+        if(this.lastPayed)
+            emailInput.sendKeys(EMAILPOSLEDNJIPRIHVATIO);
+        else
+            emailInput.sendKeys(EMAILPRVIPRIHVATIO);
+    }
+
     public void enterEmail(){
         emailInput.clear();
-        emailInput.sendKeys(EMAIL);
+        if(this.money)
+            emailInput.sendKeys(EMAIL);
+        else
+            emailInput.sendKeys(EMAIL_NOMONEY);
     }
 
     public void enterPassword(){

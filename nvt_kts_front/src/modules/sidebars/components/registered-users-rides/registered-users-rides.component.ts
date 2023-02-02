@@ -27,6 +27,8 @@ export class RegisteredUsersRidesComponent implements OnInit {
   usersDTSRIDE:RideDtoWithExpectedDuration;
   usersTimeRemainingTillGettingARide:string;
 
+
+
   private stompClient: any;
   public ws: any;
 
@@ -40,7 +42,6 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.toastr.success("PUFNA");
     this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
       this.usersRides = <RideForNotification[]> response;
@@ -51,7 +52,6 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   alreadyApproved(ride: RideForNotification)
   {
-    //alert(ride.approvedBy + " je lista za " + ride.id);
     ride.approvedBy = ride.approvedBy ? ride.approvedBy:""
     let users = ride.approvedBy.split(";");
     if (users.includes(this.username))
@@ -66,11 +66,9 @@ export class RegisteredUsersRidesComponent implements OnInit {
     this.stompClient = Stomp.over(this.ws);
     this.stompClient.debug = null;
     let that = this;
-    //alert(that.ws.readyState + " je stanje");
     this.stompClient.connect({}, function () {
 
       that.openGlobalSocket();
-      //alert(that.ws.readyState + " je stanje");
     });
   }
 
@@ -108,7 +106,8 @@ export class RegisteredUsersRidesComponent implements OnInit {
     this.stompClient.subscribe('/map-updates/everyone-approved', (message: { body: string }) => {
       let object: StringDTO = JSON.parse(message.body);
       let id: number = object.numberValue;
-      alert("SOCKET AKTIVIRAN jer su svi odobrili TODO: izbaciti obavjestenje");
+      this.toastr.success("All passengers approved ride.");
+
       // sad znam da je voznja sa ID-em 2 odobrena od strane svih
       // ako ima saljem mu alert da je odobrena i na frontu prebacujem stanje u STARTED
       for (let ride of this.usersRides)
@@ -124,8 +123,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
     this.stompClient.subscribe('/map-updates/no-drivers-available', (message: { body: string }) => {
       let object: StringDTO = JSON.parse(message.body);
       let id: number = object.numberValue;
-      alert("SOCKET AKTIVIRAN jer nema vozaca TODO: izbaciti obavjestenje");
-      alert("Your ride is declined because there are no available drivers");
+      this.toastr.error("Your ride is declined because there are no available drivers");
       // sad znam da je voznja sa ID-em 2 odobrena od strane svih
       // ako ima saljem mu alert da je odobrena i na frontu prebacujem stanje u STARTED
       for (let ride of this.usersRides)
@@ -145,7 +143,6 @@ export class RegisteredUsersRidesComponent implements OnInit {
       const map: { [id: string]: string; } = createRideStateDictionary();
       //const map = {};
 
-      alert("SOCKET AKTIVIRAN jer se promijenilo stanje voznje");
       for (let ride of this.usersRides)
       {
         if (ride.id==id)
@@ -157,7 +154,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
             this.splitDate();
           });
           // i obavijesticu korisnika da mu se zavrsila voznja
-          alert("Your ride " + map[state]);
+          this.toastr.info("Your ride " + map[state])
         }
       }
 
@@ -182,11 +179,11 @@ export class RegisteredUsersRidesComponent implements OnInit {
       if (dto.value=="OK")
       {
         this.setRideApprovedBy(id);
-        alert("Odobrili ste voznju");
+        this.toastr.info("You successfully approved ride");
       }
       else if (dto.value="NO_TOKENS")
       {
-        alert("Nema dovoljno tokena");
+        this.toastr.warning("You don't have enought tokens!");
         // napisati na frontu da nema tokena TODO: javiti i ostalima da nema tokena
         this.rideService.changeRideState(id, "DECLINED");
         this.setRideStatus(id, "DECLINED");
@@ -200,7 +197,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
     {
       if (ride.id==id)
       {
-        let newVal = ride.approvedBy + "$" + this.username;
+        let newVal = ride.approvedBy + ";" + this.username;
         ride.approvedBy = newVal;
         return;
       }

@@ -3,7 +3,9 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { UserDataService } from '../../services/user-data.service';
 import { ChangePassword, ChangeProfileRequest, User } from 'src/modules/app/model/user';
 import { Router } from '@angular/router';
-
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import { StringDTO } from 'src/modules/app/model/stringDTO';
 
 
 @Component({
@@ -20,6 +22,9 @@ export class EditProfileComponent implements OnInit {
   retrievedImage: any;
   selectedFile: File;
   isNewPictureSelected:boolean=false;
+
+  private stompClient: any;
+  public ws: any;
 
 
   constructor(
@@ -79,7 +84,28 @@ export class EditProfileComponent implements OnInit {
     this.editForm.controls['password'].disable();
     this.editForm.controls['city'].disable();
     this.editForm.controls['phone'].disable();
+    this.initializeWebSocketConnection();
+  }
 
+  initializeWebSocketConnection() {
+    this.ws = new SockJS('http://localhost:8000/socket');
+    this.stompClient = Stomp.over(this.ws);
+    this.stompClient.debug = null;
+    let that = this;
+    this.stompClient.connect({}, function () {
+
+      that.openGlobalSocket();
+    });
+  }
+
+  openGlobalSocket()
+  {
+    this.stompClient.subscribe('/map-updates/everyone-approved', (message: { body: string }) => {
+      let object: StringDTO = JSON.parse(message.body);
+      let id: number = object.numberValue;
+      this.setInitialValues();
+      
+    });
   }
 
   onFileChanged(event:any){

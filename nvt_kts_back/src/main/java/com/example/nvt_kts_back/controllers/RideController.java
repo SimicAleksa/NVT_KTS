@@ -348,7 +348,7 @@ public class RideController {
     public ResponseEntity<StringDTO> acceptRideUser(@PathVariable("id") Long id, @PathVariable("email") String email)
     {
         boolean b = this.rideService.tryAcceptRideUser(id, email);
-        if (b) return new ResponseEntity<>(new StringDTO("OK"), HttpStatus.OK);
+        if (b) return new ResponseEntity<>(new StringDTO("OK", id), HttpStatus.OK);
         return new ResponseEntity<>(new StringDTO("NO_TOKENS"), HttpStatus.OK);
 
     }

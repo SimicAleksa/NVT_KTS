@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class RegisteredUserPage {
+public class NarucivanjeRegisteredUserPage {
     private WebDriver driver;
 
     @FindBy(linkText = "\uD83D\uDD0E\uD83D\uDDFA")
@@ -21,7 +21,7 @@ public class RegisteredUserPage {
     @FindBy(id = "coupe")
     private WebElement coupeCheckBox;
 
-    public RegisteredUserPage(WebDriver driver) {
+    public NarucivanjeRegisteredUserPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
     }
