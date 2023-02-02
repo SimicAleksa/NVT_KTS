@@ -31,26 +31,7 @@
                             <p>Started at: {{ride.startDateTime}}h </p>
                         </div>
                     </div>
-                    <!--
-                    <div class="row">
-                        <div class="col-6">
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-success" (click)="accept(ride.id)">Accept</button>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-danger" (click)="reject(ride.id)">Reject</button>
-                        </div>
-                    </div>
-                    <div class="row reasonDiv" id="reasonDiv-{{ride.id}}">
-                        <div class="col-9">
-                            <input type="text">
-                        </div>
-                        <div class="col-3">
-                            <button id="sendReasonBtn" class="btn btn-primary" (click)="sendReason(ride.id)" >Send</button>
-                        </div>
-                    </div>
-                    -->
+                 
                 </div>
            
                 <div class="container cardDiv" *ngIf="ride.state === 'STARTED'">
@@ -99,7 +80,7 @@
                     <div class="row">
                         <p>To: {{ride.endLocationString}}</p>
                     </div>
-
+  
                     <div class="row">
                         <div class="col-12">
                             <p>Started at: {{ride.startDateTime}}h </p>
@@ -117,14 +98,15 @@
         </ul>
         </div>
     </div>
-</div>
-<div class="container-fluid">
+  </div>
+  <div class="container-fluid" style="padding-top: 70px; background-color: #eee;">
     <div class="row">
-        <div class="col min-vh-100 p-4">
+        <div class="col min-vh-100 p-4" >
             <!-- toggler -->
             <button id="toggleBtn" class="btn float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
                 <i id="buttonIcon" class="bi bi-arrow-left-square-fill fs-7" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
             </button>
+
         </div>
     </div>
-</div>
+  </div>

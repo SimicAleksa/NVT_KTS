@@ -40,7 +40,7 @@ export class RegisteredUsersRidesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.toastr.success("VOLIM TE KRETENU MALI PUFNASTI");
+    this.toastr.success("PUFNA");
     this.initializeWebSocketConnection();
     this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
       this.usersRides = <RideForNotification[]> response;
@@ -52,7 +52,8 @@ export class RegisteredUsersRidesComponent implements OnInit {
   alreadyApproved(ride: RideForNotification)
   {
     //alert(ride.approvedBy + " je lista za " + ride.id);
-    let users = ride.approvedBy.split("$");
+    ride.approvedBy = ride.approvedBy ? ride.approvedBy:""
+    let users = ride.approvedBy.split(";");
     if (users.includes(this.username))
     {
       return true;

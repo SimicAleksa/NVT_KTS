@@ -17,9 +17,7 @@ export const routes: Routes = [
   },
   {
     path:"simpleRouteSearch",
-    component : SimpleRoutesSearchPageComponent,
-    canActivate: [RoleGuard],
-    data:{expectedRoles:"USER"}
+    component : SimpleRoutesSearchPageComponent
   },
   {
     path:"activeVehicle",
@@ -39,9 +37,7 @@ export const routes: Routes = [
   },
   {
     path:"allVehiclesOnMap",
-    component :VehiclesOnMapComponent,
-    canActivate: [RoleGuard],
-    data:{expectedRoles:"USER"}
+    component :VehiclesOnMapComponent
   },
   {
     path:"tempForQuery",

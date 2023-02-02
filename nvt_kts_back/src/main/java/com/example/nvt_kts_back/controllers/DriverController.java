@@ -76,7 +76,6 @@ public class DriverController {
 
 //    VOZACI KONI NISU U STANJU VOZNJE,ALI SU AKTIVNI
     @GetMapping(value = "/getDrivers",produces = "application/json")
-    @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<List<DriverDTO>> getRides() {
         List<Driver> drivers = this.driverService.findDriversWhoDonTDriveRN();
         List<DriverDTO> driverDTOS = new ArrayList<>();
@@ -93,6 +92,7 @@ public class DriverController {
 //        return userService.addNewDriver(driver);
 //    }
 //
+    //TODO OBAVLJANJE voznje - integracioni
     @GetMapping("/getDriver/{id}")
     //hmmm simulacija? (na ovo za sad ostavi bez autorizacije)
     public ResponseEntity<DriverDTO> getDriver(@PathVariable String id){

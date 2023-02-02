@@ -5,6 +5,8 @@ import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.configurations.Settings;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
+import com.example.nvt_kts_back.exception.RegisteredUserNotFound;
+import com.example.nvt_kts_back.exception.RideNotFoundException;
 import com.example.nvt_kts_back.models.*;
 import com.example.nvt_kts_back.utils.mappers.EntityToDTOMapper;
 import com.example.nvt_kts_back.repository.*;
@@ -56,6 +58,7 @@ public class RideService {
         return rideRepository.save(returnRide);
     }
 
+    // TODO Nevena (odradjeno)
     public Ride changeRide(long id){
         Ride ride = this.rideRepository.findById(id).orElseThrow(()->
                 new NotFoundException("Ride does not exist"));
@@ -63,6 +66,7 @@ public class RideService {
         return this.rideRepository.save(ride);
     }
 
+    // TODO Nevena (odradjeno)
     public Ride changeRideToINPROGRESS(long id){
         Ride ride = this.rideRepository.findById(id).orElseThrow(()->
                 new NotFoundException("Ride does not exist"));
@@ -82,21 +86,23 @@ public class RideService {
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
         ride.setRideState(RideState.NOT_FOUND);
-        return  this.rideRepository.findByDriverAndRideStateSTARTED(temp).orElse(ride);
+        return this.rideRepository.findByDriverAndRideStateSTARTED(temp).orElse(ride);
     }
 
+    //TODO Nevena (odradjeno)
     public Ride getDriversINPROGRESSRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
         ride.setRideState(RideState.NOT_FOUND);
-        return  this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
+        return this.rideRepository.findByDriverAndRideStateINPROGRESS(temp).orElse(ride);
     }
 
+    // TODO ODBIJANJE voznje - jedninicni (odradjeno)
     public Ride getDriversDrivingToStartRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
         ride.setRideState(RideState.NOT_FOUND);
-        return  this.rideRepository.findByDriverAndRideStateDTS(temp).orElse(ride);
+        return this.rideRepository.findByDriverAndRideStateDTS(temp).orElse(ride);
     }
 
     public void deleteAllRides(){
@@ -214,30 +220,35 @@ public class RideService {
         return retVal;
     }
 
-    public void changeRideState(Long id, String state) {
-        Ride r = rideRepository.findById(id).get();
+    //TODO ODBIJANJE voznje - jedninicni
+    public Ride changeRideState(Long id, String state) {
+        Ride r = rideRepository.findById(id).orElseThrow(RideNotFoundException::new);
         r.setRideState(RideState.valueOf(state));
-        rideRepository.save(r);
+        return rideRepository.save(r);
     }
 
-    public ArrayList<RideNotificationDTO> finUsersUpcomingRides(String email) {
+    //TODO ODBIJANJE voznje - jedinicni
+    public ArrayList<RideNotificationDTO> findUsersUpcomingRides(String email) {
         RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
+        if(ru==null) throw new RegisteredUserNotFound("Registered user not found");
         List<Ride> rides = ru.getHistoryOfRides();
         ArrayList<RideNotificationDTO> retVal = new ArrayList<>();
         for(Ride r: rides)
         {
-            if (r.getRideState()==RideState.IN_PROGRESS || r.getRideState()==RideState.STARTED ||
-                    r.getRideState()==RideState.WAITING_FOR_PAYMENT ||
-                    r.getRideState()==RideState.RESERVED) {
+            if (r.getRideState()== RideState.IN_PROGRESS || r.getRideState()== RideState.STARTED ||
+                    r.getRideState()== RideState.WAITING_FOR_PAYMENT ||
+                    r.getRideState()== RideState.RESERVED) {
                 RideNotificationDTO dto = new RideNotificationDTO(r);
                 retVal.add(dto);
-                if(r.getRideState()==RideState.STARTED){
+                if(r.getRideState()== RideState.STARTED){
                     retVal.add(new RideNotificationDTO(this.getDriversDrivingToStartRide(String.valueOf(r.getDriver_id()))));
                 }
             }
         }
         Collections.sort(retVal, Comparator.comparing(RideNotificationDTO::getStartDateTime));
         return retVal;
+
+
     }
 
 
@@ -247,7 +258,7 @@ public class RideService {
         RideDTO retVal=new RideDTO();
         for(Ride r: rides)
         {
-            if (r.getRideState()==RideState.STARTED){
+            if (r.getRideState()== RideState.STARTED){
                 retVal.setExpectedDuration(r.getExpectedDuration());
                 retVal.setDriver(r.getDriver_id());
                 retVal.setRoute(new RouteDTO(r.getRoute()));
@@ -256,7 +267,7 @@ public class RideService {
                 break;
             }
         }
-        Ride rrrride = this.getDriversDrivingToStartRide(String.valueOf(retVal.getId()));
+        Ride rrrride = this.getDriversDrivingToStartRide(String.valueOf(retVal.getDriver()));
         RideDTO returnRideDto = new RideDTO(rrrride);
         returnRideDto.setExpectedDuration(rrrride.getExpectedDuration());
 
@@ -272,7 +283,7 @@ public class RideService {
         RideDTO retVal=new RideDTO();
         for(Ride r: rides)
         {
-            if (r.getRideState()==RideState.IN_PROGRESS){
+            if (r.getRideState()== RideState.IN_PROGRESS){
                 retVal.setExpectedDuration(r.getExpectedDuration());
                 retVal.setDriver(r.getDriver_id());
                 retVal.setRoute(new RouteDTO(r.getRoute()));
@@ -334,7 +345,7 @@ public class RideService {
             {
                 LocalDateTime existedStart = r.getStartDateTime();
                 LocalDateTime existedEnd = existedStart.plusMinutes(r.getExpectedDuration());
-                if (r.getRideState()==RideState.RESERVED && !((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
+                if (r.getRideState()== RideState.RESERVED && !((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
                 {
                     // nista ne treba da se desi
                     free = false;
@@ -466,12 +477,21 @@ public class RideService {
         }
     }
 
-    public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) {
+    //TODO ZAKAZIVANJE voznje - Jedninicni (odradjen) | hajde ponovo (odradjen ponovo)
+    public List<RegisteredUser> getLinkedPassangersFromStringArray(List<String> linkedPassengers,Ride ride) throws Exception{
         List<RegisteredUser> registeredUsers = new ArrayList<>();
         for(String passEmail : linkedPassengers){
-            registeredUsers.add(this.registeredUserRepository.findByEmail(passEmail));
-            RideNotificationDTO dto = new RideNotificationDTO(ride,passEmail);
-            this.simpMessagingTemplate.convertAndSend("/map-updates/ride-notification", dto);
+            RegisteredUser registeredUser = this.registeredUserRepository.findByEmail(passEmail);
+            if(registeredUser==null){
+                throw new RegisteredUserNotFound("Registered user not found");
+            }
+            else {
+                if(!registeredUser.getIsBlocked() && registeredUser.isEnabled()){
+                    registeredUsers.add(registeredUser);
+                    RideNotificationDTO dto = new RideNotificationDTO(ride, passEmail);
+                    this.simpMessagingTemplate.convertAndSend("/map-updates/ride-notification", dto);
+                }
+            }
         }
         return registeredUsers;
     }
@@ -515,9 +535,9 @@ public class RideService {
         }
         else
         {
-            ride.setApprovedBy(ride.getApprovedBy()+"$" + email);
+            ride.setApprovedBy(ride.getApprovedBy()+";" + email);
         }
-        if (ride.getApprovedBy()!=null && !ride.getApprovedBy().equals("") && ride.getApprovedBy().split("\\$").length == ride.getPassengers().size())
+        if (ride.getApprovedBy()!=null && !ride.getApprovedBy().equals("") && ride.getApprovedBy().split(";").length == ride.getPassengers().size())
         {
             //System.out.println(ride.getId() + " je prethhodno sacuvani ID");
             //System.out.println(this.dataForRideFromFromRepository.findById(ride.getId()).get() + " je cijeli objekat ");

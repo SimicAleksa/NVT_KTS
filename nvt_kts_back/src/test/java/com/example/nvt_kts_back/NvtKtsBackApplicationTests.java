@@ -8,6 +8,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("classpath:application-test.properties")
 class NvtKtsBackApplicationTests {
 
     @Test

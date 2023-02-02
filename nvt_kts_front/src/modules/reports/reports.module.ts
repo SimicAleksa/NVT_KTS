@@ -10,6 +10,7 @@ import { RegisteredUserPageComponent } from './pages/registered-user-page/regist
 import { AdminReportPageComponent } from './pages/admin-report-page/admin-report-page.component';
 import { AdminChartComponent } from './components/admin-chart/admin-chart.component';
 import { PopUpModule } from "../pop-up/pop-up.module";
+import { SidebarsModule } from '../sidebars/sidebars.module';
 
 
 
@@ -26,7 +27,8 @@ import { PopUpModule } from "../pop-up/pop-up.module";
         CommonModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
-        PopUpModule
+        PopUpModule,
+        SidebarsModule,
     ]
 })
 export class ReportsModule { }
