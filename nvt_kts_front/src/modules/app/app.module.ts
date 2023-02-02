@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { Routes } from '@angular/router';
 import { MapsModule } from '../maps/maps.module';
@@ -52,10 +52,10 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
       useValue: {
         autoLogin: false,
         providers: [
-          // {
-          //   id: GoogleLoginProvider.PROVIDER_ID,
-          //   provider: new GoogleLoginProvider('333701736099-t5838qp4nfmp4ijfq2bjt8vtp6lb8570.apps.googleusercontent.com')
-          // },
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('333701736099-t5838qp4nfmp4ijfq2bjt8vtp6lb8570.apps.googleusercontent.com')
+          },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider('904097183957711')

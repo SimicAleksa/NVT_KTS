@@ -58,10 +58,14 @@ public class DriverController {
     @PutMapping(value = "/updateDriverLocation/{id}", consumes = "application/json", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<DriverDTO> updateDriverLocation(@PathVariable("id") long id, @RequestBody CoordsDTO coordsDTO) {
-        Driver driver = this.userService.updateDriverCoords(id, coordsDTO.getLatitude(), coordsDTO.getLongitude());
-        DriverDTO returnDriverDTO = new DriverDTO(driver);
-        this.simpMessagingTemplate.convertAndSend("/map-updates/update-vehicle-position", returnDriverDTO);
-        return new ResponseEntity<>(returnDriverDTO, HttpStatus.OK);
+        try {
+            Driver driver = this.userService.updateDriverCoords(id, coordsDTO.getLatitude(), coordsDTO.getLongitude());
+            DriverDTO returnDriverDTO = new DriverDTO(driver);
+            this.simpMessagingTemplate.convertAndSend("/map-updates/update-vehicle-position", returnDriverDTO);
+            return new ResponseEntity<>(returnDriverDTO, HttpStatus.OK);
+        } catch (UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @DeleteMapping(value = "/deleteAllDrivers" ,produces = "text/plain")
     //hmmm simulacija?
@@ -92,9 +96,13 @@ public class DriverController {
     @GetMapping("/getDriver/{id}")
     //hmmm simulacija? (na ovo za sad ostavi bez autorizacije)
     public ResponseEntity<DriverDTO> getDriver(@PathVariable String id){
-        Driver driver = this.driverService.findById(id);
-        DriverDTO returnDriverDTO = new DriverDTO(driver);
-        return new ResponseEntity<>(returnDriverDTO, HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(
+                    new DriverDTO(this.driverService.findById(id)),
+                    HttpStatus.OK);
+        } catch (UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/getAllDrivers")

@@ -29,6 +29,7 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 
 @RestController
 @RequestMapping("api/registeredUsers")
@@ -50,10 +51,14 @@ public class RegisteredUserController {
     @GetMapping("/getUserData/{email}")
     @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ADMIN_ROLE)
     public ResponseEntity<RegisteredUserDTO> getUserData(@PathVariable("email") String email) {
-        RegisteredUser r = registeredUserService.getByEmail(email);
-        RegisteredUserDTO u = new RegisteredUserDTO(r);
-        u.setPicture(decompressBytes(u.getPicture()));
-        return new ResponseEntity<>(u, HttpStatus.OK);
+        try {
+            RegisteredUser r = registeredUserService.getByEmail(email);
+            RegisteredUserDTO u = new RegisteredUserDTO(r);
+            u.setPicture(decompressBytes(u.getPicture()));
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } catch (UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public static byte[] decompressBytes(byte[] data) {
@@ -75,10 +80,14 @@ public class RegisteredUserController {
     @PostMapping("/imgUploadPROBA/{email}")
     @PreAuthorize(Settings.PRE_AUTH_DRIVER_USER_ADMIN_ROLE)
     public ResponseEntity.BodyBuilder imgUploadPROBA(@RequestParam("imageFile") MultipartFile file,@PathVariable("email") String email) throws IOException {
-        RegisteredUser tem = this.registeredUserService.getByEmail(email);
-        tem.setPicture(compressBytes(file.getBytes()));
-        this.registeredUserService.save(tem);
-        return ResponseEntity.status(HttpStatus.OK);
+        try {
+            RegisteredUser tem = this.registeredUserService.getByEmail(email);
+            tem.setPicture(compressBytes(file.getBytes()));
+            this.registeredUserService.save(tem);
+            return ResponseEntity.status(HttpStatus.OK);
+        } catch(UserDoesNotExistException ignored) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND);
+        }
     }
 
     public static byte[] compressBytes(byte[] data) {
@@ -136,16 +145,19 @@ public class RegisteredUserController {
     //TODO ZAKAZIVANJE voznje - integracioni (odradjeno)
     //TODO OBAVLJANJE voznje - integracioni
     @GetMapping(value="/getUserStateBasedOnRide/{email}")
-    public boolean getUserStateBasedOnRide(@PathVariable("email") String email)
-    {
-        RegisteredUser u = this.registeredUserService.getByEmail(email);
-        List<Ride> rides  = u.getHistoryOfRides();
-        for(Ride ride : rides){
-            if(ride.getRideState().equals(RideState.STARTED) || ride.getRideState().equals(RideState.IN_PROGRESS)
-                    || ride.getRideState().equals(RideState.SCHEDULED) || ride.getRideState().equals(RideState.WAITING_FOR_PAYMENT))
-                return  true;
+    public ResponseEntity<Boolean> getUserStateBasedOnRide(@PathVariable("email") String email) {
+        try {
+            RegisteredUser u = this.registeredUserService.getByEmail(email);
+            List<Ride> rides  = u.getHistoryOfRides();
+            for(Ride ride : rides){
+                if(ride.getRideState().equals(RideState.STARTED) || ride.getRideState().equals(RideState.IN_PROGRESS)
+                        || ride.getRideState().equals(RideState.SCHEDULED) || ride.getRideState().equals(RideState.WAITING_FOR_PAYMENT))
+                    return new ResponseEntity<>(true, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        } catch(UserDoesNotExistException ignored) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return false;
     }
 
     @GetMapping("/favourite-routes")
