@@ -6,6 +6,7 @@ import com.example.nvt_kts_back.e2e.pages.HomePage;
 import com.example.nvt_kts_back.e2e.pages.OrderRidePage;
 import com.example.nvt_kts_back.e2e.pages.RegisteredUserPage;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.test.context.ActiveProfiles;
 import org.testng.annotations.Test;
 
 public class KolkokSelTest  extends  TestBase{

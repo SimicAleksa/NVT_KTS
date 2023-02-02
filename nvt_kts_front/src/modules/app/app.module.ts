@@ -38,7 +38,10 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     PopUpModule,
     MenuModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+
+    }),
     SocialLoginModule,
     ChatModule,
     ReportsModule,

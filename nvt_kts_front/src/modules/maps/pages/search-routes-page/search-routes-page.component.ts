@@ -1,5 +1,5 @@
 import { Component, OnInit,VERSION } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Toast, ToastrService } from 'ngx-toastr';
 import { MapLocation } from 'src/modules/app/model/mapLocation';
 import { UserDataService } from 'src/modules/user-data/services/user-data.service';
 import { Coord } from '../../components/active-vehicle/Coords';
