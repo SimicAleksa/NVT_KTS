@@ -18,8 +18,20 @@ public class HomePage {
 
     private static String URL_HOME = "http://localhost:4200/login";
 
-    @FindBy(css = "body > app-root > app-login-page > div > div:nth-child(2) > app-login-form > form > div.row.card-style > div.row > span")
+    private static String EMAIL = "seleBrateMojhihixD@gmail.com";
+    private static String PASSWORD = "sifra123";
+
+    @FindBy(css = "app-login-form > form > div.row.card-style > div.row > span")
     private WebElement logIn;
+
+    @FindBy(css = "#email")
+    private WebElement emailInput;
+
+    @FindBy(css = "#password")
+    private WebElement passwordInput;
+
+    @FindBy(css = "#login-btn")
+    private WebElement logInButton;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -31,5 +43,20 @@ public class HomePage {
         boolean isLoadedPage = (new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.textToBePresentInElement(logIn,"Login")));
         return isLoadedPage;
+    }
+
+    public void enterEmail(){
+        emailInput.clear();
+        emailInput.sendKeys(EMAIL);
+    }
+
+    public void enterPassword(){
+        passwordInput.clear();
+        passwordInput.sendKeys(PASSWORD);
+    }
+
+    public void clickLogInButton(){
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(logInButton)).click();
     }
 }

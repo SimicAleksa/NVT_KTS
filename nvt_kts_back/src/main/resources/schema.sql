@@ -30,7 +30,8 @@ VALUES ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyo
        ('batakojiceka@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Bata','Ceka','grad','42145135',true,'slika',false, 1, null),
        ('aaaaaaaaaaaaaaa@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Aaaa','Aaaa','grad','42145135',true,'slika',false, 1, null),
        ('bbbbbbbbbbbbbbbbbb@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Bbbbbbbbbbbb','Bbbbb','grad','42145135',true,'slika',false, 1, null),
-       ('zaRezervisanje@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null);
+       ('zaRezervisanje@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null),
+       ('seleBrateMojhihixD@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null);
 
 INSERT INTO registered_user (id, is_busy, tokens)
 VALUES
@@ -46,7 +47,8 @@ VALUES
 (13, true, 5500),
 (14, true, 1234),
 (15, true, 1254),
-(16, true, 1254);
+(16, true, 1254),
+(17, true, 1254);
 
 INSERT INTO driver (id, active, car_type, baby_allowed, pet_allowed, is_driver_free, current_coords_id, license_plate_number)
 VALUES (6, true, 'SEDAN', true, true, true, 3, 'NS 8734 SN'),
