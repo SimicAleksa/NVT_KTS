@@ -21,6 +21,9 @@ public class HomePage {
     @FindBy(css = "body > app-root > app-login-page > div > div:nth-child(2) > app-login-form > form > div.row.card-style > div.row > span")
     private WebElement logIn;
 
+    @FindBy(css = "nav > div > ul > li:nth-child(3) > a")
+    private WebElement registerBtnNavbar;
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
         driver.get(URL_HOME);
@@ -31,5 +34,10 @@ public class HomePage {
         boolean isLoadedPage = (new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.textToBePresentInElement(logIn,"Login")));
         return isLoadedPage;
+    }
+
+    public void clickRegisterBtnNavbar() {
+        (new WebDriverWait(driver, Duration.ofSeconds(5)))
+                .until(ExpectedConditions.elementToBeClickable(registerBtnNavbar)).click();
     }
 }

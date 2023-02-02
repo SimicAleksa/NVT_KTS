@@ -3,6 +3,7 @@ import { UserDataService } from '../../services/user-data.service';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router } from "@angular/router";
 import { ChangeProfileRequest } from 'src/modules/app/model/user';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration-form',
@@ -17,6 +18,7 @@ export class RegistrationFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userDataService : UserDataService, 
+    private toastr: ToastrService,
     ) { 
       this.createForm();
     }
@@ -53,6 +55,11 @@ export class RegistrationFormComponent implements OnInit {
     this.user = this.registrationForm.value;
     this.userDataService.addUser(this.user);
     this.userDataService.sendRegistrationEmail(this.user.email);
+
+    //this.toastr.success("We've sent confirmation email on " + this.user.email);
+    this.toastr.info("We've sent confirmation email on " + this.user.email, '', {
+      positionClass: 'toast-bottom-right'
+   });
   }
 }
 
