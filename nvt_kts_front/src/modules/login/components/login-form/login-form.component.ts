@@ -22,7 +22,7 @@ export class LoginFormComponent implements OnInit {
   private isLoginBtnClickable: boolean;
 
 
-  constructor(private reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator, 
+  constructor(public reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator, 
               private menuService: MenuService, private authService: SocialAuthService,
               private router: Router) {
     this.email = "";
@@ -90,6 +90,7 @@ export class LoginFormComponent implements OnInit {
       },
 
       error: (err: any) => {
+        console.log(err);
         if (err.status === 401)
           this.emitError("Email or/and password you entered are not valid. Try again.");
         else if (err.status === 423)
@@ -127,7 +128,7 @@ export class LoginFormComponent implements OnInit {
     };
   }
 
-  redirectAfterLogin() {
+  redirectAfterLogin(): void{
     this.menuService.updateMenu();
     this.router.navigate([API_ALL_ACTIVE_VEHICLES_URL]);
   }
