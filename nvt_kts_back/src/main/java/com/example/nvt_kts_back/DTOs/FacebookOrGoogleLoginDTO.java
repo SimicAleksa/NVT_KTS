@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FBLoginDTO {
+public class FacebookOrGoogleLoginDTO {
     private String email;
     private String authToken;
     private String name;
