@@ -278,7 +278,7 @@ public class ZakazivanjeVoznjeRideServiceUnitTest {
     @Test
     public void getUsersInProgresssRide_inValidData_NullPointerException(){
         Assertions.assertAll(
-                ()->Assertions.assertThrows(NullPointerException.class,()->this.rideService.getUsersInProgresssRide("goranogric@gmail.com"))
+                ()->Assertions.assertThrows(UserDoesNotExistException.class,()->this.rideService.getUsersInProgresssRide("goranogric@gmail.com"))
         );
     }
     @Test

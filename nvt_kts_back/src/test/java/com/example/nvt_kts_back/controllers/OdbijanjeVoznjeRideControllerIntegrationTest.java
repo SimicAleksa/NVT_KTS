@@ -75,11 +75,11 @@ public class OdbijanjeVoznjeRideControllerIntegrationTest {
     public void changeRideState_invalidId_RideNotFoundException() {
         login();
         HttpEntity<StringDTO> httpEntity = new HttpEntity<>(headers);
-        ResponseEntity<StringDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRideState/10/ENDED",
+        ResponseEntity<StringDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRideState/102/ENDED",
                 HttpMethod.GET, httpEntity, StringDTO.class);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
-        ResponseEntity<StringDTO> responseEntity2 = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRideState/10/INVALID_STATE",
+        ResponseEntity<StringDTO> responseEntity2 = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRideState/104/INVALID_STATE",
                 HttpMethod.GET, httpEntity, StringDTO.class);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity2.getStatusCode());
     }
@@ -118,7 +118,7 @@ public class OdbijanjeVoznjeRideControllerIntegrationTest {
     public void changeRide_invalidId_RideNotFoundException() {
         login();
         HttpEntity<StringDTO> httpEntity = new HttpEntity<>(headers);
-        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRide/10",
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRide/109",
                 HttpMethod.PUT, httpEntity, RideDTO.class);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
@@ -147,7 +147,7 @@ public class OdbijanjeVoznjeRideControllerIntegrationTest {
     public void changeRideToPROGRESS_invalidId_RideNotFoundException() {
         login();
         HttpEntity<StringDTO> httpEntity = new HttpEntity<>(headers);
-        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRideToPROGRESS/10",
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/changeRideToPROGRESS/108",
                 HttpMethod.PUT, httpEntity, RideDTO.class);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
