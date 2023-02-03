@@ -70,7 +70,7 @@ INSERT INTO route (start_location_id, end_location_id, routejson)VALUES (7,8,JSO
 
 
 INSERT INTO ride (ride_state, price, start_date_time, end_date_time, expected_duration, distance, route_id, driver_id)
-VALUES ('IN_PROGRESS', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:52.069', 100, 54.3, 1, 6);
+VALUES ('IN_PROGRESS', 16.3, '2023-02-03 10:47:52.069', null, 100, 54.3, 1, 6);
 
 INSERT INTO ride (ride_state, price, start_date_time, end_date_time, expected_duration, distance, route_id, driver_id)
 VALUES ('DRIVING_TO_START', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:52.069', 100, 54.3, 1, 7);

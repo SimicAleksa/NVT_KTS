@@ -231,6 +231,10 @@ public class RideService {
         {
             r.setStartDateTime(LocalDateTime.now());
         }
+        if (state.equals(RideState.ENDED.toString()))
+        {
+            r.setEndDateTime(LocalDateTime.now());
+        }
         return rideRepository.save(r);
     }
 

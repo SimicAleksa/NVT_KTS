@@ -26,7 +26,7 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @Query("update Driver d set d.babyAllowed=?2, d.petAllowed=?3 where d.id =?1")
     void updateCarData(Long id, Boolean babyAllowed, Boolean petsAllowed);
 
-    @Query("SELECT d FROM Driver d JOIN FETCH d.reviews r JOIN FETCH r.reviewer WHERE d.id = :id")
+    @Query("SELECT d FROM Driver d LEFT JOIN FETCH d.reviews r LEFT JOIN FETCH r.reviewer WHERE d.id = :id")
     Optional<Driver> findByIdWithReviews(@Param("id") Long id);
 
 
