@@ -2,6 +2,7 @@ import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
+import { iif } from 'rxjs';
 import { API_ALL_ACTIVE_VEHICLES_URL } from 'src/config/map-urls';
 import { MenuService } from 'src/modules/menu/service/menu-service';
 import { UserDataService } from 'src/modules/user-data/services/user-data.service';
@@ -42,8 +43,12 @@ export class LoginFormComponent implements OnInit {
         surname: user.lastName,
         picturePath: ""
       }
-      
-      this.reqMaker.createFacebookLoginRequest(data).subscribe(this.getFBLoginObservable());
+
+      let provider = user.provider;
+      if(provider === "GOOGLE")
+        this.reqMaker.createGoogleLoginRequest(data).subscribe(this.getFacebookOrGoogleLoginObservable());
+      else if (provider === "FACEBOOK")
+        this.reqMaker.createFacebookLoginRequest(data).subscribe(this.getFacebookOrGoogleLoginObservable()); 
     });
   }
 
@@ -114,7 +119,7 @@ export class LoginFormComponent implements OnInit {
     };
   }
 
-  getFBLoginObservable() {
+  getFacebookOrGoogleLoginObservable() {
     return {
       next: (retData: any) => {
         if (retData.body === undefined)
