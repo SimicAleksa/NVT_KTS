@@ -76,6 +76,5 @@ export class MapComponent implements OnInit {
       })
       .addTo(this.map)
   }
-  ngOnChanges(): void {
-  }
+  
 }
