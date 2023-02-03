@@ -62,7 +62,7 @@
                 <a class="nav-link" (click)="onChangedProfilesBtnClick()">CHANGED PROFILES</a>
             </li>
 
-            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='ROUTE SEARCH'}"  *ngIf="role == 'USER'">
+            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='ROUTE SEARCH'}"  *ngIf="role === 'USER'">
                 <a class="nav-link" (click)="onRouteSearchBtnClick()" >  🔎🗺</a>
             </li>
 

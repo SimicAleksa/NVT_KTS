@@ -27,11 +27,11 @@
                     
                     <div id="messagesDiv" class="col-md-7 col-lg-7 col-xl-7 order-1 order-lg-2">
                         <div>
-                            <label id="noMessages" *ngIf="currentMessages?.length==0" > No messages yet</label>
+                            <label id="noMessages" *ngIf="currentMessages?.length===0" > No messages yet</label>
 
                             <!--OVDJE SADA IDE NGFOR ZA SVE PORUKE-->
                             <div *ngFor="let item of currentMessages" class="d-flex justify-content-between mb-4" >
-                                <div class="card w-100 myMessage"  *ngIf="item.sender==userEmail">
+                                <div class="card w-100 myMessage"  *ngIf="item.sender===userEmail">
                                     <div class="card-header d-flex justify-content-between p-3">
                                         <p class="fw-bold mb-0">Me</p>
                                         <!--<p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p> -->
@@ -43,11 +43,11 @@
                                     </div>
                                 </div>
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-                                class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60"  *ngIf="item.sender==userEmail">
+                                class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60"  *ngIf="item.sender===userEmail">
 
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                                class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" *ngIf="item.receiver==userEmail">
-                                <div class="card w-100 myMessage" *ngIf="item.receiver==userEmail">
+                                class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" *ngIf="item.receiver===userEmail">
+                                <div class="card w-100 myMessage" *ngIf="item.receiver===userEmail">
                                     <div class="card-header d-flex justify-content-between p-3">
                                         <p class="fw-bold mb-0">{{friendName}}</p>
                                         <p class="text-muted small mb-0"></p>

@@ -73,7 +73,6 @@ export class SimpleRouteSearchComponent implements OnInit {
       })
       .addTo(this.map)
   }
-  ngOnChanges(): void {
-  }
+  
 
 }

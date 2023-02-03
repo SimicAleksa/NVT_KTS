@@ -79,8 +79,8 @@
             <td> <button class="btn btn-link" (click)="addNote(user.email)" id={{user.email}}|note>Add note</button>
             </td>
             <td> 
-                <button *ngIf="user.blocked==false" class="btn btn-danger" (click)="block(user.email)" id={{user.email}}|block>Block</button> 
-                <button *ngIf="user.blocked==true" class="btn btn-success" (click)="unblock(user.email)" id={{user.email}}|note>Unblock</button>
+                <button *ngIf="user.blocked===false" class="btn btn-danger" (click)="block(user.email)" id={{user.email}}|block>Block</button> 
+                <button *ngIf="user.blocked===true" class="btn btn-success" (click)="unblock(user.email)" id={{user.email}}|note>Unblock</button>
             </td>
         </tr>
 
