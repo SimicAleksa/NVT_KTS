@@ -33,7 +33,9 @@ VALUES ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyo
        ('zaRezervisanje@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null),
        ('seleBrateMojhihixD@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null),
        ('nomoneysadgeSelen@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 1, null),
-       ('bugfixDriver@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 2, null);
+       ('bugfixDriver@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 2, null),
+       ('admin@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Admin','SUPPORT','grad','42145135',true,'slika',false, 3, null);
+
 
 
 INSERT INTO registered_user (id, is_busy, tokens)
@@ -130,3 +132,7 @@ values(9,false,'LIMOUSINE',100,false,45.19,19.21);
 insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE, DATE_TIME)
 values(10,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21, '2023-02-05 18:47:52.069');
 
+
+insert into MESSAGE (TEXT, SENDER, RECEIVER) VALUES ('I need help', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
+    ('Nova poruka', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
+    ('How can I help you', 'admin@gmail.com', 'strahinjapopovic.evilpops@gmail.com');

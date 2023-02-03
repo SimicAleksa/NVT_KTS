@@ -101,7 +101,10 @@ export class LoginFormComponent implements OnInit {
           this.isLoginBtnClickable = true;
       },
       
-      complete: () => { this.redirectAfterLogin(); }
+      complete: () => { 
+        
+        
+        this.redirectAfterLogin(); }
     };
   }
 

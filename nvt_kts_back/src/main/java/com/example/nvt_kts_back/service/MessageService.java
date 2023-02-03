@@ -30,19 +30,17 @@ public class MessageService {
             String anotherPerson = findAnotherPerson(m, email);
             putInMap(retVal, m, anotherPerson);
         }
-        addAdminInHashmap(retVal, email);
+        retVal = addAdminInHashmap(retVal, email);
         return retVal;
     }
 
-    private void addAdminInHashmap(HashMap<String, List<Message>> retVal, String email) {
-        if (!retVal.containsKey("admin@gmail.com"))
+    private HashMap<String, List<Message>>  addAdminInHashmap(HashMap<String, List<Message>> retVal, String email) {
+        if (!email.equals("admin@gmail.com") && !retVal.containsKey("admin@gmail.com"))
         {
-            //Message m = new Message("Hey, how can i help you?", "admin@gmail.com", email);
             ArrayList<Message> ms = new ArrayList<>();
-            //ms.add(m);
             retVal.put("admin@gmail.com", ms);
         }
-
+    return retVal;
     }
 
     private void putInMap(HashMap<String, List<Message>> map, Message m, String key) {

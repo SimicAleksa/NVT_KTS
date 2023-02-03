@@ -32,30 +32,38 @@ export class ChatPageComponent implements OnInit {
     private messageService: MessageService, 
     //private webSocketService: WebSocketService,
   ) { 
-    this.userEmail = String(localStorage.getItem('email'));
-    //TODO pogledaj da li si dobavila
+    
+  }
+
+
+  setFriendUsername() {
     if (this.userEmail!="admin@gmail.com")
     {
       this.usersFriend = "admin@gmail.com";
     }
-    
+    else{
+      // ako je admin, postavljam na aktivnog ovog zadnjeg
+      this.usersFriend = this.messagePersons.at(0)?.email!;
+    }
   }
 
 
 
 
   ngOnInit(): void {
-    
+    this.userEmail = String(localStorage.getItem('email'));
     this.initializeWebSocketConnection();
     this.messageService.getUserMessageMap(this.userEmail).subscribe((response) => {
       this.messagesMap = new Map(Object.entries(response));
-      this.currentMessages = this.messagesMap.get(this.usersFriend);
+      console.log(this.messagesMap);
+      
       this.messageService.getUsersToShowInMessages(this.userEmail).subscribe((response) => {
         this.messagePersons = response;
+        console.log(this.messagePersons);
+        this.setFriendUsername();
         this.friendName = this.findName(this.usersFriend);
-        //this.myName = this.findName(this.userEmail);
+        this.currentMessages = this.messagesMap.get(this.usersFriend);
         this.addLastMessages();
-        //this.initializeWebSocketConnection();
 
       })
     });
@@ -93,18 +101,20 @@ export class ChatPageComponent implements OnInit {
   {
     this.stompClient.subscribe('/map-updates/add-message', (message: { body: string }) => {
       //this.messageService.saveMessage();
-      alert("Dosla nova poruka");
       let m: Message =JSON.parse(message.body);
       console.log(m);
-      alert("sender je bio " + m.sender + ", a receiver je bio " + m.receiver);
-
-      if (m.sender==this.userEmail || m.receiver == this.usersFriend)
+      /*alert("sender je bio " + m.sender + ", a receiver je bio " + m.receiver);
+      alert("usernamae je " + this.userEmail);*/
+      if (m.sender===this.userEmail || m.receiver === this.userEmail)
       {
+        //alert("Meni je stiglo");
         this.messageService.getUserMessageMap(this.userEmail).subscribe((response) => {
           this.messagesMap = new Map(Object.entries(response));
           this.currentMessages = this.messagesMap.get(this.usersFriend);
           this.messageService.getUsersToShowInMessages(this.userEmail).subscribe((response) => {
             this.messagePersons = response;
+            this.setFriendUsername();
+            this.friendName = this.findName(this.usersFriend);
             this.addLastMessages();    
           })
         });
@@ -146,6 +156,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   getLastMessage(email: string): string {
+    if (this.messagesMap.get(email)?.length==0) return "No messages yet";
     let l = this.messagesMap.get(email);
     let m:Message = l?.at(l.length - 1)!;
     let s: string = m.text; 
