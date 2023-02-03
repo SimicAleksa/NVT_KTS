@@ -15,8 +15,10 @@ public class ZavrsetakVoznjeLoginPage {
 
     private static String URL_HOME = "http://localhost:4200/login";
     private static String DRIVER_EMAIL = "registrovani1@gmail.com";
+    private static String DRIVER_EMAIL_2 = "bugfixDriver2@gmail.com";
     private static String DRIVER_PASSWORD = "sifra123";
     private static String USER_EMAIL = "djura@gmail.com";
+    private static String USER_EMAIL_2 = "selena@gmail.com";
     private static String USER_PASSWORD = "sifra123";
 
     @FindBy(css = "body > app-root > app-login-page > div > div:nth-child(2) > app-login-form > form > div.row.card-style > div.row > span")
@@ -60,6 +62,20 @@ public class ZavrsetakVoznjeLoginPage {
 
     public void loginAsUser() {
         this.emailInput.sendKeys(USER_EMAIL);
+        this.passwordInput.sendKeys(USER_PASSWORD);
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(logInButton)).click();
+    }
+
+    public void loginAsDriver2() {
+        this.emailInput.sendKeys(DRIVER_EMAIL_2);
+        this.passwordInput.sendKeys(DRIVER_PASSWORD);
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(logInButton)).click();
+    }
+
+    public void loginAsUser2() {
+        this.emailInput.sendKeys(USER_EMAIL_2);
         this.passwordInput.sendKeys(USER_PASSWORD);
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.elementToBeClickable(logInButton)).click();
