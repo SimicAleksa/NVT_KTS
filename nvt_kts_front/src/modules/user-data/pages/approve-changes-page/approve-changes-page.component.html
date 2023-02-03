@@ -3,14 +3,14 @@
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-8 col-xl-8">
-          <div class="card text-black" style="border-radius: 25px;">
+          <div class="card text-black" style="border-radius: 25px; margin-top: 100px;">
             <div class="card-body p-md-5">
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-10 col-xl-7 order-2 order-lg-1">
   
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-1 mt-4">Verify changes</p>
   
-                  <div class="oneDriverDiv" *ngFor="let user of requests" id={{user[0].email}}>
+                  <div class="oneDriverDiv" *ngFor="let user of requests" id={{user[0].email}} style="width: 500px;">
                     <form class="mx-1 mx-md-4">
 
                         <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.name === user.at(1)?.name ? '': 'hasChanged'">
@@ -29,9 +29,9 @@
                       
                         <div class="d-flex flex-row align-items-center mb-4" [ngClass]="user.at(0)?.email === user.at(1)?.email ? '': 'hasChanged'">
                           <i class="bi bi-envelope-at-fill"></i>
-                          <label> {{user.at(0)?.email}}</label>
+                          <label style="font-size: small;"> {{user.at(0)?.email}}</label>
                           <i class="bi bi-arrow-right"></i>
-                          <label> {{user.at(1)?.email}}</label>
+                          <label style="font-size: small;"> {{user.at(1)?.email}}</label>
                         </div>
                       
                       

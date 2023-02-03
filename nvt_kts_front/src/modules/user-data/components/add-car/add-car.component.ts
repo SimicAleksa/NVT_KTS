@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { ChangeProfileRequest } from 'src/modules/app/model/user';
 import { UserDataService } from '../../services/user-data.service';
 
@@ -18,6 +19,7 @@ export class AddCarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userDataService : UserDataService,
+    private toastr: ToastrService,
   ) {
     this.createForm();
   }
@@ -62,6 +64,7 @@ export class AddCarComponent implements OnInit {
     this.driver = this.registrationForm.value;
     this.userDataService.addDriver(this.driver);
     this.userDataService.sendRegistrationEmail(this.driver.email);
+    this.toastr.success("We've send confirmation email to " + this.driver.email);
   }
 
  
