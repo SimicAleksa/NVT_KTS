@@ -3,6 +3,7 @@ package com.example.nvt_kts_back.service;
 import com.example.nvt_kts_back.CustomExceptions.UserDoesNotExistException;
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.configurations.Settings;
+import com.example.nvt_kts_back.enumerations.CarType;
 import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.exception.NotFoundException;
 import com.example.nvt_kts_back.exception.RegisteredUserNotFound;
@@ -590,6 +591,12 @@ public class RideService {
                 ride.setDriver_id(d.getId());
                 // treba poslati svima da je voznja prihvacena
                 this.simpMessagingTemplate.convertAndSend("/map-updates/everyone-approved", new StringDTO(id));
+                if(d.getCarType().equals(CarType.SUV) || d.getCarType().equals(CarType.LIMOUSINE) || d.getCarType().equals(CarType.VAN) )
+                    ride.setPrice(ride.getPrice()+300.00);
+                else if(d.getCarType().equals(CarType.COUPE) || d.getCarType().equals(CarType.HATCHBACK) || d.getCarType().equals(CarType.MINIVAN) || d.getCarType().equals(CarType.SEDAN))
+                    ride.setPrice(ride.getPrice()+100.00);
+                else
+                    ride.setPrice(ride.getPrice()+50.00);
                 payRide(ride);
                 setupNotifications(ride);
             }
