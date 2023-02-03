@@ -38,17 +38,21 @@ export class LoginFormComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       let data = {
         email: user.email,
-        authToken: user.authToken,
+        authToken: "",
         name: user.firstName,
         surname: user.lastName,
         picturePath: ""
       }
 
       let provider = user.provider;
-      if(provider === "GOOGLE")
+      if(provider === "GOOGLE") {
+        data.authToken = user.idToken;
         this.reqMaker.createGoogleLoginRequest(data).subscribe(this.getFacebookOrGoogleLoginObservable());
-      else if (provider === "FACEBOOK")
+      }
+      else if (provider === "FACEBOOK") {
+        data.authToken = user.authToken;
         this.reqMaker.createFacebookLoginRequest(data).subscribe(this.getFacebookOrGoogleLoginObservable()); 
+      }
     });
   }
 
