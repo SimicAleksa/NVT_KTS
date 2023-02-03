@@ -8,7 +8,7 @@ public class NarucivanjeVoznjeDodatneLokacijeDodatniPutniciNarucivanjeTest exten
     @Test
     public void test1() throws InterruptedException {
 
-        login();
+        login_dodatno();
 
         goToOrderPage();
 

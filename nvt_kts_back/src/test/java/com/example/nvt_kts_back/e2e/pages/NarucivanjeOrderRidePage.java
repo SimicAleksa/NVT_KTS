@@ -116,6 +116,7 @@ public class NarucivanjeOrderRidePage {
         System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         System.out.println(checkIfReserved);
         calendarInput.sendKeys(day);
+        calendarInput.sendKeys(Keys.TAB);
         calendarInput.sendKeys(hour);
         calendarInput.sendKeys(minute);
         calendarInput.sendKeys(Keys.TAB);

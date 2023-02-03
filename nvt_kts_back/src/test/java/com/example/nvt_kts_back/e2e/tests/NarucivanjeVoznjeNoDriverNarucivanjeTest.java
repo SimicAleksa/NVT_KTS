@@ -8,7 +8,7 @@ public class NarucivanjeVoznjeNoDriverNarucivanjeTest extends NarucivanjeTestBas
     @Test
     public void test1() throws InterruptedException {
 
-        login();
+        login_NoDriver();
 
         goToOrderPage();
 

@@ -24,6 +24,9 @@ public class NarucivanjeHomePage {
     private static String EMAILPRVIPRIHVATIO = "nijeplatiozadnji@gmail.com";
     private static String EMAILPOSLEDNJIPRIHVATIO = "jesteplatiozadnji@gmail.com";
 
+    private static String EMAILDODATNOPUTNICI = "goran@gmail.com";
+    private static String EMAILNODRIVER = "anastasija@gmail.com";
+
     private static String PASSWORD = "sifra123";
     private boolean money;
     private boolean lastPayed;
@@ -60,6 +63,11 @@ public class NarucivanjeHomePage {
         else
             emailInput.sendKeys(EMAILPRVIPRIHVATIO);
     }
+    public void enterEmailNoDriver(){
+        emailInput.clear();
+        emailInput.sendKeys(EMAILNODRIVER);
+    }
+
 
     public void enterEmail(){
         emailInput.clear();
@@ -67,6 +75,11 @@ public class NarucivanjeHomePage {
             emailInput.sendKeys(EMAIL);
         else
             emailInput.sendKeys(EMAIL_NOMONEY);
+    }
+
+    public void enterEmailDodato(){
+        emailInput.clear();
+        emailInput.sendKeys(EMAILDODATNOPUTNICI);
     }
 
     public void enterPassword(){

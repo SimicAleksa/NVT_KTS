@@ -35,6 +35,22 @@ public class NarucivanjeTestBase {
         narucivanjeHomePage.clickLogInButton();
     }
 
+    protected void login_NoDriver(){
+        NarucivanjeHomePage narucivanjeHomePage = new NarucivanjeHomePage(driver,true,false);
+        Assertions.assertTrue(narucivanjeHomePage.isOpened());
+        narucivanjeHomePage.enterEmailNoDriver();
+        narucivanjeHomePage.enterPassword();
+        narucivanjeHomePage.clickLogInButton();
+    }
+
+    protected void login_dodatno(){
+        NarucivanjeHomePage narucivanjeHomePage = new NarucivanjeHomePage(driver,true,false);
+        Assertions.assertTrue(narucivanjeHomePage.isOpened());
+        narucivanjeHomePage.enterEmailDodato();
+        narucivanjeHomePage.enterPassword();
+        narucivanjeHomePage.clickLogInButton();
+    }
+
     protected void loginPayFirst(){
         NarucivanjeHomePage narucivanjeHomePage = new NarucivanjeHomePage(driver,true,false);
         Assertions.assertTrue(narucivanjeHomePage.isOpened());
