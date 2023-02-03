@@ -586,8 +586,8 @@ public class RideService {
                 ride.setDriver_id(d.getId());
                 // treba poslati svima da je voznja prihvacena
                 this.simpMessagingTemplate.convertAndSend("/map-updates/everyone-approved", new StringDTO(id));
-                // TODO placanje   Probacu da prebacim u drugu, ako ne bude islo, vraticu
                 payRide(ride);
+                setupNotifications(ride);
             }
         }
         else {
@@ -596,6 +596,34 @@ public class RideService {
         }
         rideRepository.save(ride);
         return true;
+    }
+
+    private void setupNotifications(Ride ride) {
+        if (ride.getRideState()==RideState.RESERVED)
+        {
+            LocalDateTime start = ride.getStartDateTime();
+            pokusaj(start, 15, ride.getId());
+            pokusaj(start, 10, ride.getId());
+            pokusaj(start, 5, ride.getId());
+        }
+    }
+
+    public void pokusaj(LocalDateTime rideTime, long minutes, long rideId)
+    {
+        LocalDateTime dateTime = rideTime.minusMinutes(minutes);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, dateTime.getHour());
+        c.set(Calendar.MINUTE, dateTime.getMinute());
+        c.set(Calendar.SECOND, dateTime.getSecond());
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                simpMessagingTemplate.convertAndSend("/map-updates/ride-time-notification", new StringDTO(String.valueOf(minutes), rideId));
+
+            }
+        }, c.getTime());
     }
 
     private RideState findNextState(LocalDateTime startDateTime) {

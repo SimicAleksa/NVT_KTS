@@ -28,7 +28,7 @@ public class ZavrsetakVoznjeTest extends TestBase {
         reportPage.endRide();
         Assertions.assertTrue(reportPage.rideIsNotPresent());
     }
-    
+
 
     @Test
     public void alreadyOrdered() throws InterruptedException {

@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Calendar;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Service
 public class EmailService {
@@ -62,6 +65,7 @@ public class EmailService {
                                 "\">link</a>"
                 )
         );
-        System.out.println("Poruka uspjesno poslata, a mejl je bio " + email);
     }
+
+
 }
