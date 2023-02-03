@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.controllers;
 
 import com.example.nvt_kts_back.DTOs.*;
+import com.example.nvt_kts_back.enumerations.RideState;
 import com.example.nvt_kts_back.models.Coord;
 import com.example.nvt_kts_back.service.RegisteredUserService;
 import com.example.nvt_kts_back.service.RideService;
@@ -77,6 +78,32 @@ public class ZakazivanjeVoznjeRideControllerIntegrationTest {
         routeFormFrontDTO.setEndLocation(new CoordsDTO(14.14,14.14));
         dto.setRoute(routeFormFrontDTO);
         dto.setReservedTime("");
+        return dto;
+    }
+    private RideDTO createRideDTOValid() throws JSONException {
+        RideDTO dto = new RideDTO();
+        RouteDTO routeDTO = new RouteDTO();
+        JSONObject obj = new JSONObject();
+        obj.put("neki","random Json Objekat");
+        routeDTO.setRouteJSON(obj.toString());
+        routeDTO.setStartLocation(new Coord(12.12,13.13));
+        routeDTO.setEndLocation(new Coord(14.14,14.14));
+        dto.setRoute(routeDTO);
+        //Pretpostavka da je na  8 vozac
+        dto.setDriver(8l);
+        return dto;
+    }
+
+    private RideDTO createRideDTOInvalid() throws JSONException {
+        RideDTO dto = new RideDTO();
+        RouteDTO routeDTO = new RouteDTO();
+        JSONObject obj = new JSONObject();
+        obj.put("neki","random Json Objekat");
+        routeDTO.setRouteJSON(obj.toString());
+        routeDTO.setStartLocation(new Coord(12.12,13.13));
+        routeDTO.setEndLocation(new Coord(14.14,14.14));
+        dto.setRoute(routeDTO);
+        //Pretpostavka da je na  8 vozac
         return dto;
     }
 
@@ -185,6 +212,64 @@ public class ZakazivanjeVoznjeRideControllerIntegrationTest {
 
         Assertions.assertAll(
                 ()-> Assertions.assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode())
+        );
+    }
+
+    @Test
+    public void getDriversDTSRide_ValidValues_StatusOk(){
+        login();
+        HttpEntity<RideDTO> httpEntity = new HttpEntity<>(headers);
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/getDriversDTSRide/7",
+                HttpMethod.GET,httpEntity,RideDTO.class);
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(HttpStatus.OK,responseEntity.getStatusCode()),
+                ()-> Assertions.assertEquals(RideState.DRIVING_TO_START,responseEntity.getBody().getRideState())
+        );
+    }
+
+    @Test
+    public void getDriversDTSRide_inValidValues_NotFound(){
+        login();
+        HttpEntity<RideDTO> httpEntity = new HttpEntity<>(headers);
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/getDriversDTSRide/100",
+                HttpMethod.GET,httpEntity,RideDTO.class);
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(RideState.NOT_FOUND,responseEntity.getBody().getRideState())
+        );
+    }
+
+    @Test
+    public void createRide_ValidValues_StatusOk() throws JSONException {
+        RideDTO dto = createRideDTOValid();
+        HttpEntity<RideDTO> httpEntity = new HttpEntity<>(dto,headers);
+
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/createRide",
+                HttpMethod.POST,httpEntity,RideDTO.class);
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(HttpStatus.OK,responseEntity.getStatusCode())
+        );
+    }
+
+    @Test
+    public void getDriversSTARTEDRide_ValidValues_StatusOk() throws JSONException {
+        HttpEntity<RideDTO> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/getDriversSTARTEDRide/7",
+                HttpMethod.GET,httpEntity,RideDTO.class);
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(HttpStatus.OK,responseEntity.getStatusCode()),
+                ()-> Assertions.assertEquals(RideState.STARTED,responseEntity.getBody().getRideState())
+        );
+    }
+
+    @Test
+    public void getDriversSTARTEDRide_inValidValues_StatusNOTFOUND() throws JSONException {
+        HttpEntity<RideDTO> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/getDriversSTARTEDRide/107",
+                HttpMethod.GET,httpEntity,RideDTO.class);
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(RideState.NOT_FOUND,responseEntity.getBody().getRideState())
         );
     }
 

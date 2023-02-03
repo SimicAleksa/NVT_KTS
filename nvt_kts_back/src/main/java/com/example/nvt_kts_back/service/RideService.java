@@ -82,6 +82,7 @@ public class RideService {
         return this.rideRepository.findAll();
     }
 
+    // TODO DODATNO ALEKSA (odradjeno)
     public Ride getDriversStartedRide(String id){
         Long temp = Long.parseLong(id);
         Ride ride = new Ride();
@@ -186,6 +187,7 @@ public class RideService {
         return r.getEndDateTime().isAfter(startDate) && r.getEndDateTime().isBefore(endDateTime);
     }
 
+    // TODO DODATNO ALEKSA (odradjeno) (samo u repo)
     public List<Ride> findAllInProgressAndDTS() {
         return this.rideRepository.findAllInProgressAndDTSRides();
     }
@@ -209,6 +211,7 @@ public class RideService {
         return map;
     }
 
+    // TODO DODATNO ALEKSA (odradjeno)
     public ArrayList<RideNotificationDTO> findDriversUpcomingRides(String email) {
         Driver d= this.driverRepository.findByEmail(email);
         List<Ride> rides = rideRepository.findDriversUpcomingRides(d.getId());
@@ -224,6 +227,10 @@ public class RideService {
     public Ride changeRideState(Long id, String state) {
         Ride r = rideRepository.findById(id).orElseThrow(RideNotFoundException::new);
         r.setRideState(RideState.valueOf(state));
+        if (state.equals(RideState.IN_PROGRESS.toString()))
+        {
+            r.setStartDateTime(LocalDateTime.now());
+        }
         return rideRepository.save(r);
     }
 
@@ -274,6 +281,7 @@ public class RideService {
         return returnRideDto;
     }
 
+    // TODO DODATNO ALEKSA (odradjeno)
     public RideDTO getUsersInProgresssRide(String email) {
         RegisteredUser ru = this.registeredUserRepository.findByEmail(email);
         if (ru == null)
@@ -296,16 +304,16 @@ public class RideService {
     }
 
 
-    // ova funkcija ce za zadati ride da pronadje sve potencijane vozace i da ih sortira po blizini
+    // TODO NEVENA - nema sta da se testira, samo su pozivi za dalje
     public Driver findDriver(DataForRideFromFrom rideDTO) {
-        // prvo imam jedan veliki if da vidimo ako je rezervacija da dodijeli bilo koga, a ako nije, onda ima pameti
         deactivateDrivers();
-        if (rideDTO.getDateTime().equals("")) {
+        if (rideDTO.getDateTime()==null || rideDTO.getDateTime().equals("")) {
             return findDriverForNow(rideDTO);
         }
         return findAnyDriver(rideDTO);
     }
 
+    // TODO NEVENA - ovdje isto nema sta, ali sam testirala ostale
     public void deactivateDrivers()
     {
         for (Driver d : this.driverRepository.findAll())
@@ -319,7 +327,7 @@ public class RideService {
     }
 
 
-
+    // TODO NEVENA
     private Driver findAnyDriver(DataForRideFromFrom rideDTO) {
         ArrayList<Driver> activeFilteredDrivers = findActiveFilteredDrivers(rideDTO);
         if (activeFilteredDrivers.size()==0)
@@ -330,27 +338,30 @@ public class RideService {
         return findOneFreeAtReservedTime(activeFilteredDrivers, rideDTO);
     }
 
+    // TODO NEVENA
     private Driver findOneFreeAtReservedTime(ArrayList<Driver> activeFilteredDrivers, DataForRideFromFrom rideDto) {
-        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String start = rideDto.getDateTime().replace('T', ' ');
-        LocalDateTime rideStart = LocalDateTime.parse(start, formatter1);
-        LocalDateTime rideEnd = rideStart.plusMinutes(rideDto.getDuration());
+        LocalDateTime rideStart = getRideStartFromString(rideDto.getDateTime());
 
+        LocalDateTime rideEnd = rideStart.plusMinutes(rideDto.getDuration());
         //outerloop:
         for (Driver d: activeFilteredDrivers)
         {
-            ArrayList<Ride> rides = (ArrayList<Ride>) d.getHistoryOfRides();
+            List<Ride> rides = d.getHistoryOfRides();
             boolean free = true;
             for (Ride r : rides)
             {
-                LocalDateTime existedStart = r.getStartDateTime();
-                LocalDateTime existedEnd = existedStart.plusMinutes(r.getExpectedDuration());
-                if (r.getRideState()== RideState.RESERVED && !((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
+                if (r.getRideState()== RideState.RESERVED)
                 {
-                    // nista ne treba da se desi
-                    free = false;
-                    break;
+                    LocalDateTime existedStart = r.getStartDateTime();
+                    LocalDateTime existedEnd = existedStart.plusMinutes(r.getExpectedDuration());
+                    if (!((existedEnd.isBefore(rideStart) || rideEnd.isBefore(existedStart))))
+                    {
+                        // nista ne treba da se desi
+                        free = false;
+                        break;
+                    }
                 }
+
             }
             // sad smo obisli sve rideove
             if (free)
@@ -361,8 +372,18 @@ public class RideService {
         return null;
     }
 
+    private LocalDateTime getRideStartFromString(String dateTime) {
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String start = dateTime.replace('T', ' ');
+        if (start.length()>=16)
+        {
+            start = start.substring(0, 16);
+        }
+        return LocalDateTime.parse(start, formatter1);
+    }
 
 
+    // TODO NEVENA
     public Driver findDriverForNow(DataForRideFromFrom rideDTO)
     {
         // prvo cu naci sve prijavljene vozace koji imaju ovaj tip vozila i ljubimce i bebe
@@ -393,6 +414,7 @@ public class RideService {
         return null;
     }
 
+    // TODO NEVENA
     private Driver findNearestDriver(ArrayList<Driver> freeNow, DataForRideFromFrom rideDTO) {
         double minDistance = Double.POSITIVE_INFINITY;
         Driver best = freeNow.get(0);
@@ -409,6 +431,7 @@ public class RideService {
 
     }
 
+    // TODO NEVENA
     private Driver sortByEndTime(ArrayList<Driver> freeAfter) {
         LocalDateTime min = LocalDateTime.now().plusYears(1);
         Driver best = freeAfter.get(0);
@@ -426,7 +449,8 @@ public class RideService {
 
     }
 
-    private ArrayList<Driver> sortByDistance(ArrayList<Driver> freeNow, DataForRideFromFrom rideDTO) {
+    // TODO ZAKAZIVANJE NEVENA
+    /*private ArrayList<Driver> sortByDistance(ArrayList<Driver> freeNow, DataForRideFromFrom rideDTO) {
         for (int i = 0; i < freeNow.size()-1; i++)
         {
             // Find the minimum element in unsorted array
@@ -442,8 +466,9 @@ public class RideService {
             freeNow.set(i, temp);
         }
         return freeNow;
-    }
+    }*/
 
+    // TODO NEVENA - preuzeto (odradjeno)
     private ArrayList<Driver> filterFreeAfter(ArrayList<Driver> activeFilteredDrivers) {
         // sad treba proci kroz vozace i uzeti samo one koji nemaju scheduled
         ArrayList<Driver> retVal = new ArrayList<>();
@@ -457,6 +482,7 @@ public class RideService {
         return retVal;
     }
 
+    // TODO zakazivanje NEVENA - preuzeto (odradjeno)
     private ArrayList<Driver> filterFreeNow(ArrayList<Driver> activeFilteredDrivers) {
         // sad treba proci kroz vozace i uzeti samo one koji nemaju ni trenutnu voznju, ni scheduled
         ArrayList<Driver> retVal = new ArrayList<>();
@@ -496,6 +522,7 @@ public class RideService {
         return registeredUsers;
     }
 
+    // TODO zakazivanje NEVENA
     private ArrayList<Driver> findActiveFilteredDrivers(DataForRideFromFrom rideDTO) {
         ArrayList<Driver> retVal = new ArrayList<>();
         ArrayList<Driver> drivers = this.driverRepository.findDriversByPetBabyActive(rideDTO.isBabyAllowed(), rideDTO.isPetAllowed());
@@ -508,6 +535,7 @@ public class RideService {
         return retVal;
     }
 
+    // TODO zakazivanje NEVENA
     public boolean tryAcceptRideUser(Long id, String email) {
         RegisteredUser user = registeredUserRepository.findByEmail(email);
         Ride ride = rideRepository.findById(id).get();
@@ -518,6 +546,7 @@ public class RideService {
         return declineRide(id);
     }
 
+    // TODO zakazivanje NEVENA - preuzeto (odradjeno)
     // Metoda vraca false nakon sto odbije voznju
     private boolean declineRide(Long id) {
         Ride ride = rideRepository.findById(id).get();
@@ -526,8 +555,9 @@ public class RideService {
         return false;
     }
 
+    // TODO zakazivanje NEVENA
     private boolean acceptRide(Long id, String email) {
-        Ride ride = rideRepository.findById(id).get();
+        Ride ride = rideRepository.findById(id).orElseThrow(RideNotFoundException:: new);
         String old = ride.getApprovedBy();
         if (old==null || old.equals(""))
         {
@@ -573,14 +603,14 @@ public class RideService {
         return RideState.STARTED;
     }
 
+    // TODO zakazivanje NEVENA
     private void payRide(Ride ride) {
         double price = ride.getPrice();
         for (RegisteredUser ru : ride.getPassengers())
         {
-            ru.setTokens(ru.getTokens() - price);
+            ru.setTokens(ru.getTokens() - price/ride.getPassengers().size());
             this.userRepository.save(ru);
         }
-
     }
 
     public List<UserRideHistoryDTO> getRideHistoryForRegisteredUser(Long userId) {

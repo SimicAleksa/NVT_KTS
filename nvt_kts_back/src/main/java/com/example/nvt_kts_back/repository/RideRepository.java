@@ -23,12 +23,12 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
     @Query("select r from Ride r where r.driver_id=?1 and r.rideState='STARTED'")
     Optional<Ride> findByDriverAndRideStateSTARTED(Long id);
 
-    //TODO ja
     @Query("select r from Ride r where r.driver_id=?1 and r.rideState='IN_PROGRESS'")
     Optional<Ride> findByDriverAndRideStateINPROGRESS(Long id);
 
     List<Ride> findAll();
 
+    //TODO zakazivanje (odradjeno)
     @Query("select r from Ride r where r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START'")
     List<Ride> findAllInProgressAndDTSRides();
 
@@ -38,6 +38,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
     List<Long> findDriversThatDrive();
 
 
+    //TODO zakazivanje
     @Query("select r from Ride r where r.driver_id=?1 and (r.rideState='IN_PROGRESS' or r.rideState = 'DRIVING_TO_START' or r.rideState='STARTED' or r.rideState='SCHEDULED' or r.rideState='RESERVED') order by start_date_time")
     ArrayList<Ride> findDriversUpcomingRides(Long id);
 

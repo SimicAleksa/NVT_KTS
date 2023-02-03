@@ -162,4 +162,9 @@ public class UserService {
         u.setProfileActivated(true);
         this.userRepository.save(u);
     }
+
+    public boolean alreadyExists(String email) {
+        Object o = this.userRepository.findByEmail(email);
+        return o!=null;
+    }
 }

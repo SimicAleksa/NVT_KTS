@@ -27,4 +27,9 @@ public class TimeSpan {
     {
         this.startTime = start;
     }
+
+    public TimeSpan(LocalDateTime start, LocalDateTime end) {
+        this.startTime = start;
+        this.endTime = end;
+    }
 }

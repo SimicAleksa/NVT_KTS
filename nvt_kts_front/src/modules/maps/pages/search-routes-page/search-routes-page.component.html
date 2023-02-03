@@ -1,5 +1,5 @@
-<section style="background-color: rgb(246, 240, 214)">
-<div class="container" style="padding-top: 50px; ">
+<section style="background-color: rgb(246, 240, 214); padding-top: 10vh;">
+<div class="container">
   <div class="row">
     <div class="col-8">
       <div style="height: 90vh;">
@@ -121,11 +121,11 @@
 
       <div class="row">
         <div class="col">
-          <button type="button" class="btn btn-primary mt-1" style="width: 100%;" (click)="onSubmit()" *ngIf="routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)">Order</button>
+          <button type="button" class="btn btn-primary mt-1" id="orderIdBUtton" style="width: 100%;" (click)="onSubmit()" *ngIf="routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)">Order</button>
         </div>
         <div class="col-1">
-          <button type="button" class="btn btn-light mt-1" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&!addedAsFavorite) && !quickOrdedWithFavoriteBoolean">✰</button>
-          <button type="button" class="btn btn-light mt-1" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&addedAsFavorite) && !quickOrdedWithFavoriteBoolean">⭐</button>
+          <button type="button" class="btn btn-light mt-1" id="favoriteIdBUtton" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&!addedAsFavorite) && !quickOrdedWithFavoriteBoolean">✰</button>
+          <button type="button" class="btn btn-light mt-1" id="UNfavoriteIdBUtton" (click)="addToFavoriteRoute()" *ngIf="(routeSelectedBoolean && (!didUserAlreadyOrder || reservedCheckBoxChecked)&&addedAsFavorite) && !quickOrdedWithFavoriteBoolean">⭐</button>
         </div>
       </div>
     </div>

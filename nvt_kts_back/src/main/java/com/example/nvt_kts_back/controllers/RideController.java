@@ -120,7 +120,7 @@ public class RideController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-
+    // TODO ZAKAZIVANJE DODATNO ALEKSA (odradjeno)
     @PostMapping(value = "/createRide",consumes = "application/json", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> createRide(@RequestBody RideDTO rideDTO){
@@ -152,6 +152,7 @@ public class RideController {
         }
     }
 
+    // TODO zakazivanje DODATNO integracioni
     @PutMapping(value = "/updateDriverIncomingTimeForRide/{id}", produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> updateDriverIncomingTimeForRide(@PathVariable("id") long id,@RequestBody ExpectedDurationDto expectedDurationDto) {
@@ -205,7 +206,7 @@ public class RideController {
         return new ResponseEntity<>(routeDTO, HttpStatus.OK);
     }
 
-
+    // TODO DODATNO ALEKSA (odradjeno)
     @GetMapping(value = "/getDriversSTARTEDRide/{id}",produces = "application/json")
     //hmmm simulacija?
     public ResponseEntity<RideDTO> getDriversSTARTEDRide(@PathVariable("id") String id) {
@@ -232,6 +233,7 @@ public class RideController {
         return new ResponseEntity<>(rideDTO, HttpStatus.OK);
     }
 
+    // TODO DODATNO ALEKSA (odradjeno)
     @GetMapping(value = "/getDriversDTSRide/{id}",produces = "application/json")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<RideDTO> getDriversDTSRide(@PathVariable("id") String id) {
@@ -344,12 +346,13 @@ public class RideController {
 
     }
 
+    // TODO zakazivanje NEVENA (odradjeno)
     @GetMapping(value = "/acceptRideUser/{id}/{email}")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public ResponseEntity<StringDTO> acceptRideUser(@PathVariable("id") Long id, @PathVariable("email") String email)
     {
         boolean b = this.rideService.tryAcceptRideUser(id, email);
-        if (b) return new ResponseEntity<>(new StringDTO("OK"), HttpStatus.OK);
+        if (b) return new ResponseEntity<>(new StringDTO("OK", id), HttpStatus.OK);
         return new ResponseEntity<>(new StringDTO("NO_TOKENS"), HttpStatus.OK);
 
     }

@@ -38,7 +38,10 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     PopUpModule,
     MenuModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut:20000,
+      positionClass: 'toast-bottom-right'
+    }),
     SocialLoginModule,
     ChatModule,
     ReportsModule,
@@ -71,7 +74,7 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
         useClass: ReferrerInterceptor,
         multi: true
       },
-      
+
     ]
   ],
   bootstrap: [AppComponent],

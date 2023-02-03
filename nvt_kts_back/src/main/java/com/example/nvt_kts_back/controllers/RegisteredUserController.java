@@ -114,7 +114,7 @@ public class RegisteredUserController {
         this.registeredUserService.addTokens(email, value);
     }
 
-    //TODO: ovo moze neulogovani
+    //TODO: ovo moze neulogovani (odradjeno)
     @PostMapping("/addUser")
     public User addUser(@RequestBody ChangeProfileRequest user) {
         return registeredUserService.saveUser(user);
