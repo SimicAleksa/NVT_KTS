@@ -88,6 +88,15 @@ export class RegisteredUsersRidesComponent implements OnInit {
       }
     });
 
+    this.stompClient.subscribe('/map-updates/ride-time-notification', (message: { body: string }) => {
+      console.log(message.body);
+      let s: StringDTO =JSON.parse(message.body);
+      for(let ride of this.usersRides)
+      {
+        if(ride.id==s.numberValue) this.toastr.info("You have one upcoming ride in " + s.value + " min");
+      }
+    });
+
     this.stompClient.subscribe('/map-updates/get-current-ride-duration', (message: { body: string }) => {
       let rideDurationride:RideForDurationDTO = JSON.parse(message.body);
 
@@ -117,7 +126,6 @@ export class RegisteredUsersRidesComponent implements OnInit {
           ride.state = "STARTED";
         }
       }
-
     });
 
     this.stompClient.subscribe('/map-updates/no-drivers-available', (message: { body: string }) => {

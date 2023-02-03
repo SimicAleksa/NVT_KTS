@@ -20,11 +20,7 @@ import com.example.nvt_kts_back.service.RideService;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/rides")
@@ -382,6 +378,8 @@ public class RideController {
         }
         return new ResponseEntity<>(rideService.getRideHistoryForDriver(userId), HttpStatus.OK);
     }
+
+
 
     @GetMapping(value = "/admin/history")
     @PreAuthorize(Settings.PRE_AUTH_ADMIN_ROLE)

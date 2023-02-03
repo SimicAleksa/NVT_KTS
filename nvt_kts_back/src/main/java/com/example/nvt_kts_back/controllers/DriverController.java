@@ -24,8 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.zip.Deflater;
 
 import static com.example.nvt_kts_back.controllers.RegisteredUserController.decompressBytes;
@@ -122,12 +121,13 @@ public class DriverController {
         driverService.addDriverFromRequest(driver);
     }
 
+
     @GetMapping("/getActiveMinutes/{email}")
     @PreAuthorize(Settings.PRE_AUTH_USER_ROLE)
     public long getActiveMinutes(@PathVariable("email") String email) {
         return this.driverService.getActiveMinutes(email);
     }
-    // TODO ovdje ce biti jos jedan poziv, pa ne znam hoce li biti samo od strane drivera
+
     @PostMapping("/changeDriverActiveStatus/{email}/{active}")
     @PreAuthorize(Settings.PRE_AUTH_DRIVER_ROLE)
     public void changeDriverActiveStatus(@PathVariable("email") String email, @PathVariable("active") boolean active)
