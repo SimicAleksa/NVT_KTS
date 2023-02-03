@@ -76,10 +76,10 @@ export class RegisteredUsersRidesComponent implements OnInit {
   {
     this.stompClient.subscribe('/map-updates/ride-notification', (message: { body: string }) => {
       console.log(message.body)
-      alert("SOCKET AKTIVIRAN")
+      // alert("SOCKET AKTIVIRAN")
       let rideNotif:RideForNotification = JSON.parse(message.body);
       if(rideNotif.passengerEmail===this.username){
-        alert("SOCKET USAO")
+        // alert("SOCKET USAO")
         this.rideService.findUsersUpcomingRides(this.username).subscribe((response) => {
           this.usersRides = <RideForNotification[]> response;
           this.addStringLocation();
