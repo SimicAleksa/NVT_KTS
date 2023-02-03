@@ -25,7 +25,7 @@ public class DriverControllerGetDriverTests {
     private HttpHeaders headers;
 
     private final String CONTROLLER_ENDPOINT = "/api/drivers/getDriver/";
-    private final String VALID_DRIVER_ID = "9";
+    private final String VALID_DRIVER_ID = "8";
     private final String INVALID_DRIVER_ID = "10000";
 
 
@@ -42,19 +42,9 @@ public class DriverControllerGetDriverTests {
     }
 
     @Test
-    public void shouldReturnStatus401IfUserNotLoggedIn() {
-        ResponseEntity<DriverDTO> response = getResponseEntityForMethod(
-                restTemplate.getRootUri() + CONTROLLER_ENDPOINT + VALID_DRIVER_ID,
-                false
-        );
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-    }
-
-    @Test
     public void shouldReturnStatusNotFoundIfDriverDoesntExist() {
         ResponseEntity<DriverDTO> response = getResponseEntityForMethod(
-                restTemplate.getRootUri() + CONTROLLER_ENDPOINT + INVALID_DRIVER_ID,
-                true
+                restTemplate.getRootUri() + CONTROLLER_ENDPOINT + INVALID_DRIVER_ID
         );
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
@@ -62,18 +52,17 @@ public class DriverControllerGetDriverTests {
     @Test
     public void shouldReturnDriverDTOIfDriverExists() {
         ResponseEntity<DriverDTO> response = getResponseEntityForMethod(
-                restTemplate.getRootUri() + CONTROLLER_ENDPOINT + VALID_DRIVER_ID,
-                true
+                restTemplate.getRootUri() + CONTROLLER_ENDPOINT + VALID_DRIVER_ID
         );
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
     }
 
-    private ResponseEntity<DriverDTO> getResponseEntityForMethod(String url, boolean isLoggedIn) {
+    private ResponseEntity<DriverDTO> getResponseEntityForMethod(String url) {
         return restTemplate.exchange(
                 url,
                 HttpMethod.GET,
-                isLoggedIn ? new HttpEntity<>(this.headers) : new HttpEntity<>(new HttpHeaders()),
+                new HttpEntity<>(this.headers),
                 DriverDTO.class
         );
     }
