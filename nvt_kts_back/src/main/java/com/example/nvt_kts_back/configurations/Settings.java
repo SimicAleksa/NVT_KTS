@@ -21,4 +21,8 @@ public class Settings {
 
     public static final String FB_APP_ID = "904097183957711";
     public static final String FB_APP_SECRET = "44d9734e3b4cad4afa772b1538b13ded";
+
+    public static final String ADMIN_EMAIL = "admin@gmail.com";
+    public static final double DEFAULT_LATITUDE = 45.25124;
+    public static final double DEFAULT_LONGITUDE = 19.84719;
 }

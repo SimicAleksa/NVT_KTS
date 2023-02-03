@@ -4,6 +4,7 @@ import { ADMIN_EDIT_PROF_URL, CLIENT_ADD_DRIVER_URL, CLIENT_ADMIN_RIDES_HISTORY_
 import { API_ALL_ACTIVE_VEHICLES_URL, API_ROUTE_SEARCH, API_SIMPLE_ROUTE_SEARCH } from 'src/config/map-urls';
 import { CLIENT_CHAT_URL } from 'src/config/other-urls';
 import { CLIENT_REPORTS_URL, DRIVER_REPORTS_URL, ADMIN_REPORTS_URL } from 'src/config/reports-urls';
+import { UserDataService } from 'src/modules/user-data/services/user-data.service';
 import { MenuService } from '../../service/menu-service';
 
 @Component({
@@ -15,7 +16,7 @@ export class MenuComponent implements OnInit {
   public role: string;
   public currentActiveBtn: string;
 
-  constructor(private menuService: MenuService, private router: Router) {
+  constructor(private menuService: MenuService, private userDataService: UserDataService ,private router: Router) {
     this.role = '';
     this.updateRole();
 
@@ -36,6 +37,7 @@ export class MenuComponent implements OnInit {
   }
 
   onLogoutBtnClick(): void {
+    if (localStorage.getItem('role')=="DRIVER") this.userDataService.changeDriverActiveStatus(localStorage.getItem('email')!, false);
     localStorage.removeItem('role');
     localStorage.removeItem('token');
     localStorage.removeItem('email');
