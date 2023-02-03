@@ -142,11 +142,12 @@ INSERT INTO ride (ride_state, price, expected_duration, distance, route_id, star
 VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1, '2023-02-05 18:47:52.069');
 
 INSERT INTO ride (ride_state, price, start_date_time, end_date_time, expected_duration, distance, route_id, driver_id)
-VALUES ('IN_PROGRESS', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:52.069', 100, 54.3, 1, 19);
+VALUES ('IN_PROGRESS', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:52.069', 100, 54.3, 1, 19),
+        ('ENDED', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:52.069', 100, 54.3, 1, 6);
 
 
 INSERT INTO ride_passengers(ride_id, registered_user_id)
-VALUES (1, 2),(4,9),(4,2),(5,10),(5,11),(6,12),(7,13),(8,14),(9,15), (10,16);
+VALUES (1, 2),(4,9),(4,2),(5,10),(5,11),(6,12),(7,13),(8,14),(9,15), (10,16), (12, 1);
 
 INSERT INTO REGISTERED_USER_FAVOURITE_ROUTES (REGISTERED_USER_ID,FAVOURITE_ROUTES_ID)
 VALUES (2, 1);
@@ -172,7 +173,20 @@ values(9,false,'LIMOUSINE',100,false,45.19,19.21);
 insert into DATA_FOR_RIDE_FROM_FROM (RIDE_ID, BABY_ALLOWED, CAR_TYPES,DURATION, PET_ALLOWED, START_LATITUDE,START_LONGITUDE, DATE_TIME)
 values(10,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.19,19.21, '2023-02-05 18:47:52.069');
 
+INSERT INTO review (car_stars, driver_stars, comment, reviewer_id, driver_id)
+    VALUES
+      (5, 5, 'Great ride!', 1, 6),
+      (4, 4, 'The car was a bit old, but the driver was very friendly.', 2, 6),
+      (3, 3, 'The ride was ok, but the car could have been cleaner.', 3, 6),
+      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6),
+      (1, 1, 'This was the worst ride I have ever taken.', 4, 7),
+      (5, 5, 'Great ride!', 5, 7),
+      (4, 4, 'The car was a bit old, but the driver was very friendly.', 1, 8),
+      (3, 3, 'The ride was ok, but the car could have been cleaner.', 1, 8),
+      (2, 2, 'The driver was rude and the car was in bad condition.', 1, 6),
+      (1, 1, 'This was the worst ride I have ever taken.', 1, 7);
 
-insert into MESSAGE (TEXT, SENDER, RECEIVER) VALUES ('I need help', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
-    ('Nova poruka', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
-    ('How can I help you', 'admin@gmail.com', 'strahinjapopovic.evilpops@gmail.com');
+insert into MESSAGE (TEXT, SENDER, RECEIVER)
+    VALUES ('I need help', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
+            ('Nova poruka', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
+            ('How can I help you', 'admin@gmail.com', 'strahinjapopovic.evilpops@gmail.com');

@@ -3,10 +3,12 @@ package com.example.nvt_kts_back.utils.mappers;
 import com.example.nvt_kts_back.DTOs.*;
 import com.example.nvt_kts_back.models.*;
 
+import static com.example.nvt_kts_back.controllers.UserController.decompressBytes;
+
 public class EntityToDTOMapper {
     public static DriverInfoForRideHistoryDTO mapDriverToDriverInfoForRideHistoryDTO(Driver driver) {
         return new DriverInfoForRideHistoryDTO(
-                driver.getId(), driver.getName(), driver.getSurname(), driver.getPhone(), driver.getPicture(),
+                driver.getId(), driver.getName(), driver.getSurname(), driver.getPhone(), decompressBytes(driver.getPicture()),
                 driver.getCarType(), driver.getBabyAllowed(), driver.getPetAllowed()
         );
     }
@@ -35,16 +37,16 @@ public class EntityToDTOMapper {
     }
 
     public static RegUserForReviewDTO mapUserToRegUserForReviewDTO(User usr) {
-        return new RegUserForReviewDTO(usr.getName(), usr.getSurname(), usr.getPicture());
+        return new RegUserForReviewDTO(usr.getName(), usr.getSurname(), decompressBytes(usr.getPicture()));
     }
 
     public static RegUserInfoForRideHistoryDTO mapUserToRegUserInfoForRideHistoryDTO(User usr) {
-        return new RegUserInfoForRideHistoryDTO(usr.getName(), usr.getSurname(), usr.getPhone(), usr.getPicture());
+        return new RegUserInfoForRideHistoryDTO(usr.getName(), usr.getSurname(), usr.getPhone(), decompressBytes(usr.getPicture()));
     }
 
     public static UserInfoForAdminRideHistoryDTO mapUserToUserInfoForAdminRideHistoryDTO(User usr) {
         return new UserInfoForAdminRideHistoryDTO(usr.getEmail(), usr.getName(), usr.getSurname(), usr.getCity(), usr.getPhone(),
-                                                    usr.getPicture(), usr.getIsBlocked(), usr.getRole().getName()
+                decompressBytes(usr.getPicture()), usr.getIsBlocked(), usr.getRole().getName()
         );
     }
 
