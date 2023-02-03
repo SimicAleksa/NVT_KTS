@@ -67,7 +67,7 @@
             </li>
 
 
-            <li class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='LOGOUT'}" *ngIf="role !== 'UNREGISTERED'">
+            <li id="logout-btn" class="nav-item" [ngClass]="{'curr-active': currentActiveBtn==='LOGOUT'}" *ngIf="role !== 'UNREGISTERED'">
                 <a class="nav-link"  (click)="onLogoutBtnClick()">LOGOUT</a>
             </li>
 

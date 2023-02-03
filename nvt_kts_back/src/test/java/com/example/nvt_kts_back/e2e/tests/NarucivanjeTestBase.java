@@ -150,6 +150,15 @@ public class NarucivanjeTestBase {
         Assertions.assertTrue(narucivanjeEditProfilePage.isApprovedByAll());
     }
 
+    protected void confirmOrder_twoCOnfirm(){
+        NarucivanjeEditProfilePage narucivanjeEditProfilePage= new NarucivanjeEditProfilePage(driver);
+        Assertions.assertTrue(narucivanjeEditProfilePage.isOpened());
+        narucivanjeEditProfilePage.clickSideBarMenuBtn();
+        narucivanjeEditProfilePage.isSideBarOpen();
+        narucivanjeEditProfilePage.clickAcceptBtn();
+        Assertions.assertTrue(narucivanjeEditProfilePage.isApprovedByYou());
+    }
+
     protected void confirmOrder_nodriver(){
         NarucivanjeEditProfilePage narucivanjeEditProfilePage= new NarucivanjeEditProfilePage(driver);
         Assertions.assertTrue(narucivanjeEditProfilePage.isOpened());

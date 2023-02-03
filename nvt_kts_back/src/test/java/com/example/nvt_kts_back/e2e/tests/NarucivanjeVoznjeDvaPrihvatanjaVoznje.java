@@ -22,9 +22,8 @@ public class NarucivanjeVoznjeDvaPrihvatanjaVoznje extends NarucivanjeTestBase {
 
         goToEditProfilePage();
 
-        confirmOrder();
+        confirmOrder_twoCOnfirm();
 
-        Thread.sleep(3000);
         Helper.takeScreenshoot(driver, "login_application_full");
     }
 }

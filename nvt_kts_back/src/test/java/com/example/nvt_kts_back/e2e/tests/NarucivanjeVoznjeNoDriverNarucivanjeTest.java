@@ -16,7 +16,6 @@ public class NarucivanjeVoznjeNoDriverNarucivanjeTest extends NarucivanjeTestBas
 
         confirmOrder_nodriver();
 
-        Thread.sleep(3000);
         Helper.takeScreenshoot(driver, "login_application_full");
     }
 }

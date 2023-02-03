@@ -8,6 +8,7 @@ import com.example.nvt_kts_back.ride_procces_tests.repository_tests.registered_u
 import com.example.nvt_kts_back.ride_procces_tests.service_tests.driver_service_tests.DriverServiceFindByIdTests;
 import com.example.nvt_kts_back.ride_procces_tests.service_tests.registered_user_service_tests.RegUserServiceGetByEmailTests;
 import com.example.nvt_kts_back.ride_procces_tests.service_tests.ride_service_tests.RideServiceGetUsersInProgressRideTests;
+import com.example.nvt_kts_back.service.ZakazivanjeVoznjeDriverServiceUnitTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

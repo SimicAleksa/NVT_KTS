@@ -22,7 +22,7 @@ public class LoginPage  {
     private final By CONTINUE_WITH_FB_BTN_BY;
 
     private final String REG_USER_EMAIL = "strahinjapopovic.evilpops@gmail.com";
-    private final String DRIVER_EMAIL = "michael.brown@example.com";
+    private final String DRIVER_EMAIL = "pera@gmail.com";
     private final String ADMIN_EMAIL = "admin@gmail.com";
     private final String ALL_USERS_PASSWORD = "sifra123";
 

@@ -16,7 +16,6 @@ public class NarucivanjeVoznjeDodatneLokacijeDodatniPutniciNarucivanjeTest exten
 
         confirmOrderLinkedPassangers();
 
-        Thread.sleep(3000);
         Helper.takeScreenshoot(driver, "login_application_full");
     }
 }
