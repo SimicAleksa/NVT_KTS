@@ -161,14 +161,14 @@ public class OdbijanjeVoznjeRideControllerIntegrationTest {
         login();
         HttpEntity<StringDTO> httpEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/getDriversINPROGRESSRide/6",
+        ResponseEntity<RideDTO> responseEntity = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/getDriversINPROGRESSRide/19",
                 HttpMethod.GET, httpEntity, RideDTO.class);
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertEquals(RideState.IN_PROGRESS, responseEntity.getBody().getRideState());
 
         ResponseEntity<RideDTO> responseEntity2 = restTemplate.exchange(restTemplate.getRootUri()+"/api/rides/getDriversINPROGRESSRide/5",
                 HttpMethod.GET, httpEntity, RideDTO.class);
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity2.getStatusCode());
         Assertions.assertEquals(RideState.NOT_FOUND, responseEntity2.getBody().getRideState());
     }
 
