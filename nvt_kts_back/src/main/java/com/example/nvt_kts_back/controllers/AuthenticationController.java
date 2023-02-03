@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Controller
 @RequestMapping(value = "/api/unauth")
 public class AuthenticationController {
@@ -37,7 +39,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthTokenDTO> validateFBAuthToken(@RequestBody FBLoginDTO fbLoginDTO) {
         try {
             return new ResponseEntity<>(authService.verifyFacebookAuthToken(fbLoginDTO), HttpStatus.OK);
-        } catch (InvalidAuthTokenException ignored) {
+        } catch (InvalidAuthTokenException | IOException ignored) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }

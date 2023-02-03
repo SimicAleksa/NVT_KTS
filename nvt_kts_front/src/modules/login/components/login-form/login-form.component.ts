@@ -40,7 +40,7 @@ export class LoginFormComponent implements OnInit {
         authToken: user.authToken,
         name: user.firstName,
         surname: user.lastName,
-        picturePath: user.photoUrl
+        picturePath: ""
       }
       
       this.reqMaker.createFacebookLoginRequest(data).subscribe(this.getFBLoginObservable());
@@ -85,6 +85,7 @@ export class LoginFormComponent implements OnInit {
         if (retData.body === undefined)
           return;
         
+        console.log("asfassafas");
         const tokenData : any = jwtDecode(retData.body.accessToken);
         localStorage.setItem('token', retData.body.accessToken);
         localStorage.setItem('email', tokenData['sub']);

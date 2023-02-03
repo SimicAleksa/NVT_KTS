@@ -16,6 +16,7 @@ import com.example.nvt_kts_back.security.TokenUtils;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Version;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Service
 public class AuthService {
@@ -58,7 +66,7 @@ public class AuthService {
         return new AuthTokenDTO(tokenUtils.generateToken(user.getEmail(), userRole), userRole, (long) tokenUtils.getExpiredIn());
     }
 
-    public AuthTokenDTO verifyFacebookAuthToken(FBLoginDTO fbLoginDTO) {
+    public AuthTokenDTO verifyFacebookAuthToken(FBLoginDTO fbLoginDTO) throws IOException {
         FacebookClient facebookClient = new DefaultFacebookClient(Version.LATEST);
         facebookClient = new DefaultFacebookClient(
                 facebookClient.obtainAppAccessToken(Settings.FB_APP_ID, Settings.FB_APP_SECRET).getAccessToken() ,
@@ -73,8 +81,9 @@ public class AuthService {
             registeredUser = userService.getRegisteredUserByEmail(fbLoginDTO.getEmail());
         } catch (UserDoesNotExistException ignored) {
             Role role = roleRepository.getByName(Settings.USER_ROLE_NAME).orElseThrow(RoleDoesNotExistException::new);
+            byte[] picture_bytes = DatatypeConverter.parseHexBinary(IOUtils.toString(Files.newInputStream(Paths.get("src/main/java/com/example/nvt_kts_back/configurations/DEFAULT_PICTURE_BYTES.txt")), StandardCharsets.UTF_8));
             registeredUser = new RegisteredUser(fbLoginDTO.getEmail(), null, fbLoginDTO.getName(), fbLoginDTO.getSurname(), "",
-                                    "", true, fbLoginDTO.getPicturePath(), false, role, false);
+                                                "", true, picture_bytes, false, role, false, 0);
             userService.addNewRegisteredUser(registeredUser);
         }
 

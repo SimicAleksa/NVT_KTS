@@ -37,7 +37,8 @@ export class MenuComponent implements OnInit {
   }
 
   onLogoutBtnClick(): void {
-    if (localStorage.getItem('role')=="DRIVER") this.userDataService.changeDriverActiveStatus(localStorage.getItem('email')!, false);
+    if (localStorage.getItem('role')=="DRIVER") 
+      this.userDataService.changeDriverActiveStatus(localStorage.getItem('email')!, false);
     localStorage.removeItem('role');
     localStorage.removeItem('token');
     localStorage.removeItem('email');
