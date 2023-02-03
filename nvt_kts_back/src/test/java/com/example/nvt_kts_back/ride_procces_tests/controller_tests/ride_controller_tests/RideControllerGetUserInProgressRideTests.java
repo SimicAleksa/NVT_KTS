@@ -46,7 +46,7 @@ public class RideControllerGetUserInProgressRideTests {
     public void loginNotRegUser(){
         ResponseEntity<AuthTokenDTO> responseEntity = restTemplate.postForEntity(
                 restTemplate.getRootUri()+"/api/unauth/login",
-                new LoginDTO("michael.brown@example.com","sifra123"),
+                new LoginDTO("pera@gmail.com","sifra123"),
                 AuthTokenDTO.class
         );
         String accessToken = Objects.requireNonNull(responseEntity.getBody()).getAccessToken();

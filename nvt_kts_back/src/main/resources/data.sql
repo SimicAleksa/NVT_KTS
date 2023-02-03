@@ -1,4 +1,3 @@
-
 INSERT INTO role (name)
 VALUES ('ROLE_USER'),
        ('ROLE_DRIVER'),
@@ -32,7 +31,9 @@ VALUES ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyo
        ('bbbbbbbbbbbbbbbbbb@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Bbbbbbbbbbbb','Bbbbb','grad','42145135',true,'slika',false, 1, null),
        ('zaRezervisanje@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null),
        ('seleBrateMojhihixD@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null),
-       ('nomoneysadgeSelen@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 1, null);
+       ('nomoneysadgeSelen@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 1, null),
+       ('bugfixDriver@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 2, null);
+
 
 INSERT INTO registered_user (id, is_busy, tokens)
 VALUES
@@ -55,7 +56,8 @@ VALUES
 INSERT INTO driver (id, active, car_type, baby_allowed, pet_allowed, is_driver_free, current_coords_id, license_plate_number)
 VALUES (6, true, 'SEDAN', true, true, true, 3, 'NS 8734 SN'),
        (7, true, 'SUV', false, true, false, 4 , 'NS 834 FN'),
-       (8, true, 'SUV', false, true, false, 5 , 'NS 834 FN');
+       (8, true, 'SUV', false, true, false, 5 , 'NS 834 FN'),
+       (19, false, 'LIMOUSINE', false, true, false, 5 , 'NS 894 FN');
 
 
 INSERT INTO route (start_location_id, end_location_id, routejson)
@@ -95,6 +97,9 @@ VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1);
 
 INSERT INTO ride (ride_state, price, expected_duration, distance, route_id, start_date_time)
 VALUES ('WAITING_FOR_PAYMENT', 100, 100, 54.3, 1, '2023-02-05 18:47:52.069');
+
+INSERT INTO ride (ride_state, price, start_date_time, end_date_time, expected_duration, distance, route_id, driver_id)
+VALUES ('IN_PROGRESS', 16.3, '2023-09-17 18:47:52.069', '2023-01-01 18:47:52.069', 100, 54.3, 1, 19);
 
 
 INSERT INTO ride_passengers(ride_id, registered_user_id)

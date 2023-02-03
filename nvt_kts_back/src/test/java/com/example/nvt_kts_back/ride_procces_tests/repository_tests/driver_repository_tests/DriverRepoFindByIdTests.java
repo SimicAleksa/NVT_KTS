@@ -20,7 +20,7 @@ public class DriverRepoFindByIdTests {
     @Autowired
     private DriverRepository driverRepository;
 
-    private final Long VALID_ID = 9L;
+    private final Long VALID_ID = 8L;
     private final Long INVALID_ID = 1000L;
 
     @Test
