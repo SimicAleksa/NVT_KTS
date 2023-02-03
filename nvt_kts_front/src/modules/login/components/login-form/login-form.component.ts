@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { API_ALL_ACTIVE_VEHICLES_URL } from 'src/config/map-urls';
 import { MenuService } from 'src/modules/menu/service/menu-service';
+import { UserDataService } from 'src/modules/user-data/services/user-data.service';
 import { FieldValidator } from 'src/utils/field-validator';
 import { APIRequestMaker } from "../../../../utils/api-request-maker";
 
@@ -24,6 +25,7 @@ export class LoginFormComponent implements OnInit {
 
   constructor(public reqMaker: APIRequestMaker, private fieldvalidator: FieldValidator, 
               private menuService: MenuService, private authService: SocialAuthService,
+              private userDataService: UserDataService,
               private router: Router) {
     this.email = "";
     this.password = "";
@@ -103,7 +105,10 @@ export class LoginFormComponent implements OnInit {
       
       complete: () => { 
         
-        
+        if (localStorage.getItem('role')=="DRIVER")
+        {
+            this.userDataService.changeDriverActiveStatus(localStorage.getItem('email')!, true);
+        }
         this.redirectAfterLogin(); }
     };
   }

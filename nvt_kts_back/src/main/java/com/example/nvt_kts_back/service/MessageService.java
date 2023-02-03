@@ -5,10 +5,13 @@ import com.example.nvt_kts_back.models.User;
 import com.example.nvt_kts_back.DTOs.UserDTO;
 import com.example.nvt_kts_back.repository.MessageRepository;
 import com.example.nvt_kts_back.repository.UserRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static com.example.nvt_kts_back.configurations.Settings.ADMIN_EMAIL;
 
 @Service
 public class MessageService {
@@ -35,10 +38,10 @@ public class MessageService {
     }
 
     private HashMap<String, List<Message>>  addAdminInHashmap(HashMap<String, List<Message>> retVal, String email) {
-        if (!email.equals("admin@gmail.com") && !retVal.containsKey("admin@gmail.com"))
+        if (!email.equals(ADMIN_EMAIL) && !retVal.containsKey(ADMIN_EMAIL))
         {
             ArrayList<Message> ms = new ArrayList<>();
-            retVal.put("admin@gmail.com", ms);
+            retVal.put(ADMIN_EMAIL, ms);
         }
     return retVal;
     }
@@ -81,13 +84,13 @@ public class MessageService {
     }
 
     private void addAdminToList(ArrayList<UserDTO> list, String email) {
-        if (!email.equals("admin@gmail.com"))
+        if (!email.equals(ADMIN_EMAIL))
         {
             for (UserDTO dto : list)
             {
-                if (dto.getEmail().equals("admin@gmail.com")) return;
+                if (dto.getEmail().equals(ADMIN_EMAIL)) return;
             }
-            User admin = this.userRepository.findByEmail("admin@gmail.com");
+            User admin = this.userRepository.findByEmail(ADMIN_EMAIL);
             list.add(new UserDTO(admin));
         }
     }

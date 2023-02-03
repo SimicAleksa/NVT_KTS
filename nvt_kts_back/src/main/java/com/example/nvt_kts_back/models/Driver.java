@@ -14,6 +14,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.nvt_kts_back.configurations.Settings.DEFAULT_LATITUDE;
+import static com.example.nvt_kts_back.configurations.Settings.DEFAULT_LONGITUDE;
+
 
 @Entity
 @Data

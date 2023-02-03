@@ -26,6 +26,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.nvt_kts_back.configurations.Settings.DEFAULT_LATITUDE;
+import static com.example.nvt_kts_back.configurations.Settings.DEFAULT_LONGITUDE;
+
 @Service
 public class DriverService {
     @Autowired
@@ -175,7 +178,7 @@ public class DriverService {
 
     public void addDriverFromRequest(ChangeProfileRequest c) {
         Driver d = new Driver(c);
-
+        d.setCurrentCoords(new Coord(DEFAULT_LATITUDE, DEFAULT_LONGITUDE));
         d.setRole(roleRepository.getByName(Settings.DRIVER_ROLE_NAME).orElseThrow(RoleDoesNotExistException::new));
         d.setPassword(new BCryptPasswordEncoder().encode(c.getPassword()));
         d.setProfileActivated(false);
