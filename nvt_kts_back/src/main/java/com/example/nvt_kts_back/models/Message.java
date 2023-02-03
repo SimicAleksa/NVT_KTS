@@ -33,6 +33,12 @@ public class Message {
         this.receiver = receiver;
     }
 
+    public Message(String text, String sender, String receiver) {
+        this.text = text;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
+
     public Integer getId() {
         return id;
     }

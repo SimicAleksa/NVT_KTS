@@ -27,13 +27,7 @@
                     
                     <div id="messagesDiv" class="col-md-7 col-lg-7 col-xl-7 order-1 order-lg-2">
                         <div>
-                            <!--<div class="myMessage">
-                                <h4>Nevena Radesic</h4>
-                                <hr>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda esse voluptatibus 
-                                    eius ipsam sapiente ipsa aut alias, placeat perspiciatis quidem minima nihil officia 
-                                    cupiditate nesciunt, animi, quia vel omnis ratione.</p>
-                            </div>  -->
+                            <label id="noMessages" *ngIf="currentMessages?.length==0" > No messages yet</label>
 
                             <!--OVDJE SADA IDE NGFOR ZA SVE PORUKE-->
                             <div *ngFor="let item of currentMessages" class="d-flex justify-content-between mb-4" >

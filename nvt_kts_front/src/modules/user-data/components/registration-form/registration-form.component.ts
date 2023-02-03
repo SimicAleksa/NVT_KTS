@@ -3,6 +3,7 @@ import { UserDataService } from '../../services/user-data.service';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router } from "@angular/router";
 import { ChangeProfileRequest } from 'src/modules/app/model/user';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration-form',
@@ -17,6 +18,7 @@ export class RegistrationFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userDataService : UserDataService, 
+    private toastr: ToastrService,
     ) { 
       this.createForm();
     }
@@ -34,7 +36,6 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   passwordConfirming(c: AbstractControl): { invalid: boolean} | null {
-    //console.log("trenutno lozinka je " + c.get('password')?.value)
     if (c.get('password')?.value !== c.get('repeated')?.value) {
         return {invalid: true};
     }
@@ -51,8 +52,31 @@ export class RegistrationFormComponent implements OnInit {
 
   onSubmit() {
     this.user = this.registrationForm.value;
+    this.userDataService.checkIfAlreadyExists(this.user.email).subscribe((response) => {
+      if (response==true)
+      {
+        this.showNegativeMessage();
+      }
+      else{
+        this.saveUser();
+      }
+    });
+  }
+
+  showNegativeMessage() {
+    let el: HTMLInputElement = document.querySelector("#alreadyExistLbl")!;
+    el.innerText =  "User with email " + this.user.email + " already exists";
+    el.style.color = "red";
+
+  }
+
+
+  saveUser() {
     this.userDataService.addUser(this.user);
     this.userDataService.sendRegistrationEmail(this.user.email);
+    let el: HTMLInputElement = document.querySelector("#alreadyExistLbl")!;
+    el.innerHTML = "We've sent confirmation email on " + this.user.email;
+    el.style.color = "green";
   }
 }
 

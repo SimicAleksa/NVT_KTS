@@ -40,7 +40,6 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut:20000,
-      tapToDismiss:false,
       positionClass: 'toast-bottom-right'
     }),
     SocialLoginModule,
@@ -75,7 +74,7 @@ const appRoutes: Routes = [{ path: '', component: AppComponent }];
         useClass: ReferrerInterceptor,
         multi: true
       },
-      
+
     ]
   ],
   bootstrap: [AppComponent],

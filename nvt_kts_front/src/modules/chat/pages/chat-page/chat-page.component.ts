@@ -34,7 +34,11 @@ export class ChatPageComponent implements OnInit {
   ) { 
     this.userEmail = String(localStorage.getItem('email'));
     //TODO pogledaj da li si dobavila
-    this.usersFriend = "pera@gmail.com";
+    if (this.userEmail!="admin@gmail.com")
+    {
+      this.usersFriend = "admin@gmail.com";
+    }
+    
   }
 
 
@@ -89,8 +93,10 @@ export class ChatPageComponent implements OnInit {
   {
     this.stompClient.subscribe('/map-updates/add-message', (message: { body: string }) => {
       //this.messageService.saveMessage();
+      alert("Dosla nova poruka");
       let m: Message =JSON.parse(message.body);
       console.log(m);
+      alert("sender je bio " + m.sender + ", a receiver je bio " + m.receiver);
 
       if (m.sender==this.userEmail || m.receiver == this.usersFriend)
       {
