@@ -293,11 +293,13 @@ export class RegisteredUsersRidesComponent implements OnInit {
 function createRideStateDictionary(): { [id: string]: string; } {
   const map: { [id: string]: string; } = {};
   map["STARTED"] = "is approved";
-  map["ENDED"] = "is over";
+  map["ENDED"] = "is over. You can w";
   map["DECLINED"] = "is declined";
   map["RESERVED"] = "is reserved";
   map["IN_PROGRESS"] = "has started"
   return map;
 
 }
+
+
 
