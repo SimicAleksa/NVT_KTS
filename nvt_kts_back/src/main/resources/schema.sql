@@ -31,7 +31,8 @@ VALUES ('strahinjapopovic.evilpops@gmail.com', '$2a$10$34m5dosyTARXnOiqIEdM8uXyo
        ('bbbbbbbbbbbbbbbbbb@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Bbbbbbbbbbbb','Bbbbb','grad','42145135',true,'slika',false, 1, null),
        ('zaRezervisanje@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null),
        ('seleBrateMojhihixD@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Rezervisan','Simic','grad','42145135',true,'slika',false, 1, null),
-       ('nomoneysadgeSelen@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 1, null);
+       ('nomoneysadgeSelen@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Money','LessSell','grad','42145135',true,'slika',false, 1, null),
+       ('admin@gmail.com','$2a$10$34m5dosyTARXnOiqIEdM8uXyosZYQtDy75QBPPS7S91Iirn5ORQ8O','Admin','Support','grad','42145135',true,'slika',false, 3, null);
 
 INSERT INTO registered_user (id, is_busy, tokens)
 VALUES

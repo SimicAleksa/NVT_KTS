@@ -30,7 +30,19 @@ public class MessageService {
             String anotherPerson = findAnotherPerson(m, email);
             putInMap(retVal, m, anotherPerson);
         }
+        addAdminInHashmap(retVal, email);
         return retVal;
+    }
+
+    private void addAdminInHashmap(HashMap<String, List<Message>> retVal, String email) {
+        if (!retVal.containsKey("admin@gmail.com"))
+        {
+            //Message m = new Message("Hey, how can i help you?", "admin@gmail.com", email);
+            ArrayList<Message> ms = new ArrayList<>();
+            //ms.add(m);
+            retVal.put("admin@gmail.com", ms);
+        }
+
     }
 
     private void putInMap(HashMap<String, List<Message>> map, Message m, String key) {
@@ -66,7 +78,20 @@ public class MessageService {
                 retVal.add(new UserDTO(u));
             }
         }
+        addAdminToList(retVal, email);
         return retVal;
+    }
+
+    private void addAdminToList(ArrayList<UserDTO> list, String email) {
+        if (!email.equals("admin@gmail.com"))
+        {
+            for (UserDTO dto : list)
+            {
+                if (dto.getEmail().equals("admin@gmail.com")) return;
+            }
+            User admin = this.userRepository.findByEmail("admin@gmail.com");
+            list.add(new UserDTO(admin));
+        }
     }
 
     private boolean alreadyInList(String email, ArrayList<UserDTO> l) {
@@ -79,6 +104,7 @@ public class MessageService {
     }
 
     public void saveMessage(Message message) {
+
         this.messageRepository.save(message);
     }
 }

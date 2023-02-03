@@ -72,3 +72,10 @@ p, textarea, button{
     right: 20px;
 }
 
+#noMessages 
+{
+    font-size: large;
+    margin-bottom: 70%;
+    margin-left: 37%;
+}
+
