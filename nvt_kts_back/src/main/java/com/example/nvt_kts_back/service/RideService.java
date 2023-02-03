@@ -606,13 +606,13 @@ public class RideService {
         if (ride.getRideState()==RideState.RESERVED)
         {
             LocalDateTime start = ride.getStartDateTime();
-            pokusaj(start, 15, ride.getId());
-            pokusaj(start, 10, ride.getId());
-            pokusaj(start, 5, ride.getId());
+            setNotifToPartyTime(start, 15, ride.getId());
+            setNotifToPartyTime(start, 10, ride.getId());
+            setNotifToPartyTime(start, 5, ride.getId());
         }
     }
 
-    public void pokusaj(LocalDateTime rideTime, long minutes, long rideId)
+    public void setNotifToPartyTime(LocalDateTime rideTime, long minutes, long rideId)
     {
         LocalDateTime dateTime = rideTime.minusMinutes(minutes);
         Calendar c = Calendar.getInstance();
