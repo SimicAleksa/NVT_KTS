@@ -2,7 +2,7 @@ package com.example.nvt_kts_back.e2e.tests;
 
 import com.example.nvt_kts_back.e2e.helper.Helper;
 import com.example.nvt_kts_back.e2e.pages.HomePage;
-import com.example.nvt_kts_back.e2e.pages.RegistrationPage;
+import com.example.nvt_kts_back.e2e.pages.RegistrationPage;;
 import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.Test;
 

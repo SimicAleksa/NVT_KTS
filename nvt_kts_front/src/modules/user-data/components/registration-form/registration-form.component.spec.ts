@@ -143,7 +143,6 @@ fdescribe('RegistrationFormComponent', () => {
   });
 
 
-
   it('save user', () => {
     component.user = {name: "Pera", surname: "Peric", email:"pera@gmail.com", picture: "slika", city: "Novi Sad",
     phone: "065-654-44-65", note: "", blocked: false, tokens: 45, carType: "", babyAllowed: true, petsAllowed: true, password: "momo"};
