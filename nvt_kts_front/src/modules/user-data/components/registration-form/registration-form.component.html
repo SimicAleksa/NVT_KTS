@@ -149,7 +149,7 @@
         appCustomValidation
       />
 
-      <small
+      <small id="repeatedPasswordError"
         class="text-danger"
         *ngIf="registrationForm.controls.repeated.touched && registrationForm.hasError('invalid')
         "

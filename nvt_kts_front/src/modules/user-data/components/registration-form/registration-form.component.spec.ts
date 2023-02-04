@@ -12,6 +12,7 @@ import { UserDataServiceMock } from '../../mocks/user-data-service.mock';
 fdescribe('RegistrationFormComponent', () => {
   let component: RegistrationFormComponent;
   let fixture: ComponentFixture<RegistrationFormComponent>;
+  let httpController: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,11 +27,16 @@ fdescribe('RegistrationFormComponent', () => {
       ]
     })
     .compileComponents();
-
+    httpController = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(RegistrationFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  afterEach(() => {
+    httpController.verify();
+  });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -41,13 +47,13 @@ fdescribe('RegistrationFormComponent', () => {
     expect(data.querySelector("#registerBtn").textContent).toContain("Register");
   });
 
-  it("should disable the button when form is not valid", () => {
+  it("should disable the button when form is empty", () => {
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css("button"));
     expect(button.nativeElement.disabled).toBeTruthy();
   });
 
-  it("should enable button when form is valid", () => {
+  it("should disable button when form is invalid", () => {
     component.registrationForm.get("name")?.setValue("Isidora");
     component.registrationForm.get("surname")?.setValue("Vasic");
     component.registrationForm.get("password")?.setValue("mladjaa");
@@ -158,6 +164,29 @@ fdescribe('RegistrationFormComponent', () => {
     let ime: string = userDataService.dumbMethod();
     expect(ime).toContain("vena");
   });
+
+  /*it('should emit error if one of inputs are of invalid format', () => {
+    component.registrationForm.get("name")?.setValue("Isidora");
+    component.registrationForm.get("surname")?.setValue("Vasic");
+    component.registrationForm.get("email")?.setValue("pera@gmail.com");
+    component.registrationForm.get("password")?.setValue("mladjaa");
+    component.registrationForm.get("repeated")?.setValue("not valid");
+    component.registrationForm.get("city")?.setValue("Novi Sad");
+    component.registrationForm.get("phone")?.setValue("065-881-98");
+
+    spyOn(component, 'onSubmit').and.callThrough();
+    component.onSubmit();
+
+    httpController.expectOne({
+      method: 'GET',
+      url: "http://localhost:8000/api/user/checkIfExist/pera@gmail.com",
+    }).flush(true);
+
+    //let el: HTMLInputElement = document.querySelector("#repeatedPasswordError")!;
+    //expect(el.innerHTML).toContain("Passwords do not match");
+    expect(component.registrationForm.get("name")?.value).toContain("Isid");
+
+  });*/
 
 
 
