@@ -39,7 +39,8 @@ public class RegisteredUserDTO {
         this.note = u.getNote();
         this.isBlocked = u.getIsBlocked();
         this.tokens = u.getTokens();
-
+        this.city = u.getCity();
+        this.phone = u.getPhone();
     }
 
     public RegisteredUserDTO(ChangeProfileRequest c) {

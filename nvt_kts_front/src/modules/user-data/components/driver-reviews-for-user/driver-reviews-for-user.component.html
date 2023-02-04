@@ -29,7 +29,7 @@
         <div class="review-card row" *ngFor="let review of reviews">
             <div class="row">
                 <div class="col-1">
-                    <img src="../../../../assets/images/pera.webp"/>
+                    <img [src]="'data:image/jpeg;base64,' + review.reviewer.picture"/>
                 </div>
                 <div class="col-11 card-txt-style">
                     {{review.reviewer.name}} {{review.reviewer.surname}}

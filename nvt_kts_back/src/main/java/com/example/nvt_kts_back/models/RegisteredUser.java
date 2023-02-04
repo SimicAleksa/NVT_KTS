@@ -29,9 +29,10 @@ public class RegisteredUser extends User {
 
 
     public RegisteredUser(String email, String password, String name, String surname, String city, String phone,
-                          Boolean profileActivated, byte[] picture, Boolean isBlocked, Role role, Boolean isBusy) {
+                          Boolean profileActivated, byte[] picture, Boolean isBlocked, Role role, Boolean isBusy, double tokens) {
         super(email, password, name, surname, city, phone, profileActivated, picture, isBlocked, role);
         this.isBusy = isBusy;
+        this.tokens = tokens;
         this.favouriteRoutes = new ArrayList<>();
         this.historyOfRides = new ArrayList<>();
         this.reviews = new ArrayList<>();

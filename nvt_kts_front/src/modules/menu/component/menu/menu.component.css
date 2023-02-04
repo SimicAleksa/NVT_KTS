@@ -55,11 +55,14 @@ button:hover::before {
 
 a 
 {
-  font-size: larger;
+  font-size: 1.4em;
+  font-weight: bold;
 }
 
 li {
-  width: 120px;
+  border: 1px solid rgb(79, 73, 82);
+  border-radius: 20px;
+  padding: 0 10px
 }
 
 .curr-active {
@@ -72,5 +75,5 @@ nav {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 99999;
+    z-index: 9998;
 }

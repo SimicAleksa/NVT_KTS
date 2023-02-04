@@ -2,6 +2,7 @@ import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
+import { iif } from 'rxjs';
 import { API_ALL_ACTIVE_VEHICLES_URL } from 'src/config/map-urls';
 import { MenuService } from 'src/modules/menu/service/menu-service';
 import { UserDataService } from 'src/modules/user-data/services/user-data.service';
@@ -37,13 +38,21 @@ export class LoginFormComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       let data = {
         email: user.email,
-        authToken: user.authToken,
+        authToken: "",
         name: user.firstName,
         surname: user.lastName,
-        picturePath: user.photoUrl
+        picturePath: ""
       }
-      
-      this.reqMaker.createFacebookLoginRequest(data).subscribe(this.getFBLoginObservable());
+
+      let provider = user.provider;
+      if(provider === "GOOGLE") {
+        data.authToken = user.idToken;
+        this.reqMaker.createGoogleLoginRequest(data).subscribe(this.getFacebookOrGoogleLoginObservable());
+      }
+      else if (provider === "FACEBOOK") {
+        data.authToken = user.authToken;
+        this.reqMaker.createFacebookLoginRequest(data).subscribe(this.getFacebookOrGoogleLoginObservable()); 
+      }
     });
   }
 
@@ -85,6 +94,7 @@ export class LoginFormComponent implements OnInit {
         if (retData.body === undefined)
           return;
         
+        console.log("asfassafas");
         const tokenData : any = jwtDecode(retData.body.accessToken);
         localStorage.setItem('token', retData.body.accessToken);
         localStorage.setItem('email', tokenData['sub']);
@@ -113,7 +123,7 @@ export class LoginFormComponent implements OnInit {
     };
   }
 
-  getFBLoginObservable() {
+  getFacebookOrGoogleLoginObservable() {
     return {
       next: (retData: any) => {
         if (retData.body === undefined)
