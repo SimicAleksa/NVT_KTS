@@ -81,9 +81,9 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         ride.setRoute(route);
         when(this.rideRepository.findById(1L)).thenReturn(Optional.of(ride));
         this.rideService.changeRideState(1L,"IN_PROGRESS");
-        Assertions.assertEquals(ride.getRideState(), RideState.IN_PROGRESS);
+        Assertions.assertEquals(RideState.IN_PROGRESS, ride.getRideState());
         this.rideService.changeRideState(1L,"WAITING_FOR_PAYMENT");
-        Assertions.assertEquals(ride.getRideState(), RideState.WAITING_FOR_PAYMENT);
+        Assertions.assertEquals(RideState.WAITING_FOR_PAYMENT, ride.getRideState());
     }
 
 
@@ -105,8 +105,8 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         ride1.setDistance(77);
         ride1.setPassengers(null);
         when(this.rideRepository.findByDriverAndRideStateDTS(6L)).thenReturn(Optional.of(ride1));
-        Assertions.assertEquals(this.rideService.getDriversDrivingToStartRide("6").getRideState(), RideState.DRIVING_TO_START);
-        Assertions.assertEquals(this.rideService.getDriversDrivingToStartRide("6").getDistance(), 77);
+        Assertions.assertEquals(RideState.DRIVING_TO_START, this.rideService.getDriversDrivingToStartRide("6").getRideState());
+        Assertions.assertEquals(77, this.rideService.getDriversDrivingToStartRide("6").getDistance());
     }
 
 
@@ -130,24 +130,24 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").size(), 0);
         rides1.add(ride1);
         ru1.setHistoryOfRides(rides1);
-        Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").size(), 1);
-        Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").get(0).getState(), RideState.IN_PROGRESS.toString());
+        Assertions.assertEquals(1, this.rideService.findUsersUpcomingRides("user@gmail.com").size());
+        Assertions.assertEquals(RideState.IN_PROGRESS.toString(), this.rideService.findUsersUpcomingRides("user@gmail.com").get(0).getState());
 
         // dodajemo ride da vidimo da li ce se sortirati
         Ride ride2 = createRideFromStateAndId(RideState.WAITING_FOR_PAYMENT, 2L);
         rides1.add(ride2);
         Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").size(), 2);
-        Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").get(0).getState(), RideState.WAITING_FOR_PAYMENT.toString());
+        Assertions.assertEquals(RideState.WAITING_FOR_PAYMENT.toString(), this.rideService.findUsersUpcomingRides("user@gmail.com").get(0).getState());
 
         // dodajemo jos jednu koja ne utice
         Ride ride3 = createRideFromStateAndId(RideState.DECLINED, 3L);
         rides1.add(ride3);
-        Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").size(), 2);
+        Assertions.assertEquals(2, this.rideService.findUsersUpcomingRides("user@gmail.com").size());
 
         // sad jos dodati jednu started
         Ride ride4 = createRideFromStateAndId(RideState.STARTED, 4L);
         rides1.add(ride4);
-        Assertions.assertEquals(this.rideService.findUsersUpcomingRides("user@gmail.com").size(), 4);
+        Assertions.assertEquals(4, this.rideService.findUsersUpcomingRides("user@gmail.com").size());
     }
 
     private RegisteredUser createRegisteredUSer() {
@@ -174,7 +174,7 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         Ride ride = createRideFromStateAndId(RideState.IN_PROGRESS, 1L);
         when(this.rideRepository.findById(1L)).thenReturn(Optional.of(ride));
         this.rideService.changeRide(1L);
-        Assertions.assertEquals(ride.getRideState(), RideState.ENDED);
+        Assertions.assertEquals(RideState.ENDED, ride.getRideState());
     }
 
     // TODO staviti onu neku petlju
@@ -190,12 +190,12 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         Ride ride = createRideFromStateAndId(RideState.IN_PROGRESS, 1L);
         when(this.rideRepository.findById(1L)).thenReturn(Optional.of(ride));
         this.rideService.changeRideToINPROGRESS(1L);
-        Assertions.assertEquals(ride.getRideState(), RideState.IN_PROGRESS);
+        Assertions.assertEquals(RideState.IN_PROGRESS, ride.getRideState());
 
         Ride ride2 = createRideFromStateAndId(RideState.WAITING_FOR_PAYMENT, 2L);
         when(this.rideRepository.findById(2L)).thenReturn(Optional.of(ride2));
         this.rideService.changeRideToINPROGRESS(2L);
-        Assertions.assertEquals(ride2.getRideState(), RideState.IN_PROGRESS);
+        Assertions.assertEquals(RideState.IN_PROGRESS, ride2.getRideState());
     }
 
     // TODO staviti onu neku petlju
@@ -225,8 +225,8 @@ public class OdbijanjeVoznjeRideServiceUnitTest {
         ride1.setDistance(77);
         ride1.setPassengers(null);
         when(this.rideRepository.findByDriverAndRideStateINPROGRESS(6L)).thenReturn(Optional.of(ride1));
-        Assertions.assertEquals(this.rideService.getDriversINPROGRESSRide("6").getRideState(), RideState.IN_PROGRESS);
-        Assertions.assertEquals(this.rideService.getDriversINPROGRESSRide("6").getDistance(), 77);
+        Assertions.assertEquals(RideState.IN_PROGRESS, this.rideService.getDriversINPROGRESSRide("6").getRideState());
+        Assertions.assertEquals(77, this.rideService.getDriversINPROGRESSRide("6").getDistance());
     }
 
 

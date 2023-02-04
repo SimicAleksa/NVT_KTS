@@ -51,7 +51,7 @@ public class OdbijanjeVoznjeRideRepositoryUnitTest {
         ride1.setDriver_id(6L);
         ride1.setPassengers(null);
         this.rideRepository.save(ride1);
-        Assertions.assertEquals(this.rideRepository.findByDriverAndRideStateDTS(6L).get().getDistance(), 54321);
+        Assertions.assertEquals(54321, this.rideRepository.findByDriverAndRideStateDTS(6L).get().getDistance());
     }
 
 }
