@@ -149,7 +149,7 @@
         appCustomValidation
       />
 
-      <small
+      <small id="repeatedPasswordError"
         class="text-danger"
         *ngIf="registrationForm.controls.repeated.touched && registrationForm.hasError('invalid')
         "
@@ -227,7 +227,7 @@
       >
     </div>
   </div>
-  <label id="alreadyExistLbl" >Prazna labela</label>
+  <label id="alreadyExistLbl" ></label>
   <div class="form-group row float-right">
     <div class="col-7"></div>
     <div class="col-1 float-right">

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { StringDTO } from 'src/modules/app/model/stringDTO';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class EditProfileComponent implements OnInit {
     private fb: FormBuilder,
     private userDataService: UserDataService,
     private router: Router,
+    private toastr: ToastrService,
     ) {
     this.username = String(localStorage.getItem('email'));
     this.createForm();
@@ -159,6 +161,7 @@ export class EditProfileComponent implements OnInit {
       this.onChangePicture()
     }
     window.location.reload();
+    this.toastr.success("Your changes are saved!");
     
   }
   changeEnteredData() {

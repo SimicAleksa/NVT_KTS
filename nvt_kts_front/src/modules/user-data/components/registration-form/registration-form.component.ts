@@ -52,6 +52,7 @@ export class RegistrationFormComponent implements OnInit {
 
   onSubmit() {
     this.user = this.registrationForm.value;
+    alert("Usla sam u onSubmit");
     this.userDataService.checkIfAlreadyExists(this.user.email).subscribe((response) => {
       if (response==true)
       {

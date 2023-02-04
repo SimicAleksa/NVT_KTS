@@ -187,3 +187,7 @@ values(10,false,'SUV;HATCHBACK;COUPE;MINIVAN;SEDAN;VAN;LIMOUSINE',100,false,45.1
 insert into MESSAGE (TEXT, SENDER, RECEIVER) VALUES ('I need help', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
                                                     ('Nova poruka', 'strahinjapopovic.evilpops@gmail.com', 'admin@gmail.com'),
                                                     ('How can I help you', 'admin@gmail.com', 'strahinjapopovic.evilpops@gmail.com');
+
+insert into change_profile_requests (name, surname, email, city, phone, picture, car_type, baby_allowed, pets_allowed) values ('Isidora', 'Mladjic', 'registrovani2@gmail.com', 'Samac','42145135', 'slika', 'SUV', true, false);
+insert into change_profile_requests (name, surname, email, city, phone, picture, car_type, baby_allowed, pets_allowed) values ('Pera', 'Perovic', 'pera@gmail.com', 'Samac','42145135', 'slika', 'SUV', false, false);
+insert into change_profile_requests (name, surname, email, city, phone, picture, car_type, baby_allowed, pets_allowed) values ('Money', 'LessSel', 'bugfixDriver2@gmail.com', 'Samac','42145135', 'slika', 'SUV', false, false);

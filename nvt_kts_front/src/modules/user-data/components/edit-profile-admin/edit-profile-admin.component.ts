@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { UserDataService } from '../../services/user-data.service';
 import { ChangePassword, ChangeProfileRequest, User } from 'src/modules/app/model/user';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class EditProfileAdminComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userDataService: UserDataService,
+    private toastr: ToastrService,
     private router: Router,
     ) {
     this.username = String(localStorage.getItem('email'));
@@ -132,6 +134,7 @@ export class EditProfileAdminComponent implements OnInit {
       this.onChangePicture()
     }
     window.location.reload();
+    this.toastr.success("Your changes are saved");
     
   }
   changeEnteredData() {
