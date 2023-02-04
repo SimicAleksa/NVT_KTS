@@ -89,54 +89,6 @@ fdescribe('RegistrationFormComponent', () => {
 
   });
 
-  /*it("should show message when form is invalid", async () => {
-
-    component.registrationForm.get("name")?.setValue("");
-    component.registrationForm.get("surname")?.setValue("");
-    component.registrationForm.get("email")?.setValue("");
-    component.registrationForm.get("password")?.setValue("");
-    component.registrationForm.get("repeated")?.setValue("");
-    component.registrationForm.get("city")?.setValue("");
-    component.registrationForm.get("phone")?.setValue("");
-
-    component.registrationForm.get("name")?.setValue("Isidora");
-    component.registrationForm.get("surname")?.setValue("Vasic");
-    component.registrationForm.get("email")?.setValue("pera@gmail.com");
-    component.registrationForm.get("password")?.setValue("mladjaa");
-    component.registrationForm.get("repeated")?.setValue("mladjaa");
-    component.registrationForm.get("city")?.setValue("Novi Sad");
-    component.registrationForm.get("phone")?.setValue("065-881-98");
-    fixture.detectChanges();
-
-    //const btn = fixture.debugElement.nativeElement.querySelector("#registerBtn");
-    //btn.click();
-    const submitEl = fixture.debugElement.query(By.css('#registerBtn'));
-    submitEl.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    const lbl = fixture.debugElement.nativeElement.querySelector("#alreadyExistLbl");
-    alert(lbl.innerHTML);
-    alert(lbl.innerHTML);
-    alert(lbl.innerHTML);
-    alert(lbl.innerHTML);
-    alert(lbl.innerHTML);
-    alert(lbl.innerHTML);
-
-    expect(lbl.textContent).toContain("already exists");
-    
-
-  });*/
-
-  /*it('service test', () => {
-    const fakedBoolean = true;
-    
-    const userDataService = fixture.debugElement.injector.get(UserDataService);
-    let spy = spyOn(userDataService, "checkIfAlreadyExists").and.returnValue(
-      Promise.resolve(true)
-    );
-  });*/
-
-
 
   it('show negative message', () => {
     component.user = {name: "Pera", surname: "Peric", email:"pera@gmail.com", picture: "slika", city: "Novi Sad",
@@ -165,7 +117,7 @@ fdescribe('RegistrationFormComponent', () => {
     expect(ime).toContain("vena");
   });
 
-  /*it('should emit error if one of inputs are of invalid format', () => {
+  it('should emit error if one of inputs are of invalid format', () => {
     component.registrationForm.get("name")?.setValue("Isidora");
     component.registrationForm.get("surname")?.setValue("Vasic");
     component.registrationForm.get("email")?.setValue("pera@gmail.com");
@@ -175,20 +127,7 @@ fdescribe('RegistrationFormComponent', () => {
     component.registrationForm.get("phone")?.setValue("065-881-98");
 
     spyOn(component, 'onSubmit').and.callThrough();
-    component.onSubmit();
-
-    httpController.expectOne({
-      method: 'GET',
-      url: "http://localhost:8000/api/user/checkIfExist/pera@gmail.com",
-    }).flush(true);
-
-    //let el: HTMLInputElement = document.querySelector("#repeatedPasswordError")!;
-    //expect(el.innerHTML).toContain("Passwords do not match");
     expect(component.registrationForm.get("name")?.value).toContain("Isid");
 
-  });*/
-
-
-
-
+  });
 });
