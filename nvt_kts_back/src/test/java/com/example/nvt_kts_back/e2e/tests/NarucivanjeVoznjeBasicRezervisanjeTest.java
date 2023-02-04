@@ -14,7 +14,7 @@ public class NarucivanjeVoznjeBasicRezervisanjeTest extends NarucivanjeTestBase 
 
         ordering_RESERVE_ogTOEditPage();
 
-        confirmOrder();
+        confirmOrder_Reserve();
 
         Helper.takeScreenshoot(driver, "login_application_full");
     }

@@ -27,8 +27,15 @@ public class NarucivanjeEditProfilePage {
     @FindBy(css = ".toast-info > div")
     private WebElement toasterMessageContainerYou;
 
+    @FindBy(css = ".toast-info:nth-child(1) > div")
+    private WebElement toasterMessageContainerYouReserve;
+
     @FindBy(css = ".toast-success:nth-child(2) > div")
     private WebElement toasterMessageContainerAllPassangers;
+
+    @FindBy(css = ".toast-success:nth-child(1) > div")
+    private WebElement toasterMessageContainerAllPassangersReserve;
+
 
     @FindBy(css = ".toast-warning > div")
     private WebElement toasterMessageContainerNoTokens;
@@ -79,6 +86,11 @@ public class NarucivanjeEditProfilePage {
                 .until(ExpectedConditions.textToBePresentInElement(toasterMessageContainerAllPassangers,"All passengers approved ride.")));
         return isApprovedByAll;
     }
+    public boolean isApprovedByAll_reserve() {
+        boolean isApprovedByAll_reserve = (new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.textToBePresentInElement(toasterMessageContainerAllPassangersReserve,"Successfully ordered")));
+        return isApprovedByAll_reserve;
+    }
 
     public boolean isRideDeclined_NoDriver() {
         boolean isRideDeclined = (new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -89,6 +101,12 @@ public class NarucivanjeEditProfilePage {
     public boolean isApprovedByYou() {
         boolean isApprovedByYou = (new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.textToBePresentInElement(toasterMessageContainerYou,"You successfully approved ride")));
+        return isApprovedByYou;
+    }
+
+    public boolean isApprovedByYou_reserve() {
+        boolean isApprovedByYou = (new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.textToBePresentInElement(toasterMessageContainerYouReserve,"You successfully approved ride")));
         return isApprovedByYou;
     }
 

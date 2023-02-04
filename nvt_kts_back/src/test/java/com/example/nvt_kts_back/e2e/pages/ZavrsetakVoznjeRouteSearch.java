@@ -1,6 +1,7 @@
 package com.example.nvt_kts_back.e2e.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,11 +14,16 @@ import java.time.Duration;
 public class ZavrsetakVoznjeRouteSearch {
     private WebDriver driver;
 
+    private static String STARTLOCATIOn = "puskinova 6, Novi Sad";
+    private static String ENDLOCATIOn = "dragise brasovana 10, Novi Sad";
+
 
     public ZavrsetakVoznjeRouteSearch(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
     }
+
+
 
     @FindBy(css = "div.leaflet-routing-geocoders > div:nth-child(1) > input")
     private WebElement startLocation;
@@ -43,10 +49,15 @@ public class ZavrsetakVoznjeRouteSearch {
         return true;
     }
 
-    public void fillForm() {
-        this.startLocation.sendKeys("Novi Sad City, South Backa Administrative District, Vojvodina, Serbia");
-        this.endLocation.sendKeys("Strazilovska, Stari grad, МЗ Соња Маринковић, Novi Sad, Novi Sad City, South Backa Administrative District, Vojvodina, 21000, Serbia");
-        this.quickTime.click();
+    public void fillForm() throws InterruptedException {
+        this.startLocation.clear();
+        this.startLocation.sendKeys(STARTLOCATIOn);
+        this.startLocation.sendKeys(Keys.ENTER);
+
+
+        this.endLocation.clear();
+        this.endLocation.sendKeys(ENDLOCATIOn);
+        this.endLocation.sendKeys(Keys.ENTER);
     }
 
     public boolean btnIsNotPresent() {
@@ -61,5 +72,16 @@ public class ZavrsetakVoznjeRouteSearch {
 
     public void logoutDriver() {
         this.driverLogoutBtn.click();
+    }
+
+
+    public void schedule() {
+        this.orderBtn.click();
+    }
+
+    public boolean btnIsPresent() {
+        (new WebDriverWait(driver, Duration.ofSeconds(5)))
+                .until(ExpectedConditions.visibilityOf(orderBtn));
+        return true;
     }
 }

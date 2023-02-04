@@ -111,7 +111,7 @@ public class NarucivanjeOrderRidePage {
         calendarInput.clear();
         String day = String.format("%02d",LocalDateTime.now().getDayOfMonth());
         String hour = String.format("%02d",LocalDateTime.now().getHour()+1);
-        String minute = String.format("%02d",LocalDateTime.now().getMinute());
+        String minute = String.format("%02d",LocalDateTime.now().getMinute()+2);
         checkIfReserved = "2023-02-"+day+"T"+hour+":"+minute;
         System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         System.out.println(checkIfReserved);

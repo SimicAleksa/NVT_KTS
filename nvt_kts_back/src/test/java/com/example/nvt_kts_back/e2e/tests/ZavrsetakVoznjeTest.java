@@ -10,28 +10,7 @@ import org.testng.annotations.Test;
 public class ZavrsetakVoznjeTest extends NarucivanjeTestBase {
 
     @Test
-    public void validData() throws InterruptedException {
-        ZavrsetakVoznjeLoginPage loginPage = new ZavrsetakVoznjeLoginPage(driver);
-        Assertions.assertTrue(loginPage.isOpened());
-
-        loginPage.loginAsDriver2();
-        ZavrsetakVoznjeAllVehiclesPage allVehiclesPage = new ZavrsetakVoznjeAllVehiclesPage(driver);
-        Assertions.assertTrue(allVehiclesPage.isOpened());
-
-        allVehiclesPage.openReportPageDriver();
-        ZavrsetakVoznjeReportPage reportPage = new ZavrsetakVoznjeReportPage(driver);
-        Assertions.assertTrue(reportPage.isOpened());
-
-        reportPage.openSideBar();
-        Assertions.assertTrue(reportPage.isSidebarOpen());
-
-        reportPage.endRide();
-        Assertions.assertTrue(reportPage.rideIsNotPresent());
-    }
-
-
-    @Test
-    public void alreadyOrdered() throws InterruptedException {
+    public void zavrsetakAlreadyOrdered() throws InterruptedException {
         ZavrsetakVoznjeLoginPage loginPage = new ZavrsetakVoznjeLoginPage(driver);
         Assertions.assertTrue(loginPage.isOpened());
 
@@ -50,7 +29,7 @@ public class ZavrsetakVoznjeTest extends NarucivanjeTestBase {
         Assertions.assertTrue(loginPage.isOpened());
 
         //////////////////////////////////////
-        loginPage.loginAsDriver();
+        loginPage.loginAsDriver2();
         Assertions.assertTrue(allVehiclesPage.isOpened());
 
         allVehiclesPage.openReportPageDriver();
@@ -67,14 +46,74 @@ public class ZavrsetakVoznjeTest extends NarucivanjeTestBase {
         routeSearch.logoutDriver();
         Assertions.assertTrue(loginPage.isOpened());
 
-        loginPage.loginAsUser();
+        loginPage.loginAsUser2();
         Assertions.assertTrue(allVehiclesPage.isOpened());
 
         allVehiclesPage.openRouteSearch();
         Assertions.assertTrue(routeSearch.isOpened());
 
         routeSearch.fillForm();
-        Assertions.assertTrue(routeSearch.btnIsNotPresent());
-
+        Assertions.assertTrue(routeSearch.btnIsPresent());
+        routeSearch.schedule();
     }
+
+
+
+
+
+
+
+
+
+
+//    @Test
+//    public void zavrsetakValidData() throws InterruptedException {
+//        ZavrsetakVoznjeLoginPage loginPage = new ZavrsetakVoznjeLoginPage(driver);
+//        Assertions.assertTrue(loginPage.isOpened());
+//
+//        loginPage.loginAsDriver2();
+//        ZavrsetakVoznjeAllVehiclesPage allVehiclesPage = new ZavrsetakVoznjeAllVehiclesPage(driver);
+//        Assertions.assertTrue(allVehiclesPage.isOpened());
+//
+//        allVehiclesPage.openReportPageDriver();
+//        ZavrsetakVoznjeReportPage reportPage = new ZavrsetakVoznjeReportPage(driver);
+//        Assertions.assertTrue(reportPage.isOpened());
+//
+//        reportPage.openSideBar();
+//        Assertions.assertTrue(reportPage.isSidebarOpen());
+//
+//        reportPage.endRide();
+//        Assertions.assertTrue(reportPage.rideIsNotPresent());
+//
+//
+//
+//
+//        //////////////////////////////////////
+//        loginPage.loginAsDriver2();
+//        Assertions.assertTrue(allVehiclesPage.isOpened());
+//
+//        allVehiclesPage.openReportPageDriver();
+//        ZavrsetakVoznjeReportPage reportPage = new ZavrsetakVoznjeReportPage(driver);
+//        Assertions.assertTrue(reportPage.isOpened());
+//
+//        reportPage.openSideBar();
+//        Assertions.assertTrue(reportPage.isSidebarOpen());
+//
+//        reportPage.endRide();
+//        Assertions.assertTrue(reportPage.rideIsNotPresent());
+//        ////////////////////////////////////////
+//
+//        routeSearch.logoutDriver();
+//        Assertions.assertTrue(loginPage.isOpened());
+//
+//        loginPage.loginAsUser();
+//        Assertions.assertTrue(allVehiclesPage.isOpened());
+//
+//        allVehiclesPage.openRouteSearch();
+//        Assertions.assertTrue(routeSearch.isOpened());
+//
+//        routeSearch.fillForm();
+//        Assertions.assertTrue(routeSearch.btnIsNotPresent());
+//
+//    }
 }

@@ -43,7 +43,7 @@ public class ZavrsetakVoznjeReportPage {
 
     public boolean isSidebarOpen() {
         (new WebDriverWait(driver, Duration.ofSeconds(5)))
-                .until(ExpectedConditions.elementToBeClickable(sideX));
+                .until(ExpectedConditions.elementToBeClickable(endRideBtn));
         return true;
     }
 
