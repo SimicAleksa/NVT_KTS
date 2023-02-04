@@ -64,6 +64,7 @@ public class RideService {
         Ride ride = this.rideRepository.findById(id).orElseThrow(()->
                 new NotFoundException("Ride does not exist"));
         ride.setRideState(RideState.ENDED);
+        ride.setEndDateTime(LocalDateTime.now());
         return this.rideRepository.save(ride);
     }
 
